@@ -1,0 +1,56 @@
+from pygments.lexers import get_lexer_for_filename 
+from vyapp.plugins.syntax.tools import *
+from vyapp.tools.misc import exec_quiet
+
+
+def install(area, theme):
+    """
+    """
+    TIME = 1000
+
+    # def cave():
+        # index0 = area.index("@0,0")
+    # 
+        # index1 = area.index("@%s,%s" % (area.winfo_width(), area.winfo_height()))
+        # colorize(area, get_lexer_for_filename(area.filename, ''), theme, index0, index1)
+
+    def cave():
+        index0 = get_prev_token(area, theme.keys(), '@0,0')
+        index1 = get_next_token(area, theme.keys(), '@0,%s' % area.winfo_height())
+        for ind in theme.keys():
+            area.tag_remove(ind, index0, index1)
+        colorize(area, get_lexer_for_filename(area.filename, ''), theme, index0, index1)
+
+    INSTALL = [(-1, '<<LoadData>>', lambda event: exec_quiet(colorize, event.widget, exec_quiet(get_lexer_for_filename, area.filename, ''), theme, '1.0', 'end')),
+               (-1, '<Escape>', lambda event: exec_quiet(cave))]
+
+    area.tag_setup(theme)
+
+
+    area.install(*INSTALL)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

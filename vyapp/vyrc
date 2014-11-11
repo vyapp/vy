@@ -1,0 +1,73 @@
+# User plugin space.
+import sys
+
+from os.path import expanduser
+sys.path.append('%s/.vy/' % expanduser('~'))
+
+from vyapp.plugins import autoload, autocall
+
+import vyapp.plugins.jump
+import vyapp.plugins.box
+import vyapp.plugins.cmd
+import vyapp.plugins.find
+import vyapp.plugins.mode
+import vyapp.plugins.io
+import vyapp.plugins.vim
+import vyapp.plugins.ibash
+import vyapp.plugins.case_pair
+import vyapp.plugins.word_complete
+import vyapp.plugins.hlink
+import vyapp.plugins.sigma
+import vyapp.plugins.status
+import vyapp.plugins.syntax.spider
+import vyapp.plugins.syntax.themes.sun
+import vyapp.plugins.shade
+import vyapp.plugins.log_opened_file
+import vyapp.plugins.set_pos
+import vyapp.plugins.inline_comment
+
+# import vyapp.plugins.pdb.debug
+# autoload(vyapp.plugins.pdb.debug)
+
+autoload(vyapp.plugins.jump)
+autoload(vyapp.plugins.inline_comment)
+autoload(vyapp.plugins.set_pos)
+autoload(vyapp.plugins.box)
+autoload(vyapp.plugins.cmd)
+autoload(vyapp.plugins.find)
+autoload(vyapp.plugins.mode)
+autoload(vyapp.plugins.io)
+autoload(vyapp.plugins.vim)
+autoload(vyapp.plugins.ibash)
+autoload(vyapp.plugins.case_pair)
+autoload(vyapp.plugins.word_complete)
+autoload(vyapp.plugins.hlink)
+autoload(vyapp.plugins.sigma)
+autoload(vyapp.plugins.status)
+autoload(vyapp.plugins.syntax.spider, vyapp.plugins.syntax.themes.sun.THEME)
+autoload(vyapp.plugins.shade)
+autoload(vyapp.plugins.log_opened_file, '.vy_history')
+
+def setup(area):
+    area.TAB_SIZE = 4
+    area.config(blockcursor= True, 
+                 insertbackground='red', 
+                 background='#fff1e8', 
+                 foreground='black', 
+                 font=('Monospace', 9, 'bold'), 
+                 undo= True)
+
+autocall(setup) 
+
+# Command plugins.
+from vyapp.plugins import codepad
+from vyapp.plugins import util
+
+
+
+
+
+
+
+
+
