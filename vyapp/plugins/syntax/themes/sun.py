@@ -2,6 +2,7 @@ THEME = {
 # 'Token.Text': {'background':'', 'foreground':''},
 # 'Token.Text.Whitespace': {'background':'', 'foreground':''},
 
+'Token.Error': {'background':'', 'foreground':''},
 
 
 # 'Token.Name':{'background':'', 'foreground':'black'},
@@ -108,6 +109,7 @@ THEME = {
     # return search('\:(\{.+?\})', data).group(1)
 
 # sub('\{.+\}', cave, '1.0', '85.0')
+
 
 
 
