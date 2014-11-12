@@ -1,27 +1,27 @@
 THEME = {
-'Token.Text': {'background':'', 'foreground':''},
-'Token.Text.Whitespace': {'background':'', 'foreground':''},
+# 'Token.Text': {'background':'', 'foreground':''},
+# 'Token.Text.Whitespace': {'background':'', 'foreground':''},
 
 
 
-'Token.Name':{'background':'', 'foreground':'black'},
-'Token.Name.Attribute':{'background':'', 'foreground':'black'},
-'Token.Name.Builtin':{'background':'', 'foreground':'black'},
-'Token.Name.Builtin.Pseudo':{'background':'', 'foreground':'black'},
-'Token.Name.Class':{'background':'', 'foreground':'black'},
-'Token.Name.Constant':{'background':'', 'foreground':'black'},
-'Token.Name.Decorator':{'background':'', 'foreground':'black'},
-'Token.Name.Entity':{'background':'', 'foreground':'black'},
-'Token.Name.Exception':{'background':'', 'foreground':'black'},
-'Token.Name.Function':{'background':'', 'foreground':'black'},
-'Token.Name.Label':{'background':'', 'foreground':'black'},
-'Token.Name.Namespace':{'background':'', 'foreground':'black'},
-'Token.Name.Other':{'background':'', 'foreground':'black'},
-'Token.Name.Tag':{'background':'', 'foreground':'black'},
-'Token.Name.Variable':{'background':'', 'foreground':'black'},
-'Token.Name.Variable.Class':{'background':'', 'foreground':'black'},
-'Token.Name.Variable.Global':{'background':'', 'foreground':'black'},
-'Token.Name.Variable.Instance':{'background':'', 'foreground':'black'},
+# 'Token.Name':{'background':'', 'foreground':'black'},
+# 'Token.Name.Attribute':{'background':'', 'foreground':'black'},
+# 'Token.Name.Builtin':{'background':'', 'foreground':'black'},
+# 'Token.Name.Builtin.Pseudo':{'background':'', 'foreground':'black'},
+# 'Token.Name.Class':{'background':'', 'foreground':'black'},
+# 'Token.Name.Constant':{'background':'', 'foreground':'black'},
+# 'Token.Name.Decorator':{'background':'', 'foreground':'black'},
+# 'Token.Name.Entity':{'background':'', 'foreground':'black'},
+# 'Token.Name.Exception':{'background':'', 'foreground':'black'},
+# 'Token.Name.Function':{'background':'', 'foreground':'black'},
+# 'Token.Name.Label':{'background':'', 'foreground':'black'},
+# 'Token.Name.Namespace':{'background':'', 'foreground':'black'},
+# 'Token.Name.Other':{'background':'', 'foreground':'black'},
+# 'Token.Name.Tag':{'background':'', 'foreground':'black'},
+# 'Token.Name.Variable':{'background':'', 'foreground':'black'},
+# 'Token.Name.Variable.Class':{'background':'', 'foreground':'black'},
+# 'Token.Name.Variable.Global':{'background':'', 'foreground':'black'},
+# 'Token.Name.Variable.Instance':{'background':'', 'foreground':'black'},
 
 'Token.Comment.Multiline':{'background':'', 'foreground':'blue'},
 'Token.Literal.String.Doc':{'background':'', 'foreground':'#CC99FF'},
@@ -108,6 +108,7 @@ THEME = {
     # return search('\:(\{.+?\})', data).group(1)
 
 # sub('\{.+\}', cave, '1.0', '85.0')
+
 
 
 
