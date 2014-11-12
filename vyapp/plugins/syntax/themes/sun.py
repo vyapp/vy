@@ -23,7 +23,6 @@ THEME = {
 'Token.Name.Variable.Global':{'background':'', 'foreground':'black'},
 'Token.Name.Variable.Instance':{'background':'', 'foreground':'black'},
 
-'Token.Error': {'background':'', 'foreground':'green'},
 'Token.Comment.Multiline':{'background':'', 'foreground':'blue'},
 'Token.Literal.String.Doc':{'background':'', 'foreground':'#CC99FF'},
 'Token.Literal.String.Heredoc':{'background':'', 'foreground':'#CC99FF'},
@@ -109,6 +108,7 @@ THEME = {
     # return search('\:(\{.+?\})', data).group(1)
 
 # sub('\{.+\}', cave, '1.0', '85.0')
+
 
 
 

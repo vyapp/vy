@@ -6,7 +6,6 @@ from vyapp.tools.misc import exec_quiet, consume_iter
 TAG_KEYS_PRECEDENCE =('Token.Comment.Multiline',
     'Token.Literal.String.Doc',
     'Token.Literal.String.Heredoc',
-    'Token.Error',
     'Token.Literal.String.Interpol',
     'Token.Literal.String.Regex',
     'Token.Literal.String.Symbol',
@@ -22,7 +21,6 @@ TAG_KEYS_PRECEDENCE =('Token.Comment.Multiline',
     'Token.Literal.String.Double',
     'Token.Literal.String.Backtick',
     'Token.Literal.String.Char',
-    
     'Token.Literal.Number.Float',
     'Token.Generic.Strong',
     'Token.Generic.Prompt',
@@ -78,6 +76,7 @@ def install(area, theme):
         update_scheme()
         area.after(TIME, cave)
     cave()
+
 
 
 
