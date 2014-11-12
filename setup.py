@@ -12,7 +12,7 @@ setup(name="vy",
 		"vyapp.plugins.pdb",
                 "vyapp.tools"],
       #package_dir={'vyapp':'vyapp'},
-      scripts=['vy', 'viper'],
+      scripts=['vy'],
       package_data={'vyapp': ['vyrc', '/vyapp/vyrc']},
       author="Iury O. G. Figueiredo",
       author_email="ioliveira@id.uff.br")

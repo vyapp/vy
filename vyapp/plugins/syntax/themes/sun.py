@@ -1,7 +1,55 @@
 THEME = {
-# 'Token.Error': {'background':'', 'foreground':'green'},
-# 'Token.Text': {'background':'', 'foreground':''},
-# 'Token.Text.Whitespace': {'background':'', 'foreground':''},
+'Token.Text': {'background':'', 'foreground':''},
+'Token.Text.Whitespace': {'background':'', 'foreground':''},
+
+
+
+'Token.Name':{'background':'', 'foreground':'black'},
+'Token.Name.Attribute':{'background':'', 'foreground':'black'},
+'Token.Name.Builtin':{'background':'', 'foreground':'black'},
+'Token.Name.Builtin.Pseudo':{'background':'', 'foreground':'black'},
+'Token.Name.Class':{'background':'', 'foreground':'black'},
+'Token.Name.Constant':{'background':'', 'foreground':'black'},
+'Token.Name.Decorator':{'background':'', 'foreground':'black'},
+'Token.Name.Entity':{'background':'', 'foreground':'black'},
+'Token.Name.Exception':{'background':'', 'foreground':'black'},
+'Token.Name.Function':{'background':'', 'foreground':'black'},
+'Token.Name.Label':{'background':'', 'foreground':'black'},
+'Token.Name.Namespace':{'background':'', 'foreground':'black'},
+'Token.Name.Other':{'background':'', 'foreground':'black'},
+'Token.Name.Tag':{'background':'', 'foreground':'black'},
+'Token.Name.Variable':{'background':'', 'foreground':'black'},
+'Token.Name.Variable.Class':{'background':'', 'foreground':'black'},
+'Token.Name.Variable.Global':{'background':'', 'foreground':'black'},
+'Token.Name.Variable.Instance':{'background':'', 'foreground':'black'},
+
+'Token.Error': {'background':'', 'foreground':'green'},
+'Token.Comment.Multiline':{'background':'', 'foreground':'blue'},
+'Token.Literal.String.Doc':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Heredoc':{'background':'', 'foreground':'#CC99FF'},
+
+'Token.Literal.String':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Backtick':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Char':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Double':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Escape':{'background':'', 'foreground':'#CC99FF'},
+
+
+'Token.Literal.String.Interpol':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Other':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Regex':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Single':{'background':'', 'foreground':'#CC99FF'},
+'Token.Literal.String.Symbol':{'background':'', 'foreground':'#CC99FF'},
+
+'Token.Comment':{'background':'', 'foreground':'blue'},
+'Token.Comment.Preproc':{'background':'', 'foreground':'blue'},
+'Token.Comment.Single':{'background':'', 'foreground':'blue'},
+'Token.Comment.Special':{'background':'', 'foreground':'blue'},
+
+
+'Token.Literal':{'background':'', 'foreground':'blue'},
+'Token.Literal.Date':{'background':'', 'foreground':'blue'},
+
 
 'Token.Keyword':{'background':'', 'foreground': 'brown'},
 'Token.Keyword.Constant':{'background':'', 'foreground':'brown'},
@@ -11,44 +59,6 @@ THEME = {
 'Token.Keyword.Reserved':{'background':'', 'foreground':'brown'},
 'Token.Keyword.Type':{'background':'', 'foreground':'brown'},
 
-
-# 'Token.Name':{'background':'', 'foreground':'black'},
-# 'Token.Name.Attribute':{'background':'', 'foreground':'black'},
-# 'Token.Name.Builtin':{'background':'', 'foreground':'black'},
-# 'Token.Name.Builtin.Pseudo':{'background':'', 'foreground':'black'},
-# 'Token.Name.Class':{'background':'', 'foreground':'black'},
-# 'Token.Name.Constant':{'background':'', 'foreground':'black'},
-# 'Token.Name.Decorator':{'background':'', 'foreground':'black'},
-# 'Token.Name.Entity':{'background':'', 'foreground':'black'},
-# 'Token.Name.Exception':{'background':'', 'foreground':'black'},
-# 'Token.Name.Function':{'background':'', 'foreground':'black'},
-# 'Token.Name.Label':{'background':'', 'foreground':'black'},
-# 'Token.Name.Namespace':{'background':'', 'foreground':'black'},
-# 'Token.Name.Other':{'background':'', 'foreground':'black'},
-# 'Token.Name.Tag':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable.Class':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable.Global':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable.Instance':{'background':'', 'foreground':'black'},
-
-
-'Token.Literal':{'background':'', 'foreground':'blue'},
-'Token.Literal.Date':{'background':'', 'foreground':'blue'},
-
-'Token.Literal.String':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Backtick':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Char':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Doc':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Double':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Escape':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Heredoc':{'background':'', 'foreground':'#CC99FF'},
-
-
-'Token.Literal.String.Interpol':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Other':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Regex':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Single':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Symbol':{'background':'', 'foreground':'#CC99FF'},
 
 
 'Token.Literal.Number':{'background':'', 'foreground':'brown'},
@@ -65,11 +75,6 @@ THEME = {
 
 'Token.Punctuation':{'background':'', 'foreground':'brown'},
 
-'Token.Comment':{'background':'', 'foreground':'blue'},
-'Token.Comment.Multiline':{'background':'', 'foreground':'blue'},
-'Token.Comment.Preproc':{'background':'', 'foreground':'blue'},
-'Token.Comment.Single':{'background':'', 'foreground':'blue'},
-'Token.Comment.Special':{'background':'', 'foreground':'blue'},
 
 'Token.Generic':{'background':'', 'foreground':'blue'},
 'Token.Generic.Deleted':{'background':'', 'foreground':'blue'},
@@ -83,6 +88,9 @@ THEME = {
 'Token.Generic.Subheading':{'background':'', 'foreground':'blue'},
 'Token.Generic.Traceback':{'background':'', 'foreground':'blue'},
 }
+
+    
+
 
 
 # def cave(index0, index1):
@@ -101,6 +109,7 @@ THEME = {
     # return search('\:(\{.+?\})', data).group(1)
 
 # sub('\{.+\}', cave, '1.0', '85.0')
+
 
 
 
