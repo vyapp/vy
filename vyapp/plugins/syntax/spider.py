@@ -41,8 +41,8 @@ def install(area, theme):
 
         # This is working because the comments appear first in the sun.py theme.
         # So the comments have a greater precedence.
-        index0 = get_prev_token(area, TAG_KEYS_PRECEDENCE, 'insert', '@0,0')
-        index1 = get_next_token(area, TAG_KEYS_PRECEDENCE, 'insert', '@%s,%s' % (area.winfo_width(), area.winfo_height()))
+        index0 = area.tag_next_occur(TAG_KEYS_PRECEDENCE, 'insert', '@0,0')
+        index1 = area.tag_prev_occur(TAG_KEYS_PRECEDENCE, 'insert', '@0,%s' % area.winfo_height())
 
         for ind in theme.keys():
             area.tag_remove(ind, index0, index1)
@@ -66,30 +66,6 @@ def install(area, theme):
     area.tag_setup(theme)
 
     area.install(*INSTALL)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

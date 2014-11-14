@@ -1601,41 +1601,16 @@ class AreaVi(Text):
         if prev_tag:
             self.mark_set(mark, prev_tag[0])
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def tag_prev_occur(self, tag_names, index0, index1):
+        for ind in tag_names:
+            pos = self.tag_prevrange(ind, index0, index1)
+            if pos: return pos[0]
+        return index1
+    
+    def tag_next_occur(self, tag_names, index0, index1):
+        for ind in tag_names:
+            pos = self.tag_nextrange(ind, index0, index1)
+            if pos: return pos[1]
+        return index1
+    
 
