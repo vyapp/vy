@@ -1,92 +1,92 @@
 THEME = {
-# 'Token.Text': {'background':'', 'foreground':''},
-# 'Token.Text.Whitespace': {'background':'', 'foreground':''},
+'Token.Text': {'background':'#fff1e8', 'foreground':''},
+'Token.Text.Whitespace': {'background':'#fff1e8', 'foreground':''},
 
-'Token.Error': {'background':'', 'foreground':''},
-
-
-# 'Token.Name':{'background':'', 'foreground':'black'},
-# 'Token.Name.Attribute':{'background':'', 'foreground':'black'},
-# 'Token.Name.Builtin':{'background':'', 'foreground':'black'},
-# 'Token.Name.Builtin.Pseudo':{'background':'', 'foreground':'black'},
-# 'Token.Name.Class':{'background':'', 'foreground':'black'},
-# 'Token.Name.Constant':{'background':'', 'foreground':'black'},
-# 'Token.Name.Decorator':{'background':'', 'foreground':'black'},
-# 'Token.Name.Entity':{'background':'', 'foreground':'black'},
-# 'Token.Name.Exception':{'background':'', 'foreground':'black'},
-# 'Token.Name.Function':{'background':'', 'foreground':'black'},
-# 'Token.Name.Label':{'background':'', 'foreground':'black'},
-# 'Token.Name.Namespace':{'background':'', 'foreground':'black'},
-# 'Token.Name.Other':{'background':'', 'foreground':'black'},
-# 'Token.Name.Tag':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable.Class':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable.Global':{'background':'', 'foreground':'black'},
-# 'Token.Name.Variable.Instance':{'background':'', 'foreground':'black'},
-
-'Token.Comment.Multiline':{'background':'', 'foreground':'blue'},
-'Token.Literal.String.Doc':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Heredoc':{'background':'', 'foreground':'#CC99FF'},
-
-'Token.Literal.String':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Backtick':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Char':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Double':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Escape':{'background':'', 'foreground':'#CC99FF'},
+'Token.Error': {'background':'#fff1e8', 'foreground':''},
 
 
-'Token.Literal.String.Interpol':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Other':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Regex':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Single':{'background':'', 'foreground':'#CC99FF'},
-'Token.Literal.String.Symbol':{'background':'', 'foreground':'#CC99FF'},
+'Token.Name':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Attribute':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Builtin':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Builtin.Pseudo':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Class':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Constant':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Decorator':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Entity':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Exception':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Function':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Label':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Namespace':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Other':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Tag':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Variable':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Variable.Class':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Variable.Global':{'background':'#fff1e8', 'foreground':'black'},
+'Token.Name.Variable.Instance':{'background':'#fff1e8', 'foreground':'black'},
 
-'Token.Comment':{'background':'', 'foreground':'blue'},
-'Token.Comment.Preproc':{'background':'', 'foreground':'blue'},
-'Token.Comment.Single':{'background':'', 'foreground':'blue'},
-'Token.Comment.Special':{'background':'', 'foreground':'blue'},
+'Token.Comment.Multiline':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Literal.String.Doc':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Heredoc':{'background':'#fff1e8', 'foreground':'#CC99FF'},
 
-
-'Token.Literal':{'background':'', 'foreground':'blue'},
-'Token.Literal.Date':{'background':'', 'foreground':'blue'},
-
-
-'Token.Keyword':{'background':'', 'foreground': 'brown'},
-'Token.Keyword.Constant':{'background':'', 'foreground':'brown'},
-'Token.Keyword.Declaration':{'background':'', 'foreground':'brown'},
-'Token.Keyword.Namespace':{'background':'', 'foreground':'brown'},
-'Token.Keyword.Pseudo':{'background':'', 'foreground':'brown'},
-'Token.Keyword.Reserved':{'background':'', 'foreground':'brown'},
-'Token.Keyword.Type':{'background':'', 'foreground':'brown'},
-
-
-
-'Token.Literal.Number':{'background':'', 'foreground':'brown'},
-'Token.Literal.Number.Bin':{'background':'', 'foreground':'brown'},
-'Token.Literal.Number.Float':{'background':'', 'foreground':'brown'},
-'Token.Literal.Number.Hex':{'background':'', 'foreground':'brown'},
-'Token.Literal.Number.Integer':{'background':'', 'foreground':'brown'},
-'Token.Literal.Number.Integer.Long':{'background':'', 'foreground':'brown'},
-'Token.Literal.Number.Oct':{'background':'', 'foreground':'brown'},
+'Token.Literal.String':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Backtick':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Char':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Double':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Escape':{'background':'#fff1e8', 'foreground':'#CC99FF'},
 
 
-'Token.Operator':{'background':'', 'foreground':'#6600FF'},
-'Token.Operator.Word':{'background':'', 'foreground':'#6600FF'},
+'Token.Literal.String.Interpol':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Other':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Regex':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Single':{'background':'#fff1e8', 'foreground':'#CC99FF'},
+'Token.Literal.String.Symbol':{'background':'#fff1e8', 'foreground':'#CC99FF'},
 
-'Token.Punctuation':{'background':'', 'foreground':'brown'},
+'Token.Comment':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Comment.Preproc':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Comment.Single':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Comment.Special':{'background':'#fff1e8', 'foreground':'blue'},
 
 
-'Token.Generic':{'background':'', 'foreground':'blue'},
-'Token.Generic.Deleted':{'background':'', 'foreground':'blue'},
-'Token.Generic.Emph':{'background':'', 'foreground':'blue'},
-'Token.Generic.Error':{'background':'', 'foreground':'blue'},
-'Token.Generic.Heading':{'background':'', 'foreground':'blue'},
-'Token.Generic.Inserted':{'background':'', 'foreground':'blue'},
-'Token.Generic.Output':{'background':'', 'foreground':'blue'},
-'Token.Generic.Prompt':{'background':'', 'foreground':'blue'},
-'Token.Generic.Strong':{'background':'', 'foreground':'blue'},
-'Token.Generic.Subheading':{'background':'', 'foreground':'blue'},
-'Token.Generic.Traceback':{'background':'', 'foreground':'blue'},
+'Token.Literal':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Literal.Date':{'background':'#fff1e8', 'foreground':'blue'},
+
+
+'Token.Keyword':{'background':'#fff1e8', 'foreground': 'brown'},
+'Token.Keyword.Constant':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Keyword.Declaration':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Keyword.Namespace':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Keyword.Pseudo':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Keyword.Reserved':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Keyword.Type':{'background':'#fff1e8', 'foreground':'brown'},
+
+
+
+'Token.Literal.Number':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Literal.Number.Bin':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Literal.Number.Float':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Literal.Number.Hex':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Literal.Number.Integer':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Literal.Number.Integer.Long':{'background':'#fff1e8', 'foreground':'brown'},
+'Token.Literal.Number.Oct':{'background':'#fff1e8', 'foreground':'brown'},
+
+
+'Token.Operator':{'background':'#fff1e8', 'foreground':'#6600FF'},
+'Token.Operator.Word':{'background':'#fff1e8', 'foreground':'#6600FF'},
+
+'Token.Punctuation':{'background':'#fff1e8', 'foreground':'brown'},
+
+
+'Token.Generic':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Deleted':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Emph':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Error':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Heading':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Inserted':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Output':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Prompt':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Strong':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Subheading':{'background':'#fff1e8', 'foreground':'blue'},
+'Token.Generic.Traceback':{'background':'#fff1e8', 'foreground':'blue'},
 }
 
     
@@ -109,6 +109,8 @@ THEME = {
     # return search('\:(\{.+?\})', data).group(1)
 
 # sub('\{.+\}', cave, '1.0', '85.0')
+
+
 
 
 

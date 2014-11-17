@@ -366,6 +366,7 @@ It appends to the clipboard the path of the file being edited.
 ~~~
 
 
-**Obs: This remains implementing docs for other key commands. These are the basic ones. **
+**It remains implementing docs for other key commands. These are the basic ones.**
+
 
 

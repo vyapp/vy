@@ -81,6 +81,14 @@ https://www.youtube.com/watch?v=Rav3iz-VCN0
 **Formating text with vy:**
 https://www.youtube.com/watch?v=5JUnUCl-E1w
 
+Screenshots
+===========
+
+**Dark Syntax Highlight Theme:**
+http://i.imgur.com/EIlWatO.jpg
+
+**Sun Syntax Highlight Theme:**
+http://i.imgur.com/WhPiLfK.jpg
 
 
 Features
@@ -97,4 +105,5 @@ Help
 ====
 I hang out at irc.freenode.org in the channel #vy.
 My nick there is Tau.
+
 
