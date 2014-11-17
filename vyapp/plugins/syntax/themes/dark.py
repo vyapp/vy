@@ -29,21 +29,22 @@ THEME = {
 'Token.Name.Variable.Instance':{'background':'black', 'foreground':'#99FFFF'},
 
 'Token.Comment.Multiline':{'background':'black', 'foreground':'#00CC33'},
+
 'Token.Literal.String.Doc':{'background':'black', 'foreground':'#FF470A'},
-'Token.Literal.String.Heredoc':{'background':'black', 'foreground':'#95CAE4'},
-'Token.Literal.String':{'background':'black', 'foreground':'#FF3333'},
-'Token.Literal.String.Backtick':{'background':'black', 'foreground':'#CC99FF'},
-'Token.Literal.String.Char':{'background':'black', 'foreground':'#FF33FF'},
-'Token.Literal.String.Double':{'background':'black', 'foreground':'#00A300'},
+'Token.Literal.String.Heredoc':{'background':'black', 'foreground':'#FF470A'},
+'Token.Literal.String':{'background':'black', 'foreground':'#FF470A'},
+'Token.Literal.String.Backtick':{'background':'black', 'foreground':'#FF470A'},
+'Token.Literal.String.Char':{'background':'black', 'foreground':'#FF470A'},
+'Token.Literal.String.Double':{'background':'black', 'foreground':'#FF470A'},
 
 'Token.Literal.String.Escape':{'background':'black', 'foreground':'#CC00CC'},
 
 
-'Token.Literal.String.Interpol':{'background':'black', 'foreground':'#CCFFCC'},
-'Token.Literal.String.Other':{'background':'black', 'foreground':'#FFCCFF'},
+'Token.Literal.String.Interpol':{'background':'black', 'foreground':'#FF470A'},
+'Token.Literal.String.Other':{'background':'black', 'foreground':'#FF470A'},
 'Token.Literal.String.Regex':{'background':'black', 'foreground':'#CC99FF'},
-'Token.Literal.String.Single':{'background':'black', 'foreground':'#FFCC33'},
-'Token.Literal.String.Symbol':{'background':'black', 'foreground':'#7AFFFF'},
+'Token.Literal.String.Single':{'background':'black', 'foreground':'#FF470A'},
+'Token.Literal.String.Symbol':{'background':'black', 'foreground':'#FF470A'},
 
 'Token.Comment':{'background':'black', 'foreground':'#99CCFF'},
 'Token.Comment.Preproc':{'background':'black', 'foreground':'#FFCC99'},
@@ -55,13 +56,13 @@ THEME = {
 'Token.Literal.Date':{'background':'black', 'foreground':'blue'},
 
 
-'Token.Keyword':{'background':'black', 'foreground': '#FFCC99'},
-'Token.Keyword.Constant':{'background':'black', 'foreground':'#FFCC99'},
-'Token.Keyword.Declaration':{'background':'black', 'foreground':'#FFCC99'},
-'Token.Keyword.Namespace':{'background':'black', 'foreground':'#FFCC99'},
-'Token.Keyword.Pseudo':{'background':'black', 'foreground':'#FFCC99'},
-'Token.Keyword.Reserved':{'background':'black', 'foreground':'#FFCC99'},
-'Token.Keyword.Type':{'background':'black', 'foreground':'#FFCC99'},
+'Token.Keyword':{'background':'black', 'foreground': '#CCCC00'},
+'Token.Keyword.Constant':{'background':'black', 'foreground':'#CCCC00'},
+'Token.Keyword.Declaration':{'background':'black', 'foreground':'#CCCC00'},
+'Token.Keyword.Namespace':{'background':'black', 'foreground':'#CCCC00'},
+'Token.Keyword.Pseudo':{'background':'black', 'foreground':'#CCCC00'},
+'Token.Keyword.Reserved':{'background':'black', 'foreground':'#CCCC00'},
+'Token.Keyword.Type':{'background':'black', 'foreground':'#CCCC00'},
 
 
 
@@ -73,11 +74,10 @@ THEME = {
 'Token.Literal.Number.Integer.Long':{'background':'black', 'foreground':'#75D1D1'},
 'Token.Literal.Number.Oct':{'background':'black', 'foreground':'brown'},
 
+'Token.Operator':{'background':'black', 'foreground':'#CCCC00'},
+'Token.Operator.Word':{'background':'black', 'foreground':'#CCCC00'},
 
-'Token.Operator':{'background':'black', 'foreground':'#FFB300'},
-'Token.Operator.Word':{'background':'black', 'foreground':'#00FF33'},
-
-'Token.Punctuation':{'background':'black', 'foreground':'#FFB300'},
+'Token.Punctuation':{'background':'black', 'foreground':'#CCCC00'},
 
 
 'Token.Generic':{'background':'black', 'foreground':'blue'},
@@ -92,6 +92,7 @@ THEME = {
 'Token.Generic.Subheading':{'background':'black', 'foreground':'blue'},
 'Token.Generic.Traceback':{'background':'black', 'foreground':'blue'},
 }
+
 
 
 

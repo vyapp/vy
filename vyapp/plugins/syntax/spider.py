@@ -215,16 +215,12 @@ from vyapp.tools.misc import exec_quiet, consume_iter
 
 TAG_KEYS_PRECEDENCE =('Token.Comment.Multiline',
     'Token.Literal.String.Doc',
-    # 'Token.Error',
     'Token.Literal.String.Heredoc',
-    'Token.Literal.String.Interpol',
     'Token.Literal.String.Regex',
     'Token.Literal.String.Symbol',
-    'Token.Literal.Number.Integer.Long',
     'Token.Literal.String',
     'Token.Literal.String.Other',
     'Token.Literal.String.Single',
-    'Token.Literal.String.Escape',
     'Token.Comment.Preproc',
     'Token.Comment',
     'Token.Comment.Single',
@@ -276,6 +272,8 @@ def install(area, theme, max=10):
     area.tag_setup(theme)
 
     area.install(*INSTALL)
+
+
 
 
 
