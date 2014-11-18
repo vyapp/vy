@@ -391,6 +391,7 @@ The following themes are implemented so far.
 
     vyapp.plugins.syntax.themes.sun
     vyapp.plugins.syntax.themes.dark
+    vyapp.plugins.syntax.themes.snake
 
 It corresponds to how many lines up and down from the cursor position it will be analyzed when Escape is pressed.
 
@@ -577,6 +578,7 @@ If you have placed dark.py inside your ~/.vy.
 
 
 **It remains implementing docs for other key commands. These are the basic ones.**
+
 
 
 
