@@ -6,7 +6,7 @@ THEME = {
 
 
 'Token.Name':{'background':'black', 'foreground':'#FAFAFA'},
-'Token.Name.Attribute':{'background':'black', 'foreground':'#00FF00'},
+'Token.Name.Attribute':{'background':'black', 'foreground':'#FAFAFA'},
 
 'Token.Name.Builtin':{'background':'black', 'foreground':'#FAFAFA'},
 'Token.Name.Builtin.Pseudo':{'background':'black', 'foreground':'#FAFAFA'},
@@ -94,6 +94,7 @@ THEME = {
 'Token.Generic.Subheading':{'background':'black', 'foreground':'blue'},
 'Token.Generic.Traceback':{'background':'black', 'foreground':'blue'},
 }
+
 
 
 
