@@ -46,6 +46,9 @@ autoload(vyapp.plugins.sigma)
 autoload(vyapp.plugins.status)
 autoload(vyapp.plugins.syntax.spider, vyapp.plugins.syntax.themes.sun.THEME)
 autoload(vyapp.plugins.shade)
+
+# You must change the '.vy_history' to something like.
+# '/home/your_home/.vy_history'
 autoload(vyapp.plugins.log_opened_file, '.vy_history')
 
 def setup(area):
@@ -62,6 +65,7 @@ autocall(setup)
 # Command plugins.
 from vyapp.plugins import codepad
 from vyapp.plugins import util
+
 
 
 

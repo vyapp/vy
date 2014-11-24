@@ -11,8 +11,8 @@ def insert_tab(area):
     area.insert_tab()
     return True
 
-INSTALL =  [(1, '<Shift-greater>', lambda event: event.widget.align_sel_right()),
-            (1, '<Shift-less>', lambda event: event.widget.align_sel_left()),
+INSTALL =  [(1, '<Key-greater>', lambda event: event.widget.align_sel_right()),
+            (1, '<Key-less>', lambda event: event.widget.align_sel_left()),
 
             (1, '<Key-j>', lambda event: event.widget.down()),
             (1, '<Key-k>', lambda event: event.widget.up()),
@@ -93,6 +93,7 @@ INSTALL =  [(1, '<Shift-greater>', lambda event: event.widget.align_sel_right())
         
 def install(area):
     area.install(*INSTALL)
+
 
 
 
