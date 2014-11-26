@@ -20,21 +20,12 @@ Vy supports an interesting feature, it is the capacity of talking to external pr
 It is all thanks to untwisted although it could be done with any other library that supports a reactor
 with a update function. The main idea behind to talking to external processes is the concept of e-scripts.
 
-E-scripts are an interesting way of programming repeatitive tasks. The first time i had contact
-with this abstraction was with one of my university teachers. It is worth reading about. He has
-implemented eev that is a set of emacs keys to perform cool tasks as well as send stuff to external
-processes. Consequently it turns easy the task of creating e-scripts to automatize repetitive tasks.
-
-You can read more about e-scripts and eev in.
-
-http://angg.twu.net/eev-intros/
-
-The person who implemented eev implements e-scripts in a nice way, you can go
-through some of the examples and learn a bit of how implementing e-scripts.
+E-scripts are an interesting way of avoiding repeatitive tasks.
 
 
 Install
 =======
+
 This is a short script to install the latest version of vy.
 
     cd /tmp
@@ -72,6 +63,9 @@ commands.
 Videos
 ======
 
+**Vy as a shell:**
+https://www.youtube.com/watch?v=CfByT5i2uWw
+
 **Using pdb with vy:**
 https://www.youtube.com/watch?v=Ahachd4_N9U
 
@@ -93,6 +87,7 @@ http://i.imgur.com/WhPiLfK.jpg
 
 Features
 ========
+
 * A simple api once it is purely written in python
 * Syntax highlight for all kind of langues supported by python-pygments.
 * A very powerful api since it written in python
@@ -100,10 +95,25 @@ Features
 * Talk to external processes like interpreters
 * A powerful search scheme that permits formating text with regex and python code
 
+Documentation
+=============
+
+**INTRO.md** 
+It guides you through the basic usage of vy.
+
+**PLUGIN.md**
+It gives a complete description of the usage of vy standard plugins.
+
+**MODE.md**
+It gives a complete reference of all standard key commands based on their modes.
 
 Help
 ====
+
 I hang out at irc.freenode.org in the channel #vy.
 My nick there is Tau.
+
+Vy facebook group.
+https://www.facebook.com/groups/525968624207147/
 
 

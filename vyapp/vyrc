@@ -1,77 +1,148 @@
+##############################################################################
+
 # User plugin space.
 import sys
-
 from os.path import expanduser
 sys.path.append('%s/.vy/' % expanduser('~'))
-
+##############################################################################
+# Functions used to load the plugins.
 from vyapp.plugins import autoload, autocall
 
+##############################################################################
+# Plugin list.
+
+# Used to jump quickly to chars.
 import vyapp.plugins.jump
-import vyapp.plugins.box
-import vyapp.plugins.cmd
-import vyapp.plugins.find
-import vyapp.plugins.mode
-import vyapp.plugins.io
-import vyapp.plugins.vim
-import vyapp.plugins.ibash
-import vyapp.plugins.case_pair
-import vyapp.plugins.word_complete
-import vyapp.plugins.hlink
-import vyapp.plugins.sigma
-import vyapp.plugins.status
-import vyapp.plugins.syntax.spider
-import vyapp.plugins.syntax.themes.sun
-import vyapp.plugins.shade
-import vyapp.plugins.log_opened_file
-import vyapp.plugins.set_pos
+autoload(vyapp.plugins.jump)
+
+
+# This plugin implements keys to comment pieces of text inside 
+# programming language files.
 import vyapp.plugins.inline_comment
+autoload(vyapp.plugins.inline_comment)
+
+
+# Used to set the cursor over a line.
+import vyapp.plugins.set_pos
+autoload(vyapp.plugins.set_pos)
+
 
 # import vyapp.plugins.pdb.debug
 # autoload(vyapp.plugins.pdb.debug)
 
-autoload(vyapp.plugins.jump)
-autoload(vyapp.plugins.inline_comment)
-autoload(vyapp.plugins.set_pos)
+
+# Implements vy stdin and stdout scheme for talking to extern processes.
+import vyapp.plugins.box
 autoload(vyapp.plugins.box)
+
+
+# Used to execute python code on the fly, things like python functions
+# to substitute text, format stuff etc, load plugins.
+import vyapp.plugins.cmd
 autoload(vyapp.plugins.cmd)
+
+
+# Used to search for text/format text with regex.
+import vyapp.plugins.find
 autoload(vyapp.plugins.find)
+
+
+# It creates the standard modes.
+import vyapp.plugins.mode
 autoload(vyapp.plugins.mode)
+
+
+# It implements ways of opening/saving files.
+import vyapp.plugins.io
 autoload(vyapp.plugins.io)
+
+
+# The main built-in key commands.
+# It doesn't implement vim keys. It is an allusion to vi improved :P
+import vyapp.plugins.vim
 autoload(vyapp.plugins.vim)
+
+
+# Used to talk to extern processes, playing with interpreters etc.
+import vyapp.plugins.ibash
 autoload(vyapp.plugins.ibash)
+
+
+# Used to highlight pairs of character like () {} [].
+# It is useful when playing with lisp things.
+import vyapp.plugins.case_pair
 autoload(vyapp.plugins.case_pair)
+
+
+# Used to complete words when Control-q is issued on insert mode.
+import vyapp.plugins.word_complete
 autoload(vyapp.plugins.word_complete)
+
+
+# This plugin highlights links when files are opened.
+import vyapp.plugins.hlink
 autoload(vyapp.plugins.hlink)
+
+
+# It implementes some features like a key command
+# to copy to the clipboard the name of the actual opened file.
+import vyapp.plugins.sigma
 autoload(vyapp.plugins.sigma)
+
+
+# It is a built-in plugin that updates tab text and titles
+# with filenames.
+import vyapp.plugins.status
 autoload(vyapp.plugins.status)
-autoload(vyapp.plugins.syntax.spider, vyapp.plugins.syntax.themes.sun.THEME)
+
+
+# syntax plugin is used to highlight code.
+# The themes are placed in the themes folder.
+import vyapp.plugins.syntax.spider
+# import vyapp.plugins.syntax.themes.sun
+# import vyapp.plugins.syntax.themes.dark
+import vyapp.plugins.syntax.themes.snake
+autoload(vyapp.plugins.syntax.spider, vyapp.plugins.syntax.themes.snake.THEME)
+
+
+# shade plugin is used to mark lines then quickly
+# go to the previous or next mark.
+import vyapp.plugins.shade
 autoload(vyapp.plugins.shade)
 
+
+# toggle_mode plugin is used to switch quickly between
+# modes. It is useful when debugging.
+import vyapp.plugins.toggle_mode
+autoload(vyapp.plugins.toggle_mode)
+
+
+# Used to log the files that you opened/saved.
 # You must change the '.vy_history' to something like.
 # '/home/your_home/.vy_history'
+import vyapp.plugins.log_opened_file
 autoload(vyapp.plugins.log_opened_file, '.vy_history')
+
+##############################################################################
 
 def setup(area):
     area.TAB_SIZE = 4
     area.config(blockcursor= True, 
                  insertbackground='red', 
-                 background='#fff1e8', 
-                 foreground='black', 
-                 font=('Monospace', 9, 'bold'), 
+                 background='black', 
+                 foreground='green', 
+                 font=('Monospace', 8, 'bold'), 
                  undo= True)
 
 autocall(setup) 
 
+##############################################################################
+
 # Command plugins.
+# Post files quickly with codepad.
 from vyapp.plugins import codepad
+
+# A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
-
-
-
-
-
-
-
-
 
 

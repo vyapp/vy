@@ -55,9 +55,8 @@ class StatusBar(Frame):
         self.is_on = False
 
     def switch(self):    
-        if self.is_on:
-            self.pack_forget()
-        else:
-            self.pack(*self.args, **self.kwargs)
+        if self.is_on: self.pack_forget()
+        else: self.pack(*self.args, **self.kwargs)
+
 
 

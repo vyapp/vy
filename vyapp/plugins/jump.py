@@ -9,15 +9,12 @@ def jump_back_mode(area):
     area.chmode(10)
 
 def jump_next(area, char):
-    print char
     index = area.search(char, 'insert', stopindex='end')
     if not index: return
     area.mark_set('insert', area.index('%s +1c' % index))
     area.see('insert')
 
 def jump_back(area, char):
-    print char
-
     index = area.search(char, 'insert', stopindex='1.0', backwards=True)
     if not index: return
     area.mark_set('insert', index)
@@ -135,6 +132,7 @@ def install(area):
             area.hook(11, '<Key-%s>' % key, lambda event, char=char: jump_next(event.widget, char))
 
         area.install(*INSTALL)
+
 
 
 

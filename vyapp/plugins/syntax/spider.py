@@ -140,7 +140,7 @@ These attributes can be.
 
     borderwidth (distance)
 
-    The name of a bitmap which is used as a stipple brush when drawing the text. Typical values are "gray12”, "gray25", "gray50", or "gray75". Default is a solid brush (no bitmap).
+    The name of a bitmap which is used as a stipple brush when drawing the text. Typical values are "gray12", "gray25", "gray50", or "gray75". Default is a solid brush (no bitmap).
     fgstipple (bitmap)
 
     The font to use for text having this tag.
@@ -272,6 +272,7 @@ def install(area, theme, max=10):
     area.tag_setup(theme)
 
     area.install(*INSTALL)
+
 
 
 
