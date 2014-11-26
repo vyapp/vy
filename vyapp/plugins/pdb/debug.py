@@ -9,10 +9,11 @@ from untwisted.utils.shrug import *
 from vyapp.plugins.pdb import event
 from vyapp.tools.misc import set_status_msg
 from vyapp.tools.misc import get_opened_files, set_line, get_all_areavi_instances
+from vyapp.ask import Ask
 
 import sys
 from os import environ, setsid, killpg
-
+import shlex
 
 class Pdb(object):
     def __call__(self, area, setup={'background':'blue', 'foreground':'yellow'}):
@@ -24,7 +25,8 @@ class Pdb(object):
                    (3, '<Key-w>', lambda event: self.stdin.dump('where\r\n')), 
                    (3, '<Key-a>', lambda event: self.stdin.dump('args\r\n')), 
                    (3, '<Key-s>', lambda event: self.stdin.dump('step\r\n')), 
-                   (3, '<Control-c>', lambda event: self.stdin.dump('clear %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
+                   (3, '<Control-C>', lambda event: self.stdin.dump('clear\r\nyes\r\n')), 
+                   (3, '<Control-c>', lambda event: self.stdin.dump('clear %s\r\n' % self.map_line[(event.widget.filename, str(event.widget.indref('insert')[0]))])),
                    (3, '<Key-B>', lambda event: self.stdin.dump('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
                    (3, '<Key-b>', lambda event: self.stdin.dump('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
 
@@ -33,11 +35,24 @@ class Pdb(object):
 
     def __init__(self):
         self.child = None
-        
+        self.map_index  = dict()
+        self.map_line   = dict()
+
     def start_debug(self, area):
-        self.child  = Popen(['python', '-u', '-m', 'pdb',  area.filename], shell=0, 
-                            stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
-                           stderr=STDOUT,  env=environ)
+        try:
+            self.child.kill()
+        except Exception:
+            pass
+
+        # When the process is restarted we need to remove all breakpoint tags.
+        self.clear_breakpoint_map()
+
+        ask         = Ask(area, 'Arguments')
+        ARGS        = 'python -u -m pdb %s %s' % (area.filename, ask.data)
+        ARGS        = shlex.split(ARGS)
+
+        self.child  = Popen(ARGS, shell=0, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
+                            stderr=STDOUT,  env=environ)
     
         self.stdout = Device(self.child.stdout)
         self.stdin  = Device(self.child.stdin)
@@ -57,10 +72,24 @@ class Pdb(object):
         xmap(self.stdout, CLOSE, lambda dev, err: lose(dev))
 
         set_status_msg('Debug process started !')
+            
+    def clear_breakpoint_map(self):
+        """
+
+        """
+
+        for index, (filename, line) in self.map_index.iteritems():
+            try:
+                area = get_opened_files()[filename]
+            except KeyError:
+                pass
+            else:
+                NAME = '_breakpoint_%s' % index
+                area.tag_delete(NAME)        
     
-    def dump_sigint(self, area):
-        killpg(child.pid, 2)
-    
+        self.map_index.clear()
+        self.map_line.clear()
+
     def handle_line(self, device, filename, line, args):
     
         """
@@ -75,37 +104,45 @@ class Pdb(object):
     
     def handle_deleted_breakpoint(self, device, index):
         """
-
+        When a break point is removed.
         """
 
-        name = '_breakpoint_%s' % index
+        filename, line = self.map_index[index]
+        NAME           = '_breakpoint_%s' % index
+        area           = None
 
-        for ind in get_all_areavi_instances():
-            map = ind.tag_ranges(name)
-            if not map: 
-                continue
+        try:
+            area = get_opened_files()[filename]
+        except KeyError:
+            return
 
-            ind.tag_delete(name)
-            break
+        area.tag_delete(NAME)
 
     def handle_breakpoint(self, device, index, filename, line):
         """
-
+        When a break point is added.
         """
 
-        map  = get_opened_files()
+        self.map_index[index]           = (filename, line)
+        self.map_line[(filename, line)] = index
+        map                             = get_opened_files()
+
         area = map[filename]
-    
-        name = '_breakpoint_%s' % index
-        area.tag_add(name, '%s.0 linestart' % line, 
+        
+        NAME = '_breakpoint_%s' % index
+        area.tag_add(NAME, '%s.0 linestart' % line, 
                      '%s.0 lineend' % line)
     
-        area.tag_config(name, **self.setup)
+        area.tag_config(NAME, **self.setup)
 
+    def dump_sigint(self, area):
+        killpg(child.pid, 2)
 
 
 pdb     = Pdb()
 install = pdb
+
+
 
 
 
