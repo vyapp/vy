@@ -20,12 +20,14 @@ class Pdb(object):
 
         INSTALL = ((3, '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
                    (3, '<Key-1>', lambda event: self.start_debug(event.widget)), 
+                   (3, '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
+                   (3, '<Key-q>', lambda event: self.terminate_process()), 
                    (3, '<Key-c>', lambda event: self.stdin.dump('continue\r\n')), 
                    (3, '<Key-e>', lambda event: self.stdin.dump('!%s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
                    (3, '<Key-w>', lambda event: self.stdin.dump('where\r\n')), 
                    (3, '<Key-a>', lambda event: self.stdin.dump('args\r\n')), 
                    (3, '<Key-s>', lambda event: self.stdin.dump('step\r\n')), 
-                   (3, '<Control-C>', lambda event: self.stdin.dump('clear\r\nyes\r\n')), 
+                   (3, '<Control-C>', lambda event: self.dump_clear_all()), 
                    (3, '<Control-c>', lambda event: self.stdin.dump('clear %s\r\n' % self.map_line[(event.widget.filename, str(event.widget.indref('insert')[0]))])),
                    (3, '<Key-B>', lambda event: self.stdin.dump('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
                    (3, '<Key-b>', lambda event: self.stdin.dump('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
@@ -38,20 +40,8 @@ class Pdb(object):
         self.map_index  = dict()
         self.map_line   = dict()
 
-    def start_debug(self, area):
-        try:
-            self.child.kill()
-        except Exception:
-            pass
-
-        # When the process is restarted we need to remove all breakpoint tags.
-        self.clear_breakpoint_map()
-
-        ask         = Ask(area, 'Arguments')
-        ARGS        = 'python -u -m pdb %s %s' % (area.filename, ask.data)
-        ARGS        = shlex.split(ARGS)
-
-        self.child  = Popen(ARGS, shell=0, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
+    def create_process(self, args):
+        self.child  = Popen(args, shell=0, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
                             stderr=STDOUT,  env=environ)
     
         self.stdout = Device(self.child.stdout)
@@ -71,13 +61,51 @@ class Pdb(object):
         xmap(self.stdin, CLOSE, lambda dev, err: lose(dev))
         xmap(self.stdout, CLOSE, lambda dev, err: lose(dev))
 
-        set_status_msg('Debug process started !')
-            
+    def kill_debug_process(self):
+        try:
+            self.child.kill()
+        except AttributeError:
+            return
+
+        self.delete_all_breakpoints()
+        self.clear_breakpoint_map()
+
+    def terminate_process(self):
+        self.kill_debug_process()
+        set_status_msg('Debug finished !')
+
+    def start_debug(self, area):
+        self.kill_debug_process()
+        self.create_process(['python', '-u', '-m', 'pdb', area.filename])
+
+        set_status_msg('Debug started !')
+
+
+    def start_debug_args(self, area):
+        ask  = Ask(area, 'Arguments')
+        ARGS = 'python -u -m pdb %s %s' % (area.filename, ask.data)
+        ARGS = shlex.split(ARGS)
+
+        self.kill_debug_process()
+        self.create_process(ARGS)
+        
+        set_status_msg('Debug started ! Args: %s' % ask.data)
+
     def clear_breakpoint_map(self):
-        """
+        self.map_index.clear()
+        self.map_line.clear()
 
-        """
+    def dump_clear_all(self):
+        self.stdin.dump('clear\r\nyes\r\n')
+        self.delete_all_breakpoints()
+        self.clear_breakpoint_map()
 
+    def delete_all_breakpoints(self):
+        """
+        It deletes all added breakpoint tags.
+        It is useful when restarting pdb as a different process.
+        """
+    
         for index, (filename, line) in self.map_index.iteritems():
             try:
                 area = get_opened_files()[filename]
@@ -86,9 +114,6 @@ class Pdb(object):
             else:
                 NAME = '_breakpoint_%s' % index
                 area.tag_delete(NAME)        
-    
-        self.map_index.clear()
-        self.map_line.clear()
 
     def handle_line(self, device, filename, line, args):
     
@@ -141,16 +166,5 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
-
-
-
-
-
-
-
-
-
-
-
 
 
