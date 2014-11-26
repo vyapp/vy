@@ -66,6 +66,9 @@ Videos
 **Vy as a shell:**
 https://www.youtube.com/watch?v=CfByT5i2uWw
 
+**Building graphical interfaces with vy:**
+https://www.youtube.com/watch?v=_F0pjyrx3_4
+
 **Using pdb with vy:**
 https://www.youtube.com/watch?v=Ahachd4_N9U
 
@@ -115,5 +118,6 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
