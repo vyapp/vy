@@ -103,15 +103,15 @@ Documentation
 
 **It guides you through the basic usage of vy.**
 
-[a relative link](INTRO.md)
+[INTRO.md](INTRO.md)
 
 **It gives a complete description of the usage of vy standard plugins.**
 
-[a relative link](PLUGIN.md)
+[PLUGIN.md](PLUGIN.md)
 
 **It gives a complete reference of all standard key commands based on their modes.**
 
-[a relative link](MODE.md)
+[MODE.md](MODE.md)
 
 Help
 ====
@@ -121,6 +121,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
