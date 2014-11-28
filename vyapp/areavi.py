@@ -1,7 +1,4 @@
 from Tkinter import *
-from traceback import print_exc as debug
-from re import finditer
-from vyapp.tools.misc import burn
 import mimetypes
 
 class AreaVi(Text):
@@ -26,33 +23,13 @@ class AreaVi(Text):
 
         Text.__init__(self, *args, **kwargs)
         self.setup = dict()
+
+        # Maybe it should be?
+        # abspath(default_filename)
         self.default_filename = default_filename
 
         # The file's path and name.
         self.filename = default_filename
-
-        # The mode in which the AreaVi is in.
-        # The 0 means the standard editing mode.
-        self.id = 0
-
-        # The global mode. Whenever a key is pressed.
-        # The callbacks are called regardless of the
-        # self.id state. 
-
-        # This is important to have once we need
-        # a symmetrical interface for the plugin system.
-        self.add_mode(-1)
-
-        # The two basic modes, insert and selection.
-        self.add_mode(0, opt=None)
-        self.add_mode(1)
-        self.add_mode(2)
-        self.add_mode(3)
-        self.add_mode(4)
-        self.add_mode(5)
-        self.add_mode(6)
-        self.add_mode(7)
-
 
         # Shouldn't it be LAST_COL and MSEL?
         self.last_col = '_last_col_'
@@ -64,7 +41,6 @@ class AreaVi(Text):
         self.STOP_REPLACE_INDEX = '_stop_replace_index_'
         # Tags have name starting and ending with __
 
-        self.TAB_SIZE = 4
 
         # def cave(event):
             # AreaVi.ACTIVE = event.widget
@@ -89,17 +65,23 @@ class AreaVi(Text):
         It receives one parameter named id which means the
         mode number.
         """
-
+        opt     = self.setup[id]
         self.id = id
 
+        MODE_X = 'mode%s-1' % self
+        MODE_Y = 'mode%s%s' % (self, id)
 
-    def add_mode(self, id, opt='break'):
+        if opt: self.bindtags((MODE_X, MODE_Y, self, 'Text', '.', 'all'))
+        else: self.bindtags((MODE_X, MODE_Y, self, '.', 'all'))
+
+
+    def add_mode(self, id, opt=False):
         """
         It adds a new mode. The opt argument means whether
         it should propagate the event to the internal text widget callbacks.
         """
 
-        self.setup[id] = (dict(), opt)
+        self.setup[id] = opt
 
     def del_mode(self, id):
         """
@@ -108,23 +90,6 @@ class AreaVi(Text):
 
         del self.setup[id]
 
-    def add_seq(self, id, seq):
-        """
-        It adds a new chain of callbacks to a mode.
-        """
-
-        mode, opt = self.setup[id]
-        mode[seq] = []
-        handle    = lambda e, seq=seq: self.dispatch(e, seq)
-        self.bind(seq, handle)
-        return mode[seq]
-
-    def del_seq(self, seq):
-        """
-        It performs the opposite of add_seq.
-        """
-
-        pass
 
     def hook(self, id, seq, callback):
         """
@@ -132,24 +97,17 @@ class AreaVi(Text):
         specified with its mode. The standard modes are insert and selection.
         The insert mode prints the key character on the text area.
         """
+        MODE_Y = 'mode%s%s' % (self, id)
 
-        mode, opt = self.setup[id]
+        self.bind_class(MODE_Y, seq, callback, add=True)
 
-        try:
-            chain = mode[seq]
-        except KeyError:
-            chain = self.add_seq(id, seq)
-        finally:
-            chain.append(callback)
 
     def unhook(self, id, seq, callback):
         """
         It performs the opposite of unhook.
         """
 
-        mode, opt = self.setup[self.id]
-        chain     = mode[seq]
-        chain.remove(callback)
+        pass
 
     def install(self, *args):
         """
@@ -168,43 +126,6 @@ class AreaVi(Text):
 
         for id, seq, callback in args:
             self.unhook(id, seq, callback)
-
-    def dispatch(self, event, seq):
-        """
-        It dispatches the events from the Text widget.
-        This isn't intented to be used outside the class methods.
-        """
-
-        # The opt means whether the event will be propagated
-        # to the internal widget handles.
-        mode, opt = self.setup[-1]
-        try:
-            chain = mode[seq]
-        except KeyError:
-            pass
-        else:
-            opt = burn(chain, event)
-        finally:
-            pass
-        # If one of the callbacks return True
-        # It means it shouldn't let tkinter spawn 
-        # the event. Sometimes when it is self.id == 0
-        # some plugins might find it interesting to not spread
-        # the event.
-
-        # If it is in self.id > 0 and a callback returns False
-        # then the event is propagated to tkinter mainloop.
-        mode, opt = self.setup[self.id]
-        try:
-            chain = mode[seq]
-        except KeyError:
-            pass
-        else:
-            val = burn(chain, event)
-            if val == True:    opt = 'break'
-            elif val == False: opt = None
-        finally:
-            return opt
 
     def tag_update(self, name, index0, index1, *args):
         """
@@ -233,14 +154,6 @@ class AreaVi(Text):
 
         for indi, indj in args:
             self.tag_add(name, indi, indj)
-
-    def insert_tab(self):
-        """
-        It inserts AreaVi.TAB_SIZE * ' ' spaces on the
-        'insert' index.
-        """
-        self.edit_separator()
-        self.insert('insert', ' ' * self.TAB_SIZE)
 
     def indref(self, index):
         """
@@ -1614,6 +1527,11 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
+
+
+
+
 
 
 

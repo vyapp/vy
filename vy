@@ -11,7 +11,7 @@ if __name__ == '__main__':
                       metavar="string", default=[])
                   
     parser.add_option("-n", "--max-tabs", dest="max_tabs",
-                      metavar="string", default='10')
+                      metavar="string", default='7')
 
     (opt, args) = parser.parse_args()
 
@@ -22,6 +22,7 @@ if __name__ == '__main__':
     if not lst: root.note.create('None')
     else: root.note.load(*lst)
     root.mainloop()
+
 
 
 

@@ -101,14 +101,17 @@ Features
 Documentation
 =============
 
-**INTRO.md** 
-It guides you through the basic usage of vy.
+**It guides you through the basic usage of vy.**
 
-**PLUGIN.md**
-It gives a complete description of the usage of vy standard plugins.
+[a relative link](INTRO.md)
 
-**MODE.md**
-It gives a complete reference of all standard key commands based on their modes.
+**It gives a complete description of the usage of vy standard plugins.**
+
+[a relative link](PLUGIN.md)
+
+**It gives a complete reference of all standard key commands based on their modes.**
+
+[a relative link](MODE.md)
 
 Help
 ====
@@ -118,6 +121,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 

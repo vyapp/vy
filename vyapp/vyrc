@@ -11,6 +11,26 @@ from vyapp.plugins import autoload, autocall
 ##############################################################################
 # Plugin list.
 
+# It creates the standard modes.
+import vyapp.plugins.mode
+autoload(vyapp.plugins.mode)
+
+
+# Default events for 'Text'.
+import vyapp.plugins.default
+autoload(vyapp.plugins.default)
+
+
+# Used to control the notebook.
+import vyapp.plugins.browser
+autoload(vyapp.plugins.browser)
+
+
+# Used to insert tab_size spaces.
+import vyapp.plugins.tab
+autoload(vyapp.plugins.tab, tab_size=4)
+
+
 # Used to jump quickly to chars.
 import vyapp.plugins.jump
 autoload(vyapp.plugins.jump)
@@ -45,11 +65,6 @@ autoload(vyapp.plugins.cmd)
 # Used to search for text/format text with regex.
 import vyapp.plugins.find
 autoload(vyapp.plugins.find)
-
-
-# It creates the standard modes.
-import vyapp.plugins.mode
-autoload(vyapp.plugins.mode)
 
 
 # It implements ways of opening/saving files.
@@ -126,7 +141,6 @@ autoload(vyapp.plugins.log_opened_file, '.vy_history')
 ##############################################################################
 
 def setup(area):
-    area.TAB_SIZE = 4
     area.config(blockcursor= True, 
                  insertbackground='red', 
                  background='black', 
@@ -144,5 +158,10 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
+
+
+
+
 
 

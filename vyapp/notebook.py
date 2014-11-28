@@ -82,7 +82,6 @@ class PanedHorizontalWindow(PanedWindow):
         scrollbar = Scrollbar(master=frame)
         area      = AreaVi('none', frame , border=3, relief=RAISED, 
                            yscrollcommand=scrollbar.set)
-        area.chmode(1)
         scrollbar.config(command=area.yview)
         scrollbar.pack(side='right', fill=Y)
 
@@ -156,6 +155,7 @@ class Manager(object):
 
             for _, indj in indi:
                 base.load(*indj)
+
 
 
 

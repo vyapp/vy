@@ -37,7 +37,7 @@ class App(Tk):
         from shutil import copyfile
         
         dir = join(expanduser('~'), '.vy')
-        rc  = join(dir, '.vyrc')
+        rc  = join(dir, 'vyrc')
         
         if not exists(dir):
             mkdir(dir)
@@ -56,6 +56,7 @@ class App(Tk):
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
 
 
 

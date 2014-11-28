@@ -267,11 +267,12 @@ def install(area, theme, max=10):
         colorize(area, lexer, theme, '1.0', 'end')
 
     INSTALL = [(-1, '<<LoadData>>', lambda event: start_scheme()),
-               (1, '<Escape>', lambda event: update_scheme())]
+               (-1, '<Escape>', lambda event: update_scheme())]
 
     area.tag_setup(theme)
 
     area.install(*INSTALL)
+
 
 
 

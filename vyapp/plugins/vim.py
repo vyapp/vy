@@ -4,12 +4,6 @@
 
 """
 from vyapp.app import root
-from vyapp.ask import *
-import os
-
-def insert_tab(area):
-    area.insert_tab()
-    return True
 
 
 INSTALL =  [(1, '<Key-greater>', lambda event: event.widget.align_sel_right()),
@@ -84,17 +78,15 @@ INSTALL =  [(1, '<Key-greater>', lambda event: event.widget.align_sel_right()),
             (1, '<Control-Y>', lambda event: event.widget.cpblock()),
             (1, '<Control-U>', lambda event: event.widget.ctblock()),
 
-            (-1, '<Left>', lambda event: root.note.scroll_left()),
-            (-1, '<Right>', lambda event: root.note.scroll_right()),
-
             (1, '<Control-a>', lambda event: event.widget.select_all()),
-            (0, '<Tab>', lambda event: insert_tab(event.widget)),
             (1, '<Key-bracketleft>', lambda event: event.widget.select_word()),
             (1, '<Control-v>', lambda event: event.widget.start_selection())]
 
         
 def install(area):
     area.install(*INSTALL)
+
+
 
 
 

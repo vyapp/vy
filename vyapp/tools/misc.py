@@ -159,7 +159,7 @@ def run_vyrc(area):
     ENV = dict()
     dir = expanduser('~')
     dir = join(dir, '.vy')
-    rc  = join(dir, '.vyrc')
+    rc  = join(dir, 'vyrc')
 
     execfile(rc, ENV)
 
@@ -197,6 +197,7 @@ def consume_iter(iterator, time=1):
             root.after(time, cave)
 
     cave()
+
 
 
 
