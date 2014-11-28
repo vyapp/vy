@@ -71,8 +71,8 @@ class AreaVi(Text):
         MODE_X = 'mode%s-1' % self
         MODE_Y = 'mode%s%s' % (self, id)
 
-        if opt: self.bindtags((MODE_X, MODE_Y, self, 'Text', '.', 'all'))
-        else: self.bindtags((MODE_X, MODE_Y, self, '.', 'all'))
+        if opt: self.bindtags((MODE_X, MODE_Y, self, 'Text', '.'))
+        else: self.bindtags((MODE_X, MODE_Y, self, '.'))
 
 
     def add_mode(self, id, opt=False):
@@ -1527,6 +1527,9 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
+
+
 
 
 
