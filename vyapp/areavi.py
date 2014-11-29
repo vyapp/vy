@@ -986,26 +986,26 @@ class AreaVi(Text):
 
         self.chmode(0)
 
-    def align_sel_right(self):
+    def shift_sel_right(self, width, char):
         """
 
         """
         srow, scol = self.indref('sel.first')
         erow, ecol = self.indref('sel.last')
-        self.align_right(srow, erow, self.TAB_SIZE)
+        self.shift_right(srow, erow, width, char)
     
-    def align_sel_left(self):
+    def shift_sel_left(self, width):
         """
 
         """
 
         srow, scol = self.indref('sel.first')
         erow, ecol = self.indref('sel.last')
-        self.align_left(srow, erow, self.TAB_SIZE)
+        self.shift_left(srow, erow, width)
     
-    def align_right(self, srow, erow, space):
+    def shift_right(self, srow, erow, width, char):
         """
-        Given a start row and a end row it aligns
+        Given a start row and a end row it shifts
         a block of text to the right.
         
         This is specially useful when working with
@@ -1014,12 +1014,12 @@ class AreaVi(Text):
 
         self.edit_separator()
         for ind in xrange(srow, erow + 1):
-            self.insert('%s.0' % ind, space * ' ') 
+            self.insert('%s.0' % ind, width * char) 
     
 
-    def align_left(self, srow, erow, space):
+    def shift_left(self, srow, erow, width):
         """
-        Given a start row and a end row it aligns
+        Given a start row and a end row it shifts
         a block of text to the left.
 
 
@@ -1029,7 +1029,7 @@ class AreaVi(Text):
 
         self.edit_separator()
         for ind in xrange(srow, erow + 1):
-            self.delete('%s.0' % ind, '%s.%s' % (ind, space)) 
+            self.delete('%s.0' % ind, '%s.%s' % (ind, width)) 
     
 
     def tag_find_ranges(self, name, regex, *args, **kwargs):
@@ -1527,6 +1527,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 

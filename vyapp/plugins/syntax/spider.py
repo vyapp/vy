@@ -213,7 +213,8 @@ from pygments.lexers import get_lexer_for_filename
 from vyapp.plugins.syntax.tools import *
 from vyapp.tools.misc import exec_quiet, consume_iter
 
-TAG_KEYS_PRECEDENCE =('Token.Comment.Multiline',
+TAG_KEYS_PRECEDENCE =('Token.Name.Tag',
+    'Token.Comment.Multiline',
     'Token.Literal.String.Doc',
     'Token.Literal.String.Heredoc',
     'Token.Literal.String.Regex',
@@ -272,6 +273,7 @@ def install(area, theme, max=10):
     area.tag_setup(theme)
 
     area.install(*INSTALL)
+
 
 
 
