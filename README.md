@@ -63,6 +63,9 @@ commands.
 Videos
 ======
 
+** Debugging applications with mainloop in vy, flask web app: **
+https://www.youtube.com/watch?v=_It1I198130
+
 **Vy as a shell:**
 https://www.youtube.com/watch?v=CfByT5i2uWw
 
@@ -121,6 +124,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
