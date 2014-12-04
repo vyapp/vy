@@ -1,3 +1,9 @@
+"""
+Mode: 0
+Event: <Control-q>
+Description: Complete word pattern based on all AreaVi instances.
+"""
+
 from vyapp.tools.misc import get_opened_files, find_on_all
 from time import time
 
@@ -55,6 +61,7 @@ class WordComplete(object):
         self.seq = find_on_all('%s[^ ]+' % data)
 
 install = WordComplete
+
 
 
 

@@ -1,3 +1,13 @@
+"""
+Mode: Specified modes(See plugin installation).
+Event: <KeyPress-apostrophe>
+Description: Switch to one of the modes specified in modes.
+
+Mode: Specified in target_mode(See plugin installation)
+Event: <KeyRelease-apostrophe>
+Description: Goes back to the previous mode.
+"""
+
 class ToggleMode(object):    
     def __init__(self, area, target_mode=1, modes=[2, 3, 4, 5, 6, 7]):
         for ind in modes:
@@ -16,5 +26,6 @@ class ToggleMode(object):
         area.chmode(self.id)
 
 install = ToggleMode
+
 
 
