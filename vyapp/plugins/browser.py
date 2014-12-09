@@ -64,14 +64,15 @@ def go_up_area(area):
 
 INSTALL =  [(-1, '<Shift-F9>', lambda event: root.note.scroll_left()),
             (-1, '<Shift-F10>', lambda event: root.note.scroll_right()),
-            (-1, '<Left>', lambda event: go_left_area(event.widget)),
-            (-1, '<Right>', lambda event: go_right_area(event.widget)),
-            (-1, '<Up>', lambda event: go_up_area(event.widget)),
-            (-1, '<Down>', lambda event: go_down_area(event.widget)),
+            (-1, '<F9>', lambda event: go_left_area(event.widget)),
+            (-1, '<F10>', lambda event: go_right_area(event.widget)),
+            (-1, '<F11>', lambda event: go_up_area(event.widget)),
+            (-1, '<F12>', lambda event: go_down_area(event.widget)),
 
-            (-1, '<F9>', lambda event: root.note.select(root.note.index(root.note.select()) - 1)),
-            (-1, '<F10>', lambda event: root.note.select(root.note.index(root.note.select()) + 1))]
+            (-1, '<Shift-F11>', lambda event: root.note.select(root.note.index(root.note.select()) - 1)),
+            (-1, '<Shift-F12>', lambda event: root.note.select(root.note.index(root.note.select()) + 1))]
 
 def install(area):
     area.install(*INSTALL)
+
 
