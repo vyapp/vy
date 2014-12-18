@@ -23,6 +23,9 @@ autoload(vyapp.plugins.shift, width=4, char=' ')
 import vyapp.plugins.default
 autoload(vyapp.plugins.default)
 
+# Quick search.
+import vyapp.plugins.quicksearch
+autoload(vyapp.plugins.quicksearch)
 
 # Used to control the notebook.
 import vyapp.plugins.browser
@@ -161,6 +164,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 
