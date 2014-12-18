@@ -1182,8 +1182,8 @@ class AreaVi(Text):
         return str(self.tk.call(tuple(args)))
 
 
-    def pick_next_up(self, name, regex, exact=None, regexp=True, nocase=None, 
-             elide=None, nolinestop=None):
+    def pick_next_up(self, name, regex, index0='insert', stopindex='1.0', exact=None, regexp=True, 
+                        nocase=None, elide=None, nolinestop=None):
 
         """
         Find the next match with regex up the cursor.
@@ -1191,20 +1191,19 @@ class AreaVi(Text):
         """
 
         count = IntVar()
-        index = self.search(regex, 'insert', 
-                            stopindex='1.0', regexp=regexp, exact=exact, nocase=nocase, elide=elide, 
-                            nolinestop=nolinestop, backwards=True, count=count)
+        index = self.search(regex, index0, stopindex=stopindex, regexp=regexp, exact=exact, 
+                            nocase=nocase, elide=elide, nolinestop=nolinestop, backwards=True, count=count)
         
         if not index: return
 
-        index0 = self.index('%s +%sc' % (index, count.get())) 
+        index1 = self.index('%s +%sc' % (index, count.get())) 
 
-        self.tag_add(name, index, index0)
+        self.tag_add(name, index, index1)
         self.mark_set('insert', index)
         self.see('insert')
 
-    def pick_next_down(self, name, regex, exact=None, regexp=True, nocase=None, 
-             elide=None, nolinestop=None):
+    def pick_next_down(self, name, regex, index0='insert', stopindex='end', exact=None, regexp=True, 
+                       nocase=None, elide=None, nolinestop=None):
 
         """
         Find the next match with regex down.
@@ -1213,16 +1212,15 @@ class AreaVi(Text):
 
         count = IntVar()
 
-        index = self.search(regex, 'insert', 
-                            stopindex='end', regexp=regexp, exact=exact, nocase=nocase, elide=elide, 
-                            nolinestop=nolinestop, count=count)
+        index = self.search(regex, index0, stopindex=stopindex, regexp=regexp, exact=exact, nocase=nocase, 
+                            elide=elide, nolinestop=nolinestop, count=count)
 
         if not index: return
 
-        index0 = self.index('%s +%sc' % (index, count.get())) 
-        self.tag_add(name, index, index0)
+        index1 = self.index('%s +%sc' % (index, count.get())) 
+        self.tag_add(name, index, index1)
 
-        self.mark_set('insert', index0)
+        self.mark_set('insert', index1)
         self.see('insert')
 
     def replace(self, regex, data, index=None, stopindex=None, forwards=None,
@@ -1527,6 +1525,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 

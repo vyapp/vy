@@ -8,22 +8,21 @@ class QuickSearch(object):
         """
         area.add_mode('Quick Search')
 
-        self.INSTALL = [('Quick Search', '<Key>'          , lambda event: self.add_data(event.widget, event.keysym_num)),
-                        (1, '<Key-backslash>'    , lambda event: self.start_search(event.widget)),
-                        ('Quick Search', '<BackSpace>'    , lambda event: self.del_data(event.widget)),
-                        ('Quick Search', '<Tab>'    , lambda event: self.go_down(event.widget)),
-                        ('Quick Search', '<Control-Tab>'    , lambda event: self.go_up(event.widget)),
-                        ('Quick Search', '<Key-space>'   , lambda event: self.data.append('.+?'))]
+        self.INSTALL = [('Quick Search', '<Key>', lambda event: self.add_data(event.widget, event.keysym_num)),
+                        (1, '<Key-backslash>', lambda event: event.widget.chmode('Quick Search')),
+                        ('Quick Search', '<Escape>', lambda event: self.clear_data(event.widget)),
+                        ('Quick Search', '<BackSpace>', lambda event: self.del_data(event.widget)),
+                        ('Quick Search', '<Tab>', lambda event: self.go_down(event.widget)),
+                        ('Quick Search', '<Control-Tab>', lambda event: self.go_up(event.widget)),
+                        ('Quick Search', '<Key-space>', lambda event: self.data.append('.+?'))]
 
         area.install(*self.INSTALL)
 
-    def start_search(self, area):
-        """
-
-        """
-
         self.data = []
-        area.chmode('Quick Search')
+
+    def clear_data(self, area):
+        area.tag_remove('sel', '1.0', 'end')
+        del self.data[:]
 
     def add_data(self, area, char):
         """
@@ -39,8 +38,7 @@ class QuickSearch(object):
             self.data.append(char)
     
         area.tag_remove('sel', '1.0', 'end')
-        area.mark_set('insert', '1.0')
-        area.pick_next_down('sel', ''.join(self.data))
+        area.pick_next_down('sel', ''.join(self.data), '1.0', 'end')
         
     def del_data(self, area):
         """
@@ -53,8 +51,7 @@ class QuickSearch(object):
             return
     
         area.tag_remove('sel', '1.0', 'end')
-        area.mark_set('insert', '1.0')
-        area.pick_next_down('sel', ''.join(self.data))
+        area.pick_next_down('sel', ''.join(self.data), '1.0', 'end')
 
     def go_up(self, area):
         """
@@ -76,6 +73,7 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 
 
 
