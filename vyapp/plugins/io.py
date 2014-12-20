@@ -222,7 +222,9 @@ def remove_tab():
     if len(root.note.tabs()) <= 1: return
     root.note.forget(root.note.select())
 
-INSTALL = [(1, '<Control-s>', lambda event: save(event.widget)),
+
+def install(area):
+    area.install((1, '<Control-s>', lambda event: save(event.widget)),
            (1, '<Shift-S>', lambda event: save_as(event.widget)),
            (1, '<Control-d>', lambda event: load(event.widget)),
            (1, '<Key-D>', lambda event: event.widget.clear_data()),
@@ -233,11 +235,10 @@ INSTALL = [(1, '<Control-s>', lambda event: save(event.widget)),
            (1, '<F5>', lambda event: add_vertical_area(event.widget)),
            (1, '<F6>', lambda event: remove_area(event.widget)),
            (1, '<F7>', lambda event: root.note.create('None')),
-           (1, '<End>', lambda event: remove_tab())]
+           (1, '<End>', lambda event: remove_tab()))
 
 
-def install(area):
-    area.install(*INSTALL)
+
 
 
 

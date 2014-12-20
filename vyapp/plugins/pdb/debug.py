@@ -17,8 +17,7 @@ import shlex
 
 class Pdb(object):
     def __call__(self, area, setup={'background':'blue', 'foreground':'yellow'}):
-
-        INSTALL = ((3, '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+        area.install((3, '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
                    (3, '<Key-1>', lambda event: self.start_debug(event.widget)), 
                    (3, '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
                    (3, '<Key-q>', lambda event: self.terminate_process()), 
@@ -32,7 +31,6 @@ class Pdb(object):
                    (3, '<Key-B>', lambda event: self.stdin.dump('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
                    (3, '<Key-b>', lambda event: self.stdin.dump('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
 
-        area.install(*INSTALL)
         self.setup = setup
 
     def __init__(self):
@@ -79,7 +77,6 @@ class Pdb(object):
         self.create_process(['python', '-u', '-m', 'pdb', area.filename])
 
         set_status_msg('Debug started !')
-
 
     def start_debug_args(self, area):
         ask  = Ask(area, 'Arguments')
@@ -166,5 +163,6 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 

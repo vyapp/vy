@@ -17,11 +17,11 @@ def hlink(area):
         area.tag_add(TAG_LINK, pos0, pos1)
 
 
-INSTALL = [(-1, '<<LoadData>>', lambda event: hlink(event.widget))]
 
 def install(area, setup={'background':'yellow', 'foreground':'blue'}):
     area.tag_config(TAG_LINK, **setup)
-    area.install(*INSTALL)
+    area.install((-1, '<<LoadData>>', lambda event: hlink(event.widget)))
+
 
 
 

@@ -11,7 +11,8 @@ def log(area, logfile):
 
 
 def install(area, logfile):
-    INSTALL = ((-1, '<<SaveData>>', lambda event: log(event.widget, logfile)),
-               (-1, '<<LoadData>>', lambda event: log(event.widget, logfile)))
+    area.install((-1, '<<SaveData>>', lambda event: log(event.widget, logfile)),
+                 (-1, '<<LoadData>>', lambda event: log(event.widget, logfile)))
 
-    area.install(*INSTALL)        
+
+

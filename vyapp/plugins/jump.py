@@ -24,14 +24,12 @@ def install(area):
         area.add_mode(10)
         area.add_mode(11)
 
-        INSTALL = [(1, '<Key-v>', lambda event: jump_next_mode(event.widget)), 
-                   (1, '<Key-c>', lambda event: jump_back_mode(event.widget))]
+        area.install((1, '<Key-v>', lambda event: jump_next_mode(event.widget)), 
+                   (1, '<Key-c>', lambda event: jump_back_mode(event.widget)),
+                   (10, '<Key>', lambda event: jump_back(event.widget, chr(event.keysym_num))),
+                   (11, '<Key>', lambda event: jump_next(event.widget, chr(event.keysym_num))))
 
-            
-        area.hook(10, '<Key>', lambda event: jump_back(event.widget, chr(event.keysym_num)))
-        area.hook(11, '<Key>', lambda event: jump_next(event.widget, chr(event.keysym_num)))
 
-        area.install(*INSTALL)
 
 
 

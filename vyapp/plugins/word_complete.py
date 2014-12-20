@@ -17,13 +17,12 @@ class WordComplete(object):
         """
 
         self.area  = area
-        INSTALL    = [(0, '<Control-q>', lambda event: self.complete())]
         self.seq   = iter(())
         self.snd   = time()
         self.MAX   = 2
         self.index = None
 
-        area.install(*INSTALL)
+        area.install((0, '<Control-q>', lambda event: self.complete()))
 
     def complete(self):
         """
@@ -61,6 +60,7 @@ class WordComplete(object):
         self.seq = find_on_all('%s[^ ]+' % data)
 
 install = WordComplete
+
 
 
 

@@ -24,12 +24,6 @@ def xi(area):
     area.chmode(5)
 
 
-INSTALL = [(1, '<Key-i>', lambda event: insert(event.widget)),
-           (-1, '<Escape>', lambda event: select(event.widget)),
-           (1, '<Key-3>', lambda event: sigma(event.widget)),
-           (1, '<Key-4>', lambda event: beta(event.widget)),
-           (1, '<Key-5>', lambda event: mi(event.widget)),
-           (1, '<Key-6>', lambda event: xi(event.widget))]
 
 
 def install(area):
@@ -47,7 +41,12 @@ def install(area):
     area.add_mode(7)
     area.chmode(1)
 
-    area.install(*INSTALL) 
+    area.install((1, '<Key-i>', lambda event: insert(event.widget)),
+           (-1, '<Escape>', lambda event: select(event.widget)),
+           (1, '<Key-3>', lambda event: sigma(event.widget)),
+           (1, '<Key-4>', lambda event: beta(event.widget)),
+           (1, '<Key-5>', lambda event: mi(event.widget)),
+           (1, '<Key-6>', lambda event: xi(event.widget)))
 
 
 

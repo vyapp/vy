@@ -18,16 +18,15 @@ import sys
 
 class Process(object):
     def __call__(self, area):
-        INSTALL = [(1, '<Control-Return>', lambda event: self.dump_region(event.widget)),
+        area.install((1, '<Control-Return>', lambda event: self.dump_region(event.widget)),
                    (1, '<Return>', lambda event: self.dump_line(event.widget)), 
                    (0, '<F1>', lambda event: self.dump_line_and_insert_line(event.widget)),
                    (0, '<F2>', lambda event: self.dump_line_and_tab(event.widget)),
                    (1, '<F1>', lambda event: self.dump_line_and_down(event.widget)),
                    (1, '<Control-F1>', lambda event: self.restart()),
                    (1, '<Control-backslash>', lambda event: self.dump_signal(3)),
-                   (1, '<Control-c>', lambda event: self.dump_signal(2))]
+                   (1, '<Control-c>', lambda event: self.dump_signal(2)))
 
-        area.install(*INSTALL)
 
 
     def __init__(self, cmd=['bash', '-i']):
@@ -89,6 +88,7 @@ class Process(object):
 extern(root)
 process = Process()
 install = process
+
 
 
 
