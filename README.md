@@ -1,5 +1,5 @@
-vy
-==
+![vy](vy.gif) vy
+================
 
 A vim-like in python made from scratch.
 
@@ -124,6 +124,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
