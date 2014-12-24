@@ -108,13 +108,6 @@ Documentation
 
 [INTRO.md](INTRO.md)
 
-**It gives a complete description of the usage of vy standard plugins.**
-
-[PLUGIN.md](PLUGIN.md)
-
-**It gives a complete reference of all standard key commands based on their modes.**
-
-[MODE.md](MODE.md)
 
 Help
 ====
@@ -124,9 +117,6 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
-
-
-
 
 
 

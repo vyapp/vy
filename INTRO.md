@@ -18,5 +18,3 @@ When Vy is on mode 1, whenever you press a key Vy will perform an action corresp
 **It remains to implement the INTRO.**
 
 
-
-
