@@ -248,8 +248,9 @@ def install(area):
                  (1, '<Key-slash>', lambda event: event.widget.select_case_pair(('{', '}'))),
                  (1, '<Key-C>', lambda event: event.widget.select_char()),
                  (1, '<Key-V>', lambda event: event.widget.unselect_char()),
-                 (1, '<Key-f>', lambda event: event.widget.select_line()),
-                 (1, '<Key-g>', lambda event: event.widget.unselect_line()),
+                 (1, '<Key-f>', lambda event: event.widget.toggle_line_selection()),
+                 # (1, '<Key-f>', lambda event: event.widget.select_line()),
+                 # (1, '<Key-g>', lambda event: event.widget.unselect_line()),
                  (1, '<Key-w>', lambda event: event.widget.scroll_line_up()),
                  (1, '<Key-s>', lambda event: event.widget.scroll_line_down()),
                  (1, '<Key-q>', lambda event: event.widget.scroll_page_up()),
@@ -292,3 +293,4 @@ def install(area):
                  (1, '<Key-bracketleft>', lambda event: event.widget.select_word()),
                  (1, '<Control-v>', lambda event: event.widget.start_selection()))
         
+

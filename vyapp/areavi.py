@@ -906,6 +906,15 @@ class AreaVi(Text):
         self.tag_remove('sel', 'insert linestart', 'insert +1l linestart')
 
 
+    def toggle_line_selection(self):
+        map = self.tag_contains('sel', 'insert linestart', 'insert +1l linestart')
+
+        if map:
+            self.unselect_line()
+        else:
+            self.select_line()
+
+
     def select_word(self):
         """
         It selects a word from the cursor position.
@@ -1525,6 +1534,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 
