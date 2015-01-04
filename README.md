@@ -39,7 +39,7 @@ This is a short script to install the latest version of vy.
     python setup.py install
 
     apt-get install python-tk
-    apt-get install pygments
+    apt-get install python-pygments
     exit
 
     
@@ -117,6 +117,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
