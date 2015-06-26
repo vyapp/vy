@@ -34,7 +34,13 @@ autoload(vyapp.plugins.browser)
 
 # Used to insert tab_size spaces.
 import vyapp.plugins.tab
-autoload(vyapp.plugins.tab, tab_size=4)
+autoload(vyapp.plugins.tab, 
+         tab_scheme= {'.rb': (2, ' '),
+                      '.c' : (4, ' '),
+                      '.cpp' : (4, ' '),
+                      '.java' : (4, ' '),
+                      '.py': (4, ' ')},
+         default_tab_size=4)
 
 
 # Used to jump quickly to chars.
@@ -164,6 +170,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 
