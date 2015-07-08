@@ -9,9 +9,7 @@ class Tab(object):
             ph, ext                  = splitext(area.filename.lower())
             self.TAB_SIZE, self.CHAR = tab_scheme.get(ext, (default_tab_size, default_char))
 
-        area.hook(-1, '<<LoadData>>', set_tab_scheme)
-        area.hook(-1, '<<SaveData>>', set_tab_scheme)
-
+        area.hook(-1, '<FocusIn>', set_tab_scheme)
         area.hook(0, '<Tab>', lambda event: self.insert_tab(event.widget))
     
     def insert_tab(self, area):
@@ -22,4 +20,5 @@ class Tab(object):
     
 
 install = Tab
+
 
