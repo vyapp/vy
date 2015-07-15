@@ -3,20 +3,22 @@ from vyapp.areavi import AreaVi
 from Tkinter import Frame
 
 def go_left_area(area):
-    map   = area.master.master.panes()
-    count = map.index(str(area.master))
+    wids  = area.master.master.panes()
+    wids  = map(lambda item: str(item), wids)
+    count = wids.index(str(area.master))
     count = count - 1
-    wid   = area.nametowidget(map[count])
+    wid   = area.nametowidget(wids[count])
     wid   = filter(lambda ind: isinstance(ind, AreaVi), wid.winfo_children())
     
     # as there is only one.
     wid[0].focus_set()
 
 def go_right_area(area):
-    map   = area.master.master.panes()
-    count = map.index(str(area.master))
-    count = (count + 1) % len(map)
-    wid   = area.nametowidget(map[count])
+    wids   = area.master.master.panes()
+    wids  = map(lambda item: str(item), wids)
+    count = wids.index(str(area.master))
+    count = (count + 1) % len(wids)
+    wid   = area.nametowidget(wids[count])
     wid   = filter(lambda ind: isinstance(ind, AreaVi), wid.winfo_children())
     
     # as there is only one.
@@ -25,14 +27,16 @@ def go_right_area(area):
 
 
 def go_down_area(area):
-    map   = area.master.master.panes()
-    index = map.index(str(area.master))
+    wids   = area.master.master.panes()
+    wids  = map(lambda item: str(item), wids)
+    index = wids.index(str(area.master))
 
-    map   = area.master.master.master.panes()
-    count = map.index(str(area.master.master))
-    count = (count + 1) % len(map)
+    wids   = area.master.master.master.panes()
+    wids  = map(lambda item: str(item), wids)
+    count = wids.index(str(area.master.master))
+    count = (count + 1) % len(wids)
 
-    wid   = area.nametowidget(map[count])
+    wid   = area.nametowidget(wids[count])
     size  = len(wid.panes())
     wid   = area.nametowidget(wid.panes()[index if index < size else (size - 1)])
 
@@ -44,14 +48,16 @@ def go_down_area(area):
 
 
 def go_up_area(area):
-    map   = area.master.master.panes()
-    index = map.index(str(area.master))
+    wids   = area.master.master.panes()
+    wids  = map(lambda item: str(item), wids)
+    index = wids.index(str(area.master))
 
-    map   = area.master.master.master.panes()
-    count = map.index(str(area.master.master))
+    wids   = area.master.master.master.panes()
+    wids  = map(lambda item: str(item), wids)
+    count = wids.index(str(area.master.master))
     count = count - 1
 
-    wid   = area.nametowidget(map[count])
+    wid   = area.nametowidget(wids[count])
     size  = len(wid.panes())
     wid   = area.nametowidget(wid.panes()[index if index < size else (size - 1)])
     wid   = filter(lambda ind: isinstance(ind, AreaVi), wid.winfo_children())
@@ -69,6 +75,7 @@ def install(area):
             (-1, '<F12>', lambda event: go_down_area(event.widget)),
             (-1, '<Shift-F11>', lambda event: root.note.select(root.note.index(root.note.select()) - 1)),
             (-1, '<Shift-F12>', lambda event: root.note.select(root.note.index(root.note.select()) + 1)))
+
 
 
 
