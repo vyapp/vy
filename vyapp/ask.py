@@ -6,7 +6,7 @@ class Ask(Toplevel):
         Toplevel.__init__(self, area, *args, **kwargs)
 
         # self.protocol("WM_DELETE_WINDOW", self.destroy())
-        self.bind('<Escape>', lambda event: self.destroy())
+        self.bind('<Escape>', lambda event: self.restore_focus_scheme())
         self.bind('<Return>', lambda event: self.ok())
         
         self.title(title)
@@ -34,12 +34,17 @@ class Ask(Toplevel):
 
     def ok(self):
         self.data = self.entry.get()
+        self.restore_focus_scheme()
+
+    def restore_focus_scheme(self):
+        self.area.focus_set()
         self.destroy()
-    
+            
 if __name__ == '__main__':
     area = Tk()
     search_dialog = Ask(area, 'Ask')
     area.mainloop()
+
 
 
 
