@@ -100,9 +100,14 @@ Features
 Documentation
 =============
 
-**It guides you through the basic usage of vy.**
+**A formal description of usage of all vy features**
 
 [INTRO.md](INTRO.md)
+
+**A sequence of videos showing vy usage step by step and features**
+link
+
+[VIDEO-INTRO.md](VIDEO-INTRO.md)
 
 
 Help
@@ -113,6 +118,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
