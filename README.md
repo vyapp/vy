@@ -56,7 +56,7 @@ Or just.
 Videos
 ======
 
-** Debugging applications with mainloop in vy, flask web app: **
+**Debugging applications with mainloop in vy, flask web app:**
 https://www.youtube.com/watch?v=_It1I198130
 
 **Vy as a shell:**
