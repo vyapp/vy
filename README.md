@@ -53,13 +53,6 @@ Or just.
     vy
 
 
-Usage
-=====
-
-Take a look at the file INTRO.md for a description of the basic
-commands.
-
-
 Videos
 ======
 
@@ -95,11 +88,12 @@ Features
 ========
 
 * A simple api once it is purely written in python
-* Syntax highlight for all kind of langues supported by python-pygments.
+* Syntax highlight for all kind of langues supported by python-pygments
 * A very powerful api since it written in python
-* Execute python code on the fly that affects the behavior of the editor.
+* Execute python code on the fly that affects the behavior of the editor
 * Talk to external processes like interpreters
 * A powerful search scheme that permits formating text with regex and python code
+* Quickly switching the cursor to positions based on a kind of fuzzy search
 
 Documentation
 =============
@@ -117,6 +111,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
