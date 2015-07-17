@@ -77,11 +77,13 @@ https://www.youtube.com/watch?v=5JUnUCl-E1w
 Screenshots
 ===========
 
-**Dark Syntax Highlight Theme:**
-http://i.imgur.com/EIlWatO.jpg
+**Dark Syntax Highlight Theme**
 
-**Sun Syntax Highlight Theme:**
-http://i.imgur.com/WhPiLfK.jpg
+![dark-theme](dark-theme.jpg)
+
+**Sun Syntax Highlight Theme**
+
+![sun-theme](sun-theme.jpg)
 
 
 Features
@@ -111,6 +113,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
