@@ -21,3 +21,13 @@ https://youtu.be/y6qNjmjP7EY
 **Describes how to open a file in a new tab**
 
 https://youtu.be/0H09krM1czQ
+
+
+**Describes how to save the contents of an areavi. It means saving changes in the file.**
+
+https://youtu.be/fAZP8VTr8Zc
+
+
+**Describes how to 'save as' the contents of a given areavi**
+
+https://youtu.be/qBCeqU9s4co
