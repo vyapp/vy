@@ -36,3 +36,12 @@ https://youtu.be/qBCeqU9s4co
 **How to move the cursor to the beginning/end of lines in Mode 1**
 
 https://youtu.be/-u5GRvsTJlc
+
+**How to move the cursor to the beginning/end of file**
+
+https://youtu.be/1lr62Y3ecqU
+
+**How to quickly make the cursor jump backward/forward to a given character over a line(This is a nice way to spare some keypresses)**
+
+https://youtu.be/-iRcvlGJ8fM
+
