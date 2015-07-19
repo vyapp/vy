@@ -31,3 +31,8 @@ https://youtu.be/fAZP8VTr8Zc
 **Describes how to 'save as' the contents of a given areavi**
 
 https://youtu.be/qBCeqU9s4co
+
+
+**How to move the cursor to the beginning/end of lines in Mode 1**
+
+https://youtu.be/-u5GRvsTJlc
