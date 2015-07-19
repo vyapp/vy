@@ -13,4 +13,8 @@ key-mon is an application that sits at the screen showing all keypresses.
 https://www.youtube.com/watch?v=9W_fAJVdXkk&feature=youtu.be
 
 
+**Describes how to open files in a given areavi**
+
+https://youtu.be/y6qNjmjP7EY
+
 
