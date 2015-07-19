@@ -18,3 +18,6 @@ https://www.youtube.com/watch?v=9W_fAJVdXkk&feature=youtu.be
 https://youtu.be/y6qNjmjP7EY
 
 
+**Describes how to open a file in a new tab**
+
+https://youtu.be/0H09krM1czQ
