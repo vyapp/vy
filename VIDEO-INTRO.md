@@ -49,4 +49,170 @@ https://youtu.be/-iRcvlGJ8fM
 
 https://youtu.be/1mS_nrnE55k
 
+**How to select ranges of text then copy to the clipboard**
+
+...
+
+
+**How to select blocks of text then copy then to the clipboard**
+
+...
+
+
+**How to select blocks of text then copy them to the clipboard with separator '\n'**
+
+...
+
+
+**
+
+**Paste text from the cliboard one line up**
+
+...
+
+
+**Paste text from the clipboard one line down**
+
+...
+
+
+**Paste text from the clipboard over the cursor position**
+
+...
+
+
+**How to scroll one page up/down**
+
+...
+
+
+**How to scroll one line up/down**
+
+...
+
+
+
+**how to insert a line up the cursor**
+
+...
+
+
+**How to insert a line down the cursor**
+
+...
+
+
+**How to delete selected text**
+
+...
+
+
+**How to cut selected text to the clipboard**
+
+...
+
+
+**How to cut selected text to the clipboard with a separator '\n'**
+
+...
+
+
+**How to delete a line**
+
+...
+
+
+**How to delete a char from the cursor position**
+
+...
+
+
+**How to select text between pairs of ( ) [] {} when the cursor
+is placed over one of these characters**
+
+...
+
+**How to select a char over the cursor position**
+
+...
+
+
+**How to remove selection from the cursor position char**
+
+...
+
+
+**How to select text from the cursor position to the end of the line**
+
+...
+
+
+**How to select text from the cursor position to the beginning of the line**
+
+...
+
+
+**How to select text from the cursor position to the beginning of the file**
+
+...
+
+
+**How to select text from the cursor position to the end of the file**
+
+...
+
+
+**How to move the cursor one word next**
+
+...
+
+
+**How to move the cursor one word back**
+
+...
+
+
+**How to place the cursor at the next occurrence of ( ) { } [ ] : .**
+
+...
+
+
+**Place the cursor at the next occurrence of ( ) { } [ ] : .**
+
+...
+
+
+**How to undo text operation**
+
+...
+
+
+**How to redo text operation**
+
+...
+
+
+**How to select all text**
+
+...
+
+
+**How to select the cursor position word**
+
+...
+
+
+**How to align blocks of text**
+
+...
+
+
+**How to put the cursor at a given line.col**
+
+...
+
+
+
+
+
 

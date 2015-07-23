@@ -40,12 +40,6 @@ Mode: 1
 Event: <Key-f> 
 Description: Add selection to a line over the cursor.
 
-
-Mode: 1
-Event: <Key-g> 
-Description: Remove selection from a line where the cursor is on.
-
-
 Mode: 1
 Event: <Key-w> 
 Description: Scroll one line up.
@@ -293,4 +287,5 @@ def install(area):
                  (1, '<Key-bracketleft>', lambda event: event.widget.select_word()),
                  (1, '<Control-v>', lambda event: event.widget.start_selection()))
         
+
 
