@@ -35,12 +35,6 @@ in a given path.
 -----------------------------------------------------------------------------------
 
 # Mode: 1
-# Event: Key-D
-
-It clears all text in the text area.
------------------------------------------------------------------------------------
-
-# Mode: 1
 # Event: Control-Escape
 
 It saves the content of the text area then quits.
@@ -236,6 +230,7 @@ def install(area):
            (1, '<F6>', lambda event: remove_area(event.widget)),
            (1, '<F7>', lambda event: root.note.create('None')),
            (1, '<End>', lambda event: remove_tab()))
+
 
 
 

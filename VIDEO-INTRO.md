@@ -22,10 +22,37 @@ https://youtu.be/y6qNjmjP7EY
 
 https://youtu.be/0H09krM1czQ
 
+**How to create a new tab**
+
+...
+
+
+**How to remove a given tab**
+
+...
+
 
 **Describes how to save the contents of an areavi. It means saving changes in the file.**
 
 https://youtu.be/fAZP8VTr8Zc
+
+
+**How to save and quit**
+
+...
+
+**How to quit without saving**
+
+...
+
+
+**How to create a vertical text area**
+
+...
+
+**How to create a horizontal text area**
+
+...
 
 
 **Describes how to 'save as' the contents of a given areavi**
@@ -212,7 +239,47 @@ is placed over one of these characters**
 ...
 
 
+**How to comment/uncomment lines based on the file programming extension**
+
+...
 
 
+**How to copy the opened filename to the clipboard**
+
+...
+
+
+**How to insert tab in the cursor position**
+
+...
+
+
+**How to do word completion**
+
+...
+
+
+**How the syntax highlight plugin works**
+
+...
+
+
+**How to execute pre defined python functions to perform actions**
+
+...
+
+
+**How to paste code onto codepad.org**
+
+...
+
+
+**How to execute blocks of python code**
+
+...
+
+**How to send lines to the bash interpreter**
+
+...
 
 
