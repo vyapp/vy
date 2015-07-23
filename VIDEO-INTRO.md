@@ -45,3 +45,8 @@ https://youtu.be/1lr62Y3ecqU
 
 https://youtu.be/-iRcvlGJ8fM
 
+**Select a line and copy to the clipboard**
+
+https://youtu.be/1mS_nrnE55k
+
+
