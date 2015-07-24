@@ -22,9 +22,10 @@ https://youtu.be/y6qNjmjP7EY
 
 https://youtu.be/0H09krM1czQ
 
+
 **How to create a new tab**
 
-...
+https://youtu.be/axf-w-LaOGU
 
 
 **How to remove a given tab**
@@ -39,7 +40,8 @@ https://youtu.be/fAZP8VTr8Zc
 
 **How to save and quit**
 
-...
+https://youtu.be/NB9B-dKv-Vg
+
 
 **How to quit without saving**
 
@@ -48,11 +50,12 @@ https://youtu.be/fAZP8VTr8Zc
 
 **How to create a vertical text area**
 
-...
+https://youtu.be/QzmKC3Drzbg
+
 
 **How to create a horizontal text area**
 
-...
+https://youtu.be/srHXrf8KtoE
 
 
 **Describes how to 'save as' the contents of a given areavi**
@@ -64,17 +67,21 @@ https://youtu.be/qBCeqU9s4co
 
 https://youtu.be/-u5GRvsTJlc
 
+
 **How to move the cursor to the beginning/end of file**
 
 https://youtu.be/1lr62Y3ecqU
+
 
 **How to quickly make the cursor jump backward/forward to a given character over a line(This is a nice way to spare some keypresses)**
 
 https://youtu.be/-iRcvlGJ8fM
 
+
 **Select a line and copy to the clipboard**
 
 https://youtu.be/1mS_nrnE55k
+
 
 **How to select ranges of text then copy to the clipboard**
 
@@ -281,5 +288,6 @@ is placed over one of these characters**
 **How to send lines to the bash interpreter**
 
 ...
+
 
 
