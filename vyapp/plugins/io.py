@@ -65,7 +65,7 @@ It removes the area with focus.
 -----------------------------------------------------------------------------------
 
 # Mode: 1
-# Event: End
+# Event: Delete
 
 It removes the selected tab.
 -----------------------------------------------------------------------------------
@@ -229,7 +229,9 @@ def install(area):
            (1, '<F5>', lambda event: add_vertical_area(event.widget)),
            (1, '<F6>', lambda event: remove_area(event.widget)),
            (1, '<F7>', lambda event: root.note.create('None')),
-           (1, '<End>', lambda event: remove_tab()))
+           (1, '<Delete>', lambda event: remove_tab()))
+
+
 
 
 

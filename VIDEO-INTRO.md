@@ -30,7 +30,7 @@ https://youtu.be/axf-w-LaOGU
 
 **How to remove a given tab**
 
-...
+https://youtu.be/XnqT1BbtoGY
 
 
 **Describes how to save the contents of an areavi. It means saving changes in the file.**
@@ -45,7 +45,7 @@ https://youtu.be/NB9B-dKv-Vg
 
 **How to quit without saving**
 
-...
+https://youtu.be/xgZQZUo4s9A
 
 
 **How to create a vertical text area**
@@ -288,6 +288,7 @@ is placed over one of these characters**
 **How to send lines to the bash interpreter**
 
 ...
+
 
 
 
