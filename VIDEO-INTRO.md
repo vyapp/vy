@@ -85,7 +85,7 @@ https://youtu.be/1mS_nrnE55k
 
 **How to select ranges of text then copy to the clipboard**
 
-...
+https://youtu.be/S8MtoXQXPrk
 
 
 **How to select blocks of text then copy then to the clipboard**
@@ -288,6 +288,7 @@ is placed over one of these characters**
 **How to send lines to the bash interpreter**
 
 ...
+
 
 
 
