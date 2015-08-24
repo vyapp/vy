@@ -33,7 +33,6 @@ class AreaVi(Text):
 
         # Shouldn't it be LAST_COL and MSEL?
         self.last_col = '_last_col_'
-        self.msel     = '_sel_start_'
         self.mark_set(self.last_col, '1.0')
 
         # This mark is used in AreaVi.replace_all.
@@ -335,21 +334,25 @@ class AreaVi(Text):
         called then they will select a region from this mark.  
         """
 
-        self.mark_set(self.msel, 'insert')
+        self.mark_set('_sel_start_', 'insert')
     
-    def is_add_up(self):
+    def start_block_selection(self):
+        self.mark_set('_block_sel_start_', 'insert')
+
+
+    def is_add_up(self, index):
         """
         It checks whether the selection must be
         removed or added.
         
         If it returns True then the selection must be
-        removed. True means that the self.msel
+        removed. True means that the '_sel_start_'
         mark is positioned above the cursor position.
         So, it must remove the selection instead of
         adding it.
         """
 
-        return self.compare('%s linestart' % self.msel, '<=', 'insert linestart')
+        return self.compare('%s linestart' % index, '<=', 'insert linestart')
 
     def rmsel(self, index0, index1):
         """
@@ -401,18 +404,18 @@ class AreaVi(Text):
         and sets the cursor one line up.
         """
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.rmsel(index0, index1)
         self.up()
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.addsel(index0, index1)
 
-    def is_add_down(self):
+    def is_add_down(self, index):
         """
         It returns True if the cursor is positioned below
         the initial mark for selection. 
@@ -421,71 +424,71 @@ class AreaVi(Text):
         sel_down is called.
         """
 
-        return self.compare('%s linestart' % self.msel, '>=', 'insert linestart')
+        return self.compare('%s linestart' % index, '>=', 'insert linestart')
 
     def sel_down(self):
         """ 
         It adds or removes selection one line down. 
         """
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.rmsel(index0, index1)
         self.down()
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.addsel(index0, index1)
     
 
-    def is_add_right(self):
+    def is_add_right(self, index):
         """
         It returns True if the cursor is positioned at the left
         of the initial selection mark. It is useful for sel_right method.
         """
 
-        return self.compare(self.msel, '>=', 'insert')
+        return self.compare(index, '>=', 'insert')
 
     def sel_right(self):
         """ 
         It adds or removes selection one character right.
         """
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.rmsel(index0, index1)
         self.right()
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.addsel(index0, index1)
     
 
-    def is_add_left(self):
+    def is_add_left(self, index):
         """
         It returns True if the cursor is positioned at the right of
         the initial mark selection.
         """
 
-        return self.compare(self.msel, '<=', 'insert')
+        return self.compare(index, '<=', 'insert')
 
     def sel_left(self):
         """ 
         It adds or removes selection one character left.
         """
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.rmsel(index0, index1)
         self.left()
 
-        index0 = self.min(self.msel, 'insert')
-        index1 = self.max(self.msel, 'insert')
+        index0 = self.min('_sel_start_', 'insert')
+        index1 = self.max('_sel_start_', 'insert')
 
         self.addsel(index0, index1)
 
@@ -494,7 +497,7 @@ class AreaVi(Text):
         It is just a shorthand for getting the last selection mark.
         """
 
-        a, b = self.indref(self.msel)
+        a, b = self.indref('_sel_start_')
         return int(a), int(b)
 
     def addblock(self, index0, index1):
@@ -537,7 +540,7 @@ class AreaVi(Text):
         a, b   = self.indcol()
         c, d   = self.indcur()
 
-        index = self.index(self.msel)
+        index = self.index('_block_sel_start_')
         self.rmblock(index, '%s.%s' % (c, b))
         self.down()
 
@@ -553,7 +556,7 @@ class AreaVi(Text):
 
         a, b   = self.indcol()
         c, d   = self.indcur()
-        index  = self.index(self.msel)
+        index  = self.index('_block_sel_start_')
 
         self.rmblock(index, '%s.%s' % (c, b))
         self.up()
@@ -578,7 +581,7 @@ class AreaVi(Text):
         a, b   = self.indcol()
         c, d   = self.indcur()
 
-        index = self.index(self.msel)
+        index = self.index('_block_sel_start_')
         self.rmblock(index, '%s.%s' % (c, b))
         self.left()
 
@@ -602,7 +605,7 @@ class AreaVi(Text):
         a, b   = self.indcol()
         c, d   = self.indcur()
 
-        index = self.index(self.msel)
+        index = self.index('_block_sel_start_')
         self.rmblock(index, '%s.%s' % (c, b))
         self.right()
 
@@ -1534,6 +1537,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 

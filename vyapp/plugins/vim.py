@@ -181,30 +181,6 @@ Description: Do redo.
 
 
 Mode: 1
-Event: <Control-k> 
-Description: Add/remove selection one line up from the initial selection mark.
-The initial selection mark is placed with Event: <Control-v>.
-
-
-Mode: 1
-Event: <Control-j> 
-Description: Add/remove selection one line down from the initial selection mark.
-The initial selection mark is placed with Event: <Control-v>.
-
-
-Mode: 1
-Event: <Control-l> 
-Description: Add/remove selection one character right from the initial selection mark.
-The initial selection mark is placed with Event: <Control-v>.
-
-
-Mode: 1
-Event: <Control-h> 
-Description: Add/remove selection one character left from the initial selection mark.
-The initial selection mark is placed with Event: <Control-v>.
-
-
-Mode: 1
 Event: <Control-Y> 
 Description: Add selection to the clipboard with a separator \n.
 
@@ -224,9 +200,6 @@ Event: <Key-bracketleft>
 Description: Add selection to a word where the cursor is placed on.
 
 
-Mode: 1
-Event: <Control-v> 
-Description: Drop a mark selection to be a reference for Event: <Control-k> Event: <Control-j> 
 Event: <Control-l> Event: <Control-h>.
 
 """
@@ -271,21 +244,14 @@ def install(area):
                  (1, '<Key-t>', lambda event: event.widget.ptsel()),
                  (1, '<Key-r>', lambda event: event.widget.ptsel_after()),
                  (1, '<Key-e>', lambda event: event.widget.ptsel_before()),
-                 (1, '<Key-comma>', lambda event: event.widget.do_undo()),
-                 (1, '<Key-period>', lambda event: event.widget.do_redo()),
-                 (1, '<Control-k>', lambda event: event.widget.sel_up()),
-                 (1, '<Control-j>', lambda event: event.widget.sel_down()),
-                 (1, '<Control-h>', lambda event: event.widget.sel_left()),
-                 (1, '<Control-l>', lambda event: event.widget.sel_right()),
-                 (1, '<Control-K>', lambda event: event.widget.block_up()),
-                 (1, '<Control-J>', lambda event: event.widget.block_down()),
-                 (1, '<Control-H>', lambda event: event.widget.block_left()),
-                 (1, '<Control-L>', lambda event: event.widget.block_right()),
                  (1, '<Control-Y>', lambda event: event.widget.cpblock()),
                  (1, '<Control-U>', lambda event: event.widget.ctblock()),
+                 (1, '<Key-comma>', lambda event: event.widget.do_undo()),
+                 (1, '<Key-period>', lambda event: event.widget.do_redo()),
                  (1, '<Control-a>', lambda event: event.widget.select_all()),
-                 (1, '<Key-bracketleft>', lambda event: event.widget.select_word()),
-                 (1, '<Control-v>', lambda event: event.widget.start_selection()))
+                 (1, '<Key-bracketleft>', lambda event: event.widget.select_word()))
         
+
+
 
 

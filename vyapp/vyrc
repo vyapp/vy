@@ -137,6 +137,13 @@ autoload(vyapp.plugins.syntax.spider, vyapp.plugins.syntax.themes.snake.THEME)
 import vyapp.plugins.shade
 autoload(vyapp.plugins.shade)
 
+# rsel plugin implemets selection commannds.
+import vyapp.plugins.rsel
+autoload(vyapp.plugins.rsel)
+
+# bsel plugin implemets selection commannds.
+import vyapp.plugins.bsel
+autoload(vyapp.plugins.bsel)
 
 # toggle_mode plugin is used to switch quickly between
 # modes. It is useful when debugging.
@@ -170,6 +177,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 
