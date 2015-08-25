@@ -21,12 +21,6 @@ Description: Move the cursor one character right.
 
 
 Mode: 1
-Event: <Key-slash> 
-Description: Select text between pairs of ( ) [] {} when the cursor
-is placed over one of these characters.
-
-
-Mode: 1
 Event: <Key-C> 
 Description: Add selection to a character whose cursor is on.
 
@@ -39,25 +33,6 @@ Description: Remove selection from a character whose cursor is on.
 Mode: 1
 Event: <Key-f> 
 Description: Add selection to a line over the cursor.
-
-Mode: 1
-Event: <Key-w> 
-Description: Scroll one line up.
-
-
-Mode: 1
-Event: <Key-s> 
-Description: Scroll one line down.
-
-
-Mode: 1
-Event: <Key-q> 
-Description: Scroll a page up.
-
-
-Mode: 1
-Event: <Key-a> 
-Description: Scroll one page down.
 
 
 Mode: 1
@@ -115,26 +90,6 @@ Event: <Key-2>
 Description: Place the cursor at the end of the file.
 
 
-Mode: 1
-Event: <Key-bracketright> 
-Description: Place the cursor at the beginning of the next word.
-
-
-Mode: 1
-Event: <Key-braceright> 
-Description: Place the cursor at the beginning of the previous word.
-
-
-Mode: 1
-Event: <Key-P> 
-Description: Place the cursor at the next occurrence of ( ) { } [ ] : .
-
- 
-Mode: 1
-Event: <Key-O> 
-Description: Place the cursor at the next occurrence of ( ) { } [ ] : .
-
- 
 Mode: 1
 Event: <Key-m> 
 Description: Insert a line down then goes insertion mode.
@@ -195,13 +150,6 @@ Event: <Control-a>
 Description: Add selection from the beginning to the end of the file.
 
 
-Mode: 1
-Event: <Key-bracketleft> 
-Description: Add selection to a word where the cursor is placed on.
-
-
-Event: <Control-l> Event: <Control-h>.
-
 """
 from vyapp.app import root
 
@@ -210,18 +158,9 @@ def install(area):
                  (1, '<Key-k>', lambda event: event.widget.up()),
                  (1, '<Key-h>', lambda event: event.widget.left()),
                  (1, '<Key-l>', lambda event: event.widget.right()),
-                 (1, '<Key-slash>', lambda event: event.widget.select_case_pair(('(', ')'))),
-                 (1, '<Key-slash>', lambda event: event.widget.select_case_pair(('[', ']'))),
-                 (1, '<Key-slash>', lambda event: event.widget.select_case_pair(('{', '}'))),
                  (1, '<Key-C>', lambda event: event.widget.select_char()),
                  (1, '<Key-V>', lambda event: event.widget.unselect_char()),
                  (1, '<Key-f>', lambda event: event.widget.toggle_line_selection()),
-                 # (1, '<Key-f>', lambda event: event.widget.select_line()),
-                 # (1, '<Key-g>', lambda event: event.widget.unselect_line()),
-                 (1, '<Key-w>', lambda event: event.widget.scroll_line_up()),
-                 (1, '<Key-s>', lambda event: event.widget.scroll_line_down()),
-                 (1, '<Key-q>', lambda event: event.widget.scroll_page_up()),
-                 (1, '<Key-a>', lambda event: event.widget.scroll_page_down()),
                  (1, '<Key-d>', lambda event: event.widget.clsel()),
                  (1, '<Key-x>', lambda event: event.widget.cllin()),
                  (1, '<Key-z>', lambda event: event.widget.clchar()),
@@ -233,10 +172,6 @@ def install(area):
                  (1, '<Control-Key-2>', lambda event: event.widget.sel_text_end()),
                  (1, '<Key-1>', lambda event: event.widget.go_text_start()),
                  (1, '<Key-2>', lambda event: event.widget.go_text_end()),
-                 (1, '<Key-bracketright>', lambda event: event.widget.go_next_word()),
-                 (1, '<Key-braceright>', lambda event: event.widget.go_prev_word()),
-                 (1, '<Key-P>', lambda event: event.widget.go_next_sym()),
-                 (1, '<Key-O>', lambda event: event.widget.go_prev_sym()),
                  (1, '<Key-m>', lambda event: event.widget.insert_line_down()),
                  (1, '<Key-n>', lambda event: event.widget.insert_line_up()),
                  (1, '<Key-y>', lambda event: event.widget.cpsel()),
@@ -248,9 +183,9 @@ def install(area):
                  (1, '<Control-U>', lambda event: event.widget.ctblock()),
                  (1, '<Key-comma>', lambda event: event.widget.do_undo()),
                  (1, '<Key-period>', lambda event: event.widget.do_redo()),
-                 (1, '<Control-a>', lambda event: event.widget.select_all()),
-                 (1, '<Key-bracketleft>', lambda event: event.widget.select_word()))
+                 (1, '<Control-a>', lambda event: event.widget.select_all()))
         
+
 
 
 

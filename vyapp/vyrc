@@ -48,6 +48,28 @@ import vyapp.plugins.jump
 autoload(vyapp.plugins.jump)
 
 
+# This plugin implements keycommands to scroll lines.
+import vyapp.plugins.scroll_line
+autoload(vyapp.plugins.scroll_line)
+
+
+# This plugin implements keycommands to scroll pages.
+import vyapp.plugins.scroll_page
+autoload(vyapp.plugins.scroll_page)
+
+
+# This plugin implements keycommands to jump quickly
+# to the next/previous word from the cursor position.
+import vyapp.plugins.match_word
+autoload(vyapp.plugins.match_word)
+
+
+# Used to select the text between pairs of (), [], {} when 
+# the cursor is placed over one of the (), {}, [].
+import vyapp.plugins.select_sym_pair
+autoload(vyapp.plugins.select_sym_pair)
+
+
 # This plugin implements keys to comment pieces of text inside 
 # programming language files.
 import vyapp.plugins.inline_comment
@@ -117,6 +139,12 @@ import vyapp.plugins.sigma
 autoload(vyapp.plugins.sigma)
 
 
+# This plugin is used to place the cursor over the next occurrence of
+# '(', ')', '.', '[', ']', '{', '}', ',', ':', ';', "'", '"'
+import vyapp.plugins.match_sym
+autoload(vyapp.plugins.match_sym)
+
+
 # It is a built-in plugin that updates tab text and titles
 # with filenames.
 import vyapp.plugins.status
@@ -137,13 +165,16 @@ autoload(vyapp.plugins.syntax.spider, vyapp.plugins.syntax.themes.snake.THEME)
 import vyapp.plugins.shade
 autoload(vyapp.plugins.shade)
 
-# rsel plugin implemets selection commannds.
-import vyapp.plugins.rsel
-autoload(vyapp.plugins.rsel)
 
-# bsel plugin implemets selection commannds.
-import vyapp.plugins.bsel
-autoload(vyapp.plugins.bsel)
+# range_sel plugin implemets selection commannds.
+import vyapp.plugins.range_selection
+autoload(vyapp.plugins.range_selection)
+
+
+# block_selection plugin implemets selection commannds.
+import vyapp.plugins.block_selection
+autoload(vyapp.plugins.block_selection)
+
 
 # toggle_mode plugin is used to switch quickly between
 # modes. It is useful when debugging.
@@ -177,6 +208,9 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
+
+
 
 
 
