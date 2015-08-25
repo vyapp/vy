@@ -15,17 +15,32 @@ from vyapp.plugins import autoload, autocall
 import vyapp.plugins.mode
 autoload(vyapp.plugins.mode)
 
+
 # Shifting blocks of code.
 import vyapp.plugins.shift
 autoload(vyapp.plugins.shift, width=4, char=' ')
+
 
 # Default events for 'Text'.
 import vyapp.plugins.default
 autoload(vyapp.plugins.default)
 
+
+# Implement keycommands to undo/redo operations.
+import vyapp.plugins.undo
+autoload(vyapp.plugins.undo)
+
+# It implements keycomands to move the cursor up, down, left, right.
+import vyapp.plugins.move_cursor
+autoload(vyapp.plugins.move_cursor)
+
 # Quick search.
 import vyapp.plugins.quicksearch
 autoload(vyapp.plugins.quicksearch)
+
+# It implements keycommands to select/unselect a char on the cursor.
+import vyapp.plugins.select_char
+autoload(vyapp.plugins.select_char)
 
 # Used to control the notebook.
 import vyapp.plugins.browser
@@ -68,6 +83,16 @@ autoload(vyapp.plugins.match_word)
 # the cursor is placed over one of the (), {}, [].
 import vyapp.plugins.select_sym_pair
 autoload(vyapp.plugins.select_sym_pair)
+
+
+# Implement a keycomand to select/unselect a line.
+import vyapp.plugins.select_line
+autoload(vyapp.plugins.select_line)
+
+
+# Implement keycommands to insert a line up/down.
+import vyapp.plugins.insert_line
+autoload(vyapp.plugins.insert_line)
 
 
 # This plugin implements keys to comment pieces of text inside 
@@ -208,6 +233,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 
