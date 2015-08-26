@@ -111,7 +111,10 @@ Videos
 
 
 
-<iframe width="420" height="345" src="https://www.youtube.com/watch?v=CfByT5i2uWw"> Cool </iframe>
+
+<iframe width="420" height="315"
+src="http://www.youtube.com/embed/XGSy3_Czz8k?autoplay=1">
+</iframe>
 
 
 **Vy as a shell:**
