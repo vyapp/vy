@@ -77,6 +77,8 @@ filemanagers, browsing specific type of files, generating latex code etc.
 Install
 =======
 
+Vy actually demands python 2.7 to run.
+
 This is a short script to install the latest version of vy.
 
     cd /tmp
@@ -150,6 +152,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
