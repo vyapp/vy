@@ -109,12 +109,6 @@ Or just.
 Videos
 ======
 
-
-
-<object width="420" height="315"
-data="http://www.youtube.com/v/XGSy3_Czz8k">
-</object>
-
 **Vy as a shell:**
 https://www.youtube.com/watch?v=CfByT5i2uWw
 
