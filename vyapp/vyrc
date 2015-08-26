@@ -21,6 +21,21 @@ import vyapp.plugins.shift
 autoload(vyapp.plugins.shift, width=4, char=' ')
 
 
+# Used to quickly jump to the end/start of the cursor line.
+import vyapp.plugins.jump_line_mark
+autoload(vyapp.plugins.jump_line_mark)
+
+
+# Used to quickly jump to the end/start of the file.
+import vyapp.plugins.jump_text_mark
+autoload(vyapp.plugins.jump_text_mark)
+
+
+# Implement keycommands to select text from the cursor position to the start/end of the file.
+import vyapp.plugins.select_text
+autoload(vyapp.plugins.select_text)
+
+
 # Default events for 'Text'.
 import vyapp.plugins.default
 autoload(vyapp.plugins.default)
@@ -233,6 +248,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 
