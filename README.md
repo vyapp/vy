@@ -111,11 +111,9 @@ Videos
 
 
 
-
-<iframe width="420" height="315"
-src="http://www.youtube.com/embed/XGSy3_Czz8k?autoplay=1">
-</iframe>
-
+<object width="420" height="315"
+data="http://www.youtube.com/v/XGSy3_Czz8k">
+</object>
 
 **Vy as a shell:**
 https://www.youtube.com/watch?v=CfByT5i2uWw
