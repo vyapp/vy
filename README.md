@@ -55,10 +55,10 @@ that is being executed and much more. It is pretty straightfoward to implement d
 It is possible to open multiple vertical/horizontal areas to edit different files. Such a feature turns possible
 to edit multiple files in a given tab. Vy supports multiple tabs as well.
 
-
 Vy has a very well defined scheme for user plugins. One can easily develop a plugin then make vy load it.
 There is a vyrc file written in python that is very well docummented and organized to turn it simple to load 
-plugins and set stuff at startup.
+plugins and set stuff at startup. You can take the best out of vy with no need for learning some odd language
+like vimscript or emacs lisp since vy is written in python, you use python to develop for it.
 
 All builtin functions are well documented it turns simple the process of plugin development as well as personalizing stuff.
 The plugins are documented, the docs can be accessed from vy by dropping python code to the interpreter.
@@ -70,8 +70,8 @@ a complete plugin reference of key commands.
     help(vyapp.plugins.plugin_name)
 
 
-One could implement as many modes as needed. This is very useful for specific situations. There could exist modes for ircclient,
-filemanagers, browsing specific type of files, generating latex code etc.
+One could implement as many modes as needed. This is very useful for specific situations. There could exist modes 
+for ircclient, filemanagers, browsing specific type of files, generating latex code etc.
 
 
 Install
@@ -152,6 +152,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
