@@ -1,26 +1,77 @@
 ![vy](vy.gif) vy
 ================
 
-A vim-like in python made from scratch.
+A powerful modal editor written in python.
 
-What is vy? 
-It is an attempt of mine(Tau a.k.a Iury) to implement a vim-like editor in python.
-I feel as i'm close to this goal since i have been using vy for all kind of tasks 
-that i used vim in the past.
+Vy is a modal editor with a very modular architecture. Everything is very well minimalistic and modular. 
+Vy is built on top of tkinter which is one of the most productive graphical toolkits. It permits vy
+to have such a great programming interface for plugins. It is pretty straightfoward to implement a plugin for vy.
 
-Why would one implement a vim-like in python? 
-Well, python is such a powerful language, i used vim for years when i noticed vimscript wasn't
-really cool and i couldn't use vim python plugin api in the way i would like.
+There is no need for mouse with vy, everything is made from the keyboard. There are tons of key commands to help 
+you spare a lot of time when programming or just editing some text. Vy has a powerful set of key commands that
+permits you quickly switch the cursor to a given position. 
 
-Does vy mimic vim?
-No, it is slightly similar, it has a standard mode, an insert mode and
-some of the key-commands perform similar operations in vy and vim.
+There is simple but powerful scheme for finding patterns of text as well as replacing ranges of text with regular 
+expressions. It is possible to select regions of text then perform matching operations inside such regions, 
+such a feature lets you format some documents easier with no spending of time.
 
-Vy supports an interesting feature, it is the capacity of talking to external processes
-It is all thanks to untwisted although it could be done with any other library that supports a reactor
-with a update function. The main idea behind to talking to external processes is the concept of e-scripts.
+The syntax highlighting plugin is very minimalistic and extremely fast. It supports syntax highlighting 
+for all languages that python-pygments supports. The source code of the syntax highlighting plugin is about 
+80 lines of code. It is faster than both vim and emacs syntax highlighting plugins. :)
 
-E-scripts are an interesting way of avoiding repeatitive tasks.
+There is a powerful quick search scheme that permits making the cursor jump to positions of the file that match
+a given pattern. Such a plugin makes it very handy to jump to specific positions of programming files.
+
+There are plugins for highlighting pairs of (), [], {} as well as selecting the text between these pairs 
+It is very useful when playing with function definitions in some languages like lisp.
+
+Vy has a plugin that implements a mode to quickly jump backwards/fowards to a given character. It is possible
+to go through some blocks of code very fast as well as quickly edit some pieces of text. Such a plugin
+uses very handy keys.
+
+It is possible to easily implement new syntax highlighting themes that work for all languages.
+The syntax highlighting plugin permits you to set specific background/colour for a language tokens type.
+
+Vy is written in pure python it permits you to drop python code to the interpreter that affects the editor state.
+It lets you implement python functions to perform cool routines like posting code onto codepad.org, converting all text 
+of a given opened file to lower case, finding unknown words in a given document, implement an irc client and much more.
+
+The set of keys used in vy was carefully chosen to be handy although it is possible to make vy look like vim or emacs since
+there is a high level of modularity in vy.
+
+There is a simple and consistent terminal-like plugin in vy. It is possible to talk to external processes through bash.
+Such a feature is very handy when dealing with interpreters. One can just drop pieces of code to a given interpreter 
+through bash then check the results. Another important point of such a feature consists in implementing e-scripts 
+to automatize tasks in unix like systems. It is possible to run a ssh process on top of bash then send commands and receive 
+output from vy it lets you access files over ssh in other machine.
+
+E-scripts are a very handy way to automatize some tasks. Such tasks can be pushing stuff onto github, adding users 
+to a unix-like system, a set of steps to set up a system, increasing sound from terminal etc. 
+
+Vy implements a python debugger plugin that permits debugging python code easily and in a very cool way. 
+One can set break points, remove break points, run the code then see the cursor jumping to the line 
+that is being executed and much more. It is pretty straightfoward to implement debuggers for other languages.
+
+It is possible to open multiple vertical/horizontal areas to edit different files. Such a feature turns possible
+to edit multiple files in a given tab. Vy supports multiple tabs as well.
+
+
+Vy has a very well defined scheme for user plugins. One can easily develop a plugin then make vy load it.
+There is a vyrc file written in python that is very well docummented and organized to turn it simple to load 
+plugins and set stuff at startup.
+
+All builtin functions are well documented it turns simple the process of plugin development as well as personalizing stuff.
+The plugins are documented, the docs can be accessed from vy by dropping python code to the interpreter.
+
+The plugins implement keycommands or python functions. The complete reference for a set of keycommands that a plugin implements 
+can be accessed with from a python interpreter instance or from vy python interpreter instance. It turns simple to access
+a complete plugin reference of key commands.
+    
+    help(vyapp.plugins.plugin_name)
+
+
+One could implement as many modes as needed. This is very useful for specific situations. There could exist modes for ircclient,
+filemanagers, browsing specific type of files, generating latex code etc.
 
 
 Install
@@ -56,9 +107,6 @@ Or just.
 Videos
 ======
 
-**Debugging applications with mainloop in vy, flask web app:**
-https://www.youtube.com/watch?v=_It1I198130
-
 **Vy as a shell:**
 https://www.youtube.com/watch?v=CfByT5i2uWw
 
@@ -86,23 +134,12 @@ Screenshots
 ![sun-theme](sun-theme.jpg)
 
 
-Features
-========
-
-* A simple api once it is purely written in python
-* Syntax highlight for all kind of langues supported by python-pygments
-* A very powerful api since it written in python
-* Execute python code on the fly that affects the behavior of the editor
-* Talk to external processes like interpreters
-* A powerful search scheme that permits formating text with regex and python code
-* Quickly switching the cursor to positions based on a kind of fuzzy search
-
 Documentation
 =============
 
-**A formal description of usage of all vy features**
+Such an amazing program demands the honour of having a book written about.
 
-[VY-BOOK.md](VY-BOOK.md)
+[VY.md](VY.md)
 
 
 Help
@@ -113,6 +150,8 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
+
 
 
 
