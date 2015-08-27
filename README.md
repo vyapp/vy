@@ -74,6 +74,10 @@ One could implement as many modes as needed. This is very useful for specific si
 for ircclient, filemanagers, browsing specific type of files, generating latex code etc.
 
 
+![screenshot](screenshot.jpg)
+
+
+
 Install
 =======
 
@@ -106,35 +110,6 @@ Or just.
     vy
 
 
-Videos
-======
-
-**Vy as a shell:**
-https://www.youtube.com/watch?v=CfByT5i2uWw
-
-**Building graphical interfaces with vy:**
-https://www.youtube.com/watch?v=_F0pjyrx3_4
-
-**Using pdb with vy:**
-https://www.youtube.com/watch?v=Ahachd4_N9U
-
-**Running python code on the fly:**
-https://www.youtube.com/watch?v=Rav3iz-VCN0
-    
-**Formating text with vy:**
-https://www.youtube.com/watch?v=5JUnUCl-E1w
-
-Screenshots
-===========
-
-**Dark Syntax Highlight Theme**
-
-![dark-theme](dark-theme.jpg)
-
-**Sun Syntax Highlight Theme**
-
-![sun-theme](sun-theme.jpg)
-
 
 Documentation
 =============
@@ -152,6 +127,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
