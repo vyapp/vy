@@ -1,8 +1,8 @@
-from vyapp.tools.misc import set_status_mode
-from vyapp.tools.misc import set_status_line
-from vyapp.tools.misc import set_status_col
-from vyapp.tools.misc import set_status_msg
-from vyapp.tools.misc import get_area_tab_index
+from vyapp.tools import set_status_mode
+from vyapp.tools import set_status_line
+from vyapp.tools import set_status_col
+from vyapp.tools import set_status_msg
+from vyapp.tools import get_area_tab_index
 from vyapp.app import root
 from os.path import basename
 

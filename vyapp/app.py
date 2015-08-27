@@ -1,20 +1,13 @@
-from vyapp.tools.misc import Transmitter
+from vyapp.stdout import Transmitter
 from Tkinter import *
 from vyapp.notevi import NoteVi
 from vyapp.statusbar import *
+from vyapp.plugins import ENV
 import sys
 
 # It points to the root toplevel window of vy. It is the one whose AreaVi instances
 # are placed on. 
 root = None
-
-# ENV is a dict holding plugins objects, like functions, classes etc.
-# Plugins should install their handles in ENV.
-ENV  = dict()
-
-# A special dict used to execute on the fly python code.
-DEV  = dict()
-
 
 class App(Tk):
     """
@@ -56,6 +49,9 @@ class App(Tk):
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
+
+
 
 
 

@@ -10,7 +10,7 @@ from untwisted.network import core, xmap, cmap, READ, WRITE, Device
 from untwisted.tkinter import extern
 from untwisted.utils.iofd import *
 from vyapp.app import root
-from vyapp.tools.misc import set_status_msg
+from vyapp.tools import set_status_msg
 
 from subprocess import Popen, PIPE, STDOUT
 from os import environ, setsid, killpg

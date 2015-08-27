@@ -4,7 +4,7 @@ Event: <Control-q>
 Description: Complete word pattern based on all AreaVi instances.
 """
 
-from vyapp.tools.misc import get_opened_files, find_on_all
+from vyapp.tools import get_opened_files, find_on_all
 from time import time
 
 

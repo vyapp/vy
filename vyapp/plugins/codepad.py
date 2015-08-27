@@ -48,8 +48,9 @@ def CPPaste():
     pointer, new_url = post(data, ext, True)
     webbrowser.open(new_url)
 
-from vyapp.app import ENV
+from vyapp.plugins import ENV
 ENV['CPPaste'] = CPPaste
+
 
 
 

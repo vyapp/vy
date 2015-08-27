@@ -75,7 +75,7 @@ It removes the selected tab.
 from tkMessageBox import *
 from tkFileDialog import askopenfilename, asksaveasfilename
 from vyapp.app import root
-from vyapp.tools.misc import set_status_msg
+from vyapp.tools import set_status_msg
 
 def save_as(area):
     """

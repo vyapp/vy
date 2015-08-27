@@ -2,8 +2,9 @@
 
 """
 
-from vyapp.tools.misc import echo, get_all_areavi_instances
-from vyapp.app import ENV
+from vyapp.stdout import echo
+from vyapp.tools import get_all_areavi_instances
+from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 from vyapp.plugins import autoload
 
@@ -27,5 +28,7 @@ ENV['get'] = lambda *args: AreaVi.ACTIVE.get(*args)
 ENV['find'] = lambda *args, **kwargs: AreaVi.ACTIVE.tag_add_found('sel', AreaVi.ACTIVE.find(*args, **kwargs))
 ENV['sub'] = lambda *args, **kwargs: AreaVi.ACTIVE.replace_all(*args, **kwargs)
 ENV['load'] = load
+
+
 
 

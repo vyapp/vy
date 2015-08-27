@@ -1,5 +1,6 @@
 from traceback import format_exc as debug
-from vyapp.tools.misc import Stdout, exec_quiet
+from vyapp.stdout import Stdout
+from vyapp.tools import exec_quiet
 from vyapp.ask import *
 import sys
 
@@ -18,6 +19,8 @@ def install(area):
            ('NORMAL', '<Tab>', lambda event: redirect_stdout(event.widget)))
 
    
+
+
 
 
 

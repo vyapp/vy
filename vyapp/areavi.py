@@ -976,8 +976,6 @@ class AreaVi(Text):
         self.insert('insert +1l linestart', '\n')
         self.mark_set('insert', 'insert +1l linestart')
         self.see('insert')
-
-        self.chmode(0)
     
     def select_all(self):
         """
@@ -996,7 +994,6 @@ class AreaVi(Text):
         self.mark_set('insert', 'insert -1l linestart')
         self.see('insert')
 
-        self.chmode(0)
 
     def shift_sel_right(self, width, char):
         """
@@ -1537,6 +1534,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 

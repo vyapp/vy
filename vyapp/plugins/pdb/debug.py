@@ -7,8 +7,8 @@ from subprocess import Popen, PIPE, STDOUT
 from untwisted.utils.iofd import *
 from untwisted.utils.shrug import *
 from vyapp.plugins.pdb import event
-from vyapp.tools.misc import set_status_msg
-from vyapp.tools.misc import get_opened_files, set_line, get_all_areavi_instances
+from vyapp.tools import set_status_msg
+from vyapp.tools import get_opened_files, set_line, get_all_areavi_instances
 from vyapp.ask import Ask
 
 import sys
