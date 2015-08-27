@@ -10,18 +10,17 @@ if __name__ == '__main__':
                       help='''./vy -l "[[['vy', 'setup.py']], [['./vyapp/plugins/ibash.py', './vyapp/plugins/cmd.py']]]"''', 
                       metavar="string", default=[])
                   
-    parser.add_option("-n", "--max-tabs", dest="max_tabs",
-                      metavar="string", default='7')
 
     (opt, args) = parser.parse_args()
 
-    root = App(int(opt.max_tabs))
+    root = App()
     lst  = eval(str(opt.lst))
     lst  = lst + map(lambda ind: [[ind]], args)
 
     if not lst: root.note.create('None')
     else: root.note.load(*lst)
     root.mainloop()
+
 
 
 

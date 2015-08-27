@@ -153,22 +153,6 @@ def find_on_all(chunk):
         for indj in it:
             yield indj[0]
 
-
-def run_vyrc(area):
-    from os.path import expanduser, join
-    ENV = dict()
-    dir = expanduser('~')
-    dir = join(dir, '.vy')
-    rc  = join(dir, 'vyrc')
-
-    execfile(rc, ENV)
-
-    for ind in ENV['INSTALL']:
-        ind[0].install(area, *ind[1:])
-
-    for ind in ENV['HANDLE']:
-        ind(area)
-
 def set_status_msg(msg):
     from vyapp.app import root
     root.status.set_msg(msg)
@@ -197,6 +181,8 @@ def consume_iter(iterator, time=1):
             root.after(time, cave)
 
     cave()
+
+
 
 
 

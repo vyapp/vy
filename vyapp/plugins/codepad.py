@@ -37,19 +37,20 @@ def post(data, lang, opt=False):
 
 def CPPaste():
     import webbrowser
-    from vyapp.tools.misc import get_file_extension
+    from os.path import splitext
     from vyapp.areavi import AreaVi
     area = AreaVi.ACTIVE
     # The areavi in which the execute cmd even was 
     # issued from.
     data             = area.get('1.0', 'end')
     data             = data.encode('utf-8')
-    ext              = get_file_extension(area.filename)
+    _, ext           = splitext(area.filename)
     pointer, new_url = post(data, ext, True)
     webbrowser.open(new_url)
 
 from vyapp.app import ENV
 ENV['CPPaste'] = CPPaste
+
 
 
 

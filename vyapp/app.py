@@ -1,7 +1,7 @@
 from vyapp.tools.misc import Transmitter
 from Tkinter import *
-from notebook import *
-from statusbar import *
+from vyapp.notevi import NoteVi
+from vyapp.statusbar import *
 import sys
 
 # It points to the root toplevel window of vy. It is the one whose AreaVi instances
@@ -21,7 +21,7 @@ class App(Tk):
 
     """
 
-    def __init__(self, max_tabs, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """
 
         """
@@ -47,7 +47,7 @@ class App(Tk):
         
         execfile(rc, ENV)
 
-        self.note = NoteVi(max_tabs, master=self)
+        self.note = NoteVi(master=self)
         self.note.pack(expand=True, fill=BOTH)
         self.status = StatusBar(self)
         self.status.pack(side=BOTTOM, fill=X)
@@ -56,6 +56,8 @@ class App(Tk):
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
+
 
 
 
