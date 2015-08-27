@@ -12,7 +12,8 @@ Description: Place the cursor at the end of the file.
 """
 
 def install(area):
-    area.install((1, '<Key-1>', lambda event: event.widget.go_text_start()),
-                 (1, '<Key-2>', lambda event: event.widget.go_text_end()))
+    area.install(('NORMAL', '<Key-1>', lambda event: event.widget.go_text_start()),
+                 ('NORMAL', '<Key-2>', lambda event: event.widget.go_text_end()))
+
 
 

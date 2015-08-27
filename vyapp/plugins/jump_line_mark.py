@@ -10,6 +10,7 @@ Description: Place the cursor at the end of the line.
 """
 
 def install(area):
-    area.install((1, '<Key-o>', lambda event: event.widget.go_line_start()),
-                 (1, '<Key-p>', lambda event: event.widget.go_line_end()))
+    area.install(('NORMAL', '<Key-o>', lambda event: event.widget.go_line_start()),
+                 ('NORMAL', '<Key-p>', lambda event: event.widget.go_line_end()))
+
 

@@ -9,20 +9,20 @@ class Find(object):
 
         area.tag_config(self.TAG_FOUND, **setup)
 
-        area.install((1, '<Control-q>'    , lambda event: self.set_regex()),
-                        (1, '<Control-Q>'    , lambda event: self.set_data()),
-                        (1, '<Key-Q>'        , lambda event: self.area.tag_remove(self.TAG_FOUND, '1.0', 'end')),
-                        (1, '<Control-Left>' , lambda event: self.area.tag_add_found(self.TAG_FOUND, self.area.tag_find_ranges('sel', self.regex))),
-                        (1, '<Shift-Left>' , lambda event: self.area.tag_replace_ranges('sel', self.regex, self.data)),
+        area.install(('NORMAL', '<Control-q>'    , lambda event: self.set_regex()),
+                        ('NORMAL', '<Control-Q>'    , lambda event: self.set_data()),
+                        ('NORMAL', '<Key-Q>'        , lambda event: self.area.tag_remove(self.TAG_FOUND, '1.0', 'end')),
+                        ('NORMAL', '<Control-Left>' , lambda event: self.area.tag_add_found(self.TAG_FOUND, self.area.tag_find_ranges('sel', self.regex))),
+                        ('NORMAL', '<Shift-Left>' , lambda event: self.area.tag_replace_ranges('sel', self.regex, self.data)),
 
-                        (1, '<Control-Right>', lambda event: self.area.replace(self.regex, self.data, 'insert')),
+                        ('NORMAL', '<Control-Right>', lambda event: self.area.replace(self.regex, self.data, 'insert')),
 
-                        (1, '<Shift-Up>'     , lambda event: self.area.replace_all(self.regex, self.data, '1.0', 'insert')),
-                        (1, '<Shift-Right>'  , lambda event: self.area.replace_all(self.regex, self.data)),
-                        (1, '<Shift-Down>'   , lambda event: self.area.replace_all(self.regex, self.data, 'insert', 'end')),
+                        ('NORMAL', '<Shift-Up>'     , lambda event: self.area.replace_all(self.regex, self.data, '1.0', 'insert')),
+                        ('NORMAL', '<Shift-Right>'  , lambda event: self.area.replace_all(self.regex, self.data)),
+                        ('NORMAL', '<Shift-Down>'   , lambda event: self.area.replace_all(self.regex, self.data, 'insert', 'end')),
 
-                        (1, '<Control-Up>'   , lambda event: self.area.pick_next_up(self.TAG_FOUND, self.regex)),
-                        (1, '<Control-Down>' , lambda event: self.area.pick_next_down(self.TAG_FOUND, self.regex)))
+                        ('NORMAL', '<Control-Up>'   , lambda event: self.area.pick_next_up(self.TAG_FOUND, self.regex)),
+                        ('NORMAL', '<Control-Down>' , lambda event: self.area.pick_next_down(self.TAG_FOUND, self.regex)))
 
 
 
@@ -40,6 +40,7 @@ class Find(object):
 
 
 install = Find
+
 
 
 

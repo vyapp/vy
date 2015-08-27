@@ -55,17 +55,18 @@ Description: Cut selection and add to the clipboard with a separator \n.
 from vyapp.app import root
 
 def install(area):
-    area.install((1, '<Key-d>', lambda event: event.widget.clsel()),
-                 (1, '<Key-x>', lambda event: event.widget.cllin()),
-                 (1, '<Key-z>', lambda event: event.widget.clchar()),
-                 (1, '<Key-y>', lambda event: event.widget.cpsel()),
-                 (1, '<Key-u>', lambda event: event.widget.ctsel()),
-                 (1, '<Key-t>', lambda event: event.widget.ptsel()),
-                 (1, '<Key-r>', lambda event: event.widget.ptsel_after()),
-                 (1, '<Key-e>', lambda event: event.widget.ptsel_before()),
-                 (1, '<Control-Y>', lambda event: event.widget.cpblock()),
-                 (1, '<Control-U>', lambda event: event.widget.ctblock()))
+    area.install(('NORMAL', '<Key-d>', lambda event: event.widget.clsel()),
+                 ('NORMAL', '<Key-x>', lambda event: event.widget.cllin()),
+                 ('NORMAL', '<Key-z>', lambda event: event.widget.clchar()),
+                 ('NORMAL', '<Key-y>', lambda event: event.widget.cpsel()),
+                 ('NORMAL', '<Key-u>', lambda event: event.widget.ctsel()),
+                 ('NORMAL', '<Key-t>', lambda event: event.widget.ptsel()),
+                 ('NORMAL', '<Key-r>', lambda event: event.widget.ptsel_after()),
+                 ('NORMAL', '<Key-e>', lambda event: event.widget.ptsel_before()),
+                 ('NORMAL', '<Control-Y>', lambda event: event.widget.cpblock()),
+                 ('NORMAL', '<Control-U>', lambda event: event.widget.ctblock()))
         
+
 
 
 

@@ -11,7 +11,8 @@ Description: Place the cursor at the next occurrence of ( ) { } [ ] : .
 """
 
 def install(area):
-    area.install((1, '<Key-P>', lambda event: event.widget.go_next_sym()),
-                 (1, '<Key-O>', lambda event: event.widget.go_prev_sym()))
+    area.install(('NORMAL', '<Key-P>', lambda event: event.widget.go_next_sym()),
+                 ('NORMAL', '<Key-O>', lambda event: event.widget.go_prev_sym()))
+
 
 

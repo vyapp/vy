@@ -6,14 +6,14 @@ class QuickSearch(object):
         """
 
         """
-        area.add_mode('Quick Search')
-        area.install(('Quick Search', '<Key>', lambda event: self.add_data(event.widget, event.keysym_num)),
-                        (1, '<Key-backslash>', lambda event: event.widget.chmode('Quick Search')),
-                        ('Quick Search', '<Escape>', lambda event: self.clear_data(event.widget)),
-                        ('Quick Search', '<BackSpace>', lambda event: self.del_data(event.widget)),
-                        ('Quick Search', '<Tab>', lambda event: self.go_down(event.widget)),
-                        ('Quick Search', '<Control-Tab>', lambda event: self.go_up(event.widget)),
-                        ('Quick Search', '<Key-space>', lambda event: self.data.append('.+?')))
+        area.add_mode('QUICK_SEARCH')
+        area.install(('QUICK_SEARCH', '<Key>', lambda event: self.add_data(event.widget, event.keysym_num)),
+                        ('NORMAL', '<Key-backslash>', lambda event: event.widget.chmode('QUICK_SEARCH')),
+                        ('QUICK_SEARCH', '<Escape>', lambda event: self.clear_data(event.widget)),
+                        ('QUICK_SEARCH', '<BackSpace>', lambda event: self.del_data(event.widget)),
+                        ('QUICK_SEARCH', '<Tab>', lambda event: self.go_down(event.widget)),
+                        ('QUICK_SEARCH', '<Control-Tab>', lambda event: self.go_up(event.widget)),
+                        ('QUICK_SEARCH', '<Key-space>', lambda event: self.data.append('.+?')))
 
 
         self.data = []
@@ -71,6 +71,7 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 
 
 

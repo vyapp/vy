@@ -120,9 +120,9 @@ autoload(vyapp.plugins.inline_comment)
 import vyapp.plugins.set_pos
 autoload(vyapp.plugins.set_pos)
 
-
-# import vyapp.plugins.pdb.debug
-# autoload(vyapp.plugins.pdb.debug)
+# Used to debug python applications.
+import vyapp.plugins.pdb.debug
+autoload(vyapp.plugins.pdb.debug)
 
 
 # Implements vy stdin and stdout scheme for talking to extern processes.
@@ -234,7 +234,7 @@ def setup(area):
     area.config(blockcursor= True, 
                  insertbackground='red', 
                  background='black', 
-                 foreground='green', 
+                 foreground='yellow', 
                  font=('Monospace', 8, 'bold'), 
                  undo= True)
 
@@ -248,6 +248,8 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
+
 
 
 

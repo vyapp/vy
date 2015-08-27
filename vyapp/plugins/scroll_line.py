@@ -10,6 +10,7 @@ Description: Scroll one line down.
 """
 
 def install(area):
-    area.install((1, '<Key-w>', lambda event: event.widget.scroll_line_up()),
-                 (1, '<Key-s>', lambda event: event.widget.scroll_line_down()))
+    area.install(('NORMAL', '<Key-w>', lambda event: event.widget.scroll_line_up()),
+                 ('NORMAL', '<Key-s>', lambda event: event.widget.scroll_line_down()))
+
 

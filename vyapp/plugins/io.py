@@ -218,18 +218,19 @@ def remove_tab():
 
 
 def install(area):
-    area.install((1, '<Control-s>', lambda event: save(event.widget)),
-           (1, '<Shift-S>', lambda event: save_as(event.widget)),
-           (1, '<Control-d>', lambda event: load(event.widget)),
-           (1, '<Key-D>', lambda event: event.widget.clear_data()),
-           (1, '<Control-Escape>', lambda event: save_quit(event.widget)),
-           (1, '<Shift-Escape>', lambda event: event.widget.quit()),
-           (1, '<F8>', lambda event: load_tab()),
-           (1, '<F4>', lambda event: add_horizontal_area(event.widget)),
-           (1, '<F5>', lambda event: add_vertical_area(event.widget)),
-           (1, '<F6>', lambda event: remove_area(event.widget)),
-           (1, '<F7>', lambda event: root.note.create('None')),
-           (1, '<Delete>', lambda event: remove_tab()))
+    area.install(('NORMAL', '<Control-s>', lambda event: save(event.widget)),
+           ('NORMAL', '<Shift-S>', lambda event: save_as(event.widget)),
+           ('NORMAL', '<Control-d>', lambda event: load(event.widget)),
+           ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
+           ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
+           ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()),
+           ('NORMAL', '<F8>', lambda event: load_tab()),
+           ('NORMAL', '<F4>', lambda event: add_horizontal_area(event.widget)),
+           ('NORMAL', '<F5>', lambda event: add_vertical_area(event.widget)),
+           ('NORMAL', '<F6>', lambda event: remove_area(event.widget)),
+           ('NORMAL', '<F7>', lambda event: root.note.create('None')),
+           ('NORMAL', '<Delete>', lambda event: remove_tab()))
+
 
 
 

@@ -13,6 +13,7 @@ Description: Insert a line up then goes insertion mode.
 
 
 def install(area):
-    area.install((1, '<Key-m>', lambda event: event.widget.insert_line_down()),
-                 (1, '<Key-n>', lambda event: event.widget.insert_line_up()))
+    area.install(('NORMAL', '<Key-m>', lambda event: event.widget.insert_line_down()),
+                 ('NORMAL', '<Key-n>', lambda event: event.widget.insert_line_up()))
+
 

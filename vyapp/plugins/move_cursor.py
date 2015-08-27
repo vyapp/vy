@@ -24,8 +24,9 @@ Description: Move the cursor one character right.
 
 
 def install(area):
-    area.install((1, '<Key-j>', lambda event: event.widget.down()),
-                 (1, '<Key-k>', lambda event: event.widget.up()),
-                 (1, '<Key-h>', lambda event: event.widget.left()),
-                 (1, '<Key-l>', lambda event: event.widget.right()))
+    area.install(('NORMAL', '<Key-j>', lambda event: event.widget.down()),
+                 ('NORMAL', '<Key-k>', lambda event: event.widget.up()),
+                 ('NORMAL', '<Key-h>', lambda event: event.widget.left()),
+                 ('NORMAL', '<Key-l>', lambda event: event.widget.right()))
+
 

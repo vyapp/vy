@@ -5,7 +5,8 @@ def clip_ph(area):
 
 
 def install(area):
-    area.install((2, '<Key-u>', lambda event: clip_ph(event.widget)))
+    area.install(('ALPHA', '<Key-u>', lambda event: clip_ph(event.widget)))
+
 
 
 

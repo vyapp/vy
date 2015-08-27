@@ -22,7 +22,7 @@ class WordComplete(object):
         self.MAX   = 2
         self.index = None
 
-        area.install((0, '<Control-q>', lambda event: self.complete()))
+        area.install(('INSERT', '<Control-q>', lambda event: self.complete()))
 
     def complete(self):
         """
@@ -60,6 +60,7 @@ class WordComplete(object):
         self.seq = find_on_all('%s[^ ]+' % data)
 
 install = WordComplete
+
 
 
 

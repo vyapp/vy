@@ -12,6 +12,7 @@ Description: Scroll one page down.
 
 
 def install(area):
-    area.install((1, '<Key-q>', lambda event: event.widget.scroll_page_up()),
-                 (1, '<Key-a>', lambda event: event.widget.scroll_page_down()))
+    area.install(('NORMAL', '<Key-q>', lambda event: event.widget.scroll_page_up()),
+                 ('NORMAL', '<Key-a>', lambda event: event.widget.scroll_page_down()))
+
 

@@ -32,10 +32,11 @@ Description: Drop a mark selection to be a reference for Event: <Control-k> Even
 """
 
 def install(area):
-    area.install((1, '<Control-k>', lambda event: event.widget.sel_up()),
-                 (1, '<Control-j>', lambda event: event.widget.sel_down()),
-                 (1, '<Control-h>', lambda event: event.widget.sel_left()),
-                 (1, '<Control-l>', lambda event: event.widget.sel_right()),
-                 (1, '<Control-v>', lambda event: event.widget.start_selection()))
+    area.install(('NORMAL', '<Control-k>', lambda event: event.widget.sel_up()),
+                 ('NORMAL', '<Control-j>', lambda event: event.widget.sel_down()),
+                 ('NORMAL', '<Control-h>', lambda event: event.widget.sel_left()),
+                 ('NORMAL', '<Control-l>', lambda event: event.widget.sel_right()),
+                 ('NORMAL', '<Control-v>', lambda event: event.widget.start_selection()))
+
 
 

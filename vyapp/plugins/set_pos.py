@@ -15,5 +15,6 @@ def go_to_pos(area):
     else:
         area.setcur(line, col)    
 
-install = lambda area: area.install((1, '<F3>', lambda event: go_to_pos(event.widget)))
+install = lambda area: area.install(('NORMAL', '<F3>', lambda event: go_to_pos(event.widget)))
+
 

@@ -10,7 +10,8 @@ Description: Remove selection from a character whose cursor is on.
 """
 
 def install(area):
-    area.install((1, '<Key-C>', lambda event: event.widget.select_char()),
-                 (1, '<Key-V>', lambda event: event.widget.unselect_char()))
+    area.install(('NORMAL', '<Key-C>', lambda event: event.widget.select_char()),
+                 ('NORMAL', '<Key-V>', lambda event: event.widget.unselect_char()))
+
 
 

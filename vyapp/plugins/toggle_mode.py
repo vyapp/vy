@@ -9,7 +9,7 @@ Description: Goes back to the previous mode.
 """
 
 class ToggleMode(object):    
-    def __init__(self, area, target_mode=1, modes=[2, 3, 4, 5, 6, 7]):
+    def __init__(self, area, target_mode='NORMAL', modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA']):
         for ind in modes:
             area.hook(ind, '<KeyPress-apostrophe>', lambda event: self.switch_standard_mode(event.widget))
         area.hook(target_mode, '<KeyRelease-apostrophe>', lambda event: self.switch_previous_mode(event.widget))
@@ -26,6 +26,7 @@ class ToggleMode(object):
         area.chmode(self.id)
 
 install = ToggleMode
+
 
 
 

@@ -23,10 +23,11 @@ def set_target(area):
     area.active()
     set_status_msg('Target set !')
 
-install = lambda area: area.install((1, '<Key-semicolon>', lambda event: exec_cmd(event.widget, ENV)), 
-           (1, '<Control-e>', lambda event: exec_region(event.widget, DEV)),
-           (1, '<Control-E>', lambda event: set_target(event.widget)),
-           (1, '<Key-E>', lambda event: exec_region(event.widget, ENV)))
+install = lambda area: area.install(('NORMAL', '<Key-semicolon>', lambda event: exec_cmd(event.widget, ENV)), 
+           ('NORMAL', '<Control-e>', lambda event: exec_region(event.widget, DEV)),
+           ('NORMAL', '<Control-E>', lambda event: set_target(event.widget)),
+           ('NORMAL', '<Key-E>', lambda event: exec_region(event.widget, ENV)))
+
 
 
 

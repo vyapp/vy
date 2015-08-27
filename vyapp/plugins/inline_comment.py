@@ -38,8 +38,9 @@ def rm_inline_comment(area):
     area.tag_replace_ranges('sel', '^ *%s ?' % comment, rep)
 
 def install(area):
-    area.install((2, '<Key-r>', lambda event: rm_inline_comment(event.widget)),
-           (2, '<Key-e>', lambda event: add_inline_comment(event.widget)))
+    area.install(('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
+           ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 

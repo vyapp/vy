@@ -2,12 +2,6 @@
 
 """
 
-def jump_next_mode(area):
-    area.chmode(11)
-
-def jump_back_mode(area):
-    area.chmode(10)
-
 def jump_next(area, char):
     index = area.search(char, 'insert', stopindex='end')
     if not index: return
@@ -21,13 +15,14 @@ def jump_back(area, char):
     area.see('insert')
 
 def install(area):
-        area.add_mode(10)
-        area.add_mode(11)
+        area.add_mode('JUMP_BACK')
+        area.add_mode('JUMP_NEXT')
 
-        area.install((1, '<Key-v>', lambda event: jump_next_mode(event.widget)), 
-                   (1, '<Key-c>', lambda event: jump_back_mode(event.widget)),
-                   (10, '<Key>', lambda event: jump_back(event.widget, chr(event.keysym_num))),
-                   (11, '<Key>', lambda event: jump_next(event.widget, chr(event.keysym_num))))
+        area.install(('NORMAL', '<Key-v>', lambda event: event.widget.chmode('JUMP_NEXT')), 
+                     ('NORMAL', '<Key-c>', lambda event: event.widget.chmode('JUMP_BACK')),
+                     ('JUMP_BACK', '<Key>', lambda event: jump_back(event.widget, chr(event.keysym_num))),
+                     ('JUMP_NEXT', '<Key>', lambda event: jump_next(event.widget, chr(event.keysym_num))))
+
 
 
 

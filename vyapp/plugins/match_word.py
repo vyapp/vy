@@ -17,8 +17,9 @@ Description: Add selection to a word where the cursor is placed on.
 """
 
 def install(area):
-    area.install((1, '<Key-bracketright>', lambda event: event.widget.go_next_word()),
-                 (1, '<Key-braceright>', lambda event: event.widget.go_prev_word()),
-                 (1, '<Key-bracketleft>', lambda event: event.widget.select_word()))
+    area.install(('NORMAL', '<Key-bracketright>', lambda event: event.widget.go_next_word()),
+                 ('NORMAL', '<Key-braceright>', lambda event: event.widget.go_prev_word()),
+                 ('NORMAL', '<Key-bracketleft>', lambda event: event.widget.select_word()))
+
 
 

@@ -28,9 +28,10 @@ def go_next_shade(area):
 
 def install(area, setup={'background':'green', 'foreground':'black'}):
     area.tag_configure(TAG_SHADE, **setup)
-    area.install((2, '<Key-q>', lambda event: toggle_shade(event.widget)),
-           (2, '<Key-a>', lambda event: go_prev_shade(event.widget)),
-           (2, '<Key-s>', lambda event: go_next_shade(event.widget)))
+    area.install(('ALPHA', '<Key-q>', lambda event: toggle_shade(event.widget)),
+           ('ALPHA', '<Key-a>', lambda event: go_prev_shade(event.widget)),
+           ('ALPHA', '<Key-s>', lambda event: go_next_shade(event.widget)))
+
 
 
 

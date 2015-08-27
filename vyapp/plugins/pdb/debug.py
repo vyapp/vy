@@ -17,19 +17,22 @@ import shlex
 
 class Pdb(object):
     def __call__(self, area, setup={'background':'blue', 'foreground':'yellow'}):
-        area.install((3, '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
-                   (3, '<Key-1>', lambda event: self.start_debug(event.widget)), 
-                   (3, '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
-                   (3, '<Key-q>', lambda event: self.terminate_process()), 
-                   (3, '<Key-c>', lambda event: self.stdin.dump('continue\r\n')), 
-                   (3, '<Key-e>', lambda event: self.stdin.dump('!%s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
-                   (3, '<Key-w>', lambda event: self.stdin.dump('where\r\n')), 
-                   (3, '<Key-a>', lambda event: self.stdin.dump('args\r\n')), 
-                   (3, '<Key-s>', lambda event: self.stdin.dump('step\r\n')), 
-                   (3, '<Control-C>', lambda event: self.dump_clear_all()), 
-                   (3, '<Control-c>', lambda event: self.stdin.dump('clear %s\r\n' % self.map_line[(event.widget.filename, str(event.widget.indref('insert')[0]))])),
-                   (3, '<Key-B>', lambda event: self.stdin.dump('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
-                   (3, '<Key-b>', lambda event: self.stdin.dump('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
+        area.add_mode('PDB')
+
+        area.install(('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
+                    ('PDB', '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+                    ('PDB', '<Key-1>', lambda event: self.start_debug(event.widget)), 
+                    ('PDB', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
+                    ('PDB', '<Key-q>', lambda event: self.terminate_process()), 
+                    ('PDB', '<Key-c>', lambda event: self.stdin.dump('continue\r\n')), 
+                    ('PDB', '<Key-e>', lambda event: self.stdin.dump('!%s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+                    ('PDB', '<Key-w>', lambda event: self.stdin.dump('where\r\n')), 
+                    ('PDB', '<Key-a>', lambda event: self.stdin.dump('args\r\n')), 
+                    ('PDB', '<Key-s>', lambda event: self.stdin.dump('step\r\n')), 
+                    ('PDB', '<Control-C>', lambda event: self.dump_clear_all()), 
+                    ('PDB', '<Control-c>', lambda event: self.stdin.dump('clear %s\r\n' % self.map_line[(event.widget.filename, str(event.widget.indref('insert')[0]))])),
+                    ('PDB', '<Key-B>', lambda event: self.stdin.dump('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
+                    ('PDB', '<Key-b>', lambda event: self.stdin.dump('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
 
         self.setup = setup
 
@@ -163,6 +166,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
