@@ -1,3 +1,7 @@
+"""
+
+"""
+
 from vyapp.app import root
 from vyapp.areavi import AreaVi
 from Tkinter import Frame
@@ -73,6 +77,7 @@ def install(area):
                  (-1, '<F12>', lambda event: go_down_area(event.widget)),
                  (-1, '<Shift-F9>', lambda event: root.note.select(root.note.index(root.note.select()) - 1)),
                  (-1, '<Shift-F10>', lambda event: root.note.select(root.note.index(root.note.select()) + 1)))
+
 
 
 

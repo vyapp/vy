@@ -64,18 +64,21 @@ All builtin functions are well documented it turns simple the process of plugin 
 The plugins are documented, the docs can be accessed from vy by dropping python code to the interpreter.
 
 The plugins implement keycommands or python functions. The complete reference for a set of keycommands that a plugin implements 
-can be accessed with from a python interpreter instance or from vy python interpreter instance. It turns simple to access
-a complete plugin reference of key commands.
+can be accessed from a python interpreter instance or from vy.
     
     help(vyapp.plugins.plugin_name)
 
+or use 
+
+    dir(vyapp.plugins)
+
+to list all the builtin plugins available.
 
 One could implement as many modes as needed. This is very useful for specific situations. There could exist modes 
 for ircclient, filemanagers, browsing specific type of files, generating latex code etc.
 
 
 ![screenshot](screenshot.jpg)
-
 
 
 Install
@@ -85,19 +88,20 @@ Vy actually demands python 2.7 to run.
 
 This is a short script to install the latest version of vy.
 
+    su
+    apt-get install python-tk
+    apt-get install python-pygments
+    exit
+
     cd /tmp
     git clone git@github.com:iogf/vy.git vy-code
     git clone git@github.com:iogf/untwisted.git untwisted-code 
 
-    su
     cd /tmp/untwisted-code
     python setup.py install
     cd /tmp/vy-code
     python setup.py install
 
-    apt-get install python-tk
-    apt-get install python-pygments
-    exit
 
     
 Once you have installed vy and its dependencies.
@@ -110,13 +114,16 @@ Or just.
     vy
 
 
-
 Documentation
 =============
 
-Such an amazing program demands the honour of having a book written about.
+**The intro**
 
-[VY.md](VY.md)
+[INTRO.md](INTRO.md)
+
+**A guide on how to develop plugins**
+
+[GUIDE.md](GUIDE.md)
 
 
 Help
@@ -127,6 +134,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 

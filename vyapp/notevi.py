@@ -120,18 +120,6 @@ class NoteVi(Notebook):
         self.add(base, text=filename)
         return base
 
-    def get_opened_files(self):
-        pass
-
-    def get_areavi_instances(self):
-        pass
-
-    def focus_areavi_line(self, areavi, line):
-        pass
-
-    def find(self, data):
-        pass
-
     def load(self, *args):
         """
 
@@ -143,6 +131,7 @@ class NoteVi(Notebook):
             self.add(base)        
             for indj in indi:
                 base.load(*indj)
+
 
 
 
