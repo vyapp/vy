@@ -1,4 +1,14 @@
 """
+Overview
+========
+
+
+Usage
+=====
+
+
+Key-Commands
+============
 
 """
 
@@ -22,6 +32,7 @@ def install(area):
                      ('NORMAL', '<Key-c>', lambda event: event.widget.chmode('JUMP_BACK')),
                      ('JUMP_BACK', '<Key>', lambda event: jump_back(event.widget, chr(event.keysym_num))),
                      ('JUMP_NEXT', '<Key>', lambda event: jump_next(event.widget, chr(event.keysym_num))))
+
 
 
 

@@ -1,11 +1,22 @@
 """
 
-Mode: 1
+Overview
+========
+
+
+
+Usage
+=====
+
+Key-Commands
+============
+
+Mode: NORMAL
 Event: <Key-1> 
 Description: Place the cursor at the beginning of the file.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-2> 
 Description: Place the cursor at the end of the file.
 
@@ -14,6 +25,7 @@ Description: Place the cursor at the end of the file.
 def install(area):
     area.install(('NORMAL', '<Key-1>', lambda event: event.widget.go_text_start()),
                  ('NORMAL', '<Key-2>', lambda event: event.widget.go_text_end()))
+
 
 
 

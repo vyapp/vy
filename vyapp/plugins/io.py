@@ -1,75 +1,54 @@
 """
-# Mode: 1 
-# Event: Control-d
+Overview
+========
 
-It opens a file selection window to pick up a file to edit.
+This plugin implements basic Key-Commands to open/save files.
 
-Whenever you press Control-d over a text area it will open a file selection window
-then after picking up a file it will load the content over the text area.
------------------------------------------------------------------------------------
+Usage
+=====
 
-# Mode: 1
-# Event: F8
+It is possible to pops a file window selection to load the contents of a file
+in a given AreaVi instance by pressing <Control-d>.
 
-It opens a file selection window to pick up a file, after you have picked up a file
-it will load the contents of the file in a new tab.
------------------------------------------------------------------------------------
+After some changes to a opened file it is possible to save the contents of the file
+by pressing <Control-s> in NORMAL mode.
 
-# Mode: 1
-# Event: F7
+The way to save the contents of an AreaVi instance as a different filename is by
+pressing <Shift-S> in NORMAL mode. It will open a file save dialog to pick up a name.
 
-It creates a new tab area. 
------------------------------------------------------------------------------------
+Sometimes it is handy to just save and quit, for such just press <Control-Escape> in NORMAL mode.
+You can just quit without saving by pressing <Shift-Escape> in NORMAL mode as well.
 
-# Mode: 1
-# Event: Control-s
+There is a Key-Command to clean all the text from a given active AreaVi instance. For such
+type <Key-D> in NORMAL mode.
 
-It saves the contents in the opened file.
------------------------------------------------------------------------------------
+Key-Commands
+============
 
-# Mode: 1
-# Event: Key-S
+Mode: NORMAL
+Event: <Control-d>
+Description: It pops a file selection window to load the contents of a file.
 
-It opens a file selection window to save the text area contents with
-in a given path. 
------------------------------------------------------------------------------------
+Mode: NORMAL
+Event: <Control-s>
+Description: It saves the content of the AreaVi instance into the opened file.
 
-# Mode: 1
-# Event: Control-Escape
+Mode: NORMAL
+Event: <Shift-S>
+Description: It pops a save file dialog to save the contents of the active AreaVi
+instance with a different filename.
 
-It saves the content of the text area then quits.
------------------------------------------------------------------------------------
+Mode: NORMAL
+Event: <Key-D>
+Description: Clear all text of the active AreaVi instance.
 
-# Mode: 1
-# Event: Shift-Escape
+Mode: NORMAL
+Event: <Control-Escape>
+Description: Save and quit.
 
-It quits.
------------------------------------------------------------------------------------
-
-# Mode: 1
-# Event: F4
-
-It adds a horizontal area.
------------------------------------------------------------------------------------
-
-# Mode: 1
-# Event: F5
-
-It adds a vertical area.
------------------------------------------------------------------------------------
-
-# Mode 1:
-# Event: F6
-
-It removes the area with focus.
------------------------------------------------------------------------------------
-
-# Mode: 1
-# Event: Delete
-
-It removes the selected tab.
------------------------------------------------------------------------------------
-
+Mode: NORMAL
+Event: <Shift-Escape>
+Description: Quit.
 """
 
 from tkMessageBox import *
@@ -131,26 +110,6 @@ def load(area):
     else:
         set_status_msg('File loaded.')
 
-def load_tab():
-    """
-    It pops a askopenfilename window to drop
-    the contents of a file into another tab's text area.
-    """
-
-    filename = askopenfilename()
-
-    # If i don't check it ends up cleaning up
-    # the text area when one presses cancel.
-
-    if not filename: 
-        return
-
-    try:
-        root.note.load([ [filename] ])
-    except Exception:
-        set_status_msg('It failed to load.')
-    else:
-        set_status_msg('File loaded.')
 
 def save(area):
     """
@@ -165,79 +124,15 @@ def save(area):
     else:
         set_status_msg('Data saved.')
 
-def add_vertical_area(area):
-    """
-    It opens a vertical area.
-    """
-
-    area.master.master.master.create()
-
-def load_vertical_area(area):
-    """
-    It opens a vertical area.
-    then asks to find a file to drop the contents
-    inside it.
-    """
-
-    pass
-
-def add_horizontal_area(area):
-    """
-    It creates a new horizontal area.
-    """
-
-    area.master.master.create()
-
-def load_horizontal_area(area):
-    """
-    It pops a window to select a file then
-    creates a new horizontal area to drop the contents
-    of the file inside.
-    """
-
-    pass
-
-def remove_area(area):
-    """
-    It removes the focused area.
-    """
-
-    if len(area.master.master.master.panes()) == 1 and len(area.master.master.panes()) == 1: return
-    
-    area.master.destroy()
-
-    if not area.master.master.panes(): area.master.master.destroy()
-
-def remove_tab():
-    """
-    It removes the selected tab.
-    """
-
-    if len(root.note.tabs()) <= 1: return
-    root.note.forget(root.note.select())
 
 
 def install(area):
     area.install(('NORMAL', '<Control-s>', lambda event: save(event.widget)),
-           ('NORMAL', '<Shift-S>', lambda event: save_as(event.widget)),
-           ('NORMAL', '<Control-d>', lambda event: load(event.widget)),
-           ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
-           ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
-           ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()),
-           ('NORMAL', '<F8>', lambda event: load_tab()),
-           ('NORMAL', '<F4>', lambda event: add_horizontal_area(event.widget)),
-           ('NORMAL', '<F5>', lambda event: add_vertical_area(event.widget)),
-           ('NORMAL', '<F6>', lambda event: remove_area(event.widget)),
-           ('NORMAL', '<F7>', lambda event: root.note.create('None')),
-           ('NORMAL', '<Delete>', lambda event: remove_tab()))
-
-
-
-
-
-
-
-
+                 ('NORMAL', '<Shift-S>', lambda event: save_as(event.widget)),
+                 ('NORMAL', '<Control-d>', lambda event: load(event.widget)),
+                 ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
+                 ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
+                 ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
 
 
 

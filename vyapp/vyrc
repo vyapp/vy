@@ -31,6 +31,14 @@ import vyapp.plugins.jump_text_mark
 autoload(vyapp.plugins.jump_text_mark)
 
 
+# Used to deal with panels.
+import vyapp.plugins.panel
+autoload(vyapp.plugins.panel)
+
+# Used to deal with tabs.
+import vyapp.plugins.notebook
+autoload(vyapp.plugins.notebook)
+
 # Implement keycommands to select text from the cursor position to the start/end of the file.
 import vyapp.plugins.select_text
 autoload(vyapp.plugins.select_text)
@@ -45,21 +53,20 @@ autoload(vyapp.plugins.default)
 import vyapp.plugins.undo
 autoload(vyapp.plugins.undo)
 
+
 # It implements keycomands to move the cursor up, down, left, right.
 import vyapp.plugins.move_cursor
 autoload(vyapp.plugins.move_cursor)
+
 
 # Quick search.
 import vyapp.plugins.quicksearch
 autoload(vyapp.plugins.quicksearch)
 
+
 # It implements keycommands to select/unselect a char on the cursor.
 import vyapp.plugins.select_char
 autoload(vyapp.plugins.select_char)
-
-# Used to control the notebook.
-import vyapp.plugins.browser
-autoload(vyapp.plugins.browser)
 
 
 # Used to insert tab_size spaces.
@@ -248,6 +255,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 

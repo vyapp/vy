@@ -1,4 +1,12 @@
 """
+Overview
+========
+
+Usage
+=====
+
+Key-Commands
+============
 
 Mode: 1
 Event: <Key-bracketright> 
@@ -20,6 +28,7 @@ def install(area):
     area.install(('NORMAL', '<Key-bracketright>', lambda event: event.widget.go_next_word()),
                  ('NORMAL', '<Key-braceright>', lambda event: event.widget.go_prev_word()),
                  ('NORMAL', '<Key-bracketleft>', lambda event: event.widget.select_word()))
+
 
 
 

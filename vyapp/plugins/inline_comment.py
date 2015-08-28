@@ -17,8 +17,8 @@ the selected block of text.
 
 The block of code will be commented based on the programming comment style of the language.
 
-Key-Commands implemented.
-=========================
+Key-Commands
+============
 
 Mode: ALPHA
 Event: <Key-e>
@@ -68,6 +68,7 @@ def rm_inline_comment(area):
 def install(area):
     area.install(('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
                  ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 
