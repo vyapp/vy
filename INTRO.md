@@ -32,7 +32,11 @@ it would appear on the status bar field Mode: INSERT. You can switch back to NOR
     <Escape>.
 
 
-The most useful Key-Command to learn is the <Key-semicolon> in NORMAL mode or ';'. With such a Key-Command you can
+The most useful Key-Command to learn is the 
+
+    <Key-semicolon> 
+
+in NORMAL mode or ';'. With such a Key-Command you can
 drop python code to vy, then execute cool stuff like getting help from the plugins.
 After pressing <key-semicolon> in NORMAL mode, it will appear an input area where you can insert python code.
 
