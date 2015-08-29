@@ -182,8 +182,8 @@ autoload(vyapp.plugins.hlink)
 
 # It implementes some features like a key command
 # to copy to the clipboard the name of the actual opened file.
-import vyapp.plugins.sigma
-autoload(vyapp.plugins.sigma)
+import vyapp.plugins.clipboard
+autoload(vyapp.plugins.clipboard)
 
 
 # This plugin is used to place the cursor over the next occurrence of
@@ -255,6 +255,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 
