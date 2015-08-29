@@ -30,19 +30,20 @@ class Find(object):
 
 
     def set_regex(self):
-        ask = Ask(self.area, 'Regex', self.regex)
+        ask = Ask(self.area, self.regex)
         self.regex = ask.data
 
         # self.regex = self.area.get_ranges('sel')
 
     def set_data(self):
-        ask = Ask(self.area, 'Replace', self.data)
+        ask = Ask(self.area,  self.data)
         self.data = ask.data
 
         # self.data = self.area.get_ranges('sel')
 
 
 install = Find
+
 
 
 
