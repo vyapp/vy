@@ -9,7 +9,7 @@ from vyapp.plugins import ENV
 import sys
 
 def exec_cmd(area, env):
-    ask    = Ask(area, 'Cmd')
+    ask    = Ask(area)
     area.active()
     exc(ask.data, env)
 
@@ -26,6 +26,7 @@ def set_target(area):
 install = lambda area: area.install(('NORMAL', '<Key-semicolon>', lambda event: exec_cmd(event.widget, ENV)), 
            ('NORMAL', '<Control-e>', lambda event: exec_region(event.widget, ENV)),
            ('NORMAL', '<Control-E>', lambda event: set_target(event.widget)))
+
 
 
 

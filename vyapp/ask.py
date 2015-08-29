@@ -2,7 +2,7 @@ from Tkinter import *
 from vyapp.app import root
 
 class Ask():
-    def __init__(self, area, title='', default_data =''):
+    def __init__(self, area, default_data =''):
         self.area = area
 
         self.frame = Frame(root.read_data, border=1, padx=3, pady=3)
@@ -48,6 +48,7 @@ if __name__ == '__main__':
     area = Tk()
     search_dialog = Ask(area, 'Ask')
     area.mainloop()
+
 
 
 

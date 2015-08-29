@@ -4,7 +4,7 @@
 from vyapp.ask import *
 
 def go_to_pos(area):
-    ask = Ask(area, 'Line.Col', '')
+    ask = Ask(area, '')
 
     if not ask.data: return
 
@@ -16,5 +16,7 @@ def go_to_pos(area):
         area.setcur(line, col)    
 
 install = lambda area: area.install(('NORMAL', '<F3>', lambda event: go_to_pos(event.widget)))
+
+
 
 

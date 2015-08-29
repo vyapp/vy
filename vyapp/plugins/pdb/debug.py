@@ -82,7 +82,7 @@ class Pdb(object):
         set_status_msg('Debug started !')
 
     def start_debug_args(self, area):
-        ask  = Ask(area, 'Arguments')
+        ask  = Ask(area)
         ARGS = 'python -u -m pdb %s %s' % (area.filename, ask.data)
         ARGS = shlex.split(ARGS)
 
@@ -166,6 +166,8 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
+
 
 
 
