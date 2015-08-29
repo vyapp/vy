@@ -49,50 +49,50 @@ with <Tab> in NORMAL mode then type <Key-semicolon>
 
 Help on module vyapp.plugins.move_cursor in vyapp.plugins:
 
-NAME
-    vyapp.plugins.move_cursor
-
-FILE
-    /usr/local/lib/python2.7/dist-packages/vyapp/plugins/move_cursor.py
-
-DESCRIPTION
-    Overview
-    ========
+    NAME
+        vyapp.plugins.move_cursor
     
-    This plugin implements the basic cursor movements.
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/move_cursor.py
     
-    Usage
-    =====
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements the basic cursor movements.
+        
+        Usage
+        =====
+        
+        The way to move the cursor up is by pressing <Key-k>, to move the cursor down <Key-j>,
+        to move the cursor left <Key-h>, to move the cursor right <Key-l>. These events
+        work in NORMAL mode.
+        
+        Key-Commands
+        ============
+        
+        Mode: NORMAL
+        Event: <Key-j> 
+        Description: Move the cursor one line down.
+        
+        
+        Mode: NORMAL
+        Event: <Key-k> 
+        Description: Move the cursor one line up.
+        
+        
+        Mode: NORMAL
+        Event: <Key-h> 
+        Description: Move the cursor one character left.
+        
+        
+        Mode: NORMAL
+        Event: <Key-l> 
+        Description: Move the cursor one character right.
     
-    The way to move the cursor up is by pressing <Key-k>, to move the cursor down <Key-j>,
-    to move the cursor left <Key-h>, to move the cursor right <Key-l>. These events
-    work in NORMAL mode.
+    FUNCTIONS
+        install(area)
     
-    Key-Commands
-    ============
-    
-    Mode: NORMAL
-    Event: <Key-j> 
-    Description: Move the cursor one line down.
-    
-    
-    Mode: NORMAL
-    Event: <Key-k> 
-    Description: Move the cursor one line up.
-    
-    
-    Mode: NORMAL
-    Event: <Key-h> 
-    Description: Move the cursor one character left.
-    
-    
-    Mode: NORMAL
-    Event: <Key-l> 
-    Description: Move the cursor one character right.
-
-FUNCTIONS
-    install(area)
-
 
 
 That is great. You got your first help. Vy is self documented, that is our philosophy !
