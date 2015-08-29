@@ -51,6 +51,7 @@ def add_inline_comment(area):
     def rep(index0, index1):
         return '%s%s ' % (area.get(index0, index1), comment)
     area.tag_replace_ranges('sel', '^ +|^', rep)
+    area.clear_selection()
 
 def rm_inline_comment(area):
     """
@@ -64,10 +65,13 @@ def rm_inline_comment(area):
         chk = chk.replace(comment, '')
         return chk
     area.tag_replace_ranges('sel', '^ *%s ?' % comment, rep)
+    area.clear_selection()
 
 def install(area):
     area.install(('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
                  ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
+
 
 
 
