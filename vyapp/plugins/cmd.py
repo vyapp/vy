@@ -42,3 +42,4 @@ install = lambda area: area.install(('NORMAL', '<Key-semicolon>', lambda event: 
 
 
 
+

@@ -6,6 +6,7 @@ class StatusBar(Frame):
         Frame.__init__(self, master)
         self.is_on = False
         self.config(border=1)
+
         self.msg = Label(self, bd=1, relief=SUNKEN, anchor=W)
         self.msg.pack(side='left', expand=True, fill=X)
 
@@ -57,6 +58,7 @@ class StatusBar(Frame):
     def switch(self):    
         if self.is_on: self.pack_forget()
         else: self.pack(*self.args, **self.kwargs)
+
 
 
 
