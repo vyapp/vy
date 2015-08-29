@@ -1,3 +1,24 @@
+"""
+Overview
+========
+
+Used to insert tabs based on the type of file being edited.
+
+Usage
+=====
+
+This plugin implements a Key-Command in INSERT mode to insert a tab/space
+based on the type of programming file being edited.
+
+Key-Commands
+============
+
+Mode: INSERT
+Event: <Tab>
+Description: Insert a tab/space based on the programming file type.
+
+"""
+
 from os.path import splitext
 
 class Tab(object):
@@ -20,6 +41,7 @@ class Tab(object):
     
 
 install = Tab
+
 
 
 

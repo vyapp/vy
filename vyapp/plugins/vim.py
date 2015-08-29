@@ -1,50 +1,62 @@
 """
+Overview
+========
 
-Mode: 1
+This plugin implements a set of basic functionalities to deal with text. Like copying,
+cutting, deleting, pasting text to the clipboard.
+
+Usage
+=====
+
+
+Key-Commands
+============
+
+Mode: NORMAL
 Event: <Key-d> 
 Description: Delete selection of text.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-x> 
 Description: Delete a line where the cursor is on.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-z> 
 Description: Delete a char from the cursor position.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-y> 
 Description: Copy selection to the clipboard.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-u> 
 Description: Cut selection then add to the clipboard.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-t> 
 Description: Paste text from the clipboard in the cursor position.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-r> 
 Description: Paste text from the clipboard one line down.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Key-e> 
 Description: Paste text from the clipboard one line up.
 
-Mode: 1
+Mode: NORMAL
 Event: <Control-Y> 
 Description: Add selection to the clipboard with a separator \n.
 
 
-Mode: 1
+Mode: NORMAL
 Event: <Control-U> 
 Description: Cut selection and add to the clipboard with a separator \n.
 
@@ -66,6 +78,7 @@ def install(area):
                  ('NORMAL', '<Control-Y>', lambda event: event.widget.cpblock()),
                  ('NORMAL', '<Control-U>', lambda event: event.widget.ctblock()))
         
+
 
 
 
