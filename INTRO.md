@@ -22,10 +22,14 @@ a Key-Command in NORMAL mode.
 
 
 The basic two modes of vy are NORMAL and INSERT. The normal mode is in which vy starts. The INSERT mode is used
-to insert data in the AreaVi instance. In order to switch to INSERT mode from NORMAL mode you press <Key-i>.
+to insert data in the AreaVi instance. In order to switch to INSERT mode from NORMAL mode you press 
+
+    <Key-i>.
 
 The statusbar field Mode shows in which mode vy is in. Once you change to INSERT mode by pressing <Key-i> in NORMAL mode
-it would appear on the status bar field Mode: INSERT. You can switch back to NORMAL mode by pressing <Escape>.
+it would appear on the status bar field Mode: INSERT. You can switch back to NORMAL mode by pressing 
+
+    <Escape>.
 
 
 The most useful Key-Command to learn is the <Key-semicolon> in NORMAL mode or ';'. With such a Key-Command you can
@@ -42,7 +46,11 @@ appear wherever you have set the output the plugin help.
 
 Let us try with the most important plugin that is move_cursor.
 Pick up the position in which you want the help to appear inside the active text area
-with <Tab> in NORMAL mode then type <Key-semicolon>
+with 
+
+    <Tab> 
+
+in NORMAL mode then type <Key-semicolon>
 
     help(vyapp.plugins.move_cursor)
 
