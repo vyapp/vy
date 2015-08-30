@@ -32,13 +32,6 @@ it would appear on the status bar field Mode: INSERT. You can switch back to NOR
     <Escape>.
 
 
-The most useful Key-Command to learn is the 
-
-    <Key-semicolon> 
-
-in NORMAL mode or ';'. With such a Key-Command you can
-drop python code to vy, then execute cool stuff like getting help from the plugins.
-After pressing <key-semicolon> in NORMAL mode, it will appear an input area where you can insert python code.
 
 Before dropping python commands to vy it is needed to set where the output should be printed. For such you need
 to use the key <Tab> in NORMAL mode. Place the cursor in the AreaVi instance that you want to drop the output of the python commands
@@ -108,6 +101,116 @@ Help on module vyapp.plugins.move_cursor in vyapp.plugins:
 
 
 That is great. You got your first help. Vy is self documented, that is our philosophy !
+
+Now let us inspect other important plugin. Type 
+    <Key-semicolon> 
+
+in NORMAL mode then type 
+    vyapp.plugins.io
+
+
+Help on module vyapp.plugins.io in vyapp.plugins:
+
+NAME
+    vyapp.plugins.io
+
+FILE
+    /usr/local/lib/python2.7/dist-packages/vyapp/plugins/io.py
+
+DESCRIPTION
+    Overview
+    ========
+    
+    This plugin implements basic Key-Commands to open/save files.
+    
+    Usage
+    =====
+    
+    It is possible to pops a file window selection to load the contents of a file
+    in a given AreaVi instance by pressing <Control-d>.
+    
+    After some changes to a opened file it is possible to save the contents of the file
+    by pressing <Control-s> in NORMAL mode.
+    
+    The way to save the contents of an AreaVi instance as a different filename is by
+    pressing <Shift-S> in NORMAL mode. It will open a file save dialog to pick up a name.
+    
+    Sometimes it is handy to just save and quit, for such just press <Control-Escape> in NORMAL mode.
+    You can just quit without saving by pressing <Shift-Escape> in NORMAL mode as well.
+    
+    There is a Key-Command to clean all the text from a given active AreaVi instance. For such
+    type <Key-D> in NORMAL mode.
+    
+    Key-Commands
+    ============
+    
+    Mode: NORMAL
+    Event: <Control-d>
+    Description: It pops a file selection window to load the contents of a file.
+    
+    Mode: NORMAL
+    Event: <Control-s>
+    Description: It saves the content of the AreaVi instance into the opened file.
+    
+    Mode: NORMAL
+    Event: <Shift-S>
+    Description: It pops a save file dialog to save the contents of the active AreaVi
+    instance with a different filename.
+    
+    Mode: NORMAL
+    Event: <Key-D>
+    Description: Clear all text of the active AreaVi instance.
+    
+    Mode: NORMAL
+    Event: <Control-Escape>
+    Description: Save and quit.
+    
+    Mode: NORMAL
+    Event: <Shift-Escape>
+    Description: Quit.
+
+FUNCTIONS
+    install(area)
+    
+    load(area)
+        It pops a askopenfilename to find a file to drop
+        the contents in the focused text area.
+    
+    save(area)
+        It just saves the text area contents into the    
+        actual opened file.
+    
+    save_as(area)
+        It pops a asksaveasfilename window to save the contents of
+        the text area.
+    
+    save_quit(area)
+        It saves the contents of the text area then quits.
+
+DATA
+    ABORT = 'abort'
+    ABORTRETRYIGNORE = 'abortretryignore'
+    CANCEL = 'cancel'
+    ERROR = 'error'
+    IGNORE = 'ignore'
+    INFO = 'info'
+    NO = 'no'
+    OK = 'ok'
+    OKCANCEL = 'okcancel'
+    QUESTION = 'question'
+    RETRY = 'retry'
+    RETRYCANCEL = 'retrycancel'
+    WARNING = 'warning'
+    YES = 'yes'
+    YESNO = 'yesno'
+    YESNOCANCEL = 'yesnocancel'
+    root = <vyapp.app.App instance>
+
+
+
+
+
+
 
 
 
