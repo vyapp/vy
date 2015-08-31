@@ -55,6 +55,7 @@ with
 
 in NORMAL mode then type <Key-semicolon>
 
+#########################################################################################################################################
     help(vyapp.plugins.move_cursor)
 
 
@@ -104,6 +105,7 @@ in NORMAL mode then type <Key-semicolon>
     FUNCTIONS
         install(area)
     
+#########################################################################################################################################
 
 
 That is great. You got your first help. Vy is self documented, that is our philosophy !
@@ -119,6 +121,7 @@ Then insert
     vyapp.plugins.io
 
 The help for vyapp.plugins.io will appear.
+#########################################################################################################################################
 
 
     Help on module vyapp.plugins.io in vyapp.plugins:
@@ -219,9 +222,12 @@ The help for vyapp.plugins.io will appear.
         root = <vyapp.app.App instance>
     
     
+#########################################################################################################################################
+
 Try now with.
 
     help(vyapp.plugins.insert_line)
+#########################################################################################################################################
 
 
     Help on module vyapp.plugins.insert_line in vyapp.plugins:
@@ -265,11 +271,13 @@ Try now with.
     
     
     
+#########################################################################################################################################
 Let us see what 
     
     help(vyapp.plugins.jump_line_mark)
 
 implements.
+#########################################################################################################################################
 
 
     Help on module vyapp.plugins.jump_line_mark in vyapp.plugins:
@@ -310,10 +318,12 @@ implements.
     
     
 
+#########################################################################################################################################
 Now
 
     help(vyapp.plugins.jump_text_mark)
 
+#########################################################################################################################################
 
     Help on module vyapp.plugins.jump_text_mark in vyapp.plugins:
     
@@ -351,12 +361,13 @@ Now
         install(area)
 
 
+#########################################################################################################################################
 
-    
 What if you wanted to shade some lines then be able to make the cursor jump
 back/next to these shaded lines?
 
     help(vyapp.plugins.shade)
+#########################################################################################################################################
 
 
     Help on module vyapp.plugins.shade in vyapp.plugins:
