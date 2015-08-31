@@ -138,6 +138,15 @@ The ALPHA mode
 The BETA mode
 ==============
 
+
+Using vy as a terminal
+======================
+
+
+E-scripts
+=========
+
+
 The vy plugins
 ==============
 
@@ -1285,6 +1294,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ## The python debugger plugin
 shit
+
 
 
 
