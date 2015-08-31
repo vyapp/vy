@@ -42,37 +42,29 @@ Execute Inline Python
 =====================
 
 Before dropping python commands to vy it is needed to set where the output should be printed. For such you need
-to use the key <Tab> in NORMAL mode. Place the cursor in the AreaVi instance that you want to drop the output of the python commands
-at the line.row then press <Tab> in NORMAL mode. It will show on the status bar that the output was redirected to that position.
+to use a Key-Command. Place the cursor in the AreaVi instance that you want to drop the output of the python commands
+at the line.row then press 
 
-After redirecting the output, you're done, just press <Key-semicolon> in NORMAL mode. It will appear an input text field
-where you can drop python commands to vy whose output will be dropped at the AreaVi instance position 
-that you set with <Tab> in NORMAL mode.
+    <Tab> 
 
-## Step by step
+in NORMAL mode. It will show on the status bar that the output was redirected to that position.
 
-Once vy is started it will be in NORMAL mode. Just press 
+After redirecting the output, you're done, just press 
 
-    <Tab>
+    <Key-semicolon>
 
-it will print a msg on the status bar that says you have set a output drop mark at that position.
+in NORMAL mode. It will appear an input text field where you can drop python commands to vy 
+whose output will be dropped at the AreaVi instance position that you have set.
 
-Now, press <Key-semicolon> in NORMAL mode or ';' it will show up an input text field.
-Input the following python code in it.
+Try inserting the following python code.
 
 ~~~python
     print 'Hello from vy'
 ~~~
 
-After you press enter, the AreaVi instance from where you issued the event 
-    <Key-semicolon>
-
-in NORMAL mode will regain the focus and the output from the command will be dropped at the position that you have set
-with 
-
-    <Tab> 
-
-in NORMAL mode.
+After you press enter, the AreaVi instance from where you issued the event in NORMAL mode will regain 
+the focus and the output from the command will be dropped at the position that you have set
+as target output.
 
 try now typing other commands like.
 
@@ -106,29 +98,25 @@ all kind of different tasks.
 Vy offers a consistent plugin interface with a powerful scheme to affect the state of the editor
 through python code.
 
-## Getting plugin help
-
-The way to get help from a plugin is through dropping python code to the interpreter.
-First you set the position in which the output should appear with 
-
-    <Tab> 
-
-in NORMAL mode then you press 
-
-    <Key-semicolon>
-
-in NORMAL mode as well. So you drop
+One can obtain help from a plugin doc definition by dropping.
 
 ~~~python
     help(vyapp.plugins.plugin_name)
 ~~~
 
-The help for the plugin would be outputed on the AreaVi instance tht you have set the drop mark.
+The help for the plugin would be outputed on the AreaVi instance that you have set the drop mark.
 
 Try getting help from 
 
+~~~python
     help(vyapp.plugins.move_cursor)
+~~~
 
+The ALPHA mode
+==============
+
+The BETA mode
+==============
 
 The vy plugins
 ==============
@@ -1273,7 +1261,9 @@ That is great. You got your first help. Vy is self documented, that is our philo
     FUNCTIONS
         install(area)
     
+## The syntax highlight plugin
 
+## The python debugger plugin
 
 
 
