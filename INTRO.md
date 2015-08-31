@@ -130,14 +130,31 @@ Try getting help from
     help(vyapp.plugins.move_cursor)
 
 
-Plugins and Key-Commands
-========================
+The vy plugins
+==============
 
 Vy is highly modular, it permits a good level of self documentation. Every plugin
 implemented in vy is self documented. The best way to get help is through our help python function.
 
-Set an AreaVi instance with <Tab> then drop help(vyapp.plugins.plugin_name) to the python
-interpreter through <Key-semicolon> then it will output the docs for the plugin.
+Set an AreaVi instance with 
+
+    <Tab> 
+
+in NORMAL mode.
+
+Press 
+
+    <Key-semicolon> 
+
+in NORMAL mode. It will show up an input text field then insert.
+
+    help(vyapp.plugins.plugin_name) 
+
+then press
+
+    <Enter>
+
+then it will output the docs for the plugin.
 
 ## Cursor movement
 
