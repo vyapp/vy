@@ -21,6 +21,9 @@ Vy implements mechanisms to drop python code to the python interpreter. The simp
 a Key-Command in NORMAL mode.
 
 
+Basic Modes
+===========
+
 The basic two modes of vy are NORMAL and INSERT. The normal mode is in which vy starts. The INSERT mode is used
 to insert data in the AreaVi instance. In order to switch to INSERT mode from NORMAL mode you press 
 
@@ -31,34 +34,87 @@ it would appear on the status bar field Mode: INSERT. You can switch back to NOR
 
     <Escape>.
 
+The NORMAL mode is where most basic plugins are implemented in. This mode offers all kind of handy Key-Commands
+like opening files, saving files, jumping the cursor to positions, searching pattern of text, replacing ranges
+of text etc.
 
+Execute Inline Python
+=====================
 
 Before dropping python commands to vy it is needed to set where the output should be printed. For such you need
 to use the key <Tab> in NORMAL mode. Place the cursor in the AreaVi instance that you want to drop the output of the python commands
 at the line.row then press <Tab> in NORMAL mode. It will show on the status bar that the output was redirected to that position.
 
-After redirecting the output, you're done, just press <Key-semicolon> in NORMAL mode. It will appear a input bar
-where you can drop python commands to vy those output will be dropped at the AreaVi instance that you set with <Tab> in NORMAL mode.
+After redirecting the output, you're done, just press <Key-semicolon> in NORMAL mode. It will appear an input text field
+where you can drop python commands to vy whose output will be dropped at the AreaVi instance position 
+that you set with <Tab> in NORMAL mode.
 
-Insert 
+## Step by step
 
-    help(vyapp.plugins.plugin_name) 
+Once vy is started it will be in NORMAL mode. Just press <Tab>
+it will print a msg on the status bar that says you have set a output drop mark at that position.
 
-Then it will print on the AreaVi instance the doc reference for the plugin_name.
+Now, press <Key-semicolon> in NORMAL mode or ';' it will show up an input text field.
+Input the following python code in it.
 
-Let us try with the most important plugin that is move_cursor.
-Pick up the position in which you want the help to appear inside the active text area
-with 
+~~~python
+    print 'Hello from vy'
+~~~
 
+After you press enter, the AreaVi instance from where you issued the event <Key-semicolon> in NORMAL mode will
+regain the focus and the output from the command will be dropped at the position that you have set
+with <Tab> in NORMAL mode.
 
-    <Tab> 
+try now typing other commands like.
 
-in NORMAL mode then type <Key-semicolon>
+~~~python
+for ind in xrange(10):
+    print ind
+~~~
 
-#########################################################################################################################################
+Switch to INSERT mode by pressing <Key-i> or 'i' in NORMAL mode, insert some blank lines then
+switch back to NORMAL mode by pressing <Escape>.
+
+Then try picking up a different position where to drop python code output by pressing <Tab> in
+NORMAL mode.
+
+You will notice that it is possible to set different places where to drop python code output.
+It is particularly useful in some situations.
+
+When dealing with vim, one drops vim commands to vim, when dealing with vy one inserts
+python functions. You can define your own python functions inside plugins to perform 
+all kind of different tasks.
+
+Vy offers a consistent plugin interface with a powerful scheme to affect the state of the editor
+through python code.
+
+## Getting plugin help
+
+The way to get help from a plugin is through dropping python code to the interpreter.
+First you set the position in which the output should appear with <Tab> in NORMAL mode
+then you press <Key-semicolon> in NORMAL mode as well. So you drop
+
+~~~python
+    help(vyapp.plugins.plugin_name)
+~~~
+
+The help for the plugin would be outputed on the AreaVi instance tht you have set the drop mark.
+
+Try getting help from 
 
     help(vyapp.plugins.move_cursor)
 
+
+Plugins and Key-Commands
+========================
+
+Vy is highly modular, it permits a good level of self documentation. Every plugin
+implemented in vy is self documented. The best way to get help is through our help python function.
+
+Set an AreaVi instance with <Tab> then drop help(vyapp.plugins.plugin_name) to the python
+interpreter through <Key-semicolon> then it will output the docs for the plugin.
+
+## Cursor movement
 
     Help on module vyapp.plugins.move_cursor in vyapp.plugins:
     
@@ -105,26 +161,12 @@ in NORMAL mode then type <Key-semicolon>
     
     FUNCTIONS
         install(area)
-    
-#########################################################################################################################################
 
 
 That is great. You got your first help. Vy is self documented, that is our philosophy !
 
-Now let us inspect other important plugin. Type 
 
-    <Key-semicolon> 
-
-in NORMAL mode.
-
-Then insert
-
-    vyapp.plugins.io
-
-The help for vyapp.plugins.io will appear.
-
-#########################################################################################################################################
-
+## Open, Save, files
 
     Help on module vyapp.plugins.io in vyapp.plugins:
     
@@ -223,14 +265,8 @@ The help for vyapp.plugins.io will appear.
         YESNOCANCEL = 'yesnocancel'
         root = <vyapp.app.App instance>
     
-    
-#########################################################################################################################################
 
-Try now with.
-
-    help(vyapp.plugins.insert_line)
-#########################################################################################################################################
-
+## Insert blank lines
 
     Help on module vyapp.plugins.insert_line in vyapp.plugins:
     
@@ -272,15 +308,7 @@ Try now with.
         install(area)
     
     
-    
-#########################################################################################################################################
-Let us see what 
-    
-    help(vyapp.plugins.jump_line_mark)
-
-implements.
-#########################################################################################################################################
-
+## Jump to the start/end of lines
 
     Help on module vyapp.plugins.jump_line_mark in vyapp.plugins:
     
@@ -319,13 +347,7 @@ implements.
         install(area)
     
     
-
-#########################################################################################################################################
-Now
-
-    help(vyapp.plugins.jump_text_mark)
-
-#########################################################################################################################################
+## Jump to the start/end of file
 
     Help on module vyapp.plugins.jump_text_mark in vyapp.plugins:
     
@@ -363,14 +385,8 @@ Now
         install(area)
 
 
-#########################################################################################################################################
 
-What if you wanted to shade some lines then be able to make the cursor jump
-back/next to these shaded lines?
-
-    help(vyapp.plugins.shade)
-#########################################################################################################################################
-
+## Create text marks/shade lines.
 
     Help on module vyapp.plugins.shade in vyapp.plugins:
     
@@ -436,8 +452,7 @@ back/next to these shaded lines?
     
 
 
-This plugin now is used to manage tabs.
-
+## Managing tabs
 
     help(vyapp.plugins.notebook)
 
@@ -525,12 +540,8 @@ This plugin now is used to manage tabs.
         YESNO = 'yesno'
         YESNOCANCEL = 'yesnocancel'
         root = <vyapp.app.App instance>
-    
 
-
-
-This one to create/remove vertical/horizontal panes.
-
+## Managing panes
 
     help(vyapp.plugins.panel)
 
@@ -650,11 +661,7 @@ This one to create/remove vertical/horizontal panes.
     
 
 
-This plugin is handy to make the cursor jump through words.
-
-
-    help(vyapp.plugins.match_word)
-
+## Jump through words
 
     Help on module vyapp.plugins.match_word in vyapp.plugins:
     
@@ -703,11 +710,7 @@ This plugin is handy to make the cursor jump through words.
     
 
 
-This one is to make the cursor jump to a set of symbols.
-
-
-    help(vyapp.plugins.match_sym)
-
+## Jumping through symbols
 
     Help on module vyapp.plugins.match_sym in vyapp.plugins:
     
@@ -763,10 +766,7 @@ This one is to make the cursor jump to a set of symbols.
         install(area)
     
     
-It is useful to comment blocks of code quickly...
-
-    help(vyapp.plugins.inline_comment)
-
+## Commenting blocks of code.
 
     Help on module vyapp.plugins.inline_comment in vyapp.plugins:
     
@@ -821,8 +821,7 @@ It is useful to comment blocks of code quickly...
     
 
 
-Now the select_sym plugin that is useful when dealing with lisp like languages.
-
+## Selecting blocks of code between ( ) { } [ ]
 
     help(vyapp.plugins.select_sym_pair)
 
@@ -859,11 +858,9 @@ Now the select_sym plugin that is useful when dealing with lisp like languages.
     
     FUNCTIONS
         install(area)
-    
 
 
-A set of useful Key-Commands to select pieces of text.
-
+## Adding selection to pieces of text
 
     help(vyapp.plugins.select_text)
 
@@ -916,8 +913,7 @@ A set of useful Key-Commands to select pieces of text.
     
 
 
-This one is used to do undo/do operations.
-
+## How to redo/undo operations
 
     help(vyapp.plugins.undo)
 
@@ -943,6 +939,308 @@ This one is used to do undo/do operations.
     FUNCTIONS
         install(area)
     
+
+## Copying to the clipboard the complete file path of the file being edited.
+
+    help(vyapp.plugins.clipboard)
+
+
+    Help on module vyapp.plugins.clipboard in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.clipboard
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/clipboard.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        It is handy to quickly get the absolute path of the file that is being edited. This plugin
+        implements a Key-Command for that.
+        
+        Usage
+        =====
+        
+        When a file is opened, vy holds a complete path for the file. It is possible
+        to put such a complete path in the clipboard area for other purposes. For such
+        switch to ALPHA mode by pressing <Key-3> in NORMAL mode then press <Key-u>.
+        
+        After pressing <Key-u> in ALPHA mode there will appear a msg on the status bar notifying that
+        the complete path was copied to the clipboard.
+        
+        Key-Commands
+        ============
+        
+        Mode: ALPHA
+        Event: <Key-u>
+        Description: Copies the complete path of the file to the clipboard.
+    
+    FUNCTIONS
+        clip_ph(area)
+            Sends filename path to clipboard.
+        
+        install(area)
+    
+
+To do block selection...
+
+    help(vyapp.plugins.block_selection)
+
+
+    Help on module vyapp.plugins.block_selection in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.block_selection
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/block_selection.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements block selection of text.
+        
+        Usage
+        =====
+        
+        There are situations where range selection is not sufficient. It may be needed
+        to select blocks of text. For such, switch to NORMAL mode then place the cursor
+        over the starting of the block that needs to be selected then press <Control-V>
+        to drop a mark at that place. 
+        
+        After pressing <Control-V> there will appear a msg on the statusbar telling the block selection mark
+        was dropped.
+        
+        In order to add selection to the region you use the keys <Control-K>, <Control-J>,
+        <Control-H>, <Control-L> in NORMAL mode to move the cursor around then adding selection to the region.
+        
+        Whenever <Control-V> in NORMAL mode is pressed the block selection mark will change it turns possible to have
+        multiple regions of text selected.
+        
+        
+        Key-Commands
+        ============
+        
+        Mode: NORMAL
+        Event: <Control-K> 
+        Description: Add block selection one line up.
+        
+        
+        Mode: NORMAL
+        Event: <Control-J>
+        Description: Add block selection one line down.
+        
+        Mode: NORMAL
+        Event: <Control-H>
+        Description: Add block selection one char left.
+        
+        Mode: NORMAL
+        Event: <Control-L>
+        Description: Add block selection one char right.
+    
+    FUNCTIONS
+        drop_start_mark(area)
+        
+        install(area)
+    
+
+To do range selection.
+
+    help(vyapp.plugins.range_selection)
+
+
+    Help on module vyapp.plugins.range_selection in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.range_selection
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/range_selection.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements range selection.
+        
+        Usage
+        =====
+        
+        First of all it is needed to drop a selection mark to start range selection.
+        Switch to NORMAL mode then type <Control-v>.
+        
+        Once the selection mark is dropped you can start selection by using the keys <Control-h>,
+        <Control-j>, <Control-k>, <Control-l> in NORMAL mode.
+        
+        Key-Commands
+        ============
+        
+        Mode: NORMAL
+        Event: <Control-k> 
+        Description: Add/remove selection one line up from the initial selection mark.
+        
+        
+        Mode: NORMAL
+        Event: <Control-j> 
+        Description: Add/remove selection one line down from the initial selection mark.
+        
+        
+        Mode: NORMAL
+        Event: <Control-l> 
+        Description: Add/remove selection one character right from the initial selection mark.
+        
+        
+        Mode: NORMAL
+        Event: <Control-h> 
+        Description: Add/remove selection one character left from the initial selection mark.
+        
+        
+        Mode: NORMAL
+        Event: <Control-v> 
+        Description: Drop a selection mark.
+    
+    FUNCTIONS
+        drop_selection_mark(area)
+        
+        install(area)
+    
+
+Scroll line plugin.
+
+    help(vyapp.plugins.scroll_line)
+
+
+    Help on module vyapp.plugins.scroll_line in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.scroll_line
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/scroll_line.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements Key-Commands to scroll lines.
+        
+        Usage
+        =====
+        
+        In order to scroll the document one line up you press <Key-w> in NORMAL mode.
+        To scroll one line down press <Key-s> in NORMAL mode.
+        
+        Key-Commands
+        ============
+        
+        Mode: NORMAL
+        Event: <Key-w> 
+        Description: Scroll one line up.
+        
+        
+        Mode: NORMAL
+        Event: <Key-s> 
+        Description: Scroll one line down.
+    
+    FUNCTIONS
+        install(area)
+    
+
+
+The scroll page plugin.
+
+    help(vyapp.plugins.scroll_page)
+
+
+    Help on module vyapp.plugins.scroll_page in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.scroll_page
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/scroll_page.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin turns possible to scroll pages.
+        
+        Usage
+        =====
+        
+        Press <Key-q> in NORMAL mode to scroll one page up.
+        Press <Key-a> in NORMAL mode to scroll one page down.
+        
+        Key-Commands
+        ============
+        
+        Mode: NORMAL
+        Event: <Key-q> 
+        Description: Scroll a page up.
+        
+        
+        Mode: NORMAL
+        Event: <Key-a> 
+        Description: Scroll one page down.
+    
+    FUNCTIONS
+        install(area)
+
+
+The select_line plugin.
+
+    help(vyapp.plugins.select_line)
+
+
+    Help on module vyapp.plugins.select_line in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.select_line
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/select_line.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements Key-Commands to select lines and chunks of text inside a line.
+        
+        Usage
+        =====
+        
+        Once in NORMAL mode if you press <Key-f> then the line whose cursor is on will be selected.
+        
+        In order to select a given range of the line from the cursor position you can type <Control-o> that
+        will select the range of the line starting from the cursor position to the beginning of the line.
+        
+        In order to select a range of the line from the cursor position to the end of the line you type
+        <Control-p> in NORMAL mode.
+        
+        Key-Commands
+        ============
+        
+        Mode: NORMAL
+        Event: <Key-f> 
+        Description: Add selection to a line over the cursor.
+        
+        Mode: NORMAL
+        Event: <Control-o> 
+        Description: Add selection from the cursor position to the beginning of the line.
+        
+        
+        Mode: NORMAL
+        Event: <Control-p> 
+        Description: Add selection from the cursor position to the end of the line.
+    
+    FUNCTIONS
+        install(area)
+    
+
 
 
 
