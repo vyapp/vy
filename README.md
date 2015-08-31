@@ -74,6 +74,15 @@ for ircclient, filemanagers, browsing specific type of files, generating latex c
 
 ![screenshot](screenshot.jpg)
 
+What did Bram Moolenaar say about vy?
+=====================================
+
+When i visited Bram in the beginning of vy development he told me that the philosophy behind
+vy was great. He said that if i managed to do it extremely modular and clear it had a great chance
+to substitute vim in the future.
+
+I'm working on a ncurses based library with a symmetrical archicture to python tkinter. Once it is done
+vy will run a text based terminal sweetly.
 
 Install
 =======
@@ -139,6 +148,7 @@ idea of implementing an editor/ide in pure python on top of Tkinter that is such
 graphical toolkit.
 
 ...
+
 
 
 
