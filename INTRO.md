@@ -20,6 +20,26 @@ the output of what the interpreter should print to the real sys.stdout.
 Vy implements mechanisms to drop python code to the python interpreter. The simplest mechanism is through
 a Key-Command in NORMAL mode.
 
+The Key-Commands definition
+===========================
+
+Along this intro i'll use some terms like Key-Commands, AreaVi instances. A Key-Command
+is an event that happens when an AreaVi instance has focus. It is when you press some key
+from your keyboard or open a file/save a file.
+
+An AreaVi instance is a class instance of the Tkinter Text widget from which AreaVi inherits from.
+AreaVi implements new features that turn the Text tkinter widget more powerful.
+It is possible to create multiple AreaVi instances by creating new tabs or panes.
+
+A Key-Command happens when there is a handle mapped to an event like 
+    
+    <Key-i>
+
+It means when you press 'i' in a given mode, vy will call a handle mapped to that event that corresponds to the
+mode in which vy is in.
+
+It is possible to have multiple AreaVi instances that are in different modes. The mode statusbar field
+shows in which mode the AreaVi instance that has focus is in.
 
 Basic Modes
 ===========
@@ -1265,6 +1285,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ## The python debugger plugin
 shit
+
 
 
 
