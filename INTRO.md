@@ -27,12 +27,12 @@ Basic Modes
 The basic two modes of vy are NORMAL and INSERT. The normal mode is in which vy starts. The INSERT mode is used
 to insert data in the AreaVi instance. In order to switch to INSERT mode from NORMAL mode you press 
 
-    <Key-i>.
+    <Key-i>
 
 The statusbar field Mode shows in which mode vy is in. Once you change to INSERT mode by pressing <Key-i> in NORMAL mode
 it would appear on the status bar field Mode: INSERT. You can switch back to NORMAL mode by pressing 
 
-    <Escape>.
+    <Escape>
 
 The NORMAL mode is where most basic plugins are implemented in. This mode offers all kind of handy Key-Commands
 like opening files, saving files, jumping the cursor to positions, searching pattern of text, replacing ranges
@@ -51,7 +51,10 @@ that you set with <Tab> in NORMAL mode.
 
 ## Step by step
 
-Once vy is started it will be in NORMAL mode. Just press <Tab>
+Once vy is started it will be in NORMAL mode. Just press 
+
+    <Tab>
+
 it will print a msg on the status bar that says you have set a output drop mark at that position.
 
 Now, press <Key-semicolon> in NORMAL mode or ';' it will show up an input text field.
@@ -61,9 +64,15 @@ Input the following python code in it.
     print 'Hello from vy'
 ~~~
 
-After you press enter, the AreaVi instance from where you issued the event <Key-semicolon> in NORMAL mode will
-regain the focus and the output from the command will be dropped at the position that you have set
-with <Tab> in NORMAL mode.
+After you press enter, the AreaVi instance from where you issued the event 
+    <Key-semicolon>
+
+in NORMAL mode will regain the focus and the output from the command will be dropped at the position that you have set
+with 
+
+    <Tab> 
+
+in NORMAL mode.
 
 try now typing other commands like.
 
@@ -72,11 +81,20 @@ for ind in xrange(10):
     print ind
 ~~~
 
-Switch to INSERT mode by pressing <Key-i> or 'i' in NORMAL mode, insert some blank lines then
-switch back to NORMAL mode by pressing <Escape>.
+Switch to INSERT mode by pressing 
 
-Then try picking up a different position where to drop python code output by pressing <Tab> in
-NORMAL mode.
+    <Key-i>
+
+or 'i' in NORMAL mode, insert some blank lines then
+switch back to NORMAL mode by pressing 
+
+    <Escape>
+
+Then try picking up a different position where to drop python code output by pressing 
+
+    <Tab>
+
+in NORMAL mode.
 
 You will notice that it is possible to set different places where to drop python code output.
 It is particularly useful in some situations.
@@ -91,8 +109,15 @@ through python code.
 ## Getting plugin help
 
 The way to get help from a plugin is through dropping python code to the interpreter.
-First you set the position in which the output should appear with <Tab> in NORMAL mode
-then you press <Key-semicolon> in NORMAL mode as well. So you drop
+First you set the position in which the output should appear with 
+
+    <Tab> 
+
+in NORMAL mode then you press 
+
+    <Key-semicolon>
+
+in NORMAL mode as well. So you drop
 
 ~~~python
     help(vyapp.plugins.plugin_name)
@@ -984,10 +1009,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
         install(area)
     
 
-To do block selection...
-
-    help(vyapp.plugins.block_selection)
-
+## Block selection
 
     Help on module vyapp.plugins.block_selection in vyapp.plugins:
     
@@ -1047,7 +1069,7 @@ To do block selection...
         install(area)
     
 
-To do range selection.
+## Range Selection
 
     help(vyapp.plugins.range_selection)
 
@@ -1108,10 +1130,7 @@ To do range selection.
         install(area)
     
 
-Scroll line plugin.
-
-    help(vyapp.plugins.scroll_line)
-
+## Scroll line up/down
 
     Help on module vyapp.plugins.scroll_line in vyapp.plugins:
     
@@ -1150,10 +1169,7 @@ Scroll line plugin.
     
 
 
-The scroll page plugin.
-
-    help(vyapp.plugins.scroll_page)
-
+## Scroll page up/down
 
     Help on module vyapp.plugins.scroll_page in vyapp.plugins:
     
@@ -1191,7 +1207,7 @@ The scroll page plugin.
         install(area)
 
 
-The select_line plugin.
+## Adding selection to lines
 
     help(vyapp.plugins.select_line)
 
