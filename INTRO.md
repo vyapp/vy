@@ -153,7 +153,7 @@ The vy plugins
 Vy is highly modular, it permits a good level of self documentation. Every plugin
 implemented in vy is self documented. The best way to get help is through our help python function.
 
-Set an AreaVi instance with 
+Set the output target on an AreaVi instance with 
 
     <Tab> 
 
@@ -1294,6 +1294,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ## The python debugger plugin
 shit
+
 
 
 
