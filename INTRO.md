@@ -58,8 +58,8 @@ in NORMAL mode then type <Key-semicolon>
     help(vyapp.plugins.move_cursor)
 
 
-Help on module vyapp.plugins.move_cursor in vyapp.plugins:
-
+    Help on module vyapp.plugins.move_cursor in vyapp.plugins:
+    
     NAME
         vyapp.plugins.move_cursor
     
@@ -359,8 +359,8 @@ back/next to these shaded lines?
     help(vyapp.plugins.shade)
 
 
-Help on module vyapp.plugins.shade in vyapp.plugins:
-
+    Help on module vyapp.plugins.shade in vyapp.plugins:
+    
     NAME
         vyapp.plugins.shade
     
@@ -429,8 +429,8 @@ This plugin now is used to manage tabs.
     help(vyapp.plugins.notebook)
 
 
-Help on module vyapp.plugins.notebook in vyapp.plugins:
-
+    Help on module vyapp.plugins.notebook in vyapp.plugins:
+    
     NAME
         vyapp.plugins.notebook
     
@@ -522,8 +522,8 @@ This one to create/remove vertical/horizontal panes.
     help(vyapp.plugins.panel)
 
 
-Help on module vyapp.plugins.panel in vyapp.plugins:
-
+    Help on module vyapp.plugins.panel in vyapp.plugins:
+    
     NAME
         vyapp.plugins.panel
     
@@ -755,57 +755,57 @@ It is useful to comment blocks of code quickly...
     help(vyapp.plugins.inline_comment)
 
 
-Help on module vyapp.plugins.inline_comment in vyapp.plugins:
-
-NAME
-    vyapp.plugins.inline_comment
-
-FILE
-    /usr/local/lib/python2.7/dist-packages/vyapp/plugins/inline_comment.py
-
-DESCRIPTION
-    Overview
-    ========
+    Help on module vyapp.plugins.inline_comment in vyapp.plugins:
     
-    This plugin implements Key-Commands to comment and uncomment blocks of code.
+    NAME
+        vyapp.plugins.inline_comment
     
-    Usage
-    =====
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/inline_comment.py
     
-    In order to comment/uncomment a block of code it is needed to first select the region.
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements Key-Commands to comment and uncomment blocks of code.
+        
+        Usage
+        =====
+        
+        In order to comment/uncomment a block of code it is needed to first select the region.
+        
+        Open a programming file then select some lines with <Key-f> in NORMAL mode then
+        switch to ALPHA mode with <Key-3>.
+        
+        Once it is in ALPHA mode then type <Key-e> to comment or <Key-r> to uncomment
+        the selected block of text.
+        
+        The block of code will be commented based on the programming comment style of the language.
+        
+        Key-Commands
+        ============
+        
+        Mode: ALPHA
+        Event: <Key-e>
+        Description: Add inline comments to a selected block of text.
+        
+        Mode: ALPHA
+        Event: <Key-r>
+        Description: Remove inline comments from a selected block of text.
     
-    Open a programming file then select some lines with <Key-f> in NORMAL mode then
-    switch to ALPHA mode with <Key-3>.
+    FUNCTIONS
+        add_inline_comment(area)
+            It adds inline comment to selected lines based on the file extesion.
+        
+        install(area)
+        
+        rm_inline_comment(area)
+            It removes the inline comments.
     
-    Once it is in ALPHA mode then type <Key-e> to comment or <Key-r> to uncomment
-    the selected block of text.
+    DATA
+        DEFAULT = '#'
+        TABLE = {'c': '//', 'c++': '//', 'java': '//', 'py': '#', 'sh': '#'}
     
-    The block of code will be commented based on the programming comment style of the language.
-    
-    Key-Commands
-    ============
-    
-    Mode: ALPHA
-    Event: <Key-e>
-    Description: Add inline comments to a selected block of text.
-    
-    Mode: ALPHA
-    Event: <Key-r>
-    Description: Remove inline comments from a selected block of text.
-
-FUNCTIONS
-    add_inline_comment(area)
-        It adds inline comment to selected lines based on the file extesion.
-    
-    install(area)
-    
-    rm_inline_comment(area)
-        It removes the inline comments.
-
-DATA
-    DEFAULT = '#'
-    TABLE = {'c': '//', 'c++': '//', 'java': '//', 'py': '#', 'sh': '#'}
-
 
 
 Now the select_sym plugin that is useful when dealing with lisp like languages.
