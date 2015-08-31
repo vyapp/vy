@@ -1264,6 +1264,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 ## The syntax highlight plugin
 
 ## The python debugger plugin
+shit
 
 
 
