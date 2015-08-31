@@ -82,7 +82,7 @@ vy was great. He said that if i managed to do it extremely modular and clear it 
 to substitute vim in the future.
 
 I'm working on a ncurses based library with a symmetrical archicture to python tkinter. Once it is done
-vy will run a text based terminal sweetly.
+vy will run on a text based terminal sweetly.
 
 Install
 =======
