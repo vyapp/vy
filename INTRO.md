@@ -30,6 +30,9 @@ When it is in INSERT mode and you type <Key-j> it will merely insert the charact
 Vy differently from vim can have as many modes as it is needed. It means you can implement new modes
 that perform all kind of actions/operations.
 
+The AreaVi/Text widget events
+=============================
+
 
 The Key-Commands definition
 ===========================
@@ -1497,6 +1500,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 The vyrc file
 =============
+
 
 
 

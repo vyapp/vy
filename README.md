@@ -120,9 +120,13 @@ Or just.
 Documentation
 =============
 
-**The intro**
+**The INTRO**
 
 [INTRO.md](INTRO.md)
+
+**HOWTO introduces vy for non vim users**
+
+[HOWTO.md](HOWTO.md)
 
 **A guide on how to develop plugins**
 
@@ -148,6 +152,7 @@ idea of implementing an editor/ide in pure python on top of Tkinter that is such
 graphical toolkit.
 
 ...
+
 
 
 
