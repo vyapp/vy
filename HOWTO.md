@@ -225,6 +225,34 @@ in NORMAL mode is meant to paste text one line up from the cursor line.
 Try these commands until getting comfortable !
 
 
+Copy text to the clipboard
+==========================
+
+The Key-Command to copy text to the clipboard without cutting it is 
+
+    <Key-y>
+
+in NORMAL mode. In order to have text copied to the clipboard it is needed
+to select some text. You can do it in so many different ways with vy.
+
+For purposes of examplifying, open a file then
+switch to NORMAL mode. Place the cursor over a line
+then press
+
+    <Key-f>
+
+It will select the entire line, once it is selected.
+Then press
+
+    <Key-y>
+
+The line will be copied to the clipboard, then you can paste it outside vy.
+
+
+
+
+
+
 
 
 
