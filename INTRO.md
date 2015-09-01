@@ -20,6 +20,17 @@ the output of what the interpreter should print to the real sys.stdout.
 Vy implements mechanisms to drop python code to the python interpreter. The simplest mechanism is through
 a Key-Command in NORMAL mode.
 
+What is a modal editor?
+======================
+
+A modal editor is an editor that can be in different states. It performs different operations/tasks/actions
+from each state it is in. When vy is NORMAL mode and you type <Key-j> it will make the cursor jump one line down.
+When it is in INSERT mode and you type <Key-j> it will merely insert the character 'j' at the cursor position.
+
+Vy differently from vim can have as many modes as it is needed. It means you can implement new modes
+that perform all kind of actions/operations.
+
+
 The Key-Commands definition
 ===========================
 
@@ -1294,6 +1305,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ## The python debugger plugin
 shit
+
 
 
 
