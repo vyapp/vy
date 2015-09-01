@@ -45,7 +45,7 @@ It will show a save dialog window. Save this file as
 Now you have edited your first file with vy !
 
 
-Open a file from a open dialog window
+Open a file from an open dialog window
 =====================================
 
 First run vy, make sure the AreaVi instance in which you want to load the contents 
@@ -196,6 +196,33 @@ It is possible to select a word when the cursor is on by pressing
     <Key-bracketleft>
 
 That is '['. This is very handy sometimes.
+
+Paste text from the clipboard
+=============================
+
+It is one of the most important things an editor has to do. 
+Select some text from the browser/other editor then copy it to the clipboard.
+
+Then open vy, give the focus to an AreaVi instance, place the cursor
+at the position that you want to paste the text then press.
+
+    <Key-r>
+
+In NORMAL mode. Such a Key-Command is meant to paste text from the clipboard one line down.
+
+The Key-Command
+
+    <Key-t>
+
+in NORMAL mode is meant to paste text to the end of the cursor line.
+
+The Key-command
+
+    <Key-e>
+
+in NORMAL mode is meant to paste text one line up from the cursor line.
+
+Try these commands until getting comfortable !
 
 
 
