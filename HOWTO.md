@@ -38,7 +38,7 @@ In order to save the contents of the AreaVi instance, press
 
     <Shift-s>    
 
-It will shows a save dialog window. Save this file as 
+It will show a save dialog window. Save this file as 
     
     universe-secret
 
