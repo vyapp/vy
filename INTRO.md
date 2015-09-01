@@ -1357,6 +1357,139 @@ That is great. You got your first help. Vy is self documented, that is our philo
     
     FUNCTIONS
         install(area)
+
+## Place the cursor at Line.Col position
+
+    Help on module vyapp.plugins.set_pos in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.set_pos
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/set_pos.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements a way to place the cursor at a given row.col.
+        
+        Usage
+        =====
+        
+        When dealing with some programming files we get some warnings/errors from the interpreter/compiler
+        then we need to quickly jump to that line to see whats going on.
+        
+        In order to make the cursor jump to a given line.row, just press <F3> in NORMAL mode.
+        It will show up an input data field where you can insert the line or the row.
+        
+        Example:
+        
+        Would make the cursor be placed at the line 30 and at the col 4.
+        30.4
+        
+        Would make the cursor be placed at the line 30 and at the col 0.
+        10
+        
+        Key-Commands
+        ============
+        
+        Mode: NORMAL
+        Event: <F3>
+        Description: Shows an input text field to insert a Line.Col value to place the cursor at that position.
+    
+    FUNCTIONS
+        go_to_pos(area)
+        
+        install lambda area
+    
+    DATA
+        ACTIVE = 'active'
+        ALL = 'all'
+        ANCHOR = 'anchor'
+        ARC = 'arc'
+        BASELINE = 'baseline'
+        BEVEL = 'bevel'
+        BOTH = 'both'
+        BOTTOM = 'bottom'
+        BROWSE = 'browse'
+        BUTT = 'butt'
+        CASCADE = 'cascade'
+        CENTER = 'center'
+        CHAR = 'char'
+        CHECKBUTTON = 'checkbutton'
+        CHORD = 'chord'
+        COMMAND = 'command'
+        CURRENT = 'current'
+        DISABLED = 'disabled'
+        DOTBOX = 'dotbox'
+        E = 'e'
+        END = 'end'
+        EW = 'ew'
+        EXCEPTION = 8
+        EXTENDED = 'extended'
+        FALSE = 0
+        FIRST = 'first'
+        FLAT = 'flat'
+        GROOVE = 'groove'
+        HIDDEN = 'hidden'
+        HORIZONTAL = 'horizontal'
+        INSERT = 'insert'
+        INSIDE = 'inside'
+        LAST = 'last'
+        LEFT = 'left'
+        MITER = 'miter'
+        MOVETO = 'moveto'
+        MULTIPLE = 'multiple'
+        N = 'n'
+        NE = 'ne'
+        NO = 0
+        NONE = 'none'
+        NORMAL = 'normal'
+        NS = 'ns'
+        NSEW = 'nsew'
+        NUMERIC = 'numeric'
+        NW = 'nw'
+        OFF = 0
+        ON = 1
+        OUTSIDE = 'outside'
+        PAGES = 'pages'
+        PIESLICE = 'pieslice'
+        PROJECTING = 'projecting'
+        RADIOBUTTON = 'radiobutton'
+        RAISED = 'raised'
+        READABLE = 2
+        RIDGE = 'ridge'
+        RIGHT = 'right'
+        ROUND = 'round'
+        S = 's'
+        SCROLL = 'scroll'
+        SE = 'se'
+        SEL = 'sel'
+        SEL_FIRST = 'sel.first'
+        SEL_LAST = 'sel.last'
+        SEPARATOR = 'separator'
+        SINGLE = 'single'
+        SOLID = 'solid'
+        SUNKEN = 'sunken'
+        SW = 'sw'
+        StringTypes = (<type 'str'>, <type 'unicode'>)
+        TOP = 'top'
+        TRUE = 1
+        TclVersion = 8.6
+        TkVersion = 8.6
+        UNDERLINE = 'underline'
+        UNITS = 'units'
+        VERTICAL = 'vertical'
+        W = 'w'
+        WORD = 'word'
+        WRITABLE = 4
+        X = 'x'
+        Y = 'y'
+        YES = 1
+        root = <vyapp.app.App instance>
+        wantobjects = 1
+    
     
 ## The syntax highlight plugin
 
@@ -1364,6 +1497,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 The vyrc file
 =============
+
 
 
 
