@@ -158,6 +158,63 @@ E-scripts
 =========
 
 
+Opening files in panes/tabs
+===========================
+
+It is possible to open files from command lines in different panes/tabs.
+
+Consider you have three files, alpha, beta, gamma.
+
+if you type in a terminal
+
+    vy -l "[[['alpha', 'beta'], ['gamma']]]"
+
+Vy will open these three files in one tab.
+It will look like.
+
+    |Alpha|
+    ----------------
+    | alpha | beta |
+    ----------------    
+    |    gamma     |
+    ----------------
+    
+If you hve four files, alpha, beta, gamma, zeta
+then you type.
+
+    vy -l "[[['alpha', 'beta'], ['gamma']], [['zeta']]]"
+
+
+It will open alpha, beta, gamma in a tab and zeta in other tab.
+
+    |Alpha|zeta|
+    ----------------
+    | alpha | beta |
+    ----------------    
+    |    gamma     |
+    ----------------
+
+
+If you switch the focused tab with <Shift-F10| to the right..
+
+
+you will get.
+
+    |Alpha|zeta|
+    ----------------
+    |              |
+    |     zeta     |
+    |              |
+    ----------------
+
+
+It is useful when dealing with some scheme of files. I use vy as a terminal like
+because i use e-scripts to automatize all kind of tasks like pushing onto github etc.
+So, i keep a quick-esc.sh file in which i open two panes, one for the file quick-esc.sh
+and one for /dev/null.
+
+    vy -l "[[['/home/tau/lib/esc-code/bash/cmd-esc.sh', '/dev/null']]]"
+    
 The vy plugins
 ==============
 
@@ -1304,7 +1361,9 @@ That is great. You got your first help. Vy is self documented, that is our philo
 ## The syntax highlight plugin
 
 ## The python debugger plugin
-shit
+
+The vyrc file
+=============
 
 
 
