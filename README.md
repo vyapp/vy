@@ -151,8 +151,10 @@ along vy development. They contributed with ideas, criticism and believed in the
 idea of implementing an editor/ide in pure python on top of Tkinter that is such a great
 graphical toolkit.
 
-...
 
+https://github.com/miku
+
+https://github.com/blha303
 
 
 
