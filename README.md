@@ -56,11 +56,11 @@ It is possible to open multiple vertical/horizontal areas to edit different file
 to edit multiple files in a given tab. Vy supports multiple tabs as well.
 
 Vy has a very well defined scheme for user plugins. One can easily develop a plugin then make vy load it.
-There is a vyrc file written in python that is very well docummented and organized to turn it simple to load 
+There is a vyrc file written in python that is very well documented and organized to turn it simple to load
 plugins and set stuff at startup. You can take the best out of vy with no need for learning some odd language
 like vimscript or emacs lisp since vy is written in python, you use python to develop for it.
 
-All builtin functions are well documented it turns simple the process of plugin development as well as personalizing stuff.
+All builtin functions are well documented, which simplifies the process of plugin development as well as personalizing stuff.
 The plugins are documented, the docs can be accessed from vy by dropping python code to the interpreter.
 
 The plugins implement keycommands or python functions. The complete reference for a set of keycommands that a plugin implements 
@@ -77,8 +77,8 @@ for ircclient, filemanagers, browsing specific type of files, generating latex c
 What did Bram Moolenaar say about vy?
 =====================================
 
-When i visited Bram in the beginning of vy development he told me that the philosophy behind
-vy was great. He said that if i managed to do it extremely modular and clear it had a great chance
+When I visited Bram in the beginning of vy development he told me that the philosophy behind
+vy was great. He said that if I managed to do it extremely modular and clear it had a great chance
 to substitute vim in the future.
 
 I'm working on a ncurses based library with a symmetrical archicture to python tkinter. Once it is done
@@ -107,8 +107,8 @@ This is a short script to install the latest version of vy.
 
 
     
-Once you have installed vy and its dependencies.
-Run on a terminal the following command.
+Once you have installed vy and its dependencies,
+run on a terminal the following command.
 
     vy file1 file2 ...
 
@@ -146,25 +146,10 @@ https://www.facebook.com/groups/525968624207147/
 Contributors
 ============
 
-It is with great pleasure and emotion that i thank to all people who helped me
+It is with great pleasure and emotion that I thank to all people who helped me
 along vy development. They contributed with ideas, criticism and believed in the
 idea of implementing an editor/ide in pure python on top of Tkinter that is such a great
 graphical toolkit.
 
 ...
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
