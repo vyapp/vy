@@ -1383,10 +1383,20 @@ class AreaVi(Text):
         filename = os.path.abspath(filename)        
         self.delete('1.0', 'end')
 
-        fd   = open(filename, 'r')
-        data = fd.read()
+        # check if filename exists and is a file before opening
+        # this may lead to a bug, need more testing
+        mode = ''
+        if os.path.exists(filename) and os.path.isfile(filename):
+            mode = 'r'
+        else:
+            mode = 'w+' # this will create the file
 
-        fd.close()
+        # if the file already exists, this will open in read-only mode
+        # else, it will write the file and make it exist
+        # not the best solution, but makes it behave
+        with open(filename, mode) as fd:
+            data = fd.read()
+
         self.insert('1.0', data)
 
         self.filename = filename
