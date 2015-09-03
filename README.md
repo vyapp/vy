@@ -152,7 +152,6 @@ idea of implementing an editor/ide in pure python on top of Tkinter that is such
 graphical toolkit.
 
 
-<<<<<<< HEAD
 https://github.com/miku
 
 https://github.com/blha303
@@ -163,13 +162,3 @@ https://github.com/blha303
 
 
 
-
-
-
-
-
-
-
-
-=======
->>>>>>> 9467c887232c5b0e4f37cd569b6ca1439f5a408a
