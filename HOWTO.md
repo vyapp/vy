@@ -259,16 +259,3 @@ The line will be copied to the clipboard, then you can paste it outside vy.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
