@@ -1414,9 +1414,10 @@ class AreaVi(Text):
 
         data = self.get('1.0', 'end')
         data = data.encode('utf-8')
-        fd = open(self.filename, 'w')
-        fd.write(data)
-        fd.close()
+
+        with open(self.filename, 'w') as fd:
+            fd.write(data)
+
         self.event_generate('<<SaveData>>')
 
         type, _ = mimetypes.guess_type(self.filename)
