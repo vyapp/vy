@@ -143,21 +143,6 @@ Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
 
 
-Contributors
-============
-
-It is with great pleasure and emotion that I thank to all people who helped me
-along vy development. They contributed with ideas, criticism and believed in the
-idea of implementing an editor/ide in pure python on top of Tkinter that is such a great
-graphical toolkit.
-
-
-https://github.com/miku
-
-https://github.com/blha303
-
-
-
 
 
 
