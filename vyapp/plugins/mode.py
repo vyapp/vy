@@ -15,7 +15,6 @@ def alpha(area):
     area.chmode('ALPHA')
 
 def beta(area):
-    print 'shit'
     area.chmode('BETA')
 
 def gamma(area):
@@ -45,6 +44,7 @@ def install(area):
            ('NORMAL', '<Key-4>', lambda event: beta(event.widget)),
            ('NORMAL', '<Key-5>', lambda event: gamma(event.widget)),
            ('NORMAL', '<Key-6>', lambda event: delta(event.widget)))
+
 
 
 

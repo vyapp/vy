@@ -84,6 +84,11 @@ to substitute vim in the future.
 I'm working on a ncurses based library with a symmetrical archicture to python tkinter. Once it is done
 vy will run on a text based terminal sweetly.
 
+A video
+=======
+
+https://youtu.be/0bBKOFdQKzo
+
 Install
 =======
 
@@ -141,6 +146,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 

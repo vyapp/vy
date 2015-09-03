@@ -41,7 +41,7 @@ Description: Goes back to the previous mode.
 """
 
 class ToggleMode(object):    
-    def __init__(self, area, target_mode='NORMAL', modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA']):
+    def __init__(self, area, target_mode='NORMAL', modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'PDB']):
         for ind in modes:
             area.hook(ind, '<KeyPress-space>', lambda event: self.switch_standard_mode(event.widget))
         area.hook(target_mode, '<KeyRelease-space>', lambda event: self.switch_previous_mode(event.widget))
@@ -58,6 +58,7 @@ class ToggleMode(object):
         area.chmode(self.id)
 
 install = ToggleMode
+
 
 
 
