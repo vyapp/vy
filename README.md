@@ -3,7 +3,7 @@
 
 A powerful modal editor written in python.
 
-Vy is a modal editor with a very modular architecture. Everything is very well minimalistic and modular. 
+Vy is a modal editor with a very modular architecture. Everything is very minimalistic and modular. 
 Vy is built on top of tkinter which is one of the most productive graphical toolkits. It permits vy
 to have such a great programming interface for plugins. It is pretty straightfoward to implement a plugin for vy.
 
@@ -155,6 +155,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
