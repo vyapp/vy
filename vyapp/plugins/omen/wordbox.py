@@ -10,6 +10,9 @@ class Wordbox(Toplevel):
 
         self.bind('<Return>', lambda event: self.insert_word())
         self.bind('<Escape>', lambda event: self.restore_focus_scheme())
+        self.bind('<Key-j>', lambda event: self.box.event_generate('<Down>'))
+        self.bind('<Key-k>', lambda event: self.box.event_generate('<Up>'))
+
         self.wm_overrideredirect(1)
         self.wm_geometry("+10000+10000")
         rootx = self.area.winfo_rootx()
