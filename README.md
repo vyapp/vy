@@ -74,7 +74,14 @@ for ircclient, filemanagers, browsing specific type of files, generating latex c
 Screenshots
 ===========
 
-![screenshot](screenshot.jpg)
+**Tabs, Panes, Terminal-like, Python Autocompletion**
+![screenshot-1](screenshot-1.jpg)
+
+**Extend dynamically the editor through python**
+![screenshot-2](screenshot-2.jpg)
+
+**E-scripts**
+![screenshot-3](screenshot-3.jpg)
 
 What did Bram Moolenaar say about vy?
 =====================================
@@ -148,6 +155,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
