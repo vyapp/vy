@@ -29,6 +29,7 @@ class CompleteBox(MatchBox):
 
         self.bind('<Key>', self.find_word, add=True)
         self.bind('<Return>', self.complete, add=True)
+        self.bind('<Escape>', lambda event: self.restore_focus_scheme(), add=True)
 
     def delete_area_char(self, event):
         self.area.delete('insert -1c', 'insert')
@@ -114,4 +115,5 @@ class PythonCompleteWindow(Toplevel):
         self.area.wait_window(self)
 
     
+
 

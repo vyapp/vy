@@ -15,7 +15,7 @@ from vyapp.plugins import autoload, autocall
 import vyapp.plugins.mode
 autoload(vyapp.plugins.mode)
 
-
+# Python auto completion plugin using jedi.
 import vyapp.plugins.omen.auto
 autoload(vyapp.plugins.omen.auto)
 
@@ -259,6 +259,7 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
 
 
 

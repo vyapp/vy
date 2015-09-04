@@ -71,6 +71,8 @@ can be accessed from a python interpreter instance or from vy.
 One could implement as many modes as needed. This is very useful for specific situations. There could exist modes 
 for ircclient, filemanagers, browsing specific type of files, generating latex code etc.
 
+Screenshots
+===========
 
 ![screenshot](screenshot.jpg)
 
@@ -146,6 +148,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 

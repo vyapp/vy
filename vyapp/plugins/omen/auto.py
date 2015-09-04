@@ -1,4 +1,24 @@
 """
+Overview
+========
+
+This plugin does autocompletion using jedi library.
+
+
+Usage
+=====
+
+Whenever one presses <Control-Key-period> in INSERT mode
+it should popup a window with possible completions.
+
+
+Key-Commands
+============
+
+Mode: INSERT
+Event: <Control-Key-period>
+Description: Open the completion window with possible python words for
+completion.
 
 """
 from vyapp.plugins.omen.utils import PythonCompleteWindow
@@ -19,6 +39,7 @@ def show_window_completion(area):
 
 def install(area):
     area.hook(-1, '<<LoadData>>', lambda event: check_file_extension(event.widget))
+
 
 
 
