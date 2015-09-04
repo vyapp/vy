@@ -39,6 +39,8 @@ def show_window_completion(area):
 
 def install(area):
     area.hook(-1, '<<LoadData>>', lambda event: check_file_extension(event.widget))
+    area.hook(-1, '<<SaveData>>', lambda event: check_file_extension(event.widget))
+
 
 
 
