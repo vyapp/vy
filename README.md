@@ -1,3 +1,12 @@
+This version installs both python2 and python3 versions of vy.
+
+To install the python3 version, run 
+```
+# python3 setup.py install
+```
+
+Also requires untwisted in python3-flavor, as well as python3-tkinter and python3-pygments.
+
 ![vy](vy.gif) vy
 ================
 
