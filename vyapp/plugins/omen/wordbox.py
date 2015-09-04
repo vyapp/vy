@@ -1,21 +1,31 @@
-from Tkinter import Listbox
+from Tkinter import *
 from jedi import Script
 
-class Wordbox(Listbox):
+class Wordbox(Toplevel):
     def __init__(self, area, *args, **kwargs):
-        Listbox.__init__(self, area, *args, **kwargs)
+        Toplevel.__init__(self, area, *args, **kwargs)
+
+        self.box = Listbox(self)
         self.area = area
+
         self.bind('<Return>', lambda event: self.insert_word())
         self.bind('<Escape>', lambda event: self.restore_focus_scheme())
+        self.wm_overrideredirect(1)
+        self.wm_geometry("+10000+10000")
+        rootx = self.area.winfo_rootx()
+        rooty = self.area.winfo_rooty()
+        x, y, width, height = self.area.bbox('insert')
+        self.wm_geometry("+%d+%d" % (x+rootx, y+rooty))
+        self.box.pack(side=LEFT, fill=BOTH, expand=True)
 
         self.do_completion()
-        self.focus_set()
-        # self.grab_set()
-        # self.area.wait_window(self)
+        self.box.focus_set()
+        self.grab_set()
+        self.area.wait_window(self)
 
     def insert_word(self):
-        index = self.curselection()
-        word  = self.get(index)
+        index = self.box.curselection()
+        word  = self.box.get(index)
         self.area.insert('insert', word)
         self.restore_focus_scheme()
 
@@ -31,6 +41,6 @@ class Wordbox(Listbox):
         completions = script.completions()
 
         for ind in completions:
-            self.insert('end', ind.name)
+            self.box.insert('end', ind.name)
     
 
