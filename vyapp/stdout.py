@@ -38,6 +38,8 @@ class Transmitter(object):
 
     def write(self, data):
         for ind in self.base: 
+            if sys.version_info >= (3, 0):
+                data = str(data)
             ind.write(data)
 
 def echo(data): 
