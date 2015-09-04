@@ -2,14 +2,23 @@
 
 """
 from vyapp.plugins.omen.wordbox import Wordbox
+from os.path import splitext
 
+def check_file_extension(area):
+    filename, extension = splitext(area.filename)
+    extension           = extension.lower()
 
-def start_completion(area):
+    if extension == '.py':
+        area.hook('INSERT', '<Key-period>', 
+                  lambda event: show_window_completion(event.widget))
+    else:
+        area.unhook('INSERT', '<Key-period>')
+    
+def show_window_completion(area):
     area.after(100, lambda: Wordbox(area))
 
 def install(area):
-    area.add_mode('INSERT_PYTHON', opt=True)
-    area.install(('BETA', '<Key-m>', lambda event: event.widget.chmode('INSERT_PYTHON')), 
-                 ('INSERT_PYTHON', '<Key-period>', lambda event: start_completion(event.widget)))
+    area.hook(-1, '<<LoadData>>', lambda event: check_file_extension(event.widget))
+
 
 
