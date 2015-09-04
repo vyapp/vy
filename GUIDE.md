@@ -10,6 +10,12 @@ The Plugin System
 The User Plugin Space
 =====================
 
+Vy Mode System
+==============
+
+Vy Global Mode
+==============
+
 A simple plugin example
 =======================
 
@@ -21,6 +27,7 @@ Count Phrase Words plugin
 
 A simple email sender plugin
 ============================
+
 
 
 

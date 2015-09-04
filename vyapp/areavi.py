@@ -101,12 +101,13 @@ class AreaVi(Text):
         self.bind_class(MODE_Y, seq, callback, add=True)
 
 
-    def unhook(self, id, seq, callback):
+    def unhook(self, id, seq, callback=None):
         """
         It performs the opposite of unhook.
         """
+        MODE_Y = 'mode%s%s' % (self, id)
 
-        pass
+        self.unbind_class(MODE_Y, seq)
 
     def install(self, *args):
         """
@@ -1534,6 +1535,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 

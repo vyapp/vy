@@ -16,6 +16,10 @@ import vyapp.plugins.mode
 autoload(vyapp.plugins.mode)
 
 
+import vyapp.plugins.omen.auto
+autoload(vyapp.plugins.omen.auto)
+
+
 # Shifting blocks of code.
 import vyapp.plugins.shift
 autoload(vyapp.plugins.shift, width=4, char=' ')
@@ -255,6 +259,8 @@ from vyapp.plugins import codepad
 
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
+
+
 
 
 
