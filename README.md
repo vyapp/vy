@@ -98,17 +98,24 @@ A video
 
 https://youtu.be/0bBKOFdQKzo
 
-Install
-=======
+Install from pip
+================
+    
+    pip install untwisted
+    pip install pygments
+    pip install jedi
+    pip install vy
+
+
+Install from git
+================
 
 Vy actually demands python 2.7 to run.
 
-This is a short script to install the latest version of vy.
+This is a short script to install vy from the git repository.
 
-    su
-    apt-get install python-tk
-    apt-get install python-pygments
-    exit
+    pip pygments
+    pip jedi
 
     cd /tmp
     git clone https://github.com/iogf/vy.git vy-code
@@ -119,8 +126,6 @@ This is a short script to install the latest version of vy.
     cd /tmp/vy-code
     python setup.py install
 
-
-    
 Once you have installed vy and its dependencies,
 run on a terminal the following command.
 
@@ -140,10 +145,6 @@ Documentation
 
 **HOWTO introduces vy for non vim users**
 
-[HOWTO.md](HOWTO.md)
-
-**A guide on how to develop plugins**
-
 [GUIDE.md](GUIDE.md)
 
 
@@ -155,6 +156,8 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
+
 
 
 
