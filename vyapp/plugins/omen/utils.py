@@ -97,9 +97,12 @@ class PythonCompleteWindow(Toplevel):
         Toplevel.__init__(self, area, *args, **kwargs)
 
         self.box = PythonCompleteBox(area, self)
+        self.box.pack(side=LEFT, fill=BOTH, expand=True)
+
         self.area = area
         self.wm_overrideredirect(1)
         self.wm_geometry("+10000+10000")
+        self.update()
 
         rootx                                              = self.area.winfo_rootx()
         rooty                                              = self.area.winfo_rooty()
@@ -107,13 +110,32 @@ class PythonCompleteWindow(Toplevel):
         x, y, width, height                                = self.area.bbox('insert')
         line_x, line_y, line_width, line_height, baseline  = self.area.dlineinfo('insert')
 
-        self.wm_geometry("+%d+%d" % (x+rootx, y+rooty + line_height))
-        self.box.pack(side=LEFT, fill=BOTH, expand=True)
+        win_height = self.winfo_height()
+        area_height = self.area.winfo_height()
+        win_width  = self.winfo_width()
+        area_width = self.area.winfo_width()
+
+        vpos = self.calculate_vertical_position(y, rooty, line_height, win_height, area_height)
+        hpos = self.calculate_horizontal_position(x, rootx, win_width, area_width)
+
+        self.wm_geometry("+%d+%d" % (hpos, vpos))
+
 
         self.box.focus_set()
         self.box.grab_set()
         self.area.wait_window(self)
 
-    
+    def calculate_vertical_position(self, y, rooty, line_height, win_height, area_height):
+        if rooty + y + win_height + line_height > rooty + area_height:
+            return rooty + y - win_height
+        else:
+            return rooty + y + line_height
+
+    def calculate_horizontal_position(self, x, rootx, win_width, area_width):
+        if x + rootx + win_width > rootx + area_width:
+            return rootx + area_width - win_width
+        else:
+            return rootx + x
+
 
 
