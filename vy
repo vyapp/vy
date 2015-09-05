@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     root = App()
     lst  = eval(str(opt.lst))
-    lst  = lst + map(lambda ind: [[ind]], args)
+    lst  = lst + list(map(lambda ind: [[ind]], args))
 
     if not lst: root.note.create('None')
     else: root.note.load(*lst)

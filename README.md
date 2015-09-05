@@ -101,7 +101,7 @@ https://youtu.be/0bBKOFdQKzo
 Install
 =======
 
-Vy actually demands python 2.7 to run.
+Vy actually demands python 2.7 or python3.x to run.
 
 This is a short script to install the latest version of vy.
 
@@ -119,6 +119,10 @@ This is a short script to install the latest version of vy.
     cd /tmp/vy-code
     python setup.py install
 
+
+To build vy in Python3 flavor, you need to run setup.py with the python3 interpreter,
+as well as installing python3-tkinter and python3-pygments instead pf their python2
+equivalents.
 
     
 Once you have installed vy and its dependencies,
