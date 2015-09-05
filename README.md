@@ -111,8 +111,8 @@ This is a short script to install the latest version of vy.
     exit
 
     cd /tmp
-    git clone git@github.com:iogf/vy.git vy-code
-    git clone git@github.com:iogf/untwisted.git untwisted-code 
+    git clone https://github.com/iogf/vy.git vy-code
+    git clone https://github.com/iogf/untwisted.git untwisted-code
 
     cd /tmp/untwisted-code
     python setup.py install
@@ -155,6 +155,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
