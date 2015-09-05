@@ -83,15 +83,6 @@ Screenshots
 **E-scripts**
 ![screenshot-3](screenshot-3.jpg)
 
-What did Bram Moolenaar say about vy?
-=====================================
-
-When I visited Bram in the beginning of vy development he told me that the philosophy behind
-vy was great. He said that if I managed to do it extremely modular and clear it had a great chance
-to substitute vim in the future.
-
-I'm working on a ncurses based library with a symmetrical archicture to python tkinter. Once it is done
-vy will run on a text based terminal sweetly.
 
 A video
 =======
@@ -156,6 +147,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 

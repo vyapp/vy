@@ -54,6 +54,12 @@ mode in which vy is in.
 It is possible to have multiple AreaVi instances that are in different modes. The mode statusbar field
 shows in which mode the AreaVi instance that has focus is in.
 
+Running vy
+==========
+
+The statusbar
+=============
+
 Basic Modes
 ===========
 
@@ -72,130 +78,20 @@ like opening files, saving files, jumping the cursor to positions, searching pat
 of text etc.
 
 
-Create a file
-=============
-
-First of all, run vy by typing in a terminal.
-
-    vy
-
-It will launch vy interface. It will be initially in NORMAL mode. There is a statusbar 
-field named Mode: in which the AreaVi instance that has the focus is in.
-
-
-In order to insert chars it is needed to switch to INSERT mode. Make sure there is focus 
-on the AreaVi/Text widget instance. Then press
-
-    <Key-i>
-
-It will make the focused AreaVi instance change its mode to INSERT mode. Once in INSERT mode 
-it is possible to insert chars in the AreaVi instance.
-
-Type the following piece of text in it.
-
-    The universe is a bag of dices. 
-    God just plays the dices continously.
-    All kind of combinations happens infinitely.
-
-Now, switch back to NORMAL mode by pressing.
-
-    <Escape>
-
-In order to save the contents of the AreaVi instance, press
-
-    <Shift-s>    
-
-It will show a save dialog window. Save this file as 
-    
-    universe-secret
-
-Now you have edited your first file with vy !
-
-
-Open a file from an open dialog window
-=====================================
-
-First run vy, make sure the AreaVi instance in which you want to load the contents 
-of the file is focused. then press
-
-    <Control-d>
-
-in NORMAL mode. It will show an open dialog window. Pick up the file created 
-in the previous section.
-
-    universe-secret
-
-After pressing 'open', it will load the
-
-    universe-secret
-
-file contents in the focused AreaVi instance.
-
-
-Save the contents of an opened file
-===================================
-
-There is a handy way to save the contents of a file that was opened 
-then edited. Let us edit our 
-
-    universe-secret
-
-file. Run vy then press
-
-    <Control-d>
-
-in NORMAL mode. Pick up the file. Then press
-
-    <Key-i>
-
-in NORMAL mode to switch to INSERT mode. Then insert the following 
-text in the end of the file.
-
-    God may not play dices.
-
-Switch back to NORMAL mode by pressing.
-
-    <Escape>
-
-Now, press
-
-    <Control-s>
-
-in NORMAL mode. If the folder has permissions for writting then will 
-appear a msg on the statusbar "Data Saved".
-
 Moving the cursor around
 ========================
 
-This the most important aspect of a modal editor, the cursor movements.
-It is what turns modal editors very handy.
+Open a file
+===========
 
-First open our file
+Saving file changes
+===================
 
-    universe-secret
+Save as dialog window
+=====================
 
-by pressing 
-
-    <Control-d>
-
-in NORMAL mode.
-
-Then try pressing 
-
-it will move the cursor left.
-    <Key-h>
-
-it will move the cursor down.
-    <Key-j>
-
-It will move the cursor up.
-    <Key-k>
-
-It will move the cursor right.
-    <Key-l>
-
-Try getting familiar with these Key-Commands. There will not last
-much until you get used to these Key-Commands.
+Open a file from command line
+=============================
 
 Move cursor to the beginning of the line
 ========================================
@@ -214,6 +110,30 @@ Move forward one word
 
 Move backward one word
 ======================
+
+Moving forward to the next occurence of () {} []
+================================================
+
+Moving backward to the next occurrence of () {} []
+==================================================
+
+Next symbol search
+==================
+
+Previous symbol search
+======================
+
+Scrolling one line up
+=====================
+
+Scrolling one line down
+=======================
+
+Scrolling one page up
+=====================
+
+Scrolling one page down
+=======================
 
 Inserting a blank line up
 =========================
@@ -239,21 +159,6 @@ That is '['. This is very handy sometimes.
 
 Selecting text between matching pairs () {} []
 ==============================================
-
-Moving forward to the next occurence of () {} []
-================================================
-
-Moving backward to the next occurrence of () {} []
-==================================================
-
-Next symbol search
-==================
-
-Previous symbol search
-======================
-
-Quick pattern search
-====================
 
 Pasting selected text one line up
 =================================
@@ -320,18 +225,6 @@ Deleting a line
 Deleting a word
 ===============
 
-Scrolling one line up
-=====================
-
-Scrolling one line down
-=======================
-
-Scrolling one page up
-=====================
-
-Scrolling one page down
-=======================
-
 Highlighting parenthesis
 ========================
 
@@ -344,11 +237,38 @@ Creating marks/shading lines
 Undo/redo
 =========
 
-Search and replacement
+Placing the cursor at a given line.col
+======================================
+
+Quick pattern search
+====================
+
+Setting a pattern for search
+============================
+
+Setting a pattern for replacement
+=================================
+
+Searching a pattern up
 ======================
 
-Regular expression search and replacement
-=========================================
+Searching a pattern down
+========================
+
+Replacing a pattern up
+====================
+
+Replacing a pattern down
+======================
+
+Replacing a pattern at the cursor position
+==========================================
+
+Searching a pattern inside a selected region
+============================================
+
+Replacing a pattern inside a selected region
+============================================
 
 Completing words
 ================
@@ -411,6 +331,9 @@ and one for /dev/null.
 
     vy -l "[[['/home/tau/lib/esc-code/bash/cmd-esc.sh', '/dev/null']]]"
    
+
+Syntax highlight
+================
 
 Commenting blocks of code
 =========================
@@ -586,6 +509,7 @@ Using vy as a terminal
 
 E-scripts
 =========
+
 
 
 
