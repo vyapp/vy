@@ -257,6 +257,8 @@ It will put the cursor on the next occurrence of one of the
 
     () {} [] : .
 
+***
+
 ### Search backward for ( ) { } [ ] : .
 
 This Key-Command is used more than its friend, i use it whenever i'm finishing to write
