@@ -56,6 +56,20 @@ shows in which mode the AreaVi instance that has focus is in.
 An AreaVi instance is a class instance of the Tkinter Text widget from which AreaVi inherits from.
 AreaVi implements new features that turn the Text tkinter widget more powerful.
 
+Consider the following Key-Command below.
+
+    <Control-h>
+
+In order to execute the code mapped to that event one would keep the key Control pressed
+then press the key 'h'.
+
+Consider now.
+
+    <Control-H>
+
+What does it mean? It means that to get the handle mapped to that event one would keep the key control pressed
+as well as the Shift key then press the key 'h'.
+
 Running vy
 ==========
 
@@ -1204,6 +1218,10 @@ are opened/saved etc.
 ***
 
 ### The BETA mode
+
+***
+
+### The python autocomplete plugin
 
 ***
 
