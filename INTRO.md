@@ -653,6 +653,37 @@ In a file with more than 5 lines.
 
 ### The QUICK_SEARCH mode
 
+This is an awesome mode in which one can do quick searches through a document. It does searches
+from the beginning of the file until the end by looking by a regex pattern. The regex pattern consists of.
+
+    sequence_of_char_1(.+)sequence_of_char_2(.+)sequence_of_char_3(.+) ...
+
+Consider the following string.
+
+    open a programming file with 100 lines.
+
+If you open this INTRO.md with vy then switch to QUICK_SEARCH mode from NORMAL mode by pressing.
+
+    <Key-backslash>
+
+then type.
+
+    open<Key-space>100
+
+It will make the cursor jump to that line and highlight the range of text that matches the pattern.
+You can use the Key-Command in QUICK_SEARCH mode to delete a char from the actual pattern by pressing.
+
+    <BackSpace>
+
+It will update the search process and try to match the new pattern. You can make the cursor go to the
+previous match by pressing.
+
+    <Control-Tab>
+
+and make the cursor go to the next match by pressing.
+
+    <Tab>
+
 ***
 
 ### Set a search pattern
@@ -671,23 +702,23 @@ In a file with more than 5 lines.
 
 ***
 
-### Replacing a pattern up
+### Replace up
 
 ***
 
-### Replacing a pattern down
+### Replace down
 
 ***
 
-### Replacing a pattern at the cursor position
+### Replace on
 
 ***
 
-### Searching a pattern inside a selected region
+### Search selected text
 
 ***
 
-### Replacing a pattern inside a selected region
+### Replace pattern inside selected text
 
 ***
 
@@ -932,6 +963,7 @@ Using vy as a terminal
 
 E-scripts
 =========
+
 
 
 
