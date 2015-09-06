@@ -412,14 +412,98 @@ press.
 
 ***
 
-### Range selection
+### Drop a range selection mark
+
+A range selection mark is a mark in the text to be used to add selection up/down/right/left.
+In order to drop a range selection mark, switch to NORMAL mode then press.
+
+    <Control-v>
+
+It will appear a msg on the statusbar saying that mark selection was dropped at the cursor
+position. The Key-Commands to add selection up/down/left/right use this mark as a reference.
 
 ***
 
-### Block selection
+### Add/remove range selection one line up
 
+Once a range selection mark was dropped, press the below Key-Command in NORMAL mode.
+
+    <Control-k>
+
+It will select/unselect one line up from the range selection mark position.
 
 ***
+
+### Add/remove range selection one line down
+
+There is a Key-Command to add/remove range selection one line down, such a Key-Command works in NORMAL mode as well.
+Drop a selection range mark then press.
+
+    <Control-j>
+
+That will add/remove range selection one line down from the range selection mark position.
+
+***
+
+### Add/remove range selection one char left
+
+The Key-Command below add/remove selection from the range selection mark.
+
+    <Control-h>
+
+***
+
+### Add/remove range selection one char right
+
+The Key-Command below add/remove selection from the range selection mark position.
+
+    <Control-l>
+
+***
+
+### Drop a block selection mark
+
+Block selection works with a mark as range selection does. In order to drop a block selection
+mark, switch to NORMAL mode then press.
+
+    <Control-V>
+
+It will appear a msg on the statusbar saying that a block selection mark was dropped at the cursor position.
+
+***
+
+### Add/remove block selection one line up
+
+Once a block selection mark was dropped, press the Key-Command below in NORMAL mode to add/remove block selection one line up.
+
+    <Control-K>
+
+***
+
+### Add/remove block selection one line down
+
+Switch to NORMAL mode then press.
+
+    <Control-J>
+
+You need to have first dropped a block selection mark.
+
+***
+
+### Add/remove block selection one char left
+
+This command works as well in NORMAL mode, supposing you have dropped a block selection mark.
+
+Press.
+
+    <Control-H>
+***
+
+### Add/remove block selection one char right
+
+Make sure you have dropped a block selection mark then press.
+
+    <Control-L>
 
 ### Paste text one line up
 
