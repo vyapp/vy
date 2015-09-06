@@ -17,7 +17,8 @@ the output of what the interpreter should print to the real sys.stdout.
 Vy implements mechanisms to drop python code to the python interpreter. The simplest mechanism is through
 a Key-Command in NORMAL mode.
 
-This INTRO goes through all standard cases of using vy as an editor/ide.
+This INTRO goes through all standard cases of using vy as an editor/ide. I'll describe some possible
+scenaries in which the Key-Commands are useful as well as explain step by step how to use the Key-Commands.
 
 What is a modal editor?
 ======================
