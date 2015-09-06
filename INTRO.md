@@ -90,8 +90,10 @@ like opening files, saving files, jumping the cursor to positions, searching pat
 of text etc.
 
 
-The basic cursor movements
-==========================
+The basic cases
+===============
+
+### The basic cursor movements
 
 You can save a lot of time by using some movement commands. These are the basic commands to learn.
 Run vy, it will be in NORMAL mode, press 
@@ -125,8 +127,7 @@ Moving the cursor down by pressing
 Practice these Key-Commands until you get used to them.
 
 
-Open a file
-===========
+### Open a file
 
 There is a way to open a file dialog window to pick a file. For such switch to NORMAL
 by pressing 
@@ -139,8 +140,7 @@ then press
 
 It will open a file dialog window in which you can select a file to be opened.
 
-Save file changes
-=================
+### Save file changes
 
 There is a handy Key-Command to save file changes. Open a file, switch to INSERT
 mode by pressing 
@@ -157,16 +157,14 @@ then press
 
 In case of failure or success a msg would appear on the statusbar.
 
-Save as dialog window
-=====================
+### Save as dialog window
 
 It is possible to save a file with a new name by opening a save as dialog window.
 Switch to NORMAL mode then press
 
     <Shift-s>
 
-Open a file from command line
-=============================
+### Open a file from command line
 
 Pass the filenames to vy as arguments on the command line.
 
@@ -174,8 +172,7 @@ Pass the filenames to vy as arguments on the command line.
 
 It would open four tabs.
 
-Move cursor to the beginning of the line
-========================================
+### Move cursor to the beginning of the line
 
 Suppose you are editing the end a line then you decide you need to edit the beginning of the line.
 You could spend some time by moving it character by character but that doesn't sound cool. There is 
@@ -185,8 +182,7 @@ Switch to NORMAL mode then press
 
     <Key-p>
 
-Move cursor to the end of the line
-==================================
+### Move cursor to the end of the line
 
 Suppose now you are editing the end of the line then you decide to edit the beginning of the line. 
 Just switch to NORMAL mode then press
@@ -194,8 +190,7 @@ Just switch to NORMAL mode then press
     <Key-o>
 
 
-Move cursor to the beginning of the file
-========================================
+### Move cursor to the beginning of the file
 
 This Key-Command spares a lot of time. Imagine as painful it would be move character by character
 until the beginning of a big file when you were editting the end of it.
@@ -205,16 +200,14 @@ Switch to NORMAL mode then press
 
 It will make the cursor jump to the beginning of the file.
 
-Move cursor to the end of the file
-==================================
+### Move cursor to the end of the file
 
 As there is a Key-Command to move the cursor to the beginning of a file there should exist one
 to move the cursor to the end of a file as well. For such, switch to NORMAL mode then press
 
     <Key-2>
 
-Move forward one word
-=====================
+### Move forward one word
 
 You can save a lot of time by using this Key-Command correctly. Sometimes it is faster
 to move the cursor foward some words than using other means. Switch to NORMAL mode
@@ -224,8 +217,7 @@ then press
 
 that will place the cursor on the first char of the next word.
 
-Move backward one word
-======================
+### Move backward one word
 
 Suppose you have finished writting a phrase then you notice that one of the previous words of the
 phrase has a typo. What do you do? Well, you switch to NORMAL mode then press
@@ -234,8 +226,7 @@ phrase has a typo. What do you do? Well, you switch to NORMAL mode then press
 
 It will place the cursor on the first char of the previous word.
     
-Search forward for ( ) { } [ ] : .
-==================================
+### Search forward for ( ) { } [ ] : .
 
 I use this Key-Command to spare time when looking for typos in programming files 
 or jumping quickly through blocks of code in java/c.
@@ -248,8 +239,7 @@ It will put the cursor on the next occurrence of one of the
 
     () {} [] : .
 
-Search backward for ( ) { } [ ] : .
-===================================
+### Search backward for ( ) { } [ ] : .
 
 This Key-Command is used more than its friend, i use it whenever i'm finishing to write
 some statement then i notice i made a typo in the middle of the line.
@@ -261,8 +251,7 @@ Switch to NORMAL mode then press
 That would put the cursor on the previous occurrence of the symbols.
 
 
-JUMP_NEXT mode
-==============
+### JUMP_NEXT mode
 
 There are circumstance that some Key-Commands wouldn't work well to place the cursor
 at the desired position. This mode will solve the problem. 
@@ -279,8 +268,7 @@ It will appear JUMP_NEXT in the statusbar mode field.
 Press some key that maps to a printable character that is ahead of the cursor position 
 then the cursor will jump to the corresponding char.
 
-JUMP_BACK mode
-==============
+### JUMP_BACK mode
 
 This mode performs the opposite of the JUMP_NEXT, it places the cursor on the previous occurrence
 of a char. Switch to NORMAL mode then press
@@ -290,8 +278,7 @@ of a char. Switch to NORMAL mode then press
 Vy will be in JUMP_BACK mode. Press some key that maps to a printable char then
 the cursor will jump to the previous occurrence of the char.
 
-Scroll one line up
-==================
+### Scroll one line up
 
 The Key-Command to scroll one line up is implemented in NORMAL mode. Open a file with
 some pages then press
@@ -302,8 +289,7 @@ It will scroll one line up. The cursor wouldn't change its position as long it r
 visible.
 
 
-Scroll one line down
-====================
+### Scroll one line down
 
 This Key-Command is implemented in NORMAL mode as the one to scroll one line up.
 Open a file with a considerable number of pages then press
@@ -312,8 +298,7 @@ Open a file with a considerable number of pages then press
 
 The cursor would remain at its position as long it stays visible.    
 
-Scroll one page up
-==================
+### Scroll one page up
 
 This Key-Command works in NORMAL mode, open a file with some pages then press
 
@@ -325,8 +310,7 @@ to jump to the end of the file. Then press
 
 The cursor will remain always visible.
 
-Scroll one page down
-====================
+### Scroll one page down
 
 In NORMAL mode, open some big file then try pressing
 
@@ -334,8 +318,7 @@ In NORMAL mode, open some big file then try pressing
 
 The cursor will remain in the visible region.
 
-Insert a blank line up
-======================
+### Insert a blank line up
 
 This command works in NORMAL mode, it inserts a blank line above the cursor position
 then puts vy in INSERT mode. 
@@ -344,8 +327,7 @@ Put the cursor over a non blank line then press.
 
     <Key-n>
 
-Insert a blank line down
-========================
+### Insert a blank line down
 
 As the Key-Command to insert a blank line up, this one works in NORMAL mode. 
 Put the cursor over a line then press.
@@ -354,8 +336,7 @@ Put the cursor over a line then press.
 
 It will insert a blank line below the cursor line then put vy in INSERT mode.
 
-Toggle line selection
-=====================
+### Toggle line selection
 
 Sometimes one is interested to copy just the line which the cursor is on. This Key-Command
 selects the line.
@@ -366,8 +347,7 @@ Switch to NORMAL mode then put the cursor over a line then press.
 
 If you press the same keystroke then the line will be unselected.
 
-Select a word
-=============
+### Select a word
 
 It is possible to select a word when the cursor is on by pressing
 
@@ -376,8 +356,7 @@ It is possible to select a word when the cursor is on by pressing
 
 That is '['. This is very handy sometimes.
 
-Select text between pairs () {} []
-==================================
+### Select text between pairs () {} []
 
 I used this Key-Command a lot when i was playing with scheme. It selects
 the text between matching pairs of 
@@ -389,8 +368,7 @@ press.
 
     <Key-slash>
 
-Paste text one line up
-======================
+### Paste text one line up
 
 Switch to NORMAL mode, place the cursor on a line then press
 
@@ -406,8 +384,7 @@ that will copy the line. Place the cursor over some other line then press
 
 that will paste the copied text at the beginning of the line above the cursor.
 
-Paste text one line down
-========================
+### Paste text one line down
 
 Switch to NORMAL mode, place the cursor in the middle of a line
 then press
@@ -428,8 +405,7 @@ press
 
 It will paste the selected range of the line at the beginning of the next line.
 
-Paste text in the cursor position
-=================================
+### Paste text in the cursor position
 
 Switch to NORMAL mode, place the cursor in the middle of a line
 then press.
@@ -446,8 +422,7 @@ to copy the text, then move the cursor to a given position and press.
 
 It will paste the copied text in the cursor position.
 
-Copy selected text
-==================
+### Copy selected text
 
 The Key-Command to copy text to the clipboard is
 
@@ -468,8 +443,7 @@ It will select the entire line, once it is selected then press.
 
 The line will be copied to the clipboard.
 
-Delete selected text
-====================
+### Delete selected text
 
 There is a Key-Command that deletes all selected text. Switch to NORMAL mode,
 place the cursor over a line then press
@@ -483,8 +457,7 @@ Now, press
 
 You will notice all the selected was deleted.
 
-Delete a char
-=============
+### Delete a char
 
 I don't use this command very much but its useful sometimes.
 Switch to NORMAL mode, then place the cursor over a character.
@@ -495,8 +468,7 @@ Now, try pressing
 
 a few times.
 
-Delete a line
-=============
+### Delete a line
 
 I use this one a lot. Switch to NORMAL mode then place the cursor on a line, then press.
 
@@ -504,8 +476,7 @@ I use this one a lot. Switch to NORMAL mode then place the cursor on a line, the
 
 It will delete the line.
 
-Delete a word
-=============
+### Delete a word
 
 There is not a specific command to delete a word although it is achievable
 by selecting the word in which the cursor is placed on. For such press
@@ -518,14 +489,12 @@ in NORMAL mode then press.
 
 It will delete the selected text that is a word.
 
-Highlight pairs of () [] {}
-===========================
+### Highlight pairs of () [] {}
 
 Vy will highlight pairs of () [] {} whenever the cursor is placed on
 one of these chars.
 
-The ALPHA mode
-==============
+### The ALPHA mode
 
 The ALPHA mode implements some Key-Commands that aren't very often used.
 Switch to NORMAL mode then press.
@@ -540,8 +509,7 @@ You can switch back to NORMAL mode by pressing
 This mode implements Key-Commands to comment/uncomment blocks of code, drop marks at
 specific positions, shade lines and a few other features.
 
-Shade a line
-============
+### Shade a line
 
 Sometimes we need to create marks to remember text positions. The way to create a mark
 in vy is by shading a line. Switch to NORMAL mode, then place the cursor on the desired line
@@ -555,8 +523,7 @@ to switch to ALPHA mode. Once in ALPHA mode, press.
 
 It will shade the line, in order to unshade just press again the same Key-Comamnd.
 
-Jump to the previous shaded line
-================================
+### Jump to the previous shaded line
 
 This is useful to remember positions of the text. Switch to ALPHA mode by pressing
 
@@ -568,8 +535,7 @@ then press
 
 It will make the cursor jump to the previous shaded line.
 
-Jump to the next shaded line
-============================
+### Jump to the next shaded line
 
 This makes the cursor jump to the next shaded line. Switch to ALPHA mode
 then shade a line that is in the middle of the file, then switch back to NORMAL mode.
@@ -585,11 +551,9 @@ then press
 
 It will make the cursor jump to the next shaded line.
 
-Undo/redo
-=========
+### Undo/redo
 
-Jump to a given Line.Col position
-=================================
+### Jump to a given Line.Col position
 
 Switch to NORMAL mode, then press
 
@@ -608,42 +572,30 @@ to place the cursor on. Try inserting the following values
 
 In a file with more than 5 lines.
 
-Quick pattern search
-====================
+### Quick pattern search
 
-Set a search pattern
-====================
+### Set a search pattern
 
-Set a replacement pattern
-=========================
+### Set a replacement pattern
 
-Search up
-=========
+### Search up
 
-Search down
-===========
+### Search down
 
-Replacing a pattern up
-====================
+### Replacing a pattern up
 
-Replacing a pattern down
-======================
+### Replacing a pattern down
 
-Replacing a pattern at the cursor position
-==========================================
+### Replacing a pattern at the cursor position
 
-Searching a pattern inside a selected region
-============================================
+### Searching a pattern inside a selected region
 
-Replacing a pattern inside a selected region
-============================================
+### Replacing a pattern inside a selected region
 
-Word completion
-===============
+### Word completion
 
 
-Opening files in panes/tabs from command line
-=============================================
+### Opening files in panes/tabs from command line
 
 It is possible to open files from command lines in different panes/tabs.
 
@@ -700,17 +652,13 @@ and one for /dev/null.
     vy -l "[[['/home/tau/lib/esc-code/bash/cmd-esc.sh', '/dev/null']]]"
    
 
-Syntax highlight
-================
+### Syntax highlight
 
-Commenting blocks of code
-=========================
+### Commenting blocks of code
 
-Copying to the clipboard the filename of the file being edited
-==============================================================
+### Copying to the clipboard the filename of the file being edited
 
-Execute Inline Python
-=====================
+### Execute Inline Python
 
 Before dropping python commands to vy it is needed to set where the output should be printed. For such you need
 to use a Key-Command. Place the cursor in the AreaVi instance that you want to drop the output of the python commands
@@ -784,8 +732,7 @@ Try getting help from
 ~~~
 
 
-Getting help 
-============
+### Getting help 
 
 Vy is highly modular, it permits a good level of self documentation. Every plugin
 implemented in vy is self documented. The best way to get help is through our help python function.
@@ -859,12 +806,9 @@ then it will output the docs for the plugin.
 
 That is great. You got your first help. Vy is self documented, that is our philosophy !
 
-The global mode
-===============
+### The global mode
 
-
-The BETA mode
-==============
+### The BETA mode
 
 The vyrc file
 =============
