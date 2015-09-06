@@ -96,9 +96,11 @@ The basic cases
 ### The basic cursor movements
 
 You can save a lot of time by using some movement commands. These are the basic commands to learn.
-Run vy, it will be in NORMAL mode, press 
+Run vy, it will be in NORMAL mode. 
 
-    <Key-i> 
+Press 
+
+>    <Key-i> 
 
 to switch to INSERT mode. Insert some text in the AreaVi then switch back to NORMAL mode by pressing 
 
@@ -107,20 +109,20 @@ to switch to INSERT mode. Insert some text in the AreaVi then switch back to NOR
 Now that you have got some text in the AreaVi you can play with the Key-Commands to move the cursor
 up, down, left, right.
 
-Move the cursor left by pressing
+Move the cursor left by pressing.
     
     <Key-h>
 
-Move the cursor right by pressing
+Move the cursor right by pressing.
 
     <Key-l>
 
 
-Move the cursor up by pressing
+Move the cursor up by pressing.
 
     <Key-k>
 
-Moving the cursor down by pressing
+Moving the cursor down by pressing.
 
     <Key-j>
 
@@ -649,7 +651,7 @@ In a file with more than 5 lines.
 
 ***
 
-### Quick pattern search
+### The QUICK_SEARCH mode
 
 ***
 
@@ -930,6 +932,7 @@ Using vy as a terminal
 
 E-scripts
 =========
+
 
 
 
