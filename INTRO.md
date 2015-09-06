@@ -830,7 +830,7 @@ It will make the cursor jump to the next occurrence of the pattern.
 
 ### Unshade matched patterns
 
-After a pattern is matched it gets shaded, in order to unshade them press.
+After a pattern is matched it gets shaded, in order to unshade them, press.
 
     <Key-Q>
 
@@ -840,25 +840,72 @@ In NORMAL mode.
 
 ### Replace up
 
+Once a replacement text was set, press the Key-Command below in NORMAL mode to replace all occurrences
+of the search pattern found up.
+
+    <Shift-Up>
+
 ***
 
 ### Replace down
+
+Set a replacement and a search pattern, then press the Key-Command below in NORMAL mode.
+
+    <Shift-Down>
+
+That will replace all occurrences of the pattern down the cursor position.
 
 ***
 
 ### Replace on
 
+Set a pattern and a replacement for the pattern. Make the cursor jump back/next to the pattern. 
+Once the cursor is positioned at the pattern then press the Key-Command below in NORMAL mode.
+
+    <Control-Right>
+
+The matched pattern will be replaced for the previously set replacement. This Key-Command is
+specially useful when one doesn't know which matched pattern should be replaced really.
+
 ***
 
 ### Search selected text
+
+This is a Key-Command that is powerful. One could select ranges of text then do
+searches inside these ranges. The matched patterns will be highlighed.
+
+First, use range selection or block selection or whatever other kind of selection to select some
+region. Then switch to NORMAL mode.
+
+Press.
+
+    <Control-Left>
+
+The matched patterns will be highlighed.
 
 ***
 
 ### Replace pattern inside selected text
 
+Once a pattern is set, a replacement is set, then one can do replacement for the matched patterns
+inside a selected region by pressing the Key-Command below in NORMAL mode.
+
+    <Shift-Right>
+
 ***
 
 ### Word completion
+
+In INSERT momde it is useful to have completion of words. The word completion
+searches for all possible combinations in all the opened files.
+
+Write down a word that you know to appear in one of the opened files by vy, place
+the cursor at the end of such a word then press the Key-Command below in INSERT mode.
+
+    <Control-q>
+
+If you keep pressing it other possible combinations will appear.
+
 
 ***
 
@@ -924,9 +971,21 @@ and one for /dev/null.
 
 ### Syntax highlight
 
+The vy syntax highlight plugin works for all languages that python pygments library works for.
+In order to highligh the inserted text based on the file extension, just press.
+
+    <Escape>
+
 ***
 
-### Copying to the clipboard the filename of the file being edited
+### Copy the opened file path to the clipboard
+
+Sometimes this command is useful, switch to ALPHA mode then press.
+
+    <Key-u>
+
+It will appear on the statusbar a msg saying the file path was copied to the clipboard.
+Try pasting it somewhere.
 
 ***
 
@@ -1083,6 +1142,30 @@ That is great. You got your first help. Vy is self documented, that is our philo
 ***
 
 ### The global mode
+
+The global mode is a mode that if there is a handle/function mapped to an event in such a mode
+then such a handle will be called no matter in which mode is in.
+
+Example of Key-Commands that work in alpha mode are those to move focus between tabs, when files
+are opened/saved etc.
+
+### Move focus one tab left
+
+***
+
+### Move focus one tab right
+
+***
+
+### Move focus one pane up
+
+***
+
+### Move focus one pane down
+
+***
+
+### Move focus one pane up
 
 ***
 
