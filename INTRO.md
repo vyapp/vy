@@ -141,8 +141,8 @@ then press
 
 It will open a file dialog window in which you can select a file to be opened.
 
-Saving file changes
-===================
+Save file changes
+=================
 
 There is a handy Key-Command to save file changes. Open a file, switch to INSERT
 mode by pressing 
@@ -433,12 +433,20 @@ It will paste the selected range of the line at the beginning of the next line.
 Paste text in the cursor position
 =================================
 
-The Key-Command
+Switch to NORMAL mode, place the cursor in the middle of a line
+then press.
+
+    <Control-o>
+
+It will copy the range of text, then press
+
+    <Key-y>
+
+to copy the text, then move the cursor to a given position and press.
 
     <Key-t>
 
-in NORMAL mode is meant to paste text at the cursor position.
-
+It will paste the copied text in the cursor position.
 
 Copy selected text
 ==================
@@ -537,29 +545,79 @@ specific positions, shade lines and a few other features.
 Shade a line
 ============
 
-Unshade a line
-==============
+Sometimes we need to create marks to remember text positions. The way to create a mark
+in vy is by shading a line. Switch to NORMAL mode, then place the cursor on the desired line
+and press
+
+    <Key-3>
+
+to switch to ALPHA mode. Once in ALPHA mode, press.
+
+    <Key-q>
+
+It will shade the line, in order to unshade just press again the same Key-Comamnd.
 
 Jump to the previous shaded line
 ================================
 
+This is useful to remember positions of the text. Switch to ALPHA mode by pressing
+
+    <Key-3>
+
+then press
+
+    <Key-a>
+
+It will make the cursor jump to the previous shaded line.
+
 Jump to the next shaded line
 ============================
+
+This makes the cursor jump to the next shaded line. Switch to ALPHA mode
+then shade a line that is in the middle of the file, then switch back to NORMAL mode.
+
+Press
+
+    <Key-1>
+
+to make the cursor jump to the beginning of the file. Now, switch back to ALPHA mode
+then press
+
+    <Key-s>
+
+It will make the cursor jump to the next shaded line.
 
 Undo/redo
 =========
 
-Placing the cursor at a given line.col
-======================================
+Jump to a given Line.Col position
+=================================
+
+Switch to NORMAL mode, then press
+
+    <F3>
+
+It will appear an input text widget in which you can insert the desired position
+to place the cursor on. Try inserting the following values
+
+    3
+
+    4 
+
+    4.2
+
+    2.3
+
+In a file with more than 5 lines.
 
 Quick pattern search
 ====================
 
-Setting a pattern for search
-============================
+Set a search pattern
+====================
 
-Setting a pattern for replacement
-=================================
+Set a replacement pattern
+=========================
 
 Searching a pattern up
 ======================
@@ -821,6 +879,7 @@ Using vy as a terminal
 
 E-scripts
 =========
+
 
 
 
