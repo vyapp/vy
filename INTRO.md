@@ -6,9 +6,6 @@ Vy is a powerful editor, it is powerful because it is written in python on top o
 graphical toolkits ever. It is also powerful because it was designed with code clarity and modularity in mind. Everything
 in vy is based on a modular approach. Everything is modular.
 
-As vy is self documented, it means all plugins that are implemented just have docs explaning how to use the Key-Commands, the
-best approach to write this intro is going through the plugins docs.
-
 Vy is written in pure python, it gives the possibility of taking all power of vy with python, with no need for learning
 a non mainstream language like vimscript or emacs lisp. It is possible to drop python code to vy then affect the state
 of the editor in real time. 
@@ -19,6 +16,8 @@ the output of what the interpreter should print to the real sys.stdout.
 
 Vy implements mechanisms to drop python code to the python interpreter. The simplest mechanism is through
 a Key-Command in NORMAL mode.
+
+This INTRO goes through all standard cases of using vy as an editor/ide.
 
 What is a modal editor?
 ======================
@@ -33,16 +32,11 @@ that perform all kind of actions/operations.
 The AreaVi/Text widget events
 =============================
 
-The Key-Commands definition
-===========================
+What is a Key-Command?
+======================
 
-Along this intro i'll use some terms like Key-Commands, AreaVi instances. A Key-Command
-is an event that happens when an AreaVi instance has focus. It is when you press some key
-from your keyboard or open a file/save a file.
-
-An AreaVi instance is a class instance of the Tkinter Text widget from which AreaVi inherits from.
-AreaVi implements new features that turn the Text tkinter widget more powerful.
-It is possible to create multiple AreaVi instances by creating new tabs or panes.
+Along this intro i'll use some terms like Key-Commands, AreaVi instances. A Key-Command is
+an event mapped to a handle/function. One way to generate an event is by pressing a key.
 
 A Key-Command happens when there is a handle mapped to an event like 
     
@@ -54,11 +48,24 @@ mode in which vy is in.
 It is possible to have multiple AreaVi instances that are in different modes. The mode statusbar field
 shows in which mode the AreaVi instance that has focus is in.
 
+An AreaVi instance is a class instance of the Tkinter Text widget from which AreaVi inherits from.
+AreaVi implements new features that turn the Text tkinter widget more powerful.
+
 Running vy
 ==========
 
+Once vy is installed then open a terminal then type.
+
+    vy
+
+That is enough to have vy running. Notice that if you attempt to open an inexisting file
+it will throw an exception informing that the file doesnt exist.
+
 The statusbar
 =============
+
+The vy statusbar has fields to show messages, display the mode in which vy is in, show cursor line and column.
+Some Key-Commands display messages to inform the user of the success of an operation.
 
 Basic Modes
 ===========
@@ -78,44 +85,157 @@ like opening files, saving files, jumping the cursor to positions, searching pat
 of text etc.
 
 
-Moving the cursor around
-========================
+The basic cursor movements
+==========================
+
+You can save a lot of time by using some movement commands. These are the basic commands to learn.
+Run vy, it will be in NORMAL mode, press <Key-i> to switch to INSERT mode. Insert some
+text in the AreaVi then switch back to NORMAL mode by pressing <Escape>.
+
+Now that you have got some text in the AreaVi you can play with the Key-Commands to move the cursor
+up, down, left, right.
+
+Move the cursor left by pressing
+    
+    <Key-h>
+
+Move the cursor right by pressing
+
+    <Key-l>
+
+
+Move the cursor up by pressing
+
+    <Key-k>
+
+Moving the cursor down by pressing
+
+    <Key-j>
+
+Practice these Key-Commands until you get used to them.
+
 
 Open a file
 ===========
 
+There is a way to open a file dialog window to pick a file. For such switch to NORMAL
+by pressing 
+
+    <Escape>
+
+then press
+
+    <Control-d>
+
+It will open a file dialog window in which you can select a file to be opened.
+
 Saving file changes
 ===================
+
+There is a handy Key-Command to save file changes. Open a file, switch to INSERT
+mode by pressing 
+
+    <Key-i>
+
+then insert some lines. Switch to NORMAL mode by pressing 
+
+    <Escape>
+
+then press
+
+    <Control-s>
+
+In case of failure or success a msg would appear on the statusbar.
 
 Save as dialog window
 =====================
 
+It is possible to save a file with a new name by opening a save as dialog window.
+Switch to NORMAL mode then press
+
+    <Shift-s>
+
 Open a file from command line
 =============================
+
+Pass the filenames to vy as arguments on the command line.
+
+    vy file1 file2 file3 file4 ...
+
+It would open four tabs.
 
 Move cursor to the beginning of the line
 ========================================
 
+Suppose you are editing the end a line then you decide you need to edit the beginning of the line.
+You could spend some time by moving it character by character but that doesn't sound cool. There is 
+a better way. Switch to NORMAL mode then press
+
+    <Key-p>
+
 Move cursor to the end of the line
 ==================================
+
+Suppose now you are editing the end of the line then you decide to edit the beginning of the line. 
+Just switch to NORMAL mode then press
+
+    <Key-o>
+
 
 Move cursor to the beginning of the file
 ========================================
 
+This Key-Command spares a lot of time. Imagine as painful it would be move character by character
+until the beginning of a big file when you were editting the end of it.
+Switch to NORMAL mode then press
+
+    <Key-1>
+
+It will make the cursor jump to the beginning of the file.
+
 Move cursor to the end of the file
 ==================================
+
+As there is a Key-Command to move the cursor to the beginning of a file there should exist one
+to move the cursor to the end of a file as well. For such, switch to NORMAL mode then press
+
+    <Key-2>
 
 Move forward one word
 =====================
 
+You can save a lot of time by using this Key-Command correctly. Sometimes it is faster
+to move the cursor foward some words than using other means. Switch to NORMAL mode
+then press
+
+    <Key-bracketright>
+
+that will place the cursor at the first char of the next word.
+
 Move backward one word
 ======================
 
-Moving forward to the next occurence of () {} []
-================================================
+Suppose you have finished writting a phrase then you notice that one of the previous words of the
+phrase has a typo. What do you do? Well, you switch to NORMAL mode then press
 
-Moving backward to the next occurrence of () {} []
-==================================================
+    <Key-braceright>
+
+It will place the cursor at the first char of the previous word.
+    
+Moving forward to the next occurence of ( ) { } [ ] : .
+=======================================================
+
+This Key-Command spares some time when coding. Switch to NORMAL mode then press
+
+    <Key-P>
+
+Moving backward to the next occurrence of ( ) { } [ ] : .
+=========================================================
+
+As it is possible to move foward it is as well to move backward. For such, switch to NORMAL mode
+then press
+
+    <Key-O>
 
 Next symbol search
 ==================
@@ -509,6 +629,8 @@ Using vy as a terminal
 
 E-scripts
 =========
+
+
 
 
 
