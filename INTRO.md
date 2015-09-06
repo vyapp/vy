@@ -100,7 +100,7 @@ Run vy, it will be in NORMAL mode.
 
 Press 
 
->    <Key-i> 
+    <Key-i> 
 
 to switch to INSERT mode. Insert some text in the AreaVi then switch back to NORMAL mode by pressing 
 
