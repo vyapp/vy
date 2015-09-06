@@ -98,16 +98,15 @@ The basic cases
 You can save a lot of time by using some movement commands. These are the basic commands to learn.
 Run vy, it will be in NORMAL mode. 
 
-Press 
+Press the Key-Command below to switch to INSERT mode.
 
     <Key-i> 
 
-to switch to INSERT mode. Insert some text in the AreaVi then switch back to NORMAL mode by pressing 
+Insert some text in the AreaVi then switch back to NORMAL mode by pressing 
 
     <Escape>
 
-Now that you have got some text in the AreaVi you can play with the Key-Commands to move the cursor
-up, down, left, right.
+Now that you have got some text then you can play with the Key-Commands to move the cursor.
 
 Move the cursor left by pressing.
     
@@ -133,11 +132,11 @@ Practice these Key-Commands until you get used to them.
 ### Open a file
 
 There is a way to open a file dialog window to pick a file. For such switch to NORMAL
-by pressing 
+by pressing. 
 
     <Escape>
 
-then press
+Then press.
 
     <Control-d>
 
@@ -148,15 +147,15 @@ It will open a file dialog window in which you can select a file to be opened.
 ### Save file changes
 
 There is a handy Key-Command to save file changes. Open a file, switch to INSERT
-mode by pressing 
+mode by pressing.
 
     <Key-i>
 
-then insert some lines. Switch to NORMAL mode by pressing 
+Insert some lines. Switch to NORMAL mode by pressing.
 
     <Escape>
 
-then press
+Then press.
 
     <Control-s>
 
@@ -184,10 +183,9 @@ It would open four tabs.
 ### Move cursor to the beginning of the line
 
 Suppose you are editing the end a line then you decide you need to edit the beginning of the line.
-You could spend some time by moving it character by character but that doesn't sound cool. There is 
-a better way. 
+You could spend some time by moving it character by character but that doesn't sound cool. 
 
-Switch to NORMAL mode then press
+Switch to NORMAL mode then press.
 
     <Key-p>
 
@@ -196,7 +194,8 @@ Switch to NORMAL mode then press
 ### Move cursor to the end of the line
 
 Suppose now you are editing the end of the line then you decide to edit the beginning of the line. 
-Just switch to NORMAL mode then press
+
+Switch to NORMAL mode then press.
 
     <Key-o>
 
@@ -204,9 +203,10 @@ Just switch to NORMAL mode then press
 
 ### Move cursor to the beginning of the file
 
-This Key-Command spares a lot of time. Imagine as painful it would be move character by character
-until the beginning of a big file when you were editting the end of it.
-Switch to NORMAL mode then press
+This Key-Command spares a lot of time. Imagine as painful it would be moving the cursor
+character by character until the beginning of a big file when you were editting the end of it.
+
+Switch to NORMAL mode then press.
 
     <Key-1>
 
@@ -217,7 +217,7 @@ It will make the cursor jump to the beginning of the file.
 ### Move cursor to the end of the file
 
 As there is a Key-Command to move the cursor to the beginning of a file there should exist one
-to move the cursor to the end of a file as well. For such, switch to NORMAL mode then press
+to move the cursor to the end of a file as well. For such, switch to NORMAL mode then press.
 
     <Key-2>
 
@@ -227,18 +227,18 @@ to move the cursor to the end of a file as well. For such, switch to NORMAL mode
 
 You can save a lot of time by using this Key-Command correctly. Sometimes it is faster
 to move the cursor foward some words than using other means. Switch to NORMAL mode
-then press
+then press.
 
     <Key-bracketright>
 
-that will place the cursor on the first char of the next word.
+That will place the cursor on the first char of the next word.
 
 ***
 
 ### Move backward one word
 
 Suppose you have finished writting a phrase then you notice that one of the previous words of the
-phrase has a typo. What do you do? Well, you switch to NORMAL mode then press
+phrase has a typo. What do you do? Well, you switch to NORMAL mode then press.
 
     <Key-braceright>
 
@@ -251,7 +251,7 @@ It will place the cursor on the first char of the previous word.
 I use this Key-Command to spare time when looking for typos in programming files 
 or jumping quickly through blocks of code in java/c.
 
-Switch to NORMAL mode then press
+Switch to NORMAL mode then press.
 
     <Key-P>
 
@@ -266,7 +266,7 @@ It will put the cursor on the next occurrence of one of the
 This Key-Command is used more than its friend, i use it whenever i'm finishing to write
 some statement then i notice i made a typo in the middle of the line.
 
-Switch to NORMAL mode then press
+Switch to NORMAL mode then press.
 
     <Key-O>
 
@@ -283,7 +283,7 @@ at the desired position. This mode will solve the problem.
 When vy is in JUMP_NEXT mode and you press some key then the cursor will be placed on the 
 next char that corresponds such a key.
 
-Turn the NORMAL mode on, then press
+Turn the NORMAL mode on, then press.
 
     <Key-v>
 
@@ -297,7 +297,9 @@ then the cursor will jump to the corresponding char.
 ### JUMP_BACK mode
 
 This mode performs the opposite of the JUMP_NEXT, it places the cursor on the previous occurrence
-of a char. Switch to NORMAL mode then press
+of a char. 
+
+Switch to NORMAL mode then press.
 
     <Key-c>
 
@@ -309,7 +311,7 @@ the cursor will jump to the previous occurrence of the char.
 ### Scroll one line up
 
 The Key-Command to scroll one line up is implemented in NORMAL mode. Open a file with
-some pages then press
+some pages then press.
 
     <Key-w>
 
@@ -321,7 +323,7 @@ visible.
 ### Scroll one line down
 
 This Key-Command is implemented in NORMAL mode as the one to scroll one line up.
-Open a file with a considerable number of pages then press
+Open a file with a considerable number of pages then press.
 
     <Key-s>
 
@@ -331,25 +333,22 @@ The cursor would remain at its position as long it stays visible.
 
 ### Scroll one page up
 
-This Key-Command works in NORMAL mode, open a file with some pages then press
+This Key-Command works in NORMAL mode, open a file with some pages then press the Key-Command below
+to make the cursor jump to the end of the file.
 
     <Key-2>
 
-to jump to the end of the file. Then press
+Then press.
 
     <Key-q>
-
-The cursor will remain always visible.
 
 ***
 
 ### Scroll one page down
 
-In NORMAL mode, open some big file then try pressing
+In NORMAL mode, open some big file then try pressing.
 
     <Key-a>
-
-The cursor will remain in the visible region.
 
 ***
 
@@ -402,7 +401,7 @@ That is '['. This is very handy sometimes.
 ### Select text between pairs () {} []
 
 I used this Key-Command a lot when i was playing with scheme. It selects
-the text between matching pairs of 
+the text between matching pairs of the symbols below.
 
     () {} []
 
@@ -413,40 +412,47 @@ press.
 
 ***
 
+### Range selection
+
+***
+
+### Block selection
+
+
+***
+
 ### Paste text one line up
 
-Switch to NORMAL mode, place the cursor on a line then press
+Switch to NORMAL mode, place the cursor on a line then press.
 
     <Key-f>
 
-to select the line, then press
+to select the line, then copy the line with.
 
     <Key-y>
 
-that will copy the line. Place the cursor over some other line then press
+Place the cursor over some other line then press.
 
     <Key-e>
 
-that will paste the copied text at the beginning of the line above the cursor.
+That will paste the copied text at the beginning of the line above the cursor.
 
 ***
 
 ### Paste text one line down
 
-Switch to NORMAL mode, place the cursor in the middle of a line
-then press
+Switch to NORMAL mode, place the cursor in the middle of a line then press.
 
     <Control-P>
 
-to select a range of the line from the cursor position to the end of the line.
-The previous Key-Command will place the cursor at the end of the line.
+The above Key-Command will select a range of the line from the cursor position 
+to the end of the line.
 
-Then press
+Then copy the selected text by pressing.
 
     <Key-y>
 
-to copy the selected text. Now that there is text copied then
-press
+Now that there is text in the clipboard, press.
 
     <Key-r>
 
@@ -456,16 +462,16 @@ It will paste the selected range of the line at the beginning of the next line.
 
 ### Paste text in the cursor position
 
-Switch to NORMAL mode, place the cursor in the middle of a line
-then press.
+Switch to NORMAL mode, place the cursor in the middle of a line then press the below command 
+to copy a range of text from the cursor position to the end of line.
 
     <Control-o>
 
-It will copy the range of text, then press
+Press the Key-Command below to copy the selected text to the clipboard.
 
     <Key-y>
 
-to copy the text, then move the cursor to a given position and press.
+Then move the cursor to a given position then press.
 
     <Key-t>
 
@@ -483,11 +489,11 @@ in NORMAL mode. In order to have text copied to the clipboard it is needed
 to select some text. You can do it in so many different ways with vy.
 
 Open a file then switch to NORMAL mode. Place the cursor over a line
-then press.
+then press the key below to select the entire line.
 
     <Key-f>
 
-It will select the entire line, once it is selected then press.
+Then press.
 
     <Key-y>
 
@@ -498,16 +504,16 @@ The line will be copied to the clipboard.
 ### Delete selected text
 
 There is a Key-Command that deletes all selected text. Switch to NORMAL mode,
-place the cursor over a line then press
+place the cursor over a line then press the Key-Command below to select the line.
 
     <Key-f>
 
-It will select the line entirely. Move the cursor around then select some lines.
-Now, press
+Move the cursor around then select some other lines.
+Now, press.
 
     <Key-d>
 
-You will notice all the selected was deleted.
+You will notice all the selected text was deleted.
 
 ***
 
@@ -535,7 +541,7 @@ It will delete the line.
 ### Delete a word
 
 There is not a specific command to delete a word although it is achievable
-by selecting the word in which the cursor is placed on. For such press
+by selecting the word in which the cursor is placed on. For such press.
 
     <Key-bracketleft>
 
@@ -562,7 +568,7 @@ Switch to NORMAL mode then press.
     <Key-3>
 
 It will appear in the statusbar mode field that vy is in ALPHA mode.
-You can switch back to NORMAL mode by pressing 
+You can switch back to NORMAL mode by pressing.
 
     <Escape>
 
@@ -575,11 +581,11 @@ specific positions, shade lines and a few other features.
 
 Sometimes we need to create marks to remember text positions. The way to create a mark
 in vy is by shading a line. Switch to NORMAL mode, then place the cursor on the desired line
-and press
+and press key below to switch to ALPHA mode.
 
     <Key-3>
 
-to switch to ALPHA mode. Once in ALPHA mode, press.
+Once in ALPHA mode, press.
 
     <Key-q>
 
@@ -677,7 +683,7 @@ previous match by pressing.
 
     <Control-Tab>
 
-and make the cursor go to the next match by pressing.
+Make the cursor go to the next match by pressing.
 
     <Tab>
 
