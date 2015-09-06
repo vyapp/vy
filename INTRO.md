@@ -36,9 +36,6 @@ it will merely insert the character 'j' at the cursor position.
 Vy differently from vim can have as many modes as it is needed. It means you can implement new modes
 that perform all kind of actions/operations.
 
-The AreaVi/Text widget events
-=============================
-
 What is a Key-Command?
 ======================
 
@@ -640,8 +637,8 @@ Searching a pattern inside a selected region
 Replacing a pattern inside a selected region
 ============================================
 
-Completing words
-================
+Word completion
+===============
 
 
 Opening files in panes/tabs from command line
@@ -811,8 +808,6 @@ then press
     <Enter>
 
 then it will output the docs for the plugin.
-
-## Cursor movement
 
     Help on module vyapp.plugins.move_cursor in vyapp.plugins:
     
