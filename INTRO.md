@@ -23,8 +23,15 @@ What is a modal editor?
 ======================
 
 A modal editor is an editor that can be in different states. It performs different operations/tasks/actions
-from each state it is in. When vy is NORMAL mode and you type <Key-j> it will make the cursor jump one line down.
-When it is in INSERT mode and you type <Key-j> it will merely insert the character 'j' at the cursor position.
+from each state it is in. When vy is NORMAL mode and you type 
+
+    <Key-j> 
+
+it will make the cursor jump one line down. When it is in INSERT mode and you type 
+
+    <Key-j> 
+
+it will merely insert the character 'j' at the cursor position.
 
 Vy differently from vim can have as many modes as it is needed. It means you can implement new modes
 that perform all kind of actions/operations.
@@ -89,8 +96,13 @@ The basic cursor movements
 ==========================
 
 You can save a lot of time by using some movement commands. These are the basic commands to learn.
-Run vy, it will be in NORMAL mode, press <Key-i> to switch to INSERT mode. Insert some
-text in the AreaVi then switch back to NORMAL mode by pressing <Escape>.
+Run vy, it will be in NORMAL mode, press 
+
+    <Key-i> 
+
+to switch to INSERT mode. Insert some text in the AreaVi then switch back to NORMAL mode by pressing 
+
+    <Escape>
 
 Now that you have got some text in the AreaVi you can play with the Key-Commands to move the cursor
 up, down, left, right.
@@ -169,7 +181,9 @@ Move cursor to the beginning of the line
 
 Suppose you are editing the end a line then you decide you need to edit the beginning of the line.
 You could spend some time by moving it character by character but that doesn't sound cool. There is 
-a better way. Switch to NORMAL mode then press
+a better way. 
+
+Switch to NORMAL mode then press
 
     <Key-p>
 
@@ -210,7 +224,7 @@ then press
 
     <Key-bracketright>
 
-that will place the cursor at the first char of the next word.
+that will place the cursor on the first char of the next word.
 
 Move backward one word
 ======================
@@ -220,55 +234,142 @@ phrase has a typo. What do you do? Well, you switch to NORMAL mode then press
 
     <Key-braceright>
 
-It will place the cursor at the first char of the previous word.
+It will place the cursor on the first char of the previous word.
     
-Moving forward to the next occurence of ( ) { } [ ] : .
-=======================================================
+Search forward for ( ) { } [ ] : .
+==================================
 
-This Key-Command spares some time when coding. Switch to NORMAL mode then press
+I use this Key-Command to spare time when looking for typos in programming files 
+or jumping quickly through blocks of code in java/c.
+
+Switch to NORMAL mode then press
 
     <Key-P>
 
-Moving backward to the next occurrence of ( ) { } [ ] : .
-=========================================================
+It will put the cursor on the next occurrence of one of the
 
-As it is possible to move foward it is as well to move backward. For such, switch to NORMAL mode
-then press
+    () {} [] : .
+
+Search backward for ( ) { } [ ] : .
+===================================
+
+This Key-Command is used more than its friend, i use it whenever i'm finishing to write
+some statement then i notice i made a typo in the middle of the line.
+
+Switch to NORMAL mode then press
 
     <Key-O>
 
-Next symbol search
+That would put the cursor on the previous occurrence of the symbols.
+
+
+JUMP_NEXT mode
+==============
+
+There are circumstance that some Key-Commands wouldn't work well to place the cursor
+at the desired position. This mode will solve the problem. 
+
+When vy is in JUMP_NEXT mode and you press some key then the cursor will be placed on the 
+next char that corresponds such a key.
+
+Turn the NORMAL mode on, then press
+
+    <Key-v>
+
+It will appear JUMP_NEXT in the statusbar mode field. 
+
+Press some key that maps to a printable character that is ahead of the cursor position 
+then the cursor will jump to the corresponding char.
+
+JUMP_BACK mode
+==============
+
+This mode performs the opposite of the JUMP_NEXT, it places the cursor on the previous occurrence
+of a char. Switch to NORMAL mode then press
+
+    <Key-c>
+
+Vy will be in JUMP_BACK mode. Press some key that maps to a printable char then
+the cursor will jump to the previous occurrence of the char.
+
+Scroll one line up
 ==================
 
-Previous symbol search
+The Key-Command to scroll one line up is implemented in NORMAL mode. Open a file with
+some pages then press
+
+    <Key-w>
+
+It will scroll one line up. The cursor wouldn't change its position as long it remains
+visible.
+
+
+Scroll one line down
+====================
+
+This Key-Command is implemented in NORMAL mode as the one to scroll one line up.
+Open a file with a considerable number of pages then press
+
+    <Key-s>
+
+The cursor would remain at its position as long it stays visible.    
+
+Scroll one page up
+==================
+
+This Key-Command works in NORMAL mode, open a file with some pages then press
+
+    <Key-2>
+
+to jump to the end of the file. Then press
+
+    <Key-q>
+
+The cursor will remain always visible.
+
+Scroll one page down
+====================
+
+In NORMAL mode, open some big file then try pressing
+
+    <Key-a>
+
+The cursor will remain in the visible region.
+
+Insert a blank line up
 ======================
 
-Scrolling one line up
+This command works in NORMAL mode, it inserts a blank line above the cursor position
+then puts vy in INSERT mode. 
+
+Put the cursor over a non blank line then press.
+
+    <Key-n>
+
+Insert a blank line down
+========================
+
+As the Key-Command to insert a blank line up, this one works in NORMAL mode. 
+Put the cursor over a line then press.
+
+    <Key-m>
+
+It will insert a blank line below the cursor line then put vy in INSERT mode.
+
+Toggle line selection
 =====================
 
-Scrolling one line down
-=======================
+Sometimes one is interested to copy just the line which the cursor is on. This Key-Command
+selects the line.
 
-Scrolling one page up
-=====================
+Switch to NORMAL mode then put the cursor over a line then press.
 
-Scrolling one page down
-=======================
+    <Key-f>
 
-Inserting a blank line up
-=========================
+If you press the same keystroke then the line will be unselected.
 
-Insertng a blank line down
-==========================
-
-Selecting a char
-================
-
-Selecting a line
-================
-
-Selecting a word
-================
+Select a word
+=============
 
 It is possible to select a word when the cursor is on by pressing
 
@@ -277,31 +378,60 @@ It is possible to select a word when the cursor is on by pressing
 
 That is '['. This is very handy sometimes.
 
-Selecting text between matching pairs () {} []
-==============================================
+Select text between pairs () {} []
+==================================
 
-Pasting selected text one line up
-=================================
+I used this Key-Command a lot when i was playing with scheme. It selects
+the text between matching pairs of 
 
-The Key-command
+    () {} []
+
+Place the cursor on one of the symbols above, considering it is a matching pair, then 
+press.
+
+    <Key-slash>
+
+Paste text one line up
+======================
+
+Switch to NORMAL mode, place the cursor on a line then press
+
+    <Key-f>
+
+to select the line, then press
+
+    <Key-y>
+
+that will copy the line. Place the cursor over some other line then press
 
     <Key-e>
 
-in NORMAL mode is meant to paste text one line up from the cursor line.
+that will paste the copied text at the beginning of the line above the cursor.
 
+Paste text one line down
+========================
 
-Pasting selected text one line down
-===================================
+Switch to NORMAL mode, place the cursor in the middle of a line
+then press
 
-The Key-Command
+    <Control-P>
+
+to select a range of the line from the cursor position to the end of the line.
+The previous Key-Command will place the cursor at the end of the line.
+
+Then press
+
+    <Key-y>
+
+to copy the selected text. Now that there is text copied then
+press
 
     <Key-r>
 
-In NORMAL mode. 
+It will paste the selected range of the line at the beginning of the next line.
 
-
-Pasting selected text at the cursor position
-============================================
+Paste text in the cursor position
+=================================
 
 The Key-Command
 
@@ -310,48 +440,110 @@ The Key-Command
 in NORMAL mode is meant to paste text at the cursor position.
 
 
-Copying text
-============
+Copy selected text
+==================
 
-The Key-Command to copy text to the clipboard without cutting it is 
+The Key-Command to copy text to the clipboard is
 
     <Key-y>
 
 in NORMAL mode. In order to have text copied to the clipboard it is needed
 to select some text. You can do it in so many different ways with vy.
 
-For purposes of examplifying, open a file then
-switch to NORMAL mode. Place the cursor over a line
+Open a file then switch to NORMAL mode. Place the cursor over a line
+
 then press
 
     <Key-f>
 
-It will select the entire line, once it is selected.
-Then press
+It will select the entire line, once it is selected then press.
 
     <Key-y>
 
-The line will be copied to the clipboard, then you can paste it outside vy.
+The line will be copied to the clipboard.
 
-Deleting selected text
-======================
+Delete selected text
+====================
 
-Deleting a char
-===============
+There is a Key-Command that deletes all selected text. Switch to NORMAL mode,
+place the cursor over a line then press
 
-Deleting a line
-===============
+    <Key-f>
 
-Deleting a word
-===============
+It will select the line entirely. Move the cursor around then select some lines.
+Now, press
 
-Highlighting parenthesis
-========================
+    <Key-d>
+
+You will notice all the selected was deleted.
+
+Delete a char
+=============
+
+I don't use this command very much but its useful sometimes.
+Switch to NORMAL mode, then place the cursor over a character.
+
+Now, try pressing
+
+    <Key-z>
+
+a few times.
+
+Delete a line
+=============
+
+I use this one a lot. Switch to NORMAL mode then place the cursor on a line, then press.
+
+    <Key-x>
+
+It will delete the line.
+
+Delete a word
+=============
+
+There is not a specific command to delete a word although it is achievable
+by selecting the word in which the cursor is placed on. For such press
+
+    <Key-bracketleft>
+
+in NORMAL mode then press.
+
+    <Key-d>
+
+It will delete the selected text that is a word.
+
+Highlight pairs of () [] {}
+===========================
 
 Vy will highlight pairs of () [] {} whenever the cursor is placed on
 one of these chars.
 
-Creating marks/shading lines
+The ALPHA mode
+==============
+
+The ALPHA mode implements some Key-Commands that aren't very often used.
+Switch to NORMAL mode then press.
+
+    <Key-3>
+
+It will appear in the statusbar mode field that vy is in ALPHA mode.
+You can switch back to NORMAL mode by pressing 
+
+    <Escape>
+
+This mode implements Key-Commands to comment/uncomment blocks of code, drop marks at
+specific positions, shade lines and a few other features.
+
+Shade a line
+============
+
+Unshade a line
+==============
+
+Jump to the previous shaded line
+================================
+
+Jump to the next shaded line
 ============================
 
 Undo/redo
@@ -613,9 +805,9 @@ then it will output the docs for the plugin.
 
 That is great. You got your first help. Vy is self documented, that is our philosophy !
 
+The global mode
+===============
 
-The ALPHA mode
-==============
 
 The BETA mode
 ==============
@@ -629,6 +821,8 @@ Using vy as a terminal
 
 E-scripts
 =========
+
+
 
 
 
