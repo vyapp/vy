@@ -709,11 +709,45 @@ It will make the cursor jump to the next shaded line.
 
 ***
 
-### Commenting blocks of code
+### Comment a block of code
+
+There is a Key-Command in ALPHA mode to comment a block of code based on the
+extension of the file being edited. It will add inline comments to the selected region
+of text when the Key-Command below is pressed in ALPHA mode.
+
+    <Key-e>
+
+I use this Key-Command with the Key-Command to select lines in NORMAL mode.
+
+### Uncomment a block of code
+
+Once a block of code is commented you can uncomment it by selectiong the lines then pressing the
+Key-Command below in ALPHA mode.
+
+    <Control-r>
+
+This Key-Command is specially useful when you want to rewrite some blocks of code without
+deleting what you have written.
 
 ***
 
-### Undo/redo
+### Undo 
+
+After some Key-Command is performed you can undo the text changes by pressing in NORMAL mode the 
+Key-Command below.
+
+    <Key-comma>
+
+
+***
+
+### Redo
+
+Consider the situation that you have performed some Key-Commands then decided to undo the
+text operations but you notice you just were mistaken when undoing the text operations. What would you do?
+Well, i would press in NORMAL mode the following Key-Command below.
+
+    <Key-period>
 
 ***
 
@@ -1184,21 +1218,6 @@ Using vy as a terminal
 
 E-scripts
 =========
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
