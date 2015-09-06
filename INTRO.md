@@ -619,11 +619,11 @@ Set a search pattern
 Set a replacement pattern
 =========================
 
-Searching a pattern up
-======================
+Search up
+=========
 
-Searching a pattern down
-========================
+Search down
+===========
 
 Replacing a pattern up
 ====================
