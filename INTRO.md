@@ -483,8 +483,7 @@ in NORMAL mode. In order to have text copied to the clipboard it is needed
 to select some text. You can do it in so many different ways with vy.
 
 Open a file then switch to NORMAL mode. Place the cursor over a line
-
-then press
+then press.
 
     <Key-f>
 
@@ -517,11 +516,9 @@ You will notice all the selected was deleted.
 I don't use this command very much but its useful sometimes.
 Switch to NORMAL mode, then place the cursor over a character.
 
-Now, try pressing
+Now, try to press a few times the command.
 
     <Key-z>
-
-a few times.
 
 ***
 
@@ -1006,6 +1003,8 @@ That is great. You got your first help. Vy is self documented, that is our philo
 The vyrc file
 =============
 
+The basic functions
+===================
 
 Using vy as a terminal
 ======================
