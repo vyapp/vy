@@ -684,21 +684,70 @@ and make the cursor go to the next match by pressing.
 
     <Tab>
 
+You can go back to NORMAL mode by pressing.
+
+    <Escape>
+
 ***
 
 ### Set a search pattern
+
+Vy uses tcl regex scheme, you can insert a regex pattern to be used later by switching to NORMAL mode
+then pressing.
+
+    <Control-q>
+
+It will open an input text field in which you can insert a regex then press
+
+    <Return>
+
+to set it.
 
 ***
 
 ### Set a replacement pattern
 
+After setting a pattern for search you can set a string to replace the occurrence of the search pattern.
+You achieve it by switching to NORMAL mode then pressing.
+
+    <Control-Q>
+
+Insert the replacement then press
+
+    <Return>
+
 ***
 
 ### Search up
 
+Once a search pattern is set, it is possible to make the cursor jump to the previous occurence of the pattern
+from the cursor position by pressing.
+
+    <Control-Up>
+
+In NORMAL mode.
+
+
 ***
 
 ### Search down
+
+Switch to NORMAL mode then set a search pattern.
+Press.
+
+    <Control-Down>
+
+It will make the cursor jump to the next occurrence of the pattern.
+
+***
+
+### Unshade matched patterns
+
+After a pattern is matched it gets shaded, in order to unshade them press.
+
+    <Key-Q>
+
+In NORMAL mode.
 
 ***
 
