@@ -8,7 +8,7 @@ class ISearch(object):
         """
 
         """
-        self.REGX = '.*?'
+        self.REGX = '.+?'
         area.add_mode('ISEARCH')
         area.install(('NORMAL', '<Key-0>', lambda event: self.set_data(event.widget)),
                         ('ISEARCH', '<Key-j>', lambda event: self.go_down(event.widget)),
@@ -31,8 +31,7 @@ class ISearch(object):
 
         seq = self.create_perm(ask.data.split(' '))
         for ind in seq:
-            print ind
-            for ch, index0, index1 in area.find(ind, '1.0'):
+            for ch, index0, index1 in area.find(ind[:-3], '1.0'):
                 self.seq.append((index0, index1))
 
         if not self.seq:
@@ -61,6 +60,8 @@ class ISearch(object):
         pos0, pos1 = self.seq[self.index - 1]
         area.tag_add('sel', pos0, pos1)
         area.inset(pos1)
+        area.see('insert')
+
         if self.index > 1: self.index = self.index - 1
 
 
@@ -70,10 +71,11 @@ class ISearch(object):
 
         """
         if not self.seq: return
-
         pos0, pos1 = self.seq[self.index]
+
         area.tag_add('sel', pos0, pos1)
         area.inset(pos1)
+        area.see('insert')
         if self.index < len(self.seq) - 1: self.index = self.index + 1
 
 install = ISearch
