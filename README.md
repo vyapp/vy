@@ -19,8 +19,16 @@ The syntax highlighting plugin is very minimalistic and extremely fast. It suppo
 for all languages that python-pygments supports. The source code of the syntax highlighting plugin is about 
 80 lines of code. It is faster than both vim and emacs syntax highlighting plugins. :)
 
+The python auto completion plugin is about 70 lines of code and it is incredibly simple to implement
+auto completion for other languages.
+
 There is a powerful quick search scheme that permits making the cursor jump to positions of the file that match
 a given pattern. Such a plugin makes it very handy to jump to specific positions of programming files.
+
+The ISEARCH mode permits to exhaust the number of possible search patterns for a given set of words. 
+Such a kind of search permits to implement e-script files with sections organized by tags.
+This scheme of organization permits one to find quickly a region of the file that performs some action
+when dropped to the bash interpreter through vy. It is handy when finding specific sections in documentations as well.
 
 There are plugins for highlighting pairs of (), [], {} as well as selecting the text between these pairs 
 It is very useful when playing with function definitions in some languages like lisp.
@@ -147,6 +155,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
