@@ -1140,6 +1140,28 @@ class AreaVi(Text):
             if not data: continue
             yield(data)
             
+    def find_one_by_line(self, regex, index, stopindex='end', exact=None, regexp=True, nocase=None, 
+             elide=None, nolinestop=None):
+
+        count = IntVar()
+
+        while True:
+            index = self.search(regex, index, stopindex, exact=exact, nocase=nocase, 
+                                nolinestop=nolinestop, regexp=regexp, elide=elide, count=count)
+
+            if not index:
+                break
+
+            len   = count.get()
+            tmp   = '%s +%sc' % (index, len)
+            chunk = self.get(index, tmp)
+
+            pos0  = self.index(index)
+            pos1  = self.index('%s +%sc' % (index, len))
+            index = '%s +1l' % pos0
+            yield(chunk, pos0, pos1)
+
+
 
     def find(self, regex, index, stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
@@ -1539,6 +1561,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 
