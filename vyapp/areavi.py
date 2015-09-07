@@ -1212,6 +1212,8 @@ class AreaVi(Text):
         self.mark_set('insert', index)
         self.see('insert')
 
+        return index, index1
+
     def pick_next_down(self, name, regex, index0='insert', stopindex='end', exact=None, regexp=True, 
                        nocase=None, elide=None, nolinestop=None):
 
@@ -1232,6 +1234,8 @@ class AreaVi(Text):
 
         self.mark_set('insert', index1)
         self.see('insert')
+
+        return index, index1
 
     def replace(self, regex, data, index=None, stopindex=None, forwards=None,
                 backwards=None, exact=None, regexp=True, nocase=None, elide=None, nolinestop=None):
@@ -1535,6 +1539,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 
