@@ -142,8 +142,7 @@ Documentation
 
 [INTRO.md](INTRO.md)
 
-**HOWTO introduces vy for non vim users**
-
+**The plugin API**
 [GUIDE.md](GUIDE.md)
 
 
@@ -155,6 +154,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
