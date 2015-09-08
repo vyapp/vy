@@ -218,9 +218,118 @@ area.hook('ALPHA', '<Key-j>', key_pressed)
 The example above should be run through a python interpreter in interactive mode in order to better understand what is happening
 as well as testing the code with different values. 
 
+
+### What a AreaVi/Text widget index?
+
+An index is a string of the type shown below.
+
+    'Line.Col'
+
+Such a string corresponds to a position of the AreaVi instance. The example below should elucidate better than
+any definition. Such an example should be run through an interactive session.
+
+~~~python
+from vyapp.areavi import *
+area = AreaVi('None')
+area.pack(expand=True, fill=BOTH)
+
+# Insert the text at the position 1.0, it means
+# at the line 1 and col 0.
+area.insert('1.0', 'THIS IS A STRING')
+
+# Now try this one. It will insert the char '#' at line 1 and col 4.
+area.insert('1.4', '#')
+
+# This one deletes a range of text.
+area.delete('1.4', '1.5')
+
+# Try other examples.
+~~~
+
 ### What are marks?
 
-### The basic Text widget marks
+Marks are strings that corresponds to positions of the AreaVi instance. The marks can 
+change its position according to text being deleted or inserted.
+
+Consider the following example.
+
+~~~python
+from vyapp.areavi import *
+area = AreaVi('None')
+area.pack(expand=True, fill=BOTH)
+area.insert('1.0', 'cool\n')
+
+# Set a mark named 'm' at the position '1.2'.
+area.mark_set('m', '1.2')
+area.insert('1.0', 'that ')
+
+# It will print 1.7. It means that the mark position
+# has changed when the text 'that' was inserted.
+# The area.index method returns the index of a given mark.
+print area.index('m')
+
+~~~
+
+### The basic AreaVi/Text widget marks
+
+The most basic marks are the 'insert' one which corresponds
+to the position in which the cursor is in, and 'end' mark that
+is used to insert text at the end of the text.
+
+There are other important marks as 'insert lineend' that maps
+the end of the cursor line, the 'insert linestart' that maps the 
+beginning of the cursor line.
+
+~~~python
+# It would insert the string 'alpha' to the end of the cursor line.
+area.insert('insert lineend', 'alpha')
+
+# It would delete the entire line that is under the cursor.
+
+area.delete('insert linestart, 'insert lineend')
+
+# It gives the index 'Line.Col' for the end of the cursor line.
+
+area.index('insert lineend')
+~~~
+
+There are other kind of possible marks used line. 'insert +1c' that corresponds to 1 character
+after the cursor position. The example below show better.
+
+~~~python
+# It deletes the char at the cursor position.
+area.delete('insert', 'insert +1c')
+
+# It deletes the second character ahead the cursor position.
+area.delete('insert +1c', 'insert +2c')
+~~~
+
+You could use a negative index like 'insert -1c' that means one char back the cursor position.
+Other possible marks are 'insert linestart +1c' that means one char after the beginning of the cursor line.
+
+~~~python
+# It deletes the first char of the cursor line.
+area.delete('insert linestart', 'insert linestart +1c')
+~~~
+
+Try playing with 'insert lineend -1c' as well. It is possible to have marks relative to lines, this is very useful.
+You could try the following marks 'insert +1l' and 'insert -1l' these means one line down the cursor position
+and one line up the cursor position. You could even have stuff like 'insert +1l linestart +1c' that means one line
+down the cursor position and one char ahead the beginning of the line down the cursor position :P
+
+~~~python
+area.delete('insert +1l linestart', 'insert +1l linestart +1c')
+~~~
+
+You could use an index instead of a mar like '4.3 +1l' as well.
+
+~~~python
+# It would insert the char '#' at the position 3.3'.
+area.insert('2.3 +1l', '#')
+~~~
+
+These examples should be played interactively. Make sure to change the cursor position
+along the examples to check what happens when the statements are executed.
 
 ### What are tags?
 
