@@ -133,6 +133,48 @@ inside the ~/.vy/vyrc file by defining the date function inside the ~/vy/.vyrc f
 A help on Tkinter events
 ========================
 
+Tkinter is an event driven based library, it means that tkinter has a mainloop that processes events then dispatch them. 
+There are handles/functions that are mapped to these events, whenever an event occurs a handle is called with an object
+that characterizes the event.
+
+The kind of events that are used in most with vy are the ones that happen when a key is pressed. A set of common events
+that happen when keys get pressed is shown below.
+
+    It means that the key 'h' was pressed while the Control key is kept pressed.
+    <Control-h> 
+
+    It means that the key 'F1' was pressed.
+    <F1>
+
+    It means that the key 'h' was pressed regardless of it being released.
+    <KeyPress-h>
+
+    It means that the key 'h' was released.
+    <KeyRelease-h>
+    
+    The return key/enter.
+    <Return>
+
+    The key '1' was pressed.
+    <Key-1>
+
+Other events that may be interesting are.
+
+    It happens when an widget gets focus, like when you click on it with the mouse.
+    <FocusIn>
+
+    When an widget loses focus.
+    <FocusOut>
+
+    It happens when a file is loaded in a given AreaVi instance.
+    <<LoadData>>
+
+    It happens when data is saved in a given AreaVi instance.
+    <<SaveData>>
+
+These events are passed as strings to the Widget.bind method. The AreaVi class inherits such a method
+but it uses another method to map events to callbacks.
+
 A help on the AreaVi widget
 ===========================
 
