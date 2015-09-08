@@ -219,7 +219,7 @@ The example above should be run through a python interpreter in interactive mode
 as well as testing the code with different values. 
 
 
-### What a AreaVi/Text widget index?
+### What is a AreaVi/Text widget index?
 
 An index is a string of the type shown below.
 
@@ -321,7 +321,7 @@ down the cursor position and one char ahead the beginning of the line down the c
 area.delete('insert +1l linestart', 'insert +1l linestart +1c')
 ~~~
 
-You could use an index instead of a mar like '4.3 +1l' as well.
+You could use an index instead of a mark like '4.3 +1l' as well.
 
 ~~~python
 # It would insert the char '#' at the position 3.3'.
@@ -333,13 +333,66 @@ along the examples to check what happens when the statements are executed.
 
 ### What are tags?
 
-### The SEL tag
+A tag has a name and two index's, a tag is mapped to a range of text. It is possible to set some options for these ranges of text, such options
+are background, color, font, font size and even to map handles to events that happen when the mouse is over them. It is even possible
+to add a handle to an event that maps a key press when the cursor is in the tag range.
 
-### The tag_add method
 
-### The tag_remove method
+### The 'sel' tag and AreaVi.tag_add/AreaVi.tag_remove method
 
-### The tag_ranges method
+The 'sel' tag is a built-in tag that corresponds to text selection, it can be added to ranges of text when needed, the text's background
+will be modified. Try the following piece of code below.
+
+~~~python
+area = AreaVi('None')
+area.pack(expand=True, fill=BOTH)
+area.insert('1.0', 'alpha')
+
+# It will add the tag 'sel' from the beginning of the text to the end.
+area.tag_add('sel', '1.0', 'end')
+
+# Look at the text in the AreaVi instance now, it will be selected.
+# Inserting the following statement will unslect the text/remove the tag 'sel' from the beginning to the end.
+area.tag_remove('sel', '1.0', 'end')
+~~~
+
+### The AreaVi.tag_ranges method
+
+Consider you have added a lot of tags to a lot of ranges of text, you want to know which ranges are binded to a given tag. This method
+will give you the answer. See the example below that adds the 'sel' tag to three ranges then retrieves back the index's.
+
+~~~python
+area.insert('1.0', 'a' * 100) 
+area.tag_add('sel', '1.0', '1.4')
+area.tag_add('sel', '1.11', '1.20')
+area.tag_add('sel', '1.30', '1.50')
+
+for ind in area.tag_ranges('sel'):
+    print ind
+
+# It will print.
+# 1.0
+# 1.4
+# 1.11
+# 1.20
+# 1.30
+# 1.50
+
+The items that area.tag_ranges generate are textindex objects that implement a __str__ method.
+~~~
+
+### The AreaVi.tag_config method
+
+It is possible to specify options for tags as mentioned before, it is needed to use the AreaVi.tag_config method.
+The example below examplifies.
+
+~~~python
+area.insert('1.0', 'a' * 50)
+# It adds the tag 'alpha' to the range '1.0', '1.10'.
+area.tag_add('alpha', '1.0', '1.10')
+# It sets the background/color/font for the specified range.
+area.tag_config('alpha', background='blue', foreground='green', font=('Monospace', 8, 'bold'))
+~~~
 
 ### The AreaVi.search method
 
@@ -378,6 +431,7 @@ Complete Examples
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
