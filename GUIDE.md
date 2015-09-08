@@ -2,7 +2,7 @@ Introduction
 ============
 
 
-### The vyrc
+### The vyrc, plugin system and user plugin space
 
 The vyrc file consists of a sequence of python statements whose purpose is loading plugins and configuring preferences.
 Some plugins receive arguments, these arguments modify their behavior in some aspects. An example of such a plugin is
@@ -129,11 +129,6 @@ Now, you have created your first vy command plugin !
 The vyrc file is executed using vyapp.plugins.ENV as environment, it means that whatever it is defined inside ~/.vy/vyrc
 it will be defined in vyapp.plugins.ENV. It means the vy command created by the plugin above could be  defined 
 inside the ~/.vy/vyrc file by defining the date function inside the ~/vy/.vyrc file although it doesn't sound good.
-
-
-### The Plugin System
-
-### The User Plugin Space
 
 A help on Tkinter events
 ========================
