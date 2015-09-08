@@ -180,6 +180,44 @@ A help on the AreaVi widget
 
 ### Playing with AreaVi widget
 
+The AreaVi widget is a class that inherits from the Tkinter Text widget, it implements other methods that turn
+the Text widget class more powerful. Vy is a modal editor, all the scheme of modes in vy is defined inside the AreaVi
+class. 
+
+The AreaVi class is a Tkinter widget, so whenever an event on an AreaVi instance happens Tkinter mainloop dispatches it
+to the event handles. The best way to examplify what happens is with an example shown below.
+
+~~~python
+
+from vyapp.areavi import *
+
+def key_pressed(event):
+    print 'Some key was pressed.'
+
+
+area = AreaVi('None')
+area.pack(expand=True, fill=BOTH)
+
+# It creates the INSERT mode.
+area.add_mode('INSERT', opt=True)
+
+# It changes the AreaVi instance mode to INSERT.
+area.chmode('INSERT')
+
+# It maps the handle key_pressed to the event <Key-i> when area is in INSERT mode.
+area.hook('INSERT', '<Key-i>', key_pressed)
+
+# Now try this one. The msg wouldn't be printed since the AreaVi instance is in
+# INSERT mode. It would be needed to put the AreaVi instance in ALPHA mode by calling
+# area.chmode('ALPHA')
+area.hook('ALPHA', '<Key-j>', key_pressed)
+
+# Switch now to ALPHA mode by calling area.chmode('ALPHA') then try pressing <Key-j>.
+~~~
+
+The example above should be run through a python interpreter in interactive mode in order to better understand what is happening
+as well as testing the code with different values. 
+
 ### What are marks?
 
 ### The basic Text widget marks
