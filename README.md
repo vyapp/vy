@@ -1,4 +1,4 @@
-![vy](vy.gif) vy
+![vy](vy.png) vy
 ================
 
 A powerful modal editor written in python.
@@ -155,6 +155,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
