@@ -75,13 +75,14 @@ class ISearch(object):
 
         self.seq   = []
         self.index = -1
+        ask        = Ask(area)
+        if not ask.data: return
+
+        data     = ask.data.split(' ')
+        find     = lambda ind: area.find_one_by_line(escape(ind), '1.0')
+        self.seq = self.match_possible_regions(find, data)
 
         area.chmode('ISEARCH')
-        ask      = Ask(area)
-        data     = ask.data.split(' ')
-
-        find     = lambda ind: area.find_one_by_line(ind, '1.0')
-        self.seq = self.match_possible_regions(find, data)
 
         if not self.seq:
             self.no_match(area)
@@ -150,6 +151,7 @@ class ISearch(object):
         self.index = self.index + 1
 
 install = ISearch
+
 
 
 
