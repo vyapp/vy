@@ -1,6 +1,9 @@
 Introduction
 ============
 
+This GUIDE goes through some of the most important aspects of the plugin api and vy common features. For a better
+understanding of how vy works and how to implement more sophisticated plugins it is needed to read Tkinter docs on
+the Text/AreaVi widget class. 
 
 ### The vyrc, plugin system and user plugin space
 
@@ -396,7 +399,40 @@ area.tag_config('alpha', background='blue', foreground='green', font=('Monospace
 
 ### The AreaVi.search method
 
+This method performs search on the AreaVi instance's text. It is possible to pass regex to the method and a range in which
+the search should be performed.
+
+~~~python
+from Tkinter import *
+
+area = AreaVi('None')
+area.pack(expand=True, fill=BOTH)
+
+count = IntVar()
+area.insert('1.0', 'this is cool')
+
+# It performs the search in the range '1.0', 'end'.
+index = area.search('o{1,2}', '1.0', 'end', regexp=True, count=count)
+
+print index, count.get()
+# It would print.
+# 1.9, 2
+# The count.get() yields the length of the matched pattern.
+~~~
+
+
 ### The AreaVi.find method
+
+This method receives basically the same arguments that AreaVi.search. It returns an iterable object
+with all the matched patterns in the given range.
+
+~~~python
+area.insert('1.0', 'o' * 3 + 'a' * 4 + 'o' * 4)
+for match, pos0, pos1 in area.find('o+', '1.0', 'end', regexp=True):
+    print match, pos0, pos1
+
+# It would print what it has been matched and the range of the match.
+~~~
 
 ### The AreaVi virtual events
 
@@ -407,15 +443,39 @@ area.tag_config('alpha', background='blue', foreground='green', font=('Monospace
 The vy scheme
 =============
 
-### Vy Mode System
-
 ### Vy Global Mode
+
+The vy global mode is the '-1', such a mode dispatches events regardless of the mode in which an AreaVi instance is in.
+Consider the following situation in which an AreaVi instance is in mode 'NORMAL' and the event below happens.
+    
+    <Key-i>
+
+If there is a handle mapped to that event in the global mode then the handle will be called with the event object.
+
+~~~python
+def handle(event):
+    pass
+
+# It would make handle be called no matter the mode in which vy is in.
+area.hook('-1', '<Key-i>', handle)
+~~~
 
 ### A simple plugin example
 
-### The creation of new modes
 
-### How to switch to a mode
+### The AreaVi.add_mode and AreaVi.chmode methods
+
+It possible to create as many modes as one want, it is enough to call the AreaVi.add_mode method
+with the name of the method and an argument named opt that tells vy about the type of the mode.
+
+~~~python
+# The opt argument being true means it is possible to insert text from the keyboard events
+# in the AreaVi instance. it is like the INSERT mode but under a different name.
+area.add_mode('MODE_NAME', opt=True)
+# It makes the AreaVi instance switch to the a mode regardless of it having the opt
+# argument set to True.
+area.chmode('NEW_MODE_NAME')
+~~~
 
 ### The sys.stdout object
 
