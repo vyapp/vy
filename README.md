@@ -22,8 +22,8 @@ for all languages that python-pygments supports. The source code of the syntax h
 The python auto completion plugin is about 70 lines of code and it is incredibly simple to implement
 auto completion for other languages.
 
-There is a powerful quick search scheme that permits making the cursor jump to positions of the file that match
-a given pattern. Such a plugin makes it very handy to jump to specific positions of programming files.
+There is a powerful SCREEN_SEARCH mode that permits making the cursor jump to positions of the visible region of the file 
+that match a given pattern. Such a plugin spares a lot of time in almost all situations.
 
 The ISEARCH mode permits to exhaust the number of possible search patterns for a given set of words. 
 Such a kind of search permits to implement e-script files with sections organized by tags.
@@ -155,6 +155,7 @@ My nick there is Tau.
 
 Vy facebook group.
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
