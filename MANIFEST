@@ -6,6 +6,7 @@ vyapp/__init__.py
 vyapp/app.py
 vyapp/areavi.py
 vyapp/ask.py
+vyapp/complete.py
 vyapp/notevi.py
 vyapp/statusbar.py
 vyapp/stdout.py
@@ -25,6 +26,7 @@ vyapp/plugins/ibash.py
 vyapp/plugins/inline_comment.py
 vyapp/plugins/insert_line.py
 vyapp/plugins/io.py
+vyapp/plugins/isearch.py
 vyapp/plugins/jump.py
 vyapp/plugins/jump_line_mark.py
 vyapp/plugins/jump_text_mark.py
@@ -37,6 +39,7 @@ vyapp/plugins/notebook.py
 vyapp/plugins/panel.py
 vyapp/plugins/quicksearch.py
 vyapp/plugins/range_selection.py
+vyapp/plugins/screen_search.py
 vyapp/plugins/scroll_line.py
 vyapp/plugins/scroll_page.py
 vyapp/plugins/select_char.py
