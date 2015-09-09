@@ -460,7 +460,6 @@ def handle(event):
 area.hook('-1', '<Key-i>', handle)
 ~~~
 
-### A simple plugin example
 
 
 ### The AreaVi.add_mode and AreaVi.chmode methods
@@ -484,6 +483,8 @@ area.chmode('NEW_MODE_NAME')
 Complete Examples
 =================
 
+### A simple plugin
+
 ### A Word Checker plugin
 
 ### Count Phrase Words plugin
@@ -491,6 +492,7 @@ Complete Examples
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 

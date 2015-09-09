@@ -786,42 +786,58 @@ In a file with more than 5 lines.
 
 ***
 
-### The QUICK_SEARCH mode
+### The SCREEN_SEARCH mode
 
-This is an awesome mode in which one can do quick searches through a document. It does searches
-from the beginning of the file until the end by looking by a regex pattern. The regex pattern consists of.
+This is an awesome mode in which one can do searches through the visible region of the document. It does searches
+from the beginning of the visible region of the document until the end of the visible region.
+The regex pattern of the search consists of.
 
     sequence_of_char_1(.+)sequence_of_char_2(.+)sequence_of_char_3(.+) ...
 
-Consider the following string.
+Consider the following piece of text.
 
-    open a programming file with 100 lines.
-
-If you open this INTRO.md with vy then switch to QUICK_SEARCH mode from NORMAL mode by pressing.
+    1 The text contains hyperlinks between the two parts, allowing you to quickly
+    2 jump between the description of an editing task and a precise explanation of
+    3 the commands and options used for it.  Use these two commands:
+    
+    4 Press  CTRL-]  to jump to a subject under the cursor.
+    5 Press  CTRL-O  to jump back (repeat to go further back).
+    
+    6 Many links are in vertical bars, like this: |bars|.  The bars themselves may
+    7 be hidden or invisible, see below.  An option name, like 'number', a command
+    8 in double quotes like ":write" and any other word can alsooo be used as a link.
+    9 Try it out: Move the cursor to  CTRL-]  and press CTRL-] on it.
+    
+Suppose the cursor is placed at the first line, you decide you need to fix the word 'alsooo' whose line index is 8.
+What do you do? Well, you could jump to the line index 8 then go word by word. But you would spare some time. The 
+best way to place the cursor over the word 'alsooo' is using the SCREEN_SEARCH mode. You first press the Key-Command
+below in NORMAL mode to switch to SCREEN_SEARCH mode.
 
     <Key-backslash>
 
-then type.
 
-    open<Key-space>100
+Now, every keystroke will become part of a pattern search. Try typping the sequence
+    
+    in als
 
-It will make the cursor jump to that line and highlight the range of text that matches the pattern.
-You can use the Key-Command in QUICK_SEARCH mode to delete a char from the actual pattern by pressing.
-
-    <BackSpace>
-
-It will update the search process and try to match the new pattern. You can make the cursor go to the
-previous match by pressing.
-
-    <Control-Tab>
-
-Make the cursor go to the next match by pressing.
+It will place the cursor at the beginning of the word 'alsooo' :)
+You can make the cursor jump to the next possible match by pressing in SCREEN_SEARCH mode 
 
     <Tab>
 
-You can go back to NORMAL mode by pressing.
+If you want to go back to the previous match
+
+    <Control-Tab>
+
+If you think you typed wrong pattern you can delete a char from it with
+
+    <BackSpace>
+
+You can switch back to NORMAL mode by pressing
 
     <Escape>
+
+The cursor will remain at the end of the match position.
 
 ***
 
@@ -1236,6 +1252,7 @@ Using vy as a terminal
 
 E-scripts
 =========
+
 
 
 
