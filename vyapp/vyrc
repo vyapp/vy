@@ -266,27 +266,6 @@ from vyapp.plugins import codepad
 # A set of useful python functions that can be executed on the fly.
 from vyapp.plugins import util
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Implement lower and upper functions.
+from vyapp.plugins import case_sensitive
 

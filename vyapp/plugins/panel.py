@@ -46,11 +46,7 @@ Then you will get.
 Consider the case that you want to remove a given pane. For such
 you place the cursor over the pane then type <F6>.
 
-It is handy to move the cursor around panes. For changing the cursor
-one pane left you type <F9>, changing the cursor one pane right then type <F10>.
-The keys used to change the cursor up/down are <F11> and <F12>. These 
-Key-Commands work in -1 mode.
-
+For moving the focus between AreaVi instances, see the commands below.
 
 Key-Commands
 ============
@@ -67,21 +63,21 @@ Mode: NORMAL
 Event: <F6> 
 Description: Remove a pane.
 
-Mode: -1
-Event: <F9>
-Description: Change the cursor one pane left.
+Mode: NORMAL
+Event: <Shift-H>
+Description: Change focus one pane left.
 
-Mode: -1
-Event: <F10>
-Description: Change the cursor one pane right.
+Mode: NORMAL
+Event: <Shift-L>
+Description: Change focus one pane right.
 
-Mode: -1
-Event: <F11>
-Description: Change the cursor one pane up.
+Mode: NORMAL
+Event: <Shift-K>
+Description: Change focus one pane up.
 
-Mode: -1
-Event: <F12>
-Description: Change the cursor one pane down.
+Mode: NORMAL
+Event: <Shift-J>
+Description: Change focus one pane down.
 
 """
 
@@ -176,10 +172,12 @@ def install(area):
     area.install(('NORMAL', '<F4>', lambda event: add_horizontal_area(event.widget)),
                  ('NORMAL', '<F5>', lambda event: add_vertical_area(event.widget)),
                  ('NORMAL', '<F6>', lambda event: remove_area(event.widget)),
-                 (-1, '<F9>', lambda event: go_left_area(event.widget)),
-                 (-1, '<F10>', lambda event: go_right_area(event.widget)),
-                 (-1, '<F11>', lambda event: go_up_area(event.widget)),
-                 (-1, '<F12>', lambda event: go_down_area(event.widget)))
+                 ('NORMAL', '<Shift-H>', lambda event: go_left_area(event.widget)),
+                 ('NORMAL', '<Shift-L>', lambda event: go_right_area(event.widget)),
+                 ('NORMAL', '<Shift-K>', lambda event: go_up_area(event.widget)),
+                 ('NORMAL', '<Shift-J>', lambda event: go_down_area(event.widget)))
+
+
 
 
 
