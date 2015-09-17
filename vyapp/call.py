@@ -3,6 +3,8 @@ from threading import Thread
 from Queue import Queue, Empty
 from os import environ, setsid, killpg
 
+TIMEOUT = 200
+    
 class Call(Thread):
     def __init__(self, *args):
         Thread.__init__(self)
@@ -11,6 +13,7 @@ class Call(Thread):
         self.queue = Queue()
         self.start()
         self.stop = False
+        self.base = []
 
     def send(self, data):
         self.child.stdin.write(data.encode('utf-8'))
@@ -19,7 +22,7 @@ class Call(Thread):
         while not self.stop:
             data = self.child.stdout.readline()
             self.queue.put_nowait(data)
-    
+
     def update(self):
         while True:
             try:
@@ -27,11 +30,24 @@ class Call(Thread):
             except Empty:
                 break
             else:
-                self.handle_read(data)
+                self.dispatch(data)
                 
-    def handle_read(self, data):
-        pass
+    def add_handle(self, handle):
+        self.base.append(handle)
+
+    def dispatch(self, data):
+        for ind in self.base:
+            ind(data)
 
     def die(self):
         self.stop = True
         self.child.kill()
+
+def run_reactor(widget, reactor, timeout=200):
+    def loop():
+        widget.after(timeout, loop)               
+        reactor.update()    
+    widget.after(timeout, loop)               
+
+
+
