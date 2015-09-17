@@ -10,6 +10,8 @@ from vyapp.plugins import autoload, autocall
 
 ##############################################################################
 # Plugin list.
+import vyapp.plugins.doors
+autoload(vyapp.plugins.doors)
 
 # It creates the standard modes.
 import vyapp.plugins.mode
@@ -268,4 +270,5 @@ from vyapp.plugins import util
 
 # Implement lower and upper functions.
 from vyapp.plugins import case_sensitive
+
 
