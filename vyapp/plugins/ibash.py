@@ -21,7 +21,7 @@ class Process(object):
         area.install(('NORMAL', '<Control-Return>', lambda event: self.dump_region(event.widget)),
                    ('NORMAL', '<Return>', lambda event: self.dump_line(event.widget)), 
                    ('INSERT', '<F1>', lambda event: self.dump_line_and_insert_line(event.widget)),
-                   ('INSERT', '<F2>', lambda event: self.dump_line_and_tab(event.widget)),
+                   ('INSERT', '<Shift-F1>', lambda event: self.dump_line_and_tab(event.widget)),
                    ('NORMAL', '<F1>', lambda event: self.dump_line_and_down(event.widget)),
                    ('NORMAL', '<Control-F1>', lambda event: self.restart()),
                    ('NORMAL', '<Control-backslash>', lambda event: self.dump_signal(3)),
@@ -88,6 +88,7 @@ class Process(object):
 extern(root)
 process = Process()
 install = process
+
 
 
 

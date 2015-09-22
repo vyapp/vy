@@ -127,6 +127,22 @@ class AreaVi(Text):
         for id, seq, callback in args:
             self.unhook(id, seq, callback)
 
+    def append(self, data):
+        """
+        """
+
+        self.insert('end', data)
+        self.mark_set('insert', 'end')
+        self.see('end')
+
+    def curline(self):
+        """
+        A short hand for.
+
+        area.get('insert linestart', 'insert +1l linestart')
+        """
+        return self.get('insert linestart', 'insert +1l linestart')
+
     def tag_update(self, name, index0, index1, *args):
         """
         It removes a given tag from index0 to index1 and re adds
@@ -1561,6 +1577,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 
