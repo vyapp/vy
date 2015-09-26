@@ -13,6 +13,9 @@ from vyapp.plugins import autoload, autocall
 import vyapp.plugins.doors
 autoload(vyapp.plugins.doors)
 
+import vyapp.plugins.get_page_source
+autoload(vyapp.plugins.get_page_source)
+
 # It creates the standard modes.
 import vyapp.plugins.mode
 autoload(vyapp.plugins.mode)
@@ -270,6 +273,7 @@ from vyapp.plugins import util
 
 # Implement lower and upper functions.
 from vyapp.plugins import case_sensitive
+
 
 
 
