@@ -126,7 +126,7 @@ class IrcMode(object):
     def send_chan_msg(self, area, chan, con):
         data = area.get('insert linestart', 'insert lineend')
         area.delete('insert linestart', 'insert lineend')
-        area.insert('chan_msg', '<%s> %s' % (con.nick, data))
+        area.insert('chan_msg', '<%s> %s\n' % (con.nick, data))
         area.mark_set('insert', 'user_input')
         send_msg(con, chan, str(data))
 
