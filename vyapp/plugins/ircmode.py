@@ -35,6 +35,9 @@ def on_353(con, prefix, nick, mode, chan, peers):
     spawn(con, '353->%s' % chan, prefix, 
           nick, mode, peers)
 
+def on_332(con, addr, nick, channel, msg):
+    spawn(con, '332->%s' % channel, addr, nick, msg)
+
 def on_part(con, nick, user, host, chan):
     if con.nick == nick: 
         spawn(con, 'PART->%s->MEPART' % chan, chan)
@@ -100,6 +103,8 @@ class IrcMode(object):
         xmap(con, 'JOIN', on_join)
         xmap(con, 'PART', on_part)
         xmap(con, '353', on_353)
+        xmap(con, '332', on_332)
+
         xmap(con, 'MEJOIN', l1)
         xmap(con, 'PING', l2)
         xmap(con, FOUND, l3)
@@ -112,30 +117,25 @@ class IrcMode(object):
         area.hook('IRC', '<Control-e>', e2)
 
     def set_common_chan_handles(self, area, con, chan):
-        l1 = lambda *args: self.on_privmsg(area, *args)
-        l2 = lambda *args: self.on_332(area, *args)
+        H1 = '<%s> %s\n' 
+        H2 = 'Topic :%s\n' 
+        l1 = lambda con, nick, user, host, msg: area.insee('chan_msg', H1 % (nick, msg))
+        l2 = lambda con, addr, nick, msg: area.insee('chan_msg', H2 % msg)
 
         xmap(con, 'PRIVMSG->%s' % chan, l1)
-        xmap(con, '332', l2)
-
+        xmap(con, '332->%s' % chan, l2)
 
     def on_part(self, area, *args):
         pass
 
     def send_chan_msg(self, area, chan, con):
         data = area.get('insert linestart', 'insert lineend')
+
         area.delete('insert linestart', 'insert lineend')
         area.insert('chan_msg', '<%s> %s\n' % (con.nick, data))
+
         send_msg(con, chan, str(data))
         return 'break'
-
-    def on_privmsg(self, area, con, nick, user, host, msg):
-        area.insert('chan_msg', '<%s> %s\n' % (nick, msg))
-        area.mark_set('insert', 'end')
-        area.see('insert')
-
-    def on_332(self, area, con, addr, nick, channel, msg):
-        area.insert('chan_msg', 'Topic: %s\n' % msg)
 
     def on_connect_err(self, con, err):
         print 'not connected'

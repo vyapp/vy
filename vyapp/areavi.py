@@ -171,6 +171,11 @@ class AreaVi(Text):
         for indi, indj in args:
             self.tag_add(name, indi, indj)
 
+    def insee(self, index, data):
+        self.insert(index, data)
+        self.see('insert')
+
+
     def indref(self, index):
         """
         This is a short hand function. 
@@ -1577,6 +1582,7 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
 
 
 
