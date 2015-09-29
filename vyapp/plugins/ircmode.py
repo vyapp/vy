@@ -83,7 +83,11 @@ class IrcMode(object):
 
         self.set_common_chan_commands(area_chan, con, chan)
         self.set_common_chan_handles(area_chan, con, chan)
-    
+
+        area_chan.insert('end','\n\n')
+        area_chan.mark_set('chan_msg', '1.0')
+        area_chan.mark_set('user_input', 'end')
+
     def set_common_irc_commands(self, area, con):
         area.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
 
@@ -122,16 +126,17 @@ class IrcMode(object):
     def send_chan_msg(self, area, chan, con):
         data = area.get('insert linestart', 'insert lineend')
         area.delete('insert linestart', 'insert lineend')
-        area.insert('end', '<%s> %s' % (con.nick, data))
+        area.insert('chan_msg', '<%s> %s' % (con.nick, data))
+        area.mark_set('insert', 'user_input')
         send_msg(con, chan, str(data))
 
     def on_privmsg(self, area, con, nick, user, host, msg):
-        area.insert('end', '<%s> %s\n' % (nick, msg))
-        area.mark_set('insert', 'end')
+        area.insert('chan_msg', '<%s> %s\n' % (nick, msg))
+        area.mark_set('insert', 'user_input')
         area.see('insert')
 
     def on_332(self, area, con, addr, nick, channel, msg):
-        area.insert('end', 'Topic: %s\n' % msg)
+        area.insert('chan_msg', 'Topic: %s\n' % msg)
 
     def on_connect_err(self, con, err):
         print 'not connected'
