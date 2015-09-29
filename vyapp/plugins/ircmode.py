@@ -86,7 +86,6 @@ class IrcMode(object):
 
         area_chan.insert('end','\n\n')
         area_chan.mark_set('chan_msg', '1.0')
-        area_chan.mark_set('user_input', 'end')
 
     def set_common_irc_commands(self, area, con):
         area.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
@@ -127,12 +126,12 @@ class IrcMode(object):
         data = area.get('insert linestart', 'insert lineend')
         area.delete('insert linestart', 'insert lineend')
         area.insert('chan_msg', '<%s> %s\n' % (con.nick, data))
-        area.mark_set('insert', 'user_input')
         send_msg(con, chan, str(data))
+        return 'break'
 
     def on_privmsg(self, area, con, nick, user, host, msg):
         area.insert('chan_msg', '<%s> %s\n' % (nick, msg))
-        area.mark_set('insert', 'user_input')
+        area.mark_set('insert', 'end')
         area.see('insert')
 
     def on_332(self, area, con, addr, nick, channel, msg):
