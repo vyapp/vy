@@ -1,8 +1,17 @@
 """
+Overview
+========
+
+
+Usage
+=====
+
+Key-Commands
+============
 
 """
 
-from untwisted.plugins.irc import Irc, send_cmd
+from untwisted.plugins.irc import Irc, send_cmd, send_msg
 from untwisted.network import Spin, xmap, spawn
 from untwisted.utils.stdio import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE
 from untwisted.utils.shrug import *
@@ -39,9 +48,10 @@ def on_001(con, address, nick, *args):
 
 class IrcMode(object):
     def __init__(self, area):
-        area.add_mode('IRC')
+        area.add_mode('IRC', opt=True)
 
-        area.install(('IRC', '<Control-s>', lambda event: self.connect_server(event.widget)))
+        area.install(('IRC', '<Control-s>', lambda event: self.connect_server(event.widget)),
+                     ('GAMMA', '<Key-i>', lambda event: event.widget.chmode('IRC')))
 
     def connect_server(self, area):
         ask        = Ask(area)
@@ -71,15 +81,33 @@ class IrcMode(object):
         xmap(con, 'PART', on_part)
         xmap(con, '353', on_353)
         xmap(con, 'MEJOIN', lambda con, chan: self.create_channel(area, con, chan))
+        xmap(con, 'PING', lambda con, prefix, servaddr: 
+                send_cmd(con, 'PONG :%s' % servaddr))
 
     def create_channel(self, area, con, chan):
-        area.mark_set(chan, 'end')
-        area.insert('end', '#' * 30 + '\n')
-        area.insert(chan, '>')
-        xmap(con, 'PRIVMSG', lambda *args: self.feed(area, *args))
+        area_chan = root.note.create(chan)
+        area_chan.chmode('IRC')
 
-    def feed(self, area, con, nick, user, host, target, msg):
-        area.insert(target, msg)
+        area_chan.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
+        area_chan.hook('IRC', '<Return>', 
+                lambda event: self.send_chan_msg(event.widget, chan, con))
+
+        xmap(con, 'PRIVMSG->%s' % chan, lambda *args: self.on_privmsg(area_chan, *args))
+        xmap(con, '332', lambda *args: self.on_332(area_chan, *args))
+
+        # xmap(con, CLOSE, lambda *args: )
+
+    def send_chan_msg(self, area, chan, con):
+        data = area.get('insert linestart', 'insert lineend')
+        area.delete('insert linestart', 'insert lineend')
+        area.insert('end', '<%s> %s' % (con.nick, data))
+        send_msg(con, chan, str(data))
+
+    def on_privmsg(self, area, con, nick, user, host, msg):
+        area.insert('end', '<%s> %s\n' % (nick, msg))
+
+    def on_332(self, area, con, addr, nick, channel, msg):
+        area.insert('end', 'Topic: %s\n' % msg)
 
     def on_connect_err(self, con, err):
         print 'not connected'
@@ -91,3 +119,4 @@ def ircmode():
 
 ENV['ircmode'] = ircmode
 install        = IrcMode
+

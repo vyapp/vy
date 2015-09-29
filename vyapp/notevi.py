@@ -18,14 +18,14 @@ class PanedHorizontalWindow(PanedWindow):
 
         PanedWindow.__init__(self, orient=HORIZONTAL, *args, **kwargs)
 
-    def create_area(self):
+    def create_area(self, filename='none'):
         """
 
         """
 
         frame     = Frame(master=self)
         scrollbar = Scrollbar(master=frame)
-        area      = AreaVi('none', frame , border=3, relief=RAISED, 
+        area      = AreaVi(filename, frame , border=3, relief=RAISED, 
                            yscrollcommand=scrollbar.set)
         scrollbar.config(command=area.yview)
         scrollbar.pack(side='right', fill=Y)
@@ -45,12 +45,12 @@ class PanedHorizontalWindow(PanedWindow):
 
         return area
 
-    def create(self):
+    def create(self, filename='none'):
         """
 
         """
 
-        area = self.create_area()
+        area = self.create_area(filename)
         self.add(area.master)
         return area
 
@@ -76,15 +76,15 @@ class PanedVerticalWindow(PanedWindow):
 
         PanedWindow.__init__(self, orient=VERTICAL, *args, **kwargs)
 
-    def create(self):
+    def create(self, filename='none'):
         """
 
         """
 
         base = PanedHorizontalWindow(master=self)
         self.add(base)
-        base.create()
-        return base
+        area = base.create(filename)
+        return area
 
     def load(self, *args):
         """
@@ -116,9 +116,9 @@ class NoteVi(Notebook):
         """
 
         base = PanedVerticalWindow(master=self)
-        base.create()
+        area = base.create(filename)
         self.add(base, text=filename)
-        return base
+        return area
 
     def load(self, *args):
         """
@@ -131,6 +131,7 @@ class NoteVi(Notebook):
             self.add(base)        
             for indj in indi:
                 base.load(*indj)
+
 
 
 
