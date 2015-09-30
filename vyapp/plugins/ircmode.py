@@ -68,6 +68,7 @@ class IrcMode(object):
         con.connect_ex((addr, port))
         Client(con)
 
+        area.filename = addr 
         xmap(con, CONNECT, lambda con: self.set_up_con(con, area))
         xmap(con, CONNECT_ERR, self.on_connect_err)
 
@@ -101,7 +102,7 @@ class IrcMode(object):
     def set_common_irc_handles(self, area, con):
         l1 = lambda con, chan: self.create_channel(area, con, chan)
         l2 = lambda con, prefix, servaddr: send_cmd(con, 'PONG :%s' % servaddr)
-        l3 = lambda con, data: area.insert('end', '%s\n' % data)
+        l3 = lambda con, data: area.insee('end', '%s\n' % data)
 
         xmap(con, '001', on_001)
         xmap(con, 'PRIVMSG', on_privmsg)
