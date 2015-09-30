@@ -1,4 +1,6 @@
 from traceback import print_exc as debug
+from vyapp.app import root
+from vyapp.areavi import AreaVi
 import sys
 
 
@@ -56,18 +58,13 @@ def exc(data, env):
         sys.stderr = tmp
 
 
-def get_all_areavi_instances():
-    from vyapp.app import root
-    from vyapp.areavi import AreaVi
-
-    lst = []
-    for indi in root.note.winfo_children():
-        for indj in indi.winfo_children():
-            for indz in indj.winfo_children():
-                for indn in indz.winfo_children():
-                    if isinstance(indn, AreaVi):
-                       lst.append(indn)
-    return lst
+def get_all_areavi_instances(wid=root):
+    for ind in wid.winfo_children():
+        if isinstance(ind, AreaVi):
+            yield ind
+        else:
+            for ind in get_all_areavi_instances(ind):
+                yield ind
 
 def get_opened_files():
     map = dict()
@@ -123,6 +120,7 @@ def consume_iter(iterator, time=1):
             root.after(time, cave)
 
     cave()
+
 
 
 

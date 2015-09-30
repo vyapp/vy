@@ -136,7 +136,7 @@ class IrcMode(object):
     def send_msg(self, area, chan, con):
         data = area.cmd_like()
         area.insee('CHDATA', H1 % (con.nick, data))
-        send_msg(con, chan, str(data))
+        send_msg(con, chan, data.encode('utf-8'))
         return 'break'
 
     def on_connect_err(self, con, err):
@@ -149,5 +149,6 @@ def ircmode():
 
 ENV['ircmode'] = ircmode
 install        = IrcMode
+
 
 

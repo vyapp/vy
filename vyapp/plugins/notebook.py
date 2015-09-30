@@ -46,7 +46,7 @@ Event: <Shift-P>
 Description: It changes the focus right from a tab.
 
 """
-
+from vyapp.tools import get_all_areavi_instances
 from vyapp.app import root
 from vyapp.tools import set_status_msg
 from tkMessageBox import *
@@ -82,16 +82,33 @@ def remove_tab():
     if len(root.note.tabs()) <= 1: return
     root.note.forget(root.note.select())
 
+def select_left():
+    """
+    """
+
+    root.note.select(root.note.index(root.note.select()) - 1)
+    wid  = root.note.nametowidget(root.note.select())
+    seq  = get_all_areavi_instances(wid)
+    area = seq.next()
+    area.focus_set()
+
+def select_right():
+    """
+    """
+
+    root.note.select(root.note.index(root.note.select()) + 1)
+    wid  = root.note.nametowidget(root.note.select())
+    seq  = get_all_areavi_instances(wid)
+    area = seq.next()
+    area.focus_set()
+
 
 def install(area):
     area.install(('NORMAL', '<F8>', lambda event: load_tab()),
                  ('NORMAL', '<F7>', lambda event: root.note.create('None')),
                  ('NORMAL', '<Delete>', lambda event: remove_tab()),
-                 ('NORMAL', '<Shift-O>', lambda event: root.note.select(root.note.index(root.note.select()) - 1)),
-                 ('NORMAL', '<Shift-P>', lambda event: root.note.select(root.note.index(root.note.select()) + 1)))
-
-
-
+                 ('NORMAL', '<Shift-O>', lambda event: select_left()),
+                 ('NORMAL', '<Shift-P>', lambda event: select_right()))
 
 
 
