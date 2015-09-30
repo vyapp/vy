@@ -24,6 +24,7 @@ H2 = 'Topic :%s\n'
 H3 = '>>>%s has left %s.<<<\n' 
 H4 = '>>>%s has joined %s.<<<\n' 
 H5 = '>>>%s is now known as %s<<<\n'
+H6 = 'Peers:%s\n'
 
 def on_privmsg(con, nick, user, host, target, msg):
     spawn(con, 'PRIVMSG->%s' % target.lower(), nick, user, host, msg)
@@ -37,7 +38,6 @@ def on_join(con, nick, user, host, chan):
               user, host)
 
 def on_353(con, prefix, nick, mode, chan, peers):
-    peers = peers.split(' ')
     spawn(con, '353->%s' % chan, prefix, 
           nick, mode, peers)
 
@@ -138,12 +138,15 @@ class IrcMode(object):
         l3 = lambda con, nick, user, host: area.insee('CHDATA', H3 % (nick, chan))
         l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
+        l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
+
 
         xmap(con, 'PRIVMSG->%s' % chan, l1)
         xmap(con, '332->%s' % chan, l2)
         xmap(con, 'PART->%s' % chan, l3)
         xmap(con, 'JOIN->%s' % chan, l4)
         xmap(con, 'MENICK', l5)
+        xmap(con, '353->%s' % chan, l6)
 
     def send_msg(self, area, chan, con):
         data = area.cmd_like()
@@ -161,6 +164,7 @@ def ircmode():
 
 ENV['ircmode'] = ircmode
 install        = IrcMode
+
 
 
 
