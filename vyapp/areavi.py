@@ -175,6 +175,13 @@ class AreaVi(Text):
         self.insert(index, data)
         self.see('insert')
 
+    def cmd_like(self):
+        """
+        """
+
+        data = self.get('insert linestart', 'insert lineend')
+        self.delete('insert linestart', 'insert lineend')
+        return data
 
     def indref(self, index):
         """
@@ -1582,6 +1589,8 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
+
 
 
 

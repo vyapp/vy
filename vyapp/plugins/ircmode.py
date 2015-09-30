@@ -19,6 +19,11 @@ from vyapp.plugins import ENV
 from vyapp.ask import Ask
 from vyapp.app import root
 
+H1 = '<%s> %s\n' 
+H2 = 'Topic :%s\n' 
+H3 = '>>>%s has left %s.<<<\n' 
+H4 = '>>>%s has joined %s.<<<\n' 
+
 def on_privmsg(con, nick, user, host, target, msg):
     spawn(con, 'PRIVMSG->%s' % target.lower(), nick, user, host, msg)
     spawn(con, 'PRIVMSG->%s' % nick.lower(), target, user, host, msg)
@@ -88,7 +93,7 @@ class IrcMode(object):
         self.set_common_chan_handles(area_chan, con, chan)
 
         area_chan.insert('end','\n\n')
-        area_chan.mark_set('chan_msg', '1.0')
+        area_chan.mark_set('CHDATA', '1.0')
 
     def set_common_irc_commands(self, area, con):
         area.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
@@ -110,30 +115,26 @@ class IrcMode(object):
         xmap(con, FOUND, l3)
 
     def set_common_chan_commands(self, area, con, chan):
-        e1 = lambda event: self.send_chan_msg(event.widget, chan, con)
+        e1 = lambda event: self.send_msg(event.widget, chan, con)
         e2 = lambda event: self.send_cmd(event.widget, con)
 
         area.hook('IRC', '<Return>', e1)
         area.hook('IRC', '<Control-e>', e2)
 
     def set_common_chan_handles(self, area, con, chan):
-        H1 = '<%s> %s\n' 
-        H2 = 'Topic :%s\n' 
-        l1 = lambda con, nick, user, host, msg: area.insee('chan_msg', H1 % (nick, msg))
-        l2 = lambda con, addr, nick, msg: area.insee('chan_msg', H2 % msg)
+        l1 = lambda con, nick, user, host, msg: area.insee('CHDATA', H1 % (nick, msg))
+        l2 = lambda con, addr, nick, msg: area.insee('CHDATA', H2 % msg)
+        l3 = lambda con, nick, user, host: area.insee('CHDATA', H3 % (nick, chan))
+        l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
 
         xmap(con, 'PRIVMSG->%s' % chan, l1)
         xmap(con, '332->%s' % chan, l2)
+        xmap(con, 'PART->%s' % chan, l3)
+        xmap(con, 'JOIN->%s' % chan, l4)
 
-    def on_part(self, area, *args):
-        pass
-
-    def send_chan_msg(self, area, chan, con):
-        data = area.get('insert linestart', 'insert lineend')
-
-        area.delete('insert linestart', 'insert lineend')
-        area.insert('chan_msg', '<%s> %s\n' % (con.nick, data))
-
+    def send_msg(self, area, chan, con):
+        data = area.cmd_like()
+        area.insee('CHDATA', H1 % (con.nick, data))
         send_msg(con, chan, str(data))
         return 'break'
 
