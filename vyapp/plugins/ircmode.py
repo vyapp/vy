@@ -23,6 +23,7 @@ H1 = '<%s> %s\n'
 H2 = 'Topic :%s\n' 
 H3 = '>>>%s has left %s.<<<\n' 
 H4 = '>>>%s has joined %s.<<<\n' 
+H5 = '>>>%s is now known as %s<<<\n'
 
 def on_privmsg(con, nick, user, host, target, msg):
     spawn(con, 'PRIVMSG->%s' % target.lower(), nick, user, host, msg)
@@ -52,6 +53,14 @@ def on_part(con, nick, user, host, chan):
 
 def on_001(con, address, nick, *args):
     con.nick = nick
+
+def on_nick(con, nicka, user, host, nickb):
+    if not con.nick == nicka: 
+        return
+
+    con.nick = nickb;
+    spawn(con, 'MENICK', nicka, user, host, nickb)
+
 
 class IrcMode(object):
     def __init__(self, area):
@@ -110,6 +119,7 @@ class IrcMode(object):
         xmap(con, 'PART', on_part)
         xmap(con, '353', on_353)
         xmap(con, '332', on_332)
+        xmap(con, 'NICK', on_nick)
 
         xmap(con, 'MEJOIN', l1)
         xmap(con, 'PING', l2)
@@ -127,11 +137,13 @@ class IrcMode(object):
         l2 = lambda con, addr, nick, msg: area.insee('CHDATA', H2 % msg)
         l3 = lambda con, nick, user, host: area.insee('CHDATA', H3 % (nick, chan))
         l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
+        l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
 
         xmap(con, 'PRIVMSG->%s' % chan, l1)
         xmap(con, '332->%s' % chan, l2)
         xmap(con, 'PART->%s' % chan, l3)
         xmap(con, 'JOIN->%s' % chan, l4)
+        xmap(con, 'MENICK', l5)
 
     def send_msg(self, area, chan, con):
         data = area.cmd_like()
@@ -149,6 +161,8 @@ def ircmode():
 
 ENV['ircmode'] = ircmode
 install        = IrcMode
+
+
 
 
 
