@@ -63,21 +63,11 @@ def on_nick(con, nicka, user, host, nickb):
 
 
 class IrcMode(object):
-    def __init__(self, area):
-        area.add_mode('IRC', opt=True)
-
-        area.install(('IRC', '<Control-s>', lambda event: self.connect_server(event.widget)),
-                     ('GAMMA', '<Key-i>', lambda event: event.widget.chmode('IRC')))
-
-    def connect_server(self, area):
-        ask        = Ask(area)
-        con        = Spin()
-        addr, port = ask.data.split(':')
-        port       = int(port)
-        con.connect_ex((addr, port))
+    def __init__(self, area, addr, port):
+        con = Spin()
+        con.connect_ex((addr, int(port)))
         Client(con)
 
-        area.filename = addr 
         xmap(con, CONNECT, lambda con: self.set_up_con(con, area))
         xmap(con, CONNECT_ERR, self.on_connect_err)
 
@@ -97,8 +87,8 @@ class IrcMode(object):
 
     def create_channel(self, area, con, chan):
         area_chan = root.note.create(chan)
-        area_chan.chmode('IRC')
 
+        self.set_common_irc_commands(area_chan, con)
         self.set_common_chan_commands(area_chan, con, chan)
         self.set_common_chan_handles(area_chan, con, chan)
 
@@ -106,6 +96,10 @@ class IrcMode(object):
         area_chan.mark_set('CHDATA', '1.0')
 
     def set_common_irc_commands(self, area, con):
+        area.add_mode('IRC', opt=True)
+        area.chmode('IRC')
+        area.hook('GAMMA', '<Key-i>', 
+                lambda event: event.widget.chmode('IRC'))
         area.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
 
     def set_common_irc_handles(self, area, con):
@@ -127,10 +121,7 @@ class IrcMode(object):
 
     def set_common_chan_commands(self, area, con, chan):
         e1 = lambda event: self.send_msg(event.widget, chan, con)
-        e2 = lambda event: self.send_cmd(event.widget, con)
-
         area.hook('IRC', '<Return>', e1)
-        area.hook('IRC', '<Control-e>', e2)
 
     def set_common_chan_handles(self, area, con, chan):
         l1 = lambda con, nick, user, host, msg: area.insee('CHDATA', H1 % (nick, msg))
@@ -157,13 +148,12 @@ class IrcMode(object):
     def on_connect_err(self, con, err):
         print 'not connected'
 
-def ircmode():
-    from vyapp.areavi import AreaVi
-    AreaVi.ACTIVE.chmode('IRC')
-    
+def ircmode(addr='irc.freenode.org', port=6667):
+    area = root.note.create(addr)    
+    IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
-install        = IrcMode
+
 
 
 
