@@ -13,7 +13,7 @@ Key-Commands
 
 from untwisted.plugins.irc import Irc, send_cmd, send_msg
 from untwisted.network import Spin, xmap, spawn
-from untwisted.utils.stdio import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE
+from untwisted.utils.stdio import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
 from untwisted.utils.shrug import *
 from vyapp.plugins import ENV
 from vyapp.ask import Ask
@@ -45,11 +45,11 @@ def on_332(con, addr, nick, channel, msg):
     spawn(con, '332->%s' % channel, addr, nick, msg)
 
 def on_part(con, nick, user, host, chan):
+    spawn(con, 'PART->%s' % chan, nick, 
+          user, host)
+
     if con.nick == nick: 
         spawn(con, 'PART->%s->MEPART' % chan, chan)
-    else:
-        spawn(con, 'PART->%s' % chan, nick, 
-              user, host)
 
 def on_001(con, address, nick, *args):
     con.nick = nick
@@ -82,6 +82,7 @@ class IrcMode(object):
         Shrug(con)
         Irc(con)
 
+        xmap(con, CLOSE, lambda con, err: lose(con))
         self.set_common_irc_handles(area, con)
         self.set_common_irc_commands(area, con)
 
@@ -131,13 +132,17 @@ class IrcMode(object):
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
         l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
 
+        events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
+            ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), ('MENICK', l5), ('353->%s' % chan, l6))
 
-        xmap(con, 'PRIVMSG->%s' % chan, l1)
-        xmap(con, '332->%s' % chan, l2)
-        xmap(con, 'PART->%s' % chan, l3)
-        xmap(con, 'JOIN->%s' % chan, l4)
-        xmap(con, 'MENICK', l5)
-        xmap(con, '353->%s' % chan, l6)
+        for key, value in events:
+            xmap(con, key, value)
+
+        def unset(con, *args):
+            for key, value in events:
+                zmap(con, key, value)
+
+        xmap(con, 'PART->%s->MEPART' % chan, unset)
 
     def send_msg(self, area, chan, con):
         data = area.cmd_like()
@@ -153,6 +158,7 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
 
 
 
