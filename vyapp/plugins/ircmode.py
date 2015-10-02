@@ -12,9 +12,9 @@ Key-Commands
 """
 
 from untwisted.plugins.irc import Irc, send_cmd, send_msg
-from untwisted.network import Spin, xmap, spawn
+from untwisted.network import Spin, xmap, spawn, zmap
 from untwisted.utils.stdio import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
-from untwisted.utils.shrug import *
+from untwisted.utils.shrug import Shrug, FOUND
 from vyapp.plugins import ENV
 from vyapp.ask import Ask
 from vyapp.app import root
@@ -158,6 +158,7 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
 
 
 
