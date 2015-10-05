@@ -13,6 +13,10 @@ from vyapp.plugins import autoload, autocall
 import vyapp.plugins.doors
 autoload(vyapp.plugins.doors)
 
+
+import vyapp.plugins.global_notebook_selection
+autoload(vyapp.plugins.global_notebook_selection)
+
 import vyapp.plugins.get_page_source
 autoload(vyapp.plugins.get_page_source)
 
@@ -273,6 +277,9 @@ from vyapp.plugins import util
 
 # Implement lower and upper functions.
 from vyapp.plugins import case_sensitive
+
+# The ircmode.
+import vyapp.plugins.ircmode
 
 
 
