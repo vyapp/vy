@@ -11,7 +11,7 @@ Key-Commands
 
 """
 
-from untwisted.plugins.irc import Irc, send_cmd, send_msg
+from untwisted.plugins.irc import Irc, Misc, send_cmd, send_msg
 from untwisted.network import Spin, xmap, spawn, zmap
 from untwisted.utils.stdio import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
 from untwisted.utils.shrug import Shrug, FOUND
@@ -26,41 +26,6 @@ H4 = '>>>%s has joined %s.<<<\n'
 H5 = '>>>%s is now known as %s<<<\n'
 H6 = 'Peers:%s\n'
 
-def on_privmsg(con, nick, user, host, target, msg):
-    spawn(con, 'PRIVMSG->%s' % target.lower(), nick, user, host, msg)
-    spawn(con, 'PRIVMSG->%s' % nick.lower(), target, user, host, msg)
-
-def on_join(con, nick, user, host, chan):
-    if con.nick == nick: 
-        spawn(con, 'MEJOIN', chan)
-    else:
-        spawn(con, 'JOIN->%s' % chan, nick, 
-              user, host)
-
-def on_353(con, prefix, nick, mode, chan, peers):
-    spawn(con, '353->%s' % chan, prefix, 
-          nick, mode, peers)
-
-def on_332(con, addr, nick, channel, msg):
-    spawn(con, '332->%s' % channel, addr, nick, msg)
-
-def on_part(con, nick, user, host, chan):
-    spawn(con, 'PART->%s' % chan, nick, 
-          user, host)
-
-    if con.nick == nick: 
-        spawn(con, 'PART->%s->MEPART' % chan, chan)
-
-def on_001(con, address, nick, *args):
-    con.nick = nick
-
-def on_nick(con, nicka, user, host, nickb):
-    if not con.nick == nicka: 
-        return
-
-    con.nick = nickb;
-    spawn(con, 'MENICK', nicka, user, host, nickb)
-
 
 class IrcMode(object):
     def __init__(self, area, addr, port):
@@ -70,7 +35,7 @@ class IrcMode(object):
 
         xmap(con, CONNECT, lambda con: self.set_up_con(con, area))
         xmap(con, CONNECT_ERR, self.on_connect_err)
-
+        self.misc = None
 
     def send_cmd(self, area, con):
         ask = Ask(area)
@@ -108,14 +73,7 @@ class IrcMode(object):
         l2 = lambda con, prefix, servaddr: send_cmd(con, 'PONG :%s' % servaddr)
         l3 = lambda con, data: area.insee('end', '%s\n' % data)
 
-        xmap(con, '001', on_001)
-        xmap(con, 'PRIVMSG', on_privmsg)
-        xmap(con, 'JOIN', on_join)
-        xmap(con, 'PART', on_part)
-        xmap(con, '353', on_353)
-        xmap(con, '332', on_332)
-        xmap(con, 'NICK', on_nick)
-
+        self.misc = Misc(con)
         xmap(con, 'MEJOIN', l1)
         xmap(con, 'PING', l2)
         xmap(con, FOUND, l3)
@@ -141,12 +99,13 @@ class IrcMode(object):
         def unset(con, *args):
             for key, value in events:
                 zmap(con, key, value)
+            zmap(con, 'PART->%s->MEPART' % chan, unset)
 
         xmap(con, 'PART->%s->MEPART' % chan, unset)
 
     def send_msg(self, area, chan, con):
         data = area.cmd_like()
-        area.insee('CHDATA', H1 % (con.nick, data))
+        area.insee('CHDATA', H1 % (self.misc.nick, data))
         send_msg(con, chan, data.encode('utf-8'))
         return 'break'
 
@@ -158,6 +117,7 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
 
 
 
