@@ -113,8 +113,8 @@ vy requires Python 2.7 to run.
 
 This is a short script to install vy from the git repository.
 
-    pip pygments
-    pip jedi
+    pip install pygments
+    pip install jedi
 
     cd /tmp
     git clone https://github.com/iogf/vy.git vy-code
@@ -155,6 +155,7 @@ My nick there is Tau.
 
 vy Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
