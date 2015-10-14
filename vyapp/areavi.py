@@ -44,8 +44,8 @@ class AreaVi(Text):
         # def cave(event):
             # AreaVi.ACTIVE = event.widget
         # self.hook(-1, '<FocusIn>', cave)
-
-        AreaVi.ACTIVE = self
+        AreaVi.ACTIVE        = self
+        self.charset         = 'utf-8'
 
     def active(self):
         """
@@ -1435,22 +1435,27 @@ class AreaVi(Text):
         filename - Name of the file.
         """
         import os
-        filename = os.path.abspath(filename)        
-        self.delete('1.0', 'end')
-
-        fd   = open(filename, 'r')
-        data = fd.read()
-
-        fd.close()
-        self.insert('1.0', data)
-
+        filename      = os.path.abspath(filename)        
         self.filename = filename
+        fd            = open(filename, 'r')
+        data          = fd.read()
+        fd.close()
 
+        # i could generate a tk event here.
+        try:
+            data = data.decode(self.charset)
+        except UnicodeDecodeError:
+            self.charset = ''
+
+        self.delete('1.0', 'end')
+        self.insert('1.0', data)
         self.event_generate('<<LoadData>>')
-    
         type, _ = mimetypes.guess_type(self.filename)
         self.event_generate('<<Load-%s>>' % type)
 
+    def decode(self, name):
+        self.charset = name
+        self.load_data(self.filename)
 
     def save_data(self):
         """
@@ -1458,8 +1463,8 @@ class AreaVi(Text):
         """
 
         data = self.get('1.0', 'end')
-        data = data.encode('utf-8')
-        fd = open(self.filename, 'w')
+        data = data.encode(self.charset)
+        fd   = open(self.filename, 'w')
         fd.write(data)
         fd.close()
         self.event_generate('<<SaveData>>')
@@ -1589,6 +1594,9 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+
+
+
 
 
 
