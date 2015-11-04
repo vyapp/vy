@@ -107,8 +107,9 @@ def install(area):
     area.install(('NORMAL', '<F8>', lambda event: load_tab()),
                  ('NORMAL', '<F7>', lambda event: root.note.create('None')),
                  ('NORMAL', '<Delete>', lambda event: remove_tab()),
-                 ('NORMAL', '<Shift-O>', lambda event: select_left()),
-                 ('NORMAL', '<Shift-P>', lambda event: select_right()))
+                 (-1, '<Alt-o>', lambda event: select_left()),
+                 (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

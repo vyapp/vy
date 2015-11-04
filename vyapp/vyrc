@@ -14,26 +14,28 @@ import vyapp.plugins.doors
 autoload(vyapp.plugins.doors)
 
 
-import vyapp.plugins.global_notebook_selection
-autoload(vyapp.plugins.global_notebook_selection)
+import vyapp.plugins.url_source
+autoload(vyapp.plugins.url_source)
 
-import vyapp.plugins.get_page_source
-autoload(vyapp.plugins.get_page_source)
 
 # It creates the standard modes.
 import vyapp.plugins.mode
 autoload(vyapp.plugins.mode)
 
+
 import vyapp.plugins.screen_search
 autoload(vyapp.plugins.screen_search)
+
 
 # Python auto completion plugin using jedi.
 import vyapp.plugins.omen.auto
 autoload(vyapp.plugins.omen.auto)
 
+
 # The isearch plugin.
 import vyapp.plugins.isearch
 autoload(vyapp.plugins.isearch)
+
 
 # Shifting blocks of code.
 import vyapp.plugins.shift
@@ -54,9 +56,11 @@ autoload(vyapp.plugins.jump_text_mark)
 import vyapp.plugins.panel
 autoload(vyapp.plugins.panel)
 
+
 # Used to deal with tabs.
 import vyapp.plugins.notebook
 autoload(vyapp.plugins.notebook)
+
 
 # Implement keycommands to select text from the cursor position to the start/end of the file.
 import vyapp.plugins.select_text
@@ -280,6 +284,7 @@ from vyapp.plugins import case_sensitive
 
 # The ircmode.
 import vyapp.plugins.ircmode
+
 
 
 
