@@ -122,7 +122,8 @@ Description: It redirects output from sys.stdout to a given AreaVi instance.
 
 from traceback import format_exc as debug
 from vyapp.stdout import Stdout
-from vyapp.tools import exec_quiet, set_status_msg
+from vyapp.tools import set_status_msg
+from vyapp.exe import exec_quiet
 from vyapp.ask import *
 import sys
 
@@ -142,6 +143,7 @@ def install(area):
            ('NORMAL', '<Tab>', lambda event: redirect_stdout(event.widget)))
 
    
+
 
 
 

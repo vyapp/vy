@@ -2,7 +2,8 @@
 
 """
 
-from vyapp.tools import exc, set_status_msg
+from vyapp.tools import set_status_msg
+from vyapp.exe import exc
 from vyapp.ask import Ask
 from vyapp.plugins import ENV
 
@@ -26,6 +27,7 @@ def set_target(area):
 install = lambda area: area.install(('NORMAL', '<Key-semicolon>', lambda event: exec_cmd(event.widget, ENV)), 
            ('NORMAL', '<Control-e>', lambda event: exec_region(event.widget, ENV)),
            ('NORMAL', '<Control-E>', lambda event: set_target(event.widget)))
+
 
 
 

@@ -211,7 +211,7 @@ If you have placed dark.py inside your ~/.vy.
 
 from pygments.lexers import get_lexer_for_filename 
 from vyapp.plugins.syntax.tools import *
-from vyapp.tools import exec_quiet, consume_iter
+from vyapp.exe import exec_quiet
 
 TAG_KEYS_PRECEDENCE =('Token.Name.Tag',
     'Token.Comment.Multiline',
@@ -271,6 +271,8 @@ def install(area, theme, max=10):
                  (-1, '<Escape>', lambda event: update_scheme()))
 
     area.tag_setup(theme)
+
+
 
 
 
