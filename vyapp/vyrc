@@ -104,8 +104,8 @@ autoload(vyapp.plugins.tab,
 
 
 # Used to jump quickly to chars.
-import vyapp.plugins.jump
-autoload(vyapp.plugins.jump)
+import vyapp.plugins.seek_symbol
+autoload(vyapp.plugins.seek_symbol)
 
 
 # This plugin implements keycommands to scroll lines.
@@ -120,8 +120,8 @@ autoload(vyapp.plugins.scroll_page)
 
 # This plugin implements keycommands to jump quickly
 # to the next/previous word from the cursor position.
-import vyapp.plugins.match_word
-autoload(vyapp.plugins.match_word)
+import vyapp.plugins.word_jumps
+autoload(vyapp.plugins.word_jumps)
 
 
 # Used to select the text between pairs of (), [], {} when 
@@ -189,8 +189,8 @@ autoload(vyapp.plugins.ibash)
 
 # Used to highlight pairs of character like () {} [].
 # It is useful when playing with lisp things.
-import vyapp.plugins.case_pair
-autoload(vyapp.plugins.case_pair)
+import vyapp.plugins.match_sym_pair
+autoload(vyapp.plugins.match_sym_pair)
 
 
 # Used to complete words when Control-q is issued on insert mode.
@@ -211,8 +211,8 @@ autoload(vyapp.plugins.clipboard)
 
 # This plugin is used to place the cursor over the next occurrence of
 # '(', ')', '.', '[', ']', '{', '}', ',', ':', ';', "'", '"'
-import vyapp.plugins.match_sym
-autoload(vyapp.plugins.match_sym)
+import vyapp.plugins.symbol_jumps
+autoload(vyapp.plugins.symbol_jumps)
 
 
 # It is a built-in plugin that updates tab text and titles
@@ -284,6 +284,7 @@ from vyapp.plugins import case_sensitive
 
 # The ircmode.
 import vyapp.plugins.ircmode
+
 
 
 
