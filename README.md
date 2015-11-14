@@ -138,13 +138,9 @@ Or just:
 Documentation
 =============
 
-**The INTRO**
+**The Vy Book**
 
-[INTRO.md](INTRO.md)
-
-**The plugin API**
-
-[GUIDE.md](GUIDE.md)
+[BOOK.md](BOOK.md)
 
 
 Help
@@ -155,23 +151,6 @@ My nick there is Tau.
 
 vy Facebook group:
 https://www.facebook.com/groups/525968624207147/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
