@@ -1240,6 +1240,19 @@ are opened/saved etc.
 
 ***
 
+The IRC mode
+============
+
+### Connect to an irc network
+
+### Join a channel
+
+### Leave a channel
+
+### Nick identification
+
+### Nick change
+
 The vyrc file
 =============
 
@@ -1779,6 +1792,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
