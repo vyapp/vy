@@ -1191,7 +1191,7 @@ class AreaVi(Text):
 
 
 
-    def find(self, regex, index, stopindex='end', exact=None, regexp=True, nocase=None, 
+    def find(self, regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
         """
         It returns an iterator of matches. It is based on the Text.search method
@@ -1594,32 +1594,31 @@ class AreaVi(Text):
             if pos: return pos[0]
         return default
     
+    @staticmethod
+    def get_all_areavi_instances(wid):
+        for ind in wid.winfo_children():
+            if isinstance(ind, AreaVi):
+                yield ind
+            else:
+                for ind in AreaVi.get_all_areavi_instances(ind):
+                    yield ind
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @staticmethod
+    def get_opened_files(wid):
+        map = dict()
+        for ind in AreaVi.get_all_areavi_instances(wid):
+            map[ind.filename] = ind
+        return map
+    
+    @staticmethod
+    def find_on_all(wid, chunk):
+        for indi in AreaVi.get_all_areavi_instances(wid):
+            it = indi.find(chunk, '1.0', 'end')
+    
+            for indj in it:
+                yield indj[0]
+    
+    
 
 
 

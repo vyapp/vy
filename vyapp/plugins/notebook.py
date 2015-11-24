@@ -46,12 +46,12 @@ Event: <Shift-P>
 Description: It changes the focus right from a tab.
 
 """
-from vyapp.tools import get_all_areavi_instances
+
 from vyapp.app import root
 from vyapp.tools import set_status_msg
 from tkMessageBox import *
 from tkFileDialog import askopenfilename, asksaveasfilename
-
+from vyapp.areavi import AreaVi
 
 def load_tab():
     """
@@ -88,7 +88,7 @@ def select_left():
 
     root.note.select(root.note.index(root.note.select()) - 1)
     wid  = root.note.nametowidget(root.note.select())
-    seq  = get_all_areavi_instances(wid)
+    seq  = AreaVi.get_all_areavi_instances(wid)
     area = seq.next()
     area.focus_set()
 
@@ -98,7 +98,7 @@ def select_right():
 
     root.note.select(root.note.index(root.note.select()) + 1)
     wid  = root.note.nametowidget(root.note.select())
-    seq  = get_all_areavi_instances(wid)
+    seq  = AreaVi.get_all_areavi_instances(wid)
     area = seq.next()
     area.focus_set()
 
@@ -109,6 +109,7 @@ def install(area):
                  ('NORMAL', '<Delete>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

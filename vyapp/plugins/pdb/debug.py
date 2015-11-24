@@ -18,13 +18,13 @@ from subprocess import Popen, PIPE, STDOUT
 from untwisted.utils.iofd import *
 from untwisted.utils.shrug import *
 from vyapp.plugins.pdb import event
-from vyapp.tools import set_status_msg
-from vyapp.tools import get_opened_files, set_line, get_all_areavi_instances
+from vyapp.tools import set_status_msg, set_line
 from vyapp.ask import Ask
-
-import sys
+from vyapp.areavi import AreaVi
+from vyapp.app import root
 from os import environ, setsid, killpg
 import shlex
+import sys
 
 class Pdb(object):
     def __call__(self, area, setup={'background':'blue', 'foreground':'yellow'}):
@@ -119,7 +119,7 @@ class Pdb(object):
     
         for index, (filename, line) in self.map_index.iteritems():
             try:
-                area = get_opened_files()[filename]
+                area = AreaVi.get_opened_files(root)[filename]
             except KeyError:
                 pass
             else:
@@ -132,7 +132,7 @@ class Pdb(object):
     
         """
         try:
-            area = get_opened_files()[filename]
+            area = AreaVi.get_opened_files(root)[filename]
         except  KeyError:
             pass
         else:
@@ -148,7 +148,7 @@ class Pdb(object):
         area           = None
 
         try:
-            area = get_opened_files()[filename]
+            area = AreaVi.get_opened_files(root)[filename]
         except KeyError:
             return
 
@@ -177,6 +177,8 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
+
 
 
 

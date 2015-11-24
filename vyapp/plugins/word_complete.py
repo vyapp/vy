@@ -4,7 +4,7 @@ Event: <Control-q>
 Description: Complete word pattern based on all AreaVi instances.
 """
 
-from vyapp.tools import get_opened_files, find_on_all
+from vyapp.app import root
 from time import time
 
 
@@ -57,19 +57,9 @@ class WordComplete(object):
         if self.area.compare(self.index, '==', 'insert'): return
 
         data     = self.area.get(self.index, 'insert')
-        self.seq = find_on_all('%s[^ ]+' % data)
+        self.seq = self.area.find_on_all(root, '%s[^ ]+' % data)
 
 install = WordComplete
-
-
-
-
-
-
-
-
-
-
 
 
 

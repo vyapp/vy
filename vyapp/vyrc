@@ -271,19 +271,38 @@ def setup(area):
 autocall(setup) 
 
 ##############################################################################
-
 # Command plugins.
+
 # Post files quickly with codepad.
 from vyapp.plugins import codepad
 
-# A set of useful python functions that can be executed on the fly.
-from vyapp.plugins import util
+
+# Plugin tools.
+from vyapp.plugins import plugin_tools
+
 
 # Implement lower and upper functions.
 from vyapp.plugins import case_sensitive
 
+
 # The ircmode.
 import vyapp.plugins.ircmode
+
+
+# Count words.
+import vyapp.plugins.count_words
+
+
+# Managing file encodings.
+import vyapp.plugins.codec
+
+
+# Saving, opening files from vy python command line.
+import vyapp.plugins.iocmd
+
+
+# Find, replace, highlight patterns from vy python command line.
+import vyapp.plugins.cmd_search
 
 
 
