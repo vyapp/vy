@@ -18,6 +18,7 @@ from untwisted.utils.shrug import Shrug, FOUND
 from vyapp.plugins import ENV
 from vyapp.ask import Ask
 from vyapp.app import root
+from vyapp.areavi import AreaVi
 
 H1 = '<%s> %s\n' 
 H2 = 'Topic :%s\n' 
@@ -52,14 +53,27 @@ class IrcMode(object):
         self.set_common_irc_commands(area, con)
 
     def create_channel(self, area, con, chan):
-        area_chan = root.note.create(chan)
-
+        area_chan = self.create_area(chan)
         self.set_common_irc_commands(area_chan, con)
         self.set_common_chan_commands(area_chan, con, chan)
         self.set_common_chan_handles(area_chan, con, chan)
 
-        area_chan.insert('end','\n\n')
-        area_chan.mark_set('CHDATA', '1.0')
+
+    def create_area(self, name):
+        area = root.note.create(name)
+        area.insert('end','\n\n')
+        area.mark_set('CHDATA', '1.0')
+        return area
+
+    def deliver_user_msg(self, con, nick, target, user, host, msg):
+        try:
+            area_user = AreaVi.get_opened_files(root)[nick]
+        except KeyError:
+            area_user = self.create_area(nick)
+            self.set_common_irc_commands(area_user, con)
+            self.set_common_chan_commands(area_user, con, nick)
+        finally:
+            area_user.insee('CHDATA', H1 % (nick, msg))
 
     def set_common_irc_commands(self, area, con):
         area.add_mode('IRC', opt=True)
@@ -77,6 +91,7 @@ class IrcMode(object):
         xmap(con, 'MEJOIN', l1)
         xmap(con, 'PING', l2)
         xmap(con, FOUND, l3)
+        xmap(con, 'PMSG', self.deliver_user_msg)
 
     def set_common_chan_commands(self, area, con, chan):
         e1 = lambda event: self.send_msg(event.widget, chan, con)
@@ -117,6 +132,7 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
 
 
 
