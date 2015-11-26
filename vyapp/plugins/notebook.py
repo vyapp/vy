@@ -80,7 +80,15 @@ def remove_tab():
     """
 
     if len(root.note.tabs()) <= 1: return
-    root.note.forget(root.note.select())
+    name = root.note.select()
+    wid  = root.note.nametowidget(name)
+    wid.destroy()
+
+    # We don't need to call forget after destroy.
+    # It seems the method forget from note doesnt destroy
+    # the widget at all consequently the event <Destroy> isn't
+    # spreaded.
+    # root.note.forget(wid)
 
 def select_left():
     """
@@ -109,6 +117,7 @@ def install(area):
                  ('NORMAL', '<Delete>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 
