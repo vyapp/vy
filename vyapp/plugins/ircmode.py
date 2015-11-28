@@ -65,7 +65,7 @@ class IrcMode(object):
         area.mark_set('CHDATA', '1.0')
         return area
 
-    def deliver_user_msg(self, con, nick, target, user, host, msg):
+    def deliver_user_msg(self, con, nick, user, host, target, msg):
         try:
             area_user = AreaVi.get_opened_files(root)[nick]
         except KeyError:
@@ -132,6 +132,7 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
 
 
 
