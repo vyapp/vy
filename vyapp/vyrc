@@ -23,10 +23,6 @@ import vyapp.plugins.mode
 autoload(vyapp.plugins.mode)
 
 
-import vyapp.plugins.screen_search
-autoload(vyapp.plugins.screen_search)
-
-
 # Python auto completion plugin using jedi.
 import vyapp.plugins.omen.auto
 autoload(vyapp.plugins.omen.auto)
@@ -43,13 +39,13 @@ autoload(vyapp.plugins.shift, width=4, char=' ')
 
 
 # Used to quickly jump to the end/start of the cursor line.
-import vyapp.plugins.jump_line_mark
-autoload(vyapp.plugins.jump_line_mark)
+import vyapp.plugins.line_jumps
+autoload(vyapp.plugins.line_jumps)
 
 
 # Used to quickly jump to the end/start of the file.
-import vyapp.plugins.jump_text_mark
-autoload(vyapp.plugins.jump_text_mark)
+import vyapp.plugins.text_jumps
+autoload(vyapp.plugins.text_jumps)
 
 
 # Used to deal with panels.
@@ -83,8 +79,22 @@ autoload(vyapp.plugins.move_cursor)
 
 
 # Quick search.
-import vyapp.plugins.quicksearch
-autoload(vyapp.plugins.quicksearch)
+# import vyapp.plugins.quicksearch
+# autoload(vyapp.plugins.quicksearch)
+
+
+# import vyapp.plugins.screen_search
+# autoload(vyapp.plugins.screen_search)
+
+
+# A different implementation of quicksearch.
+import vyapp.plugins.leap
+autoload(vyapp.plugins.leap)
+
+
+# A different implementation of screen_search
+import vyapp.plugins.hop
+autoload(vyapp.plugins.hop)
 
 
 # It implements keycommands to select/unselect a char on the cursor.
@@ -255,8 +265,8 @@ autoload(vyapp.plugins.toggle_mode)
 # Used to log the files that you opened/saved.
 # You must change the '.vy_history' to something like.
 # '/home/your_home/.vy_history'
-import vyapp.plugins.log_opened_file
-autoload(vyapp.plugins.log_opened_file, '.vy_history')
+# import vyapp.plugins.log_opened_file
+# autoload(vyapp.plugins.log_opened_file, '.vy_history')
 
 ##############################################################################
 
@@ -303,6 +313,9 @@ import vyapp.plugins.iocmd
 
 # Find, replace, highlight patterns from vy python command line.
 import vyapp.plugins.cmd_search
+
+
+
 
 
 
