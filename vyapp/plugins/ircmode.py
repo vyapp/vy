@@ -26,7 +26,7 @@ H3 = '>>>%s has left %s.<<<\n'
 H4 = '>>>%s has joined %s.<<<\n' 
 H5 = '>>>%s is now known as %s<<<\n'
 H6 = 'Peers:%s\n'
-
+H7 = '>>>%s has quit (%s)<<<\n'
 
 class IrcMode(object):
     def __init__(self, area, addr, port):
@@ -100,13 +100,15 @@ class IrcMode(object):
     def set_common_chan_handles(self, area, con, chan):
         l1 = lambda con, nick, user, host, msg: area.insee('CHDATA', H1 % (nick, msg))
         l2 = lambda con, addr, nick, msg: area.insee('CHDATA', H2 % msg)
+        # it may be missing a msg='' parameter.
         l3 = lambda con, nick, user, host: area.insee('CHDATA', H3 % (nick, chan))
         l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
         l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
+        l7 = lambda con, nick, user, host, msg: area.insee('CHDATA', H7 % (nick, msg))
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
-            ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), ('MENICK', l5), ('353->%s' % chan, l6))
+            ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7))
 
         for key, value in events:
             xmap(con, key, value)
@@ -132,6 +134,7 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
 
 
 
