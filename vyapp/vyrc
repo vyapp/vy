@@ -295,10 +295,6 @@ from vyapp.plugins import plugin_tools
 from vyapp.plugins import case_sensitive
 
 
-# The ircmode.
-import vyapp.plugins.ircmode
-
-
 # Count words.
 import vyapp.plugins.count_words
 
@@ -313,6 +309,7 @@ import vyapp.plugins.iocmd
 
 # Find, replace, highlight patterns from vy python command line.
 import vyapp.plugins.cmd_search
+
 
 
 
