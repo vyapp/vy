@@ -292,7 +292,7 @@ from vyapp.plugins import plugin_tools
 
 
 # Implement lower and upper functions.
-from vyapp.plugins import case_sensitive
+from vyapp.plugins import caps
 
 
 # Count words.
@@ -309,6 +309,8 @@ import vyapp.plugins.iocmd
 
 # Find, replace, highlight patterns from vy python command line.
 import vyapp.plugins.cmd_search
+
+
 
 
 
