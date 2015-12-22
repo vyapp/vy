@@ -1,4 +1,14 @@
 """
+Overview
+========
+
+This plugin implements a mechanism to highligh pairs of ( ) [ ] { }.
+
+Usage
+=====
+
+Place the cursor over one of the following characters ( ) [ ] { } 
+in order to highligh its matching pair.
 
 """
 
@@ -21,6 +31,7 @@ def install(area, setup={'background':'pink', 'foreground':'black'},
     cave('_paren_', ('(', ')'))
     cave('_bracket_', ('[', ']'))
     cave('_brace_', ('{', '}'))
+
 
 
 
