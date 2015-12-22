@@ -85,12 +85,6 @@ Table of Contents
       * [Move focus one pane up](#move-focus-one-pane-up-1)
       * [The BETA mode](#the-beta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
-  * [The IRC mode](#the-irc-mode)
-      * [Connect to an irc network](#connect-to-an-irc-network)
-      * [Join a channel](#join-a-channel)
-      * [Leave a channel](#leave-a-channel)
-      * [Nick identification](#nick-identification)
-      * [Nick change](#nick-change)
   * [The vyrc file](#the-vyrc-file)
   * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
@@ -1364,19 +1358,6 @@ are opened/saved etc.
 
 ***
 
-The IRC mode
-============
-
-### Connect to an irc network
-
-### Join a channel
-
-### Leave a channel
-
-### Nick identification
-
-### Nick change
-
 The vyrc file
 =============
 
@@ -1916,6 +1897,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
