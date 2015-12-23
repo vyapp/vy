@@ -1,4 +1,17 @@
 """
+Overview
+========
+
+This module implements functionalities to find/replace patterns of text in an AreaVi instance
+that has focus.
+
+
+Usage
+=====
+
+Key-Commands
+============
+
 """
 
 from vyapp.ask import *
@@ -43,6 +56,7 @@ class Find(object):
 
 
 install = Find
+
 
 
 
