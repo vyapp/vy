@@ -10,8 +10,8 @@ from vyapp.plugins import autoload, autocall
 
 ##############################################################################
 # Plugin list.
-import vyapp.plugins.doors
-autoload(vyapp.plugins.doors)
+import vyapp.plugins.shell
+autoload(vyapp.plugins.shell)
 
 
 import vyapp.plugins.url_source
@@ -309,6 +309,7 @@ import vyapp.plugins.iocmd
 
 # Find, replace, highlight patterns from vy python command line.
 import vyapp.plugins.cmd_search
+
 
 
 
