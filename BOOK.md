@@ -77,6 +77,7 @@ Table of Contents
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
       * [Execute Inline Python](#execute-inline-python)
       * [Getting help](#getting-help)
+      * [Set an AreaVi instance as target for commands](#set-an-areavi-instance-as-target-for-commands)
       * [The global mode](#the-global-mode)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
@@ -1322,13 +1323,15 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ***
 
+### Set an AreaVi instance as target for commands
+
+
+***
+
 ### The global mode
 
 The global mode is a mode that if there is a handle/function mapped to an event in such a mode
 then such a handle will be called no matter in which mode is in.
-
-Example of Key-Commands that work in alpha mode are those to move focus between tabs, when files
-are opened/saved etc.
 
 ### Move focus one tab left
 
@@ -1897,6 +1900,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
