@@ -146,8 +146,8 @@ autoload(vyapp.plugins.select_line)
 
 
 # Implement keycommands to insert a line up/down.
-import vyapp.plugins.insert_line
-autoload(vyapp.plugins.insert_line)
+import vyapp.plugins.eol
+autoload(vyapp.plugins.eol)
 
 
 # This plugin implements keys to comment pieces of text inside 
@@ -309,6 +309,7 @@ import vyapp.plugins.iocmd
 
 # Find, replace, highlight patterns from vy python command line.
 import vyapp.plugins.cmd_search
+
 
 
 
