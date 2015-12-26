@@ -78,6 +78,7 @@ Table of Contents
       * [Execute Inline Python](#execute-inline-python)
       * [Getting help](#getting-help)
       * [Set an AreaVi instance as target for commands](#set-an-areavi-instance-as-target-for-commands)
+      * [Execute selected regions of python code](#execute-selected-regions-of-python-code)
       * [The global mode](#the-global-mode)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
@@ -1328,6 +1329,12 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ***
 
+### Execute selected regions of python code
+
+
+***
+
+
 ### The global mode
 
 The global mode is a mode that if there is a handle/function mapped to an event in such a mode
@@ -1900,6 +1907,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
