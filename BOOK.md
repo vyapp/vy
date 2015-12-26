@@ -1326,6 +1326,25 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ### Set an AreaVi instance as target for commands
 
+The vy built in functions/commands work on the concept of an AreaVi target. Some functions operate on
+AreaVi instances, an example is the CPPaste() function that posts code onto codepad.org. Code that is executed
+using the key command below in NORMAL mode it has the last AreaVi instance that had focus as target.
+
+
+<Key-semicolon>
+
+
+But code that is executed from selected regions of text can have a different AreaVi instance as target to operate on.
+In order to set an AreaVi instance as target, switch to NORMAL mode then press.
+
+    <Control-E>
+
+The msg 'Target set!' would appear on the status bar. Once the target is set then it is possible
+to execute python functions from selected regions of text that operate on the AreaVi instance that was set
+as target. Try setting a target then executing CPPaste() from other AreaVi instance with the following command
+in NORMAL mode after having selected the text 'CPPaste()'.
+
+    <Control-e>
 
 ***
 
@@ -1907,6 +1926,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
