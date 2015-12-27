@@ -88,6 +88,12 @@ Table of Contents
       * [Toggle mode](#toggle-mode)
       * [The BETA mode](#the-beta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
+  * [The IRC MODE](#the-IRC-MODE)
+      * [Connect to an irc network](#connect-to-an-irc-network)
+      * [Identify nick](#identify-nick)
+      * [Join a channel](#join-a-channel)
+      * [Part from a channel](#part-from-a-channel)
+      * [Change nick](#change-nick)
   * [The vyrc file](#the-vyrc-file)
   * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
@@ -1392,6 +1398,27 @@ then such a handle will be called no matter in which mode is in.
 
 ***
 
+The IRC MODE
+============
+
+### Connect to an irc network
+
+***
+
+### Identify nick
+
+***
+
+### Join a channel
+
+***
+
+### Part from a channel
+
+***
+
+### Change nick
+
 The vyrc file
 =============
 
@@ -1931,6 +1958,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
