@@ -9,18 +9,40 @@ sys.path.append(join(expanduser('~'), '.vy'))
 from vyapp.plugins import autoload, autocall
 
 ##############################################################################
+# The basic modes.
+
+import vyapp.plugins.delta_mode
+autoload(vyapp.plugins.delta_mode)
+
+
+import vyapp.plugins.gamma_mode
+autoload(vyapp.plugins.gamma_mode)
+
+
+import vyapp.plugins.beta_mode
+autoload(vyapp.plugins.beta_mode)
+
+
+import vyapp.plugins.alpha_mode
+autoload(vyapp.plugins.alpha_mode)
+
+
+import vyapp.plugins.insert_mode
+autoload(vyapp.plugins.insert_mode)
+
+
+import vyapp.plugins.normal_mode
+autoload(vyapp.plugins.normal_mode)
+
+##############################################################################
 # Plugin list.
+
 import vyapp.plugins.shell
 autoload(vyapp.plugins.shell)
 
 
 import vyapp.plugins.url_source
 autoload(vyapp.plugins.url_source)
-
-
-# It creates the standard modes.
-import vyapp.plugins.mode
-autoload(vyapp.plugins.mode)
 
 
 # Python auto completion plugin using jedi.
@@ -312,6 +334,7 @@ import vyapp.plugins.cmd_search
 
 # The vy irc mode.
 import vyapp.plugins.vyirc
+
 
 
 
