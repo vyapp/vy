@@ -310,6 +310,9 @@ import vyapp.plugins.iocmd
 # Find, replace, highlight patterns from vy python command line.
 import vyapp.plugins.cmd_search
 
+# The vy irc mode.
+import vyapp.plugins.vyirc
+
 
 
 
