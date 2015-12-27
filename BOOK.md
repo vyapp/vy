@@ -86,7 +86,6 @@ Table of Contents
       * [Move focus one pane down](#move-focus-one-pane-down)
       * [Move focus one pane up](#move-focus-one-pane-up-1)
       * [Toggle mode](#toggle-mode)
-      * [The ALPHA mode](#the-alpha-mode)
       * [The BETA mode](#the-beta-mode)
       * [The GAMMA mode](#the-gamma-mode)
       * [The DELTA mode](#the-delta-mode)
@@ -1393,10 +1392,6 @@ then such a handle will be called no matter in which mode is in.
 
 ***
 
-### The ALPHA mode
-
-***
-
 ### The BETA mode
 
 ***
@@ -1973,6 +1968,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
