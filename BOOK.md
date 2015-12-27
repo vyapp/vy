@@ -1326,7 +1326,7 @@ That is great. You got your first help. Vy is self documented, that is our philo
 
 ### Set an AreaVi instance as target for commands
 
-The vy built in functions/commands work on the concept of an AreaVi target. Some functions operate on
+Some of vy plugins expose some functions/commands that work on the concept of an AreaVi target. Some functions operate on
 AreaVi instances, an example is the CPPaste() function that posts code onto codepad.org. Code that is executed
 using the key command below in NORMAL mode it has the last AreaVi instance that had focus as target.
 
@@ -1926,6 +1926,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
