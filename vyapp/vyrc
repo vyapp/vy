@@ -59,8 +59,8 @@ autoload(vyapp.plugins.notebook)
 
 
 # Implement keycommands to select text from the cursor position to the start/end of the file.
-import vyapp.plugins.select_text
-autoload(vyapp.plugins.select_text)
+import vyapp.plugins.text_sel
+autoload(vyapp.plugins.text_sel)
 
 
 # Default events for 'Text'.
@@ -98,8 +98,8 @@ autoload(vyapp.plugins.hop)
 
 
 # It implements keycommands to select/unselect a char on the cursor.
-import vyapp.plugins.select_char
-autoload(vyapp.plugins.select_char)
+import vyapp.plugins.char_sel
+autoload(vyapp.plugins.char_sel)
 
 
 # Used to insert tab_size spaces.
@@ -136,18 +136,18 @@ autoload(vyapp.plugins.word_jumps)
 
 # Used to select the text between pairs of (), [], {} when 
 # the cursor is placed over one of the (), {}, [].
-import vyapp.plugins.select_sym_pair
-autoload(vyapp.plugins.select_sym_pair)
+import vyapp.plugins.sym_pair_sel
+autoload(vyapp.plugins.sym_pair_sel)
 
 
 # Implement a keycomand to select/unselect a line.
-import vyapp.plugins.select_line
-autoload(vyapp.plugins.select_line)
+import vyapp.plugins.line_sel
+autoload(vyapp.plugins.line_sel)
 
 
 # Implement keycommands to insert a line up/down.
-import vyapp.plugins.eol
-autoload(vyapp.plugins.eol)
+import vyapp.plugins.line_feed
+autoload(vyapp.plugins.line_feed)
 
 
 # This plugin implements keys to comment pieces of text inside 
@@ -247,13 +247,13 @@ autoload(vyapp.plugins.shade)
 
 
 # range_sel plugin implemets selection commannds.
-import vyapp.plugins.range_selection
-autoload(vyapp.plugins.range_selection)
+import vyapp.plugins.range_sel
+autoload(vyapp.plugins.range_sel)
 
 
 # block_selection plugin implemets selection commannds.
-import vyapp.plugins.block_selection
-autoload(vyapp.plugins.block_selection)
+import vyapp.plugins.block_sel
+autoload(vyapp.plugins.block_sel)
 
 
 # toggle_mode plugin is used to switch quickly between
@@ -312,6 +312,7 @@ import vyapp.plugins.cmd_search
 
 # The vy irc mode.
 import vyapp.plugins.vyirc
+
 
 
 

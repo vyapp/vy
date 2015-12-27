@@ -31,18 +31,18 @@ Description: It pops a file selection window to load the contents of a file in a
 
 Mode: NORMAL
 Event: <F7>
-Description: It creates a new blanktab.
+Description: It creates a new blank tab.
 
 Mode: NORMAL
 Event: <Delete>
 Description: It removes the focused tab.
 
 Mode: NORMAL
-Event: <Shift-O>
+Event: <Alt-o>
 Description: It changes the focus left from a tab.
 
 Mode: NORMAL
-Event: <Shift-P>
+Event: <Alt-p>
 Description: It changes the focus right from a tab.
 
 """
@@ -117,6 +117,7 @@ def install(area):
                  ('NORMAL', '<Delete>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

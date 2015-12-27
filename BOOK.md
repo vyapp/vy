@@ -85,6 +85,7 @@ Table of Contents
       * [Move focus one pane up](#move-focus-one-pane-up)
       * [Move focus one pane down](#move-focus-one-pane-down)
       * [Move focus one pane up](#move-focus-one-pane-up-1)
+      * [Toggle mode](#toggle-mode)
       * [The BETA mode](#the-beta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
   * [The vyrc file](#the-vyrc-file)
@@ -1379,6 +1380,10 @@ then such a handle will be called no matter in which mode is in.
 
 ***
 
+### Toggle mode
+
+***
+
 ### The BETA mode
 
 ***
@@ -1926,6 +1931,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 

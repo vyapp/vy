@@ -31,11 +31,11 @@ Key-Commands
 ============
 
 Mode: ALPHA, BETA, GAMMA, DELTA
-Event: <KeyPress-apostrophe>
+Event: <KeyPress-space>
 Description: Switch to one of the modes specified in modes.
 
 Mode: NORMAL
-Event: <KeyRelease-apostrophe>
+Event: <KeyRelease-space>
 Description: Goes back to the previous mode.
 
 """
@@ -58,6 +58,7 @@ class ToggleMode(object):
         area.chmode(self.id)
 
 install = ToggleMode
+
 
 
 
