@@ -88,7 +88,7 @@ Table of Contents
       * [Toggle mode](#toggle-mode)
       * [The BETA mode](#the-beta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
-  * [The IRC MODE](#the-IRC-MODE)
+  * [The IRC MODE](#the-irc-mode)
       * [Connect to an irc network](#connect-to-an-irc-network)
       * [Identify nick](#identify-nick)
       * [Join a channel](#join-a-channel)
@@ -1958,6 +1958,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
