@@ -1331,7 +1331,7 @@ AreaVi instances, an example is the CPPaste() function that posts code onto code
 using the key command below in NORMAL mode it has the last AreaVi instance that had focus as target.
 
 
-<Key-semicolon>
+    <Key-semicolon>
 
 
 But code that is executed from selected regions of text can have a different AreaVi instance as target to operate on.
@@ -1926,6 +1926,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
