@@ -84,7 +84,8 @@ Table of Contents
       * [Move focus one tab right](#move-focus-one-tab-right)
       * [Move focus one pane up](#move-focus-one-pane-up)
       * [Move focus one pane down](#move-focus-one-pane-down)
-      * [Move focus one pane up](#move-focus-one-pane-up-1)
+      * [Move focus one pane left](#move-focus-one-pane-left)
+      * [Move focus one pane right](#move-focus-one-pane-right)
       * [Toggle mode](#toggle-mode)
       * [The BETA mode](#the-beta-mode)
       * [The GAMMA mode](#the-gamma-mode)
@@ -1984,6 +1985,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
