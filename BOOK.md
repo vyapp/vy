@@ -1370,9 +1370,21 @@ then such a handle will be called no matter in which mode is in.
 
 ### Move focus one tab left
 
+It is possible to open files in multiple tabs, there is a handy key command to move the focus
+between tabs. For moving focus one tab left, press the key-command below regardless of the mode
+that vy is in. The key-command below works in GLOBAL mode it is a mode whose events have their handles
+called regardless of the mode in which vy is in.
+
+    <Alt-o>
+
+
 ***
 
 ### Move focus one tab right
+
+In order to move the focus one tab right, press the key-command below.
+
+    <Alt-p>
 
 ***
 
@@ -1384,7 +1396,11 @@ then such a handle will be called no matter in which mode is in.
 
 ***
 
-### Move focus one pane up
+### Move focus one pane left
+
+***
+
+### Move focus one pane right
 
 ***
 
@@ -1968,6 +1984,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
