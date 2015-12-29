@@ -1391,17 +1391,39 @@ In order to move the focus one tab right, press the key-command below.
 
 ### Move focus one pane up
 
+It is possible to have more than one file opened per tab, to move the focus
+one pane up, press.
+
+    <Key-K>
+
+in NORMAL mode.
+
 ***
 
 ### Move focus one pane down
+
+In order to move focus one pane down, switch to NORMAL mode then press.
+
+
+    <Key-J>
 
 ***
 
 ### Move focus one pane left
 
+Switch to NORMAL mode then press.
+
+    <Key-H>
+
+to move the focus one pane left.
+
 ***
 
 ### Move focus one pane right
+
+In order to move focus one pane right, switch to NORMAL mode then press.
+
+    <Key-L>
 
 ***
 
@@ -1985,6 +2007,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
