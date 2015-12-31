@@ -1429,6 +1429,42 @@ In order to move focus one pane right, switch to NORMAL mode then press.
 
 ### Toggle mode
 
+The standard mode is the NORMAL one, in such a mode it is possible to move cursor, copy text, paste text, delete text
+and a lot of other stuff. There are other secundary modes that implement Key-Commands for other kind of tasks. One example
+is the PDB mode that is implemented by the plugin below.
+
+~~~
+vyapp.plugins.pdb
+~~~
+
+Such a mode implements Key-Commands to set break points,
+run python code etc. In some situations it is useful to quickly switch to NORMAL mode to perform some task then go back to the
+previous mode. It is possible by using a Key-Command that is implemented in ALPHA, BETA, GAMMA, DELTA and PDB mode.
+
+In order to examplify the scenary, switch to ALPHA mode by pressing.
+
+    <Key-3>
+
+in NORMAL mode. Once in ALPHA mode, try holding the key:
+
+    <KeyPress-space>
+
+You will notice the mode has changed to NORMAL, once you release the key then you'll go back to the previous mode
+that is ALPHA. It is possible to extend the plugin below to work with other modes.
+
+For such, edit the line in your ~/.vy/vyrc file.
+
+~~~
+autoload(vyapp.plugins.toggle_mode)
+~~~
+
+to
+
+~~~
+autoload(vyapp.plugins.toggle_mode, modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'PDB', 'SOME_OTHER_MODE'])
+~~~
+
+
 ***
 
 ### The BETA mode
@@ -2007,6 +2043,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
