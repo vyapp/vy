@@ -134,6 +134,12 @@ Or just:
 
     vy
 
+Upgrade
+=======
+
+As vy is in development there may occur some changes to the vyrc file format, it is important to remove
+your ~/.vy directory before a new installation in order to upgrade to a new version.
+
 
 Documentation
 =============
@@ -151,6 +157,7 @@ My nick there is Tau.
 
 vy Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
