@@ -1469,6 +1469,9 @@ autoload(vyapp.plugins.toggle_mode, modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'P
 
 ### The BETA mode
 
+The BETA mode is an extra mode that may be used to implement extra functionalities. The PDB mode
+is implemented in BETA mode.
+
 ***
 
 ### The GAMMA mode
@@ -1483,10 +1486,25 @@ autoload(vyapp.plugins.toggle_mode, modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'P
 
 ***
 
-The IRC MODE
+The PDB mode (Python debugger)
+==============================
+
+### Switch to PDB mode
+
+### Set a break point
+
+### Remove a break point
+
+### Run code step by step
+
+The IRC mode
 ============
 
 ### Connect to an irc network
+
+***
+
+### Switch to IRC mode
 
 ***
 
@@ -2043,6 +2061,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
