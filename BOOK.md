@@ -1472,13 +1472,29 @@ autoload(vyapp.plugins.toggle_mode, modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'P
 The BETA mode is an extra mode that may be used to implement extra functionalities. The PDB mode
 is implemented in BETA mode.
 
+In order to switch to BETA mode, press the key below in NORMAL mode.
+
+    <Key-4>
+
 ***
 
 ### The GAMMA mode
 
+The GAMMA mode is an extra mode. It is implemented in NORMAL mode. 
+
+    <Key-5>
+
+It would get vy in GAMMA mode.
+
 ***
 
 ### The DELTA mode
+
+DELTA is an auxiliary mode as ALPHA, BETA, GAMMA are. It is implemented in NORMAL mode.
+
+    <Key-6>
+
+It would get vy in DELTA mode.
 
 ***
 
@@ -2061,6 +2077,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
