@@ -2,6 +2,9 @@
 Overview
 ========
 
+This module implements PDB mode that is a mode where it is possible to easily debug python applications.
+It is possible to set breakpoints, run code step by step, remove break points, check variable values etc.
+
 Usage
 =====
 
@@ -177,6 +180,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
