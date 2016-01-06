@@ -8,6 +8,18 @@ It is possible to set breakpoints, run code step by step, remove break points, c
 Usage
 =====
 
+First of all, it is needed to have a python program currently opened and having an output areavi instance. For such, open a python file
+then create a horizontal/vertical areavi by pressing <F5> or <F4> in NORMAL mode. After having opened a horizontal/vertical areavi
+instance then make it an output target by switching the focus to the horizontal/vertical areavi instance and press <Tab> in NORMAL mode.
+
+Once having set an output target on an areavi instance then it is time to switch to BETA mode
+by pressing <Key-4> in NORMAL mode. Once in BETA mode, press <Key-p> to get in PDB mode. 
+
+There are two ways to execute the program that was opened, the first one is without command line arguments, the second one
+is with command line arguments.
+
+
+
 Key-Commands
 ============
 
@@ -180,6 +192,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
