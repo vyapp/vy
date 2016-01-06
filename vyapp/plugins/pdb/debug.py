@@ -30,7 +30,7 @@ an '(a)args' to the python debugger process.
 Sometimes it is important to eval some expressions in the current frame, for such it is needed to select the text expression
 then press <Key-p> that would send a '(p)rint', so the corresponding selected text will be evaluated in the currrent frame. 
 The same occurs with statements that should be executed, select the text then press <Key-e> it would send a '!statement'.
-It is useful to inject code through <Key-w> to be executed and <Key-x> to be evaluated .
+It is useful to inject code through <Key-r> to be executed and <Key-x> to be evaluated .
 
 Notice that when debugging a python application that does imports and if the import files are opened in vy
 then when setting break points over multiple files would make vy set the focus to the tab whose file is being executed.
@@ -52,10 +52,59 @@ Mode: PDB
 Event: <Key-2>
 Description: It starts the python application with command line arguments that use shlex module to split the arguments.
 
+Mode: PDB
+Event? <Key-c>
+Description: Send a (c)ontinue to the debug process.
+Continue execution, only stop when a breakpoint is encountered.
 
-""""""
+Mode: PDB
+Event: <Key-e>
+Description: Send selected text to the debug to be executed.
+
+Mode: PDB
+Event: <Key-w>
+Description: Send a (w)here to the debug.
+Print a stack trace, with the most recent frame at the bottom. An arrow indicates the current frame, which determines the context of most commands.
+
+Mode: PDB
+Event: <Key-a>
+Description: Send a (a)rgs to the debug to show the list of arguments passed to the current function.
+
+Mode: PDB
+Event: <Key-b>
+Description: Set a break point at the cursor line.
+
+Mode: PDB
+Event: <Key-B>
+Description: Set a temporary break point at the cursor line.
+
+Mode: PDB
+Event: <Control-C>
+Description: Clear all break points.
+
+Mode: PDB
+Event: <Control-c>
+Description: Remove break point that is set at the cursor line.
+
+Mode: PDB
+Event: <Control-s>
+Description: Send a (s)tep to the debug it means execute the current line, stop at the first possible
+occasion (either in a function that is called or on the next line in the current function).
+
+Mode: PDB
+Event: <Key-x>
+Description: Inject python code to be evaluated in the current context.
+
+Mode: PDB
+Event: <Key-r>
+Description: Inject python code to be executed in the current context.
+
+Mode: PDB
+Event: <Key-q>
+Description: Terminate the process.
 
 """
+
 from untwisted.network import core, cmap, READ, Device
 from untwisted.tkinter import extern
 from subprocess import Popen, PIPE, STDOUT
@@ -77,7 +126,7 @@ class Pdb(object):
         area.install(('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
                     ('PDB', '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
                     ('PDB', '<Key-x>', lambda event: self.evaluate_expression(event.widget)), 
-                    ('PDB', '<Key-w>', lambda event: self.execute_statement(event.widget)), 
+                    ('PDB', '<Key-r>', lambda event: self.execute_statement(event.widget)), 
                     ('PDB', '<Key-1>', lambda event: self.start_debug(event.widget)), 
                     ('PDB', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
                     ('PDB', '<Key-q>', lambda event: self.terminate_process()), 
@@ -231,6 +280,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
