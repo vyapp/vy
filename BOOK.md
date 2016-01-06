@@ -91,6 +91,23 @@ Table of Contents
       * [The GAMMA mode](#the-gamma-mode)
       * [The DELTA mode](#the-delta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
+  * [The PDB mode (Python debugger)](#the-pdb-mode-(python-debugger))
+      * [Introduction](#introduction)
+      * [Switch to PDB mode](#switch-to-pdb-mode)
+      * [Start a process](#start-a-process)
+      * [Start a process with command line arguments](#start-a-process-with-command-line-arguments)
+      * [Set a break point](#set-a-break-point)
+      * [Set a temporary break point](#set-a-temporary-break-point)
+      * [Remove a break point](#remove-a-break-point)
+      * [Clear all break points](#clear-all-break-points)
+      * [Run code step by step](#run-code-step-by-step)
+      * [Stop at the next break point](#stop-at-the-next-break-point)
+      * [Print a stack trach most recent frame at the bottom](#print-a-stack-trach-most-recent-frame-at-the-bottom)
+      * [Execute selected text in the current context](#execute-selected-text-in-the-current-context)
+      * [Evaluate selected text in the current context](#evaluate-selected-text-in-the-current-context)
+      * [Inject python code to be executed in the current context](#inject-python-code-to-be-executed-in-the-current-context)
+      * [Inject python code to be evaluated in the current context](#inject-python-code-to-be-evaluated-in-the-current-context)
+      * [Terminate the process](#terminate-the-process)
   * [The IRC MODE](#the-irc-mode)
       * [Connect to an irc network](#connect-to-an-irc-network)
       * [Identify nick](#identify-nick)
@@ -1505,13 +1522,37 @@ It would get vy in DELTA mode.
 The PDB mode (Python debugger)
 ==============================
 
+### Introduction
+
 ### Switch to PDB mode
+
+### Start a process
+
+### Start a process with command line arguments
 
 ### Set a break point
 
+### Set a temporary break point
+
 ### Remove a break point
 
+### Clear all break points
+
 ### Run code step by step
+
+### Stop at the next break point
+
+### Print a stack trach most recent frame at the bottom
+
+### Execute selected text in the current context
+
+### Evaluate selected text in the current context
+
+### Inject python code to be executed in the current context
+
+### Inject python code to be evaluated in the current context
+
+### Terminate the process
 
 The IRC mode
 ============
@@ -2077,6 +2118,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
