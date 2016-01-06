@@ -16,9 +16,23 @@ Once having set an output target on an areavi instance then it is time to switch
 by pressing <Key-4> in NORMAL mode. Once in BETA mode, press <Key-p> to get in PDB mode. 
 
 There are two ways to execute the program that was opened, the first one is without command line arguments, the second one
-is with command line arguments.
+is with command line arguments. When in PDB mode and having one or more python files currently opened it is possible to start the debug process by
+pressing <Key-1> with no command line arguments. When it is needed to pass arguments to the python application then it is used
+the key-command <Key-2>. Once the debug process was started then output will go to the areavi instance that was set as target.
 
+It is possible to set break points by placing the cursor over the desired line and pressing <Key-b> or <Key-N> for temporary
+break points. In order to clear all break points, press <Control-C>, to remove a given break point, place the cursor
+over the desired line then press <Control-c>. The line in which the break point was added is shaded.
+Once break points were set then it is possible to send a '(c)ontinue' by pressing <Key-c>, '(s)tep' by pressing <Key-s>.
+It is interesting to inspect the arguments that were passed to a function, for such, press <Key-a> that would send
+an '(a)args' to the python debugger process.
 
+Sometimes it is important to eval some expressions in the current frame, for such it is needed to select the text expression
+then press <Key-p> that would send a '(p)rint', so the corresponding selected text will be evaluated in the currrent frame. 
+The same occurs with statements that should be executed, select the text then press <Key-e> it would send a '!statement'.
+
+Notice that when debugging a python application that does imports and if the import files are opened in vy
+then when setting break points over multiple files would make vy set the focus to the tab whose file is being executed.
 
 Key-Commands
 ============
@@ -192,6 +206,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
