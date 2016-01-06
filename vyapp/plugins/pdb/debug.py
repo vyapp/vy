@@ -30,12 +30,27 @@ an '(a)args' to the python debugger process.
 Sometimes it is important to eval some expressions in the current frame, for such it is needed to select the text expression
 then press <Key-p> that would send a '(p)rint', so the corresponding selected text will be evaluated in the currrent frame. 
 The same occurs with statements that should be executed, select the text then press <Key-e> it would send a '!statement'.
+It is useful to inject code through <Key-w> to be executed and <Key-x> to be evaluated .
 
 Notice that when debugging a python application that does imports and if the import files are opened in vy
 then when setting break points over multiple files would make vy set the focus to the tab whose file is being executed.
 
+
 Key-Commands
 ============
+
+
+Mode: BETA
+Event: <Key-p>
+Description: It turns PDB mode on.
+
+Mode: PDB
+Event? <Key-1>
+Description: It starts debugging the opened python application with no command line arguments.
+
+Mode: PDB
+Event: <Key-2>
+Description: It starts the python application with command line arguments that use shlex module to split the arguments.
 
 
 """"""
@@ -61,6 +76,8 @@ class Pdb(object):
 
         area.install(('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
                     ('PDB', '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+                    ('PDB', '<Key-x>', lambda event: self.evaluate_expression(event.widget)), 
+                    ('PDB', '<Key-w>', lambda event: self.execute_statement(event.widget)), 
                     ('PDB', '<Key-1>', lambda event: self.start_debug(event.widget)), 
                     ('PDB', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
                     ('PDB', '<Key-q>', lambda event: self.terminate_process()), 
@@ -131,6 +148,14 @@ class Pdb(object):
         
         set_status_msg('Debug started ! Args: %s' % ask.data)
 
+    def evaluate_expression(self, area):
+        ask  = Ask(area)
+        self.stdin.dump('print %s\r\n' % ask.data)
+
+    def execute_statement(self, area):
+        ask  = Ask(area)
+        self.stdin.dump('!%s\r\n' % ask.data)
+
     def clear_breakpoint_map(self):
         self.map_index.clear()
         self.map_line.clear()
@@ -190,7 +215,7 @@ class Pdb(object):
 
         self.map_index[index]           = (filename, line)
         self.map_line[(filename, line)] = index
-        map                             = get_opened_files()
+        map                             = AreaVi.get_opened_files(root)
 
         area = map[filename]
         
