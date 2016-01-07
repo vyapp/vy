@@ -93,6 +93,7 @@ Table of Contents
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
   * [The PDB mode (Python debugger)](#the-pdb-mode-(python-debugger))
       * [Introduction](#introduction)
+      * [First steps](#first-steps)
       * [Switch to PDB mode](#switch-to-pdb-mode)
       * [Start a process](#start-a-process)
       * [Start a process with command line arguments](#start-a-process-with-command-line-arguments)
@@ -1524,6 +1525,29 @@ The PDB mode (Python debugger)
 
 ### Introduction
 
+The PDB mode is a mode used to debug python applications. It is possible to set breakpoints and run code step by step.
+The cursor follow the program flow and breakpoints turn into shaded lines. It follows the flow even through multiple packages/modules.
+
+### First steps
+
+In order to fully examplify the functionalities of this plugin it is needed to follow some preparatives.
+Create a directory as below.
+
+~~~
+mkdir mytest
+cd mytest
+~~~
+
+Then create put the two files below inside mytest.
+
+~~~python
+
+~~~
+
+~~~python
+
+~~~
+
 ### Switch to PDB mode
 
 ### Start a process
@@ -2118,6 +2142,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
