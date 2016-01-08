@@ -1577,6 +1577,11 @@ on PDB mode, for such, switch to BETA mode by pressing <Key-4> in NORMAL mode th
 
 ### Start a process
 
+Once in PDB mode it is possible to start a python process through the debugger by pressing <Key-1> in PDB mode.
+It is important to notice that using this key command there is no way to pass command line arguments. Once
+the process was successful started then the debugger will output information about the program flow on
+the output targets that were set.
+
 ### Start a process with command line arguments
 
 ### Set a break point
@@ -2167,6 +2172,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
