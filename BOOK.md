@@ -1584,9 +1584,18 @@ the output targets that were set.
 
 ### Start a process with command line arguments
 
+It is possible to pass command line arguments to the python application by pressing <Key-2> in PDB mode.
+The arguments are split using shlex module.
+
 ### Set a break point
 
+The line over the cursor is set as a breakpoint if the key-command <Key-b> is issued in PDB mode.
+The line will be shaded then it is possible to run other key-commands like <Key-c> that means 'continue'.
+
 ### Set a temporary break point
+
+In order to set a temporary breakpoint, press <Key-B> in PDB mode, the line cursor line will be shaded
+and when the debugger hits that breakpoint the line will be unshaded.
 
 ### Remove a break point
 
@@ -2172,6 +2181,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
