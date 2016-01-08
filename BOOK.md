@@ -93,7 +93,7 @@ Table of Contents
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
   * [The PDB mode (Python debugger)](#the-pdb-mode-(python-debugger))
       * [Introduction](#introduction)
-      * [A basic case](#a-basic-case)
+      * [Getting ready to debug a python application](#getting-ready-to-debug-a-python-application)
       * [Switch to PDB mode](#switch-to-pdb-mode)
       * [Start a process](#start-a-process)
       * [Start a process with command line arguments](#start-a-process-with-command-line-arguments)
@@ -1523,15 +1523,15 @@ It would get vy in DELTA mode.
 The PDB mode (Python debugger)
 ==============================
 
-### Introduction
-
 The PDB mode is a mode used to debug python applications. It is possible to set breakpoints and run code step by step.
 The cursor follow the program flow and breakpoints turn into shaded lines. It follows the flow even through multiple packages/modules.
 
-### A basic case
+### Getting ready to debug a python application
 
-In order to fully examplify the functionalities of this plugin it is needed to follow some preparatives.
-Create a directory as below.
+In order to use PDB mode it is needed to create areavi instances and setting them as output targets for the debugger process.
+Consider the basic python application shown below.
+
+Create the following dir.
 
 ~~~
 mkdir mytest
@@ -1569,9 +1569,11 @@ by pressing <Tab> as it was done with the tab having alpha.py.
 Once the output targets were set on the areavi instances it is possible now to read the debug output
 on these areavi instances. Now it is possible to send debug commands to the process and watch the flow of the program.
 
-It is possible to set breakpoints
 
 ### Switch to PDB mode
+
+The PDB mode is implemented in BETA mode. Once having set output targets for the debug process, it is time to set vy
+on PDB mode, for such, switch to BETA mode by pressing <Key-4> in NORMAL mode then <Key-p> in BETA mode.
 
 ### Start a process
 
@@ -2165,6 +2167,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 

@@ -37,6 +37,10 @@ autoload(vyapp.plugins.normal_mode)
 ##############################################################################
 # Plugin list.
 
+import vyapp.plugins.find_sel
+autoload(vyapp.plugins.find_sel)
+
+
 import vyapp.plugins.shell
 autoload(vyapp.plugins.shell)
 
@@ -334,6 +338,7 @@ import vyapp.plugins.cmd_search
 
 # The vy irc mode.
 import vyapp.plugins.vyirc
+
 
 
 
