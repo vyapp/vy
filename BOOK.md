@@ -1596,9 +1596,15 @@ The line will be shaded then it is possible to run other key-commands like <Key-
 In order to set a temporary breakpoint, press <Key-B> in PDB mode, the line cursor line will be shaded
 and when the debugger hits that breakpoint the line will be unshaded.
 
-### Remove a break point
+### Remove a breakpoint
+
+In order to remove a breakpoint that was set it is enough to place the cursor over the line
+then press <Control-c> in PDB mode. The line will be unshaded.
 
 ### Clear all break points
+
+In PDB mode it is enough to press <Control-C> then it will clear all breakpoints, all the lines
+will be unshaded.
 
 ### Run code step by step
 
@@ -2180,6 +2186,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
