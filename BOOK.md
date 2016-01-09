@@ -91,8 +91,7 @@ Table of Contents
       * [The GAMMA mode](#the-gamma-mode)
       * [The DELTA mode](#the-delta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
-  * [The PDB mode (Python debugger)](#the-pdb-mode-(python-debugger))
-      * [Introduction](#introduction)
+  * [The PDB mode](#the-pdb-mode)
       * [Getting ready to debug a python application](#getting-ready-to-debug-a-python-application)
       * [Switch to PDB mode](#switch-to-pdb-mode)
       * [Start a process](#start-a-process)
@@ -1520,8 +1519,8 @@ It would get vy in DELTA mode.
 
 ***
 
-The PDB mode (Python debugger)
-==============================
+The PDB mode
+============
 
 The PDB mode is a mode used to debug python applications. It is possible to set breakpoints and run code step by step.
 The cursor follow the program flow and breakpoints turn into shaded lines. It follows the flow even through multiple packages/modules.
@@ -2181,6 +2180,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
