@@ -1608,9 +1608,16 @@ will be unshaded.
 
 ### Run code step by step
 
-### Stop at the next break point
+The key-command <Key-s> in PDB mode is used to execute code step by step. It sends a '(s)tep' to the debugger.
+it basically executes the current line, stop at the first possible occasion (either in a function that is called or on the next line in the current function).
 
-### Print a stack trach most recent frame at the bottom
+### Stop at the next breakpoint
+
+In order to stop at the next breakpoint, press <Key-c> in PDB mode. It sends a '(c)ontinue' to the debugger process.
+
+### Print a stack trace most recent frame at the bottom
+
+Press the key-command <Key-w> in PDB mode. It will send a '(w)here' to the debugger process.
 
 ### Execute selected text in the current context
 
@@ -2186,6 +2193,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
