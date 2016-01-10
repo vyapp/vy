@@ -101,8 +101,8 @@ Table of Contents
       * [Remove a break point](#remove-a-break-point)
       * [Clear all break points](#clear-all-break-points)
       * [Run code step by step](#run-code-step-by-step)
-      * [Stop at the next break point](#stop-at-the-next-break-point)
-      * [Print a stack trach most recent frame at the bottom](#print-a-stack-trach-most-recent-frame-at-the-bottom)
+      * [Stop at the next breakpoint](#stop-at-the-next-break-point)
+      * [Print a stack trace most recent frame at the bottom](#print-a-stack-trace-most-recent-frame-at-the-bottom)
       * [Execute selected text in the current context](#execute-selected-text-in-the-current-context)
       * [Evaluate selected text in the current context](#evaluate-selected-text-in-the-current-context)
       * [Inject python code to be executed in the current context](#inject-python-code-to-be-executed-in-the-current-context)
@@ -1621,13 +1621,30 @@ Press the key-command <Key-w> in PDB mode. It will send a '(w)here' to the debug
 
 ### Execute selected text in the current context
 
+Sometimes it is interesting to execute some statements of the python program that is being debugged
+in some contexts/scope, for such, select the statement text then press <Key-e> in PDB mode. 
+The statement text will be sent to the debugger process then will be executed.
+
 ### Evaluate selected text in the current context
+
+Sometimes it is useful to evaluate some expressions that appear in the python program that is being debugged,
+such expressions will be evaluated in the current scope of the debugger process. Select the expression text
+then press <Key-p> in PDB mode.
 
 ### Inject python code to be executed in the current context
 
+It is very useful to change the state of variables or even redefinie functions in some scopes
+when debugging an application, through this key-command it is possible to inject python code
+to be executed. For such, press <Key-r> in PDB mode, it will appear an inputbox where to insert the statement text.
+
 ### Inject python code to be evaluated in the current context
 
+In order to inject code to be evaluated in some contexts/scope, press <Key-x> in PDB mode. It will open
+an inputbox where to type the expression text to be evaluated.
+
 ### Terminate the process
+
+When the debugging process has finished it is possible to terminate the process by pressing <Key-q> in PDB mode.
 
 The IRC mode
 ============
@@ -2193,6 +2210,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
