@@ -1275,10 +1275,10 @@ Try getting help from
 
 ***
 
-### Getting help 
+### Getting help
 
 Vy is highly modular, it permits a good level of self documentation. Every plugin
-implemented in vy is self documented. The best way to get help is through our help python function.
+implemented in vy is self documented. The best way to get help is through the help python function.
 
 Set the output target on an AreaVi instance with 
 
@@ -2210,6 +2210,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
