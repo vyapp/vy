@@ -41,8 +41,7 @@ It is possible to easily implement new syntax highlighting themes that work for 
 The syntax highlighting plugin permits you to set specific background/colour for a language tokens type.
 
 vy is written in pure Python; it permits you to drop Python code to the interpreter that affects the editor state.
-It lets you implement Python functions to perform cool routines like posting code onto codepad.org, converting all text 
-of a given opened file to lower case, finding unknown words in a given document, implementing an irc client, and much more.
+Python is such an amazing language it turns vy such a powerful application because its plugin API is high level naturally.
 
 The set of keys used in vy was carefully chosen to be handy although it is possible to make vy look like vim or emacs since
 there is a high level of modularity in vy.
@@ -157,6 +156,7 @@ My nick there is Tau.
 
 vy Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
