@@ -124,21 +124,21 @@ class Pdb(object):
         area.add_mode('PDB')
 
         area.install(('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
-                    ('PDB', '<Key-p>', lambda event: self.stdin.dump('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+                    ('PDB', '<Key-p>', lambda event: self.send('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
                     ('PDB', '<Key-x>', lambda event: self.evaluate_expression(event.widget)), 
                     ('PDB', '<Key-r>', lambda event: self.execute_statement(event.widget)), 
                     ('PDB', '<Key-1>', lambda event: self.start_debug(event.widget)), 
                     ('PDB', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
                     ('PDB', '<Key-q>', lambda event: self.terminate_process()), 
-                    ('PDB', '<Key-c>', lambda event: self.stdin.dump('continue\r\n')), 
-                    ('PDB', '<Key-e>', lambda event: self.stdin.dump('!%s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
-                    ('PDB', '<Key-w>', lambda event: self.stdin.dump('where\r\n')), 
-                    ('PDB', '<Key-a>', lambda event: self.stdin.dump('args\r\n')), 
-                    ('PDB', '<Key-s>', lambda event: self.stdin.dump('step\r\n')), 
+                    ('PDB', '<Key-c>', lambda event: self.send('continue\r\n')), 
+                    ('PDB', '<Key-e>', lambda event: self.send('!%s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+                    ('PDB', '<Key-w>', lambda event: self.send('where\r\n')), 
+                    ('PDB', '<Key-a>', lambda event: self.send('args\r\n')), 
+                    ('PDB', '<Key-s>', lambda event: self.send('step\r\n')), 
                     ('PDB', '<Control-C>', lambda event: self.dump_clear_all()), 
-                    ('PDB', '<Control-c>', lambda event: self.stdin.dump('clear %s\r\n' % self.map_line[(event.widget.filename, str(event.widget.indref('insert')[0]))])),
-                    ('PDB', '<Key-B>', lambda event: self.stdin.dump('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
-                    ('PDB', '<Key-b>', lambda event: self.stdin.dump('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
+                    ('PDB', '<Control-c>', lambda event: self.send('clear %s\r\n' % self.map_line[(event.widget.filename, str(event.widget.indref('insert')[0]))])),
+                    ('PDB', '<Key-B>', lambda event: self.send('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
+                    ('PDB', '<Key-b>', lambda event: self.send('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
 
         self.setup = setup
 
@@ -174,11 +174,10 @@ class Pdb(object):
         except AttributeError:
             return
 
-        self.delete_all_breakpoints()
-        self.clear_breakpoint_map()
-
     def terminate_process(self):
         self.kill_debug_process()
+        self.delete_all_breakpoints()
+        self.clear_breakpoint_map()
         set_status_msg('Debug finished !')
 
     def start_debug(self, area):
@@ -199,18 +198,18 @@ class Pdb(object):
 
     def evaluate_expression(self, area):
         ask  = Ask(area)
-        self.stdin.dump('print %s\r\n' % ask.data)
+        self.send('print %s\r\n' % ask.data)
 
     def execute_statement(self, area):
         ask  = Ask(area)
-        self.stdin.dump('!%s\r\n' % ask.data)
+        self.send('!%s\r\n' % ask.data)
 
     def clear_breakpoint_map(self):
         self.map_index.clear()
         self.map_line.clear()
 
     def dump_clear_all(self):
-        self.stdin.dump('clear\r\nyes\r\n')
+        self.send('clear\r\nyes\r\n')
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
 
@@ -278,8 +277,13 @@ class Pdb(object):
         killpg(child.pid, 2)
 
 
+    def send(self, data):
+        self.stdin.dump(data)
+
 pdb     = Pdb()
 install = pdb
+
+
 
 
 

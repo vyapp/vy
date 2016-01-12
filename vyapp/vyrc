@@ -188,8 +188,10 @@ autoload(vyapp.plugins.set_pos)
 
 
 # Used to debug python applications.
-import vyapp.plugins.pdb.unix_platform
-autoload(vyapp.plugins.pdb.unix_platform)
+# import vyapp.plugins.pdb.unix_platform
+# autoload(vyapp.plugins.pdb.unix_platform)
+import vyapp.plugins.pdb.cross_platform
+autoload(vyapp.plugins.pdb.cross_platform)
 
 
 # Implements vy stdin and stdout scheme for talking to extern processes.
@@ -335,6 +337,7 @@ import vyapp.plugins.cmd_search
 
 # The vy irc mode.
 import vyapp.plugins.vyirc
+
 
 
 
