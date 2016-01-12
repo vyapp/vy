@@ -1,9 +1,10 @@
 import vyapp.plugins.pdb.unix_platform
 from untwisted.expect import Expect, LOAD, CLOSE
 from vyapp.plugins.pdb import event
-from untwisted.utils.shrug import *
 from vyapp.app import root
 import sys
+
+__doc__ = vyapp.plugins.pdb.unix_platform.__doc__
 
 class Pdb(vyapp.plugins.pdb.unix_platform.Pdb):
     def __init__(self):
@@ -31,3 +32,5 @@ class Pdb(vyapp.plugins.pdb.unix_platform.Pdb):
 
 pdb = Pdb()
 install = pdb
+
+
