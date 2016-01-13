@@ -108,12 +108,15 @@ Table of Contents
       * [Inject python code to be executed in the current context](#inject-python-code-to-be-executed-in-the-current-context)
       * [Inject python code to be evaluated in the current context](#inject-python-code-to-be-evaluated-in-the-current-context)
       * [Terminate the process](#terminate-the-process)
-  * [The IRC MODE](#the-irc-mode)
+  * [The IRC mode](#the-irc-mode)
       * [Connect to an irc network](#connect-to-an-irc-network)
+      * [Switch to IRC mode](#switch-to-irc-mode)
+      * [Send IRC commands](#Send-irc-commands)
       * [Identify nick](#identify-nick)
       * [Join a channel](#join-a-channel)
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
+      * [Quickly switch focus between channels/irc servers](#quickly-switch-focus-between-channels/irc-servers)
   * [The vyrc file](#the-vyrc-file)
   * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
@@ -1649,27 +1652,98 @@ When the debugging process has finished it is possible to terminate the process 
 The IRC mode
 ============
 
+Vy implements vyirc that is an irc client plugin. It is such an amazing plugin that permits easily to connect
+to an irc network. It is possible to connect to more than one network, channels turn into tabs, irc servers turn into tabs as well.
+
 ### Connect to an irc network
+
+Vyirc implements the following function below.
+
+~~~python
+ircmode(irc_server, irc_port)
+~~~
+
+In order to connect to an irc network, switch to NORMAL mode then press <Key-semicolon> to execute the function
+described above.
+
+An example would be.
+
+~~~python
+ircmode('irc.freenode.org', 6667)
+~~~
+
+It would open a tab with an irc connectinon tied to it.
+
 
 ***
 
 ### Switch to IRC mode
 
+After having executed the function ircmode and opening an irc connection then it is possible
+to put the areavi instance tied to the connection in IRC mode by switching the focus to that
+areavi instance then switching to GAMMA mode and pressing <Key-i>.
+
+When the areavi instance is in IRC mode then it is possible to use key-commands to send IRC commands
+by pressing <Control-e>.
+
+***
+
+### Send IRC commands
+
+Vy implements a key-command to send raw irc commands to the irc server. It shows an inputbox where to type irc commands.
+Switch to an irc connection tab or an irc channel tab then press <Control-e> in IRC mode. 
+
 ***
 
 ### Identify nick
+
+In order to identify nick once having opened an irc connection, just switch to IRC mode by pressing <Control-e>
+then type.
+
+~~~
+PRIVMSG nickserv :IDENTIFY nick_password
+~~~
+
+Some irc networks uses the command below.
+
+~~~
+
+NickServ identify nick_password
+~~~
 
 ***
 
 ### Join a channel
 
+Press <Control-e> in IRC mode then type.
+
+~~~
+JOIN #channel
+~~~
+
 ***
 
 ### Part from a channel
 
+Just switch to IRC mode then type.
+
+~~~
+PART #channel
+~~~
+
 ***
 
 ### Change nick
+
+In IRC mode, type.
+
+~~~
+NICK new_nick
+~~~
+
+### Quickly switch focus between channels/irc servers
+
+Use the key-command <alt-o> and <alt-p> regardless of the mode that the areavi instance is in.
 
 The vyrc file
 =============
@@ -2210,6 +2284,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
