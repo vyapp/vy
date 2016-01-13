@@ -100,8 +100,8 @@ autoload(vyapp.plugins.undo)
 
 
 # It implements keycomands to move the cursor up, down, left, right.
-import vyapp.plugins.move_cursor
-autoload(vyapp.plugins.move_cursor)
+import vyapp.plugins.main_jumps
+autoload(vyapp.plugins.main_jumps)
 
 
 # Quick search.
@@ -337,6 +337,7 @@ import vyapp.plugins.cmd_search
 
 # The vy irc mode.
 import vyapp.plugins.vyirc
+
 
 
 

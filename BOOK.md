@@ -1272,7 +1272,7 @@ The help for the plugin would be outputed on the AreaVi instance that you have s
 Try getting help from 
 
 ~~~python
-    help(vyapp.plugins.move_cursor)
+    help(vyapp.plugins.main_jumps)
 ~~~
 
 
@@ -1303,13 +1303,13 @@ then press
 
 then it will output the docs for the plugin.
 
-    Help on module vyapp.plugins.move_cursor in vyapp.plugins:
+    Help on module vyapp.plugins.main_jumps in vyapp.plugins:
     
     NAME
-        vyapp.plugins.move_cursor
+        vyapp.plugins.main_jumps
     
     FILE
-        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/move_cursor.py
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/main_jumps.py
     
     DESCRIPTION
         Overview
@@ -2284,6 +2284,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
