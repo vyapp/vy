@@ -145,13 +145,13 @@ autoload(vyapp.plugins.seek_symbol)
 
 
 # This plugin implements keycommands to scroll lines.
-import vyapp.plugins.scroll_line
-autoload(vyapp.plugins.scroll_line)
+import vyapp.plugins.line_scroll
+autoload(vyapp.plugins.line_scroll)
 
 
 # This plugin implements keycommands to scroll pages.
-import vyapp.plugins.scroll_page
-autoload(vyapp.plugins.scroll_page)
+import vyapp.plugins.page_scroll
+autoload(vyapp.plugins.page_scroll)
 
 
 # This plugin implements keycommands to jump quickly
@@ -337,6 +337,7 @@ import vyapp.plugins.cmd_search
 
 # The vy irc mode.
 import vyapp.plugins.vyirc
+
 
 
 
