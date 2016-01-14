@@ -2,45 +2,58 @@
 Overview
 ========
 
-It is handy to quickly get the absolute path of the file that is being edited. This plugin
-implements a Key-Command for that.
+This plugin implements a set of basic functionalities to deal with text. Like copying,
+cutting, deleting, pasting text to the clipboard.
 
 Usage
 =====
 
-When a file is opened, vy holds a complete path for the file. It is possible
-to put such a complete path in the clipboard area for other purposes. For such
-switch to ALPHA mode by pressing <Key-3> in NORMAL mode then press <Key-u>.
-
-After pressing <Key-u> in ALPHA mode there will appear a msg on the status bar notifying that
-the complete path was copied to the clipboard.
 
 Key-Commands
 ============
 
-Mode: ALPHA
-Event: <Key-u>
-Description: Copies the complete path of the file to the clipboard.
+Mode: NORMAL
+Event: <Key-y> 
+Description: Copy selection to the clipboard.
+
+
+Mode: NORMAL
+Event: <Key-u> 
+Description: Cut selection then add to the clipboard.
+
+
+Mode: NORMAL
+Event: <Key-t> 
+Description: Paste text from the clipboard in the cursor position.
+
+
+Mode: NORMAL
+Event: <Key-r> 
+Description: Paste text from the clipboard one line down.
+
+
+Mode: NORMAL
+Event: <Key-e> 
+Description: Paste text from the clipboard one line up.
+
+Mode: NORMAL
+Event: <Control-Y> 
+Description: Add selection to the clipboard with a separator \n.
+
+
+Mode: NORMAL
+Event: <Control-U> 
+Description: Cut selection and add to the clipboard with a separator \n.
+
 
 """
 
-from vyapp.tools import set_status_msg
-
-def clip_ph(area):
-    """ Sends filename path to clipboard. """
-    area.clipboard_clear()
-    area.clipboard_append(area.filename)
-    set_status_msg('File path copied to the clipboard.')
-
 def install(area):
-    area.install(('ALPHA', '<Key-u>', lambda event: clip_ph(event.widget)))
-
-
-
-
-
-
-
-
-
+    area.install(('NORMAL', '<Key-y>', lambda event: event.widget.cpsel()),
+                 ('NORMAL', '<Key-u>', lambda event: event.widget.ctsel()),
+                 ('NORMAL', '<Key-t>', lambda event: event.widget.ptsel()),
+                 ('NORMAL', '<Key-r>', lambda event: event.widget.ptsel_after()),
+                 ('NORMAL', '<Key-e>', lambda event: event.widget.ptsel_before()),
+                 ('NORMAL', '<Control-Y>', lambda event: event.widget.cpblock()),
+                 ('NORMAL', '<Control-U>', lambda event: event.widget.ctblock()))
 
