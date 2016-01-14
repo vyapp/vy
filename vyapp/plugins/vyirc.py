@@ -2,6 +2,8 @@
 Overview
 ========
 
+It implements a neat IRC Client interface that permits connection with multiple networks. IRC networks turn into
+tabs, IRC network channels turn into tabs as well.
 
 Usage
 =====
@@ -65,13 +67,22 @@ class IrcMode(object):
         area.mark_set('CHDATA', '1.0')
         return area
 
+    def start_user_chat(self, area, con):
+        ask = Ask(area)
+        self.create_user_chat(con, ask.data)
+
+    def create_user_chat(self, con, nick):
+        area_user = self.create_area(nick)
+        self.set_common_irc_commands(area_user, con)
+        self.set_common_chan_commands(area_user, con, nick)
+        return area_user
+
     def deliver_user_msg(self, con, nick, user, host, target, msg):
         try:
-            area_user = AreaVi.get_opened_files(root)[nick]
+            area_user = dict(map(lambda (key, value): (key.lower(), value), 
+                                 AreaVi.get_opened_files(root).iteritems()))[nick.lower()]
         except KeyError:
-            area_user = self.create_area(nick)
-            self.set_common_irc_commands(area_user, con)
-            self.set_common_chan_commands(area_user, con, nick)
+            area_user = self.create_user_chat(con, nick)
         finally:
             area_user.insee('CHDATA', H1 % (nick, msg))
 
@@ -81,6 +92,7 @@ class IrcMode(object):
         area.hook('GAMMA', '<Key-i>', 
                 lambda event: event.widget.chmode('IRC'))
         area.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
+        area.hook('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con))
 
     def set_common_irc_handles(self, area, con):
         l1 = lambda con, chan: self.create_channel(area, con, chan)
@@ -110,7 +122,6 @@ class IrcMode(object):
 
         def l7(con, nick, user, host, msg):
             pass
-    
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
             ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7))
@@ -139,18 +150,6 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
