@@ -1671,8 +1671,20 @@ An example would be.
 ircmode('irc.freenode.org', 6667)
 ~~~
 
-It would open a tab with an irc connectinon tied to it.
+It would open a tab with an irc connectinon tied to it. The new tab will be in IRC mode, it will be needed
+to send the command below to the IRC server. For such, switch to the IRC connection tab then press <Control-e> in IRC mode.
 
+~~~
+USER vyirc vyirc vyirc: real name
+~~~
+
+then again <Control-e> and type.
+
+~~~
+NICK your_nick
+~~~
+
+If there is no one using your nick and the commands were typed correctly then you'll be connected to the IRC server.
 
 ***
 
@@ -2279,6 +2291,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
