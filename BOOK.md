@@ -116,7 +116,7 @@ Table of Contents
       * [Join a channel](#join-a-channel)
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
-      * [Query an user][#query-an-user)
+      * [Query an user](#query-an-user)
   * [The vyrc file](#the-vyrc-file)
   * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
@@ -2299,6 +2299,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
