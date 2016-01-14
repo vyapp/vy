@@ -116,6 +116,7 @@ Table of Contents
       * [Join a channel](#join-a-channel)
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
+      * [Query an user][#query-an-user)
   * [The vyrc file](#the-vyrc-file)
   * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
@@ -1752,6 +1753,13 @@ In IRC mode, type.
 NICK new_nick
 ~~~
 
+### Query an user
+
+Switch to one of the IRC network tabs then press <Control-c> in IRC mode to type
+the nick of the user. It will create a new tab whose title is the user's nick.
+
+***
+
 The vyrc file
 =============
 
@@ -2291,6 +2299,8 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
+
 
 
 
