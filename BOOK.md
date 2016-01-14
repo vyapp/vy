@@ -116,7 +116,6 @@ Table of Contents
       * [Join a channel](#join-a-channel)
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
-      * [Quickly switch focus between channels/irc servers](#quickly-switch-focus-between-channels/irc-servers)
   * [The vyrc file](#the-vyrc-file)
   * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
@@ -1741,10 +1740,6 @@ In IRC mode, type.
 NICK new_nick
 ~~~
 
-### Quickly switch focus between channels/irc servers
-
-Use the key-command <alt-o> and <alt-p> regardless of the mode that the areavi instance is in.
-
 The vyrc file
 =============
 
@@ -2284,6 +2279,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
