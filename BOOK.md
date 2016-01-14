@@ -1561,12 +1561,29 @@ def func_beta(m):
 
 ~~~
 
-Open these two files in two tabs by pressing <F8> in NORMAL mode. 
-Create a vertical/horizontal area for each one of the vy tabs that were created. For such, 
-switch the focus to the tab that has alpha.py then press <F4> in NORMAL mode, it will open a vertical areavi instance.  
-Switch the focus to that areavi instance then make it an output target by pressing <Tab> in NORMAL mode.  Switch the focus 
-to the tab that has beta.py opened then press <F4> to create a vertical area to set output target on  
-by pressing <Tab> as it was done with the tab having alpha.py.
+Open these two files in two tabs by pressing 
+
+    <F8> 
+
+in NORMAL mode. Create a vertical/horizontal area for each one of the vy tabs that were created. For such, 
+switch the focus to the tab that has alpha.py then press 
+
+    <F4> 
+
+in NORMAL mode, it will open a vertical areavi instance.  Switch the focus to that areavi instance then 
+make it an output target by pressing 
+
+    <Tab> 
+
+in NORMAL mode.  Switch the focus to the tab that has beta.py opened then press 
+
+    <F4> 
+
+to create a vertical area to set output target on by pressing 
+
+    <Tab> 
+
+as it was done with the tab having alpha.py.
 
 Once the output targets were set on the areavi instances it is possible now to read the debug output
 on these areavi instances. Now it is possible to send debug commands to the process and watch the flow of the program.
@@ -1575,79 +1592,140 @@ on these areavi instances. Now it is possible to send debug commands to the proc
 ### Switch to PDB mode
 
 The PDB mode is implemented in BETA mode. Once having set output targets for the debug process, it is time to set vy
-on PDB mode, for such, switch to BETA mode by pressing <Key-4> in NORMAL mode then <Key-p> in BETA mode.
+on PDB mode, for such, switch to BETA mode by pressing 
+
+    <Key-4> 
+
+in NORMAL mode then 
+
+    <Key-p> 
+
+in BETA mode.
 
 ### Start a process
 
-Once in PDB mode it is possible to start a python process through the debugger by pressing <Key-1> in PDB mode.
-It is important to notice that using this key command there is no way to pass command line arguments. Once
+Once in PDB mode it is possible to start a python process through the debugger by pressing 
+
+    <Key-1> 
+
+in PDB mode. It is important to notice that using this key command there is no way to pass command line arguments. Once
 the process was successful started then the debugger will output information about the program flow on
 the output targets that were set.
 
 ### Start a process with command line arguments
 
-It is possible to pass command line arguments to the python application by pressing <Key-2> in PDB mode.
-The arguments are split using shlex module.
+It is possible to pass command line arguments to the python application by pressing 
+
+    <Key-2> 
+
+in PDB mode. The arguments are split using shlex module.
 
 ### Set a break point
 
-The line over the cursor is set as a breakpoint if the key-command <Key-b> is issued in PDB mode.
-The line will be shaded then it is possible to run other key-commands like <Key-c> that means 'continue'.
+The line over the cursor is set as a breakpoint if the key-command 
+
+    <Key-b> 
+
+is issued in PDB mode. The line will be shaded then it is possible to run other key-commands like 
+
+    <Key-c> 
+
+that means 'continue'.
 
 ### Set a temporary break point
 
-In order to set a temporary breakpoint, press <Key-B> in PDB mode, the line cursor line will be shaded
-and when the debugger hits that breakpoint the line will be unshaded.
+In order to set a temporary breakpoint, press 
+
+    <Key-B> 
+
+in PDB mode, the line cursor line will be shaded and when the debugger hits that breakpoint the line will be unshaded.
 
 ### Remove a breakpoint
 
 In order to remove a breakpoint that was set it is enough to place the cursor over the line
-then press <Control-c> in PDB mode. The line will be unshaded.
+then press 
+
+    <Control-c> 
+
+in PDB mode. The line will be unshaded.
 
 ### Clear all break points
 
-In PDB mode it is enough to press <Control-C> then it will clear all breakpoints, all the lines
-will be unshaded.
+In PDB mode it is enough to press 
+
+    <Control-C> 
+
+then it will clear all breakpoints, all the lines will be unshaded.
 
 ### Run code step by step
 
-The key-command <Key-s> in PDB mode is used to execute code step by step. It sends a '(s)tep' to the debugger.
+The key-command 
+
+    <Key-s> 
+
+in PDB mode is used to execute code step by step. It sends a '(s)tep' to the debugger.
 it basically executes the current line, stop at the first possible occasion (either in a function that is called or on the next line in the current function).
 
 ### Stop at the next breakpoint
 
-In order to stop at the next breakpoint, press <Key-c> in PDB mode. It sends a '(c)ontinue' to the debugger process.
+In order to stop at the next breakpoint, press 
+
+    <Key-c> 
+
+in PDB mode. It sends a '(c)ontinue' to the debugger process.
 
 ### Print a stack trace most recent frame at the bottom
 
-Press the key-command <Key-w> in PDB mode. It will send a '(w)here' to the debugger process.
+Press the key-command 
+
+    <Key-w> 
+
+in PDB mode. It will send a '(w)here' to the debugger process.
 
 ### Execute selected text in the current context
 
 Sometimes it is interesting to execute some statements of the python program that is being debugged
-in some contexts/scope, for such, select the statement text then press <Key-e> in PDB mode. 
-The statement text will be sent to the debugger process then will be executed.
+in some contexts/scope, for such, select the statement text then press 
+
+    <Key-e> 
+
+in PDB mode. The statement text will be sent to the debugger process then will be executed.
 
 ### Evaluate selected text in the current context
 
 Sometimes it is useful to evaluate some expressions that appear in the python program that is being debugged,
 such expressions will be evaluated in the current scope of the debugger process. Select the expression text
-then press <Key-p> in PDB mode.
+then press 
+
+    <Key-p> 
+
+in PDB mode.
 
 ### Inject python code to be executed in the current context
 
 It is very useful to change the state of variables or even redefinie functions in some scopes
 when debugging an application, through this key-command it is possible to inject python code
-to be executed. For such, press <Key-r> in PDB mode, it will appear an inputbox where to insert the statement text.
+to be executed. For such, press 
+
+    <Key-r> 
+
+in PDB mode, it will appear an inputbox where to insert the statement text.
 
 ### Inject python code to be evaluated in the current context
 
-In order to inject code to be evaluated in some contexts/scope, press <Key-x> in PDB mode. It will open
-an inputbox where to type the expression text to be evaluated.
+In order to inject code to be evaluated in some contexts/scope, press 
+
+    <Key-x> 
+
+in PDB mode. It will open an inputbox where to type the expression text to be evaluated.
 
 ### Terminate the process
 
-When the debugging process has finished it is possible to terminate the process by pressing <Key-q> in PDB mode.
+When the debugging process has finished it is possible to terminate the process by pressing 
+
+    <Key-q> 
+
+in PDB mode.
 
 The IRC mode
 ============
@@ -1663,8 +1741,11 @@ Vyirc implements the following function below.
 ircmode(irc_server, irc_port)
 ~~~
 
-In order to connect to an irc network, switch to NORMAL mode then press <Key-semicolon> to execute the function
-described above.
+In order to connect to an irc network, switch to NORMAL mode then press 
+
+    <Key-semicolon>
+
+to execute the function described above.
 
 An example would be.
 
@@ -1673,13 +1754,21 @@ ircmode('irc.freenode.org', 6667)
 ~~~
 
 It would open a tab with an irc connectinon tied to it. The new tab will be in IRC mode, it will be needed
-to send the command below to the IRC server. For such, switch to the IRC connection tab then press <Control-e> in IRC mode.
+to send the command below to the IRC server. For such, switch to the IRC connection tab then press 
+
+    <Control-e> 
+
+in IRC mode.
 
 ~~~
 USER vyirc vyirc vyirc: real name
 ~~~
 
-then again <Control-e> and type.
+then again 
+
+    <Control-e> 
+
+and type.
 
 ~~~
 NICK your_nick
@@ -1693,23 +1782,34 @@ If there is no one using your nick and the commands were typed correctly then yo
 
 After having executed the function ircmode and opening an irc connection then it is possible
 to put the areavi instance tied to the connection in IRC mode by switching the focus to that
-areavi instance then switching to GAMMA mode and pressing <Key-i>.
+areavi instance then switching to GAMMA mode and pressing.
+
+    <Key-i>
 
 When the areavi instance is in IRC mode then it is possible to use key-commands to send IRC commands
-by pressing <Control-e>.
+by pressing 
+
+    <Control-e>
 
 ***
 
 ### Send IRC commands
 
 Vy implements a key-command to send raw irc commands to the irc server. It shows an inputbox where to type irc commands.
-Switch to an irc connection tab or an irc channel tab then press <Control-e> in IRC mode. 
+Switch to an irc connection tab or an irc channel tab then press 
+
+    <Control-e> 
+
+in IRC mode. 
 
 ***
 
 ### Identify nick
 
-In order to identify nick once having opened an irc connection, just switch to IRC mode by pressing <Control-e>
+In order to identify nick once having opened an irc connection, just switch to IRC mode by pressing 
+
+    <Control-e>
+
 then type.
 
 ~~~
@@ -1719,7 +1819,6 @@ PRIVMSG nickserv :IDENTIFY nick_password
 Some irc networks uses the command below.
 
 ~~~
-
 NickServ identify nick_password
 ~~~
 
@@ -1727,7 +1826,11 @@ NickServ identify nick_password
 
 ### Join a channel
 
-Press <Control-e> in IRC mode then type.
+Press 
+
+    <Control-e> 
+
+in IRC mode then type.
 
 ~~~
 JOIN #channel
@@ -1737,7 +1840,11 @@ JOIN #channel
 
 ### Part from a channel
 
-Just switch to IRC mode then type.
+Just switch to IRC mode, press
+
+    <Control-e>
+
+then type.
 
 ~~~
 PART #channel
@@ -1747,7 +1854,11 @@ PART #channel
 
 ### Change nick
 
-In IRC mode, type.
+In IRC mode, press 
+
+    <Control-e>
+
+then type.
 
 ~~~
 NICK new_nick
@@ -1755,7 +1866,11 @@ NICK new_nick
 
 ### Query an user
 
-Switch to one of the IRC network tabs then press <Control-c> in IRC mode to type
+Switch to one of the IRC network tabs then press 
+
+    <Control-c> 
+
+in IRC mode to type
 the nick of the user. It will create a new tab whose title is the user's nick.
 
 ***
@@ -2299,6 +2414,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
