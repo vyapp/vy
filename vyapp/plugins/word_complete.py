@@ -22,44 +22,28 @@ class WordComplete(object):
         self.MAX   = 2
         self.index = None
 
-        area.install(('INSERT', '<Control-q>', lambda event: self.complete()))
+        area.install(('INSERT', '<Control-q>', lambda event: self.complete(event.widget)))
+        area.install(('INSERT', '<Key>', lambda event: self.reset(event.widget)))
 
-    def complete(self):
+    def complete(self, area):
         """
         """
-
-        if time() - self.snd > self.MAX: 
-            self.reset()
 
         try:
-            data = self.seq.next()
-        except StopIteration:    
-            self.reset()        
-        else:
-            self.area.delete(self.index, 'insert')
-            self.area.insert(self.index, data)
-        self.snd = time()
+            self.seq
+        except AttributeError:
+            self.reset()
 
+        try:    
+            self.seq.next()
+        except StopIteration:
+            pass
 
-    def reset(self):
-        """
-        """
-
-        if self.area.compare('insert', '==', 'insert linestart'):
-            return
-
-        self.index = self.area.search(' ', 'insert', 
-                                      stopindex='insert linestart',regexp=True, 
-                                      backwards=True)
-
-        if not self.index: self.index = 'insert linestart'
-        else: self.index = '%s +1c' % self.index
-        if self.area.compare(self.index, '==', 'insert'): return
-
-        data     = self.area.get(self.index, 'insert')
-        self.seq = self.area.find_on_all(root, '%s[^ ]+' % data)
+    def reset(self, area):
+        self.seq = area.complete_word(root)
 
 install = WordComplete
+
 
 
 
