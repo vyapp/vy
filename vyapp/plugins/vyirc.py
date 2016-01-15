@@ -154,6 +154,21 @@ class IrcMode(object):
                 lambda event: event.widget.chmode('IRC'))
         area.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
         area.hook('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con))
+        area.install(('IRC', '<Control-q>', lambda event: self.complete_nick(event.widget)))
+        area.install(('IRC', '<Control_R>', lambda event: self.reset(event.widget)))
+        area.install(('IRC', '<Control_L>', lambda event: self.reset(event.widget)))
+
+    def complete_nick(self, area):
+        """
+        """
+
+        try:    
+            self.seq.next()
+        except StopIteration:
+            pass
+
+    def reset(self, area):
+        self.seq = area.complete_word(area.master)
 
     def set_common_irc_handles(self, area, con):
         l1 = lambda con, chan: self.create_channel(area, con, chan)
@@ -211,6 +226,8 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
+
 
 
 
