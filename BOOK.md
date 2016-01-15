@@ -117,7 +117,6 @@ Table of Contents
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
       * [Query an user](#query-an-user)
-  * [The vyrc file](#the-vyrc-file)
   * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
   * [E-scripts](#e-scripts)
@@ -1875,9 +1874,6 @@ the nick of the user. It will create a new tab whose title is the user's nick.
 
 ***
 
-The vyrc file
-=============
-
 The basic functions
 ===================
 
@@ -1945,9 +1941,12 @@ The most important statements of the vyrc file are the following.
 
 ~~~python
 
+##############################################################################
+# User plugin space.
+
 import sys
-from os.path import expanduser
-sys.path.append('%s/.vy/' % expanduser('~'))
+from os.path import expanduser, join
+sys.path.append(join(expanduser('~'), '.vy'))
 ##############################################################################
 # Functions used to load the plugins.
 from vyapp.plugins import autoload, autocall
@@ -2414,6 +2413,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
