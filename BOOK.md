@@ -1523,6 +1523,13 @@ It would get vy in DELTA mode.
 
 ### The python autocomplete plugin
 
+Vy uses jedi python library to implement auto completion for python code. Whenever a python file
+is opened in vy it turns possible to type a python object name following a period then pressing.
+
+    <Control-period>
+
+It will open a small window with the possible attributes of the object.
+
 ***
 
 The PDB mode
