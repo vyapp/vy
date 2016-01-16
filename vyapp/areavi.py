@@ -1636,9 +1636,9 @@ class AreaVi(Text):
         data = self.get(index, 'insert')
         return data, index
     
-    def match_word(self, wid):
+    def match_word(self, wid, delim=' '):
         data, index = self.get_cursor_word()
-        for area, (chk, pos0, pos1) in self.find_on_all(wid, '%s[^ ]+' % data):
+        for area, (chk, pos0, pos1) in self.find_on_all(wid, '[^ ]*%s[^ ]+' % data):
             yield chk, index
 
     def complete_word(self, wid):
@@ -1654,5 +1654,6 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
