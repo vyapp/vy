@@ -1260,21 +1260,6 @@ all kind of different tasks.
 Vy offers a consistent plugin interface with a powerful scheme to affect the state of the editor
 through python code.
 
-One can obtain help from a plugin doc definition by dropping.
-
-~~~python
-    help(vyapp.plugins.plugin_name)
-~~~
-
-The help for the plugin would be outputed on the AreaVi instance that you have set the drop mark.
-
-Try getting help from 
-
-~~~python
-    help(vyapp.plugins.main_jumps)
-~~~
-
-
 ***
 
 ### Getting help
@@ -1379,8 +1364,27 @@ in NORMAL mode after having selected the text 'CPPaste()'.
 
 ### Execute selected regions of python code
 
+Select a region of text that corresponds to python code then switch to NORMAL mode and press.
+
+    <Control-e>
+
+Make sure you have set an output target in case of the code producing some output. In
+order to set an output target, switch to the areavi instance that will be the output target
+then switch to NORMAL mode and press 
+
+    <Tab>
 
 ***
+
+### The basic commands
+
+It is possible to expose python functions to be executed through vy. These functions can perform all kind of
+tasks like posting code onto codepad or capitalizing selected text. These functions are implemented in modules
+that expose up in.
+
+~~~python
+vyapp.plugins.ENV
+~~~
 
 
 ### The global mode
@@ -1873,9 +1877,6 @@ in IRC mode to type
 the nick of the user. It will create a new tab whose title is the user's nick.
 
 ***
-
-The basic functions
-===================
 
 Using vy as a terminal
 ======================
@@ -2413,6 +2414,7 @@ area.chmode('NEW_MODE_NAME')
 ### The AreaVi.ACTIVE attribute
 
 ### A simple email sender plugin
+
 
 
 
