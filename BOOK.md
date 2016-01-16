@@ -133,18 +133,12 @@ Table of Contents
       * [The AreaVi.tag_config method](#the-areavitag_config-method)
       * [The AreaVi.search method](#the-areavisearch-method)
       * [The AreaVi.find method](#the-areavifind-method)
-      * [The AreaVi virtual events](#the-areavi-virtual-events)
       * [The AreaVi.load_data method](#the-areaviload_data-method)
       * [The AreaVi.save_data method](#the-areavisave_data-method)
       * [Vy Global Mode](#vy-global-mode)
       * [The AreaVi.add_mode and AreaVi.chmode methods](#the-areaviadd_mode-and-areavichmode-methods)
       * [The sys.stdout object](#the-sysstdout-object)
-      * [The CompleteWindow class](#the-completewindow-class)
-      * [A simple plugin](#a-simple-plugin)
-      * [A Word Checker plugin](#a-word-checker-plugin)
-      * [Count Phrase Words plugin](#count-phrase-words-plugin)
       * [The AreaVi.ACTIVE attribute](#the-areaviactive-attribute)
-      * [A simple email sender plugin](#a-simple-email-sender-plugin)
 
 
 Introduction
@@ -2365,9 +2359,20 @@ for match, pos0, pos1 in area.find('o+', '1.0', 'end', regexp=True):
 
 ~~~
 
-### The AreaVi virtual events
-
 ### The AreaVi.load_data method
+
+This method of the class AreaVi is used to dump the contents of a file into an AreaVi instance.
+This method spawns a virtual event whose name is.
+
+    <<LoadData>>
+
+Another virtual event that is spawned is.
+
+    <<Load-type>> 
+
+where type is the file type that is determined by the mimetypes.guess_type method.
+It is useful when needing to have handles called when a given file type is loaded.
+
 
 ### The AreaVi.save_data method
 
@@ -2410,58 +2415,6 @@ area.chmode('NEW_MODE_NAME')
 
 ### The sys.stdout object
 
-### The CompleteWindow class
-
-### A simple plugin
-
-### A Word Checker plugin
-
-### Count Phrase Words plugin
-
 ### The AreaVi.ACTIVE attribute
-
-### A simple email sender plugin
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
