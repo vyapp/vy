@@ -11,6 +11,7 @@ from untwisted.tkinter import extern
 from untwisted.utils.iofd import *
 from vyapp.app import root
 from vyapp.tools import set_status_msg
+from vyapp.ask import Ask
 
 from subprocess import Popen, PIPE, STDOUT
 from os import environ, setsid, killpg
@@ -24,9 +25,9 @@ class Process(object):
                    ('INSERT', '<Shift-F1>', lambda event: self.dump_line_and_tab(event.widget)),
                    ('NORMAL', '<F1>', lambda event: self.dump_line_and_down(event.widget)),
                    ('NORMAL', '<Control-F1>', lambda event: self.restart()),
+                   ('NORMAL', '<Control-semicolon>', lambda event: self.ask_data_and_dump(event.widget)),
                    ('NORMAL', '<Control-backslash>', lambda event: self.dump_signal(3)),
                    ('NORMAL', '<Control-c>', lambda event: self.dump_signal(2)))
-
 
 
     def __init__(self, cmd=['bash', '-i']):
@@ -81,13 +82,19 @@ class Process(object):
 
         self.stdin.dump(data)
         area.insert_line_down()
-    
+
+    def ask_data_and_dump(self, area):
+        ask  = Ask(area)
+        data = ask.data.encode('utf-8')
+        self.stdin.dump('%s\n' %  data)
+
     def dump_signal(self, signal):
         killpg(self.child.pid, signal)
     
 extern(root)
 process = Process()
 install = process
+
 
 
 
