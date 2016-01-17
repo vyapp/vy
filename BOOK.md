@@ -117,7 +117,6 @@ Table of Contents
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
       * [Query an user](#query-an-user)
-  * [The basic functions](#the-basic-functions)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
   * [E-scripts](#e-scripts)
   * [The plugin API](#the-plugin-api)
@@ -1370,7 +1369,7 @@ then switch to NORMAL mode and press
 
 ***
 
-### The basic commands
+### The scope of plugin functions
 
 It is possible to expose python functions to be executed through vy. These functions can perform all kind of
 tasks like posting code onto codepad or capitalizing selected text. These functions are implemented in modules
@@ -1379,6 +1378,14 @@ that expose up in.
 ~~~python
 vyapp.plugins.ENV
 ~~~
+
+When code is executed through the key commands below then it is executed in the dictionary shown above.
+
+    <Control-e>
+
+or
+
+    <Key-semicolon>
 
 
 ### The global mode
@@ -1881,9 +1888,6 @@ the nick of the user. It will create a new tab whose title is the user's nick.
 
 Using vy as a terminal
 ======================
-
-E-scripts
-=========
 
 The plugin API
 ==============
@@ -2416,5 +2420,6 @@ area.chmode('NEW_MODE_NAME')
 ### The sys.stdout object
 
 ### The AreaVi.ACTIVE attribute
+
 
 
