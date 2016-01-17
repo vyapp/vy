@@ -67,10 +67,11 @@ Description: Used to open a private chat channel with an user.
 Commands
 ========
 
-ircmode(irc_server, irc_port)
-    irc_server: The IRC network address.
-
-    irc_port: The port to connect to. It is normally 6667
+Command: ircmode(irc_server, irc_port)
+Description: Initiate a new IRC connection.
+Args:
+irc_server = The IRC network address.
+irc_port   = The port to connect to. It is normally 6667
 
 """
 
@@ -226,6 +227,8 @@ def ircmode(addr='irc.freenode.org', port=6667):
     IrcMode(area, addr, port)
 
 ENV['ircmode'] = ircmode
+
+
 
 
 
