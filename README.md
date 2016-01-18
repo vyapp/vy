@@ -55,8 +55,9 @@ vy implements a Python debugger plugin and auto completion that permits debuggin
 One can set break points, remove break points, run the code then see the cursor jumping to the line 
 that is being executed and much more.
 
-It is possible to open multiple vertical/horizontal areas to edit different files. Such a feature makes it possible
-to edit multiple files in a given tab. vy supports multiple tabs as well.
+It is possible to open multiple vertical/horizontal panes to edit different files. Such a feature makes it possible
+to edit multiple files in a given tab. vy supports multiple tabs as well with a very powerful scheme of keys
+to switch focus between tabs and panes. 
 
 vy has a very well defined scheme for user plugins. One can easily develop a plugin then make vy load it.
 There is a vyrc file written in Python that is very well documented and organized to make it simple to load
@@ -147,5 +148,6 @@ My nick there is Tau.
 
 Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
