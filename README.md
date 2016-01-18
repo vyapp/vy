@@ -49,7 +49,7 @@ output from vy: it lets you access files over SSH on another machine.
 
 The features of talking to proccesses and vy powerful fuzzy search schemes it makes vy a perfect tool to deal with
 E-scripts. E-scripts are a very handy way to automate some tasks. Such tasks can be pushing stuff onto GitHub, adding users 
-to a UNIX-like system, a set of steps to set up a system, adjusting the system sound volume, etc. 
+to a UNIX-like system, a set of steps to set up a system, etc. 
 
 vy implements a Python debugger plugin and auto completion that permits debugging Python code easily and in a very cool way. 
 One can set break points, remove break points, run the code then see the cursor jumping to the line 
@@ -80,9 +80,6 @@ Screenshots
 
 **Dynamically extending the editor through Python**
 ![screenshot-2](screenshot-2.jpg)
-
-**E-scripts**
-![screenshot-3](screenshot-3.jpg)
 
 
 A video
@@ -150,4 +147,5 @@ My nick there is Tau.
 
 Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
