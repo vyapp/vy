@@ -1746,52 +1746,37 @@ to an irc network. It is possible to connect to more than one network, channels 
 
 ### Connect to an irc network
 
-Vyirc implements the following function below.
+Vyirc implements the following class constructor that is defined below.
 
 ~~~python
-ircmode(irc_server, irc_port)
+IrcMode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
+             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#vy'])
 ~~~
 
 In order to connect to an irc network, switch to NORMAL mode then press 
 
     <Key-semicolon>
 
-to execute the function described above.
+to instantiate the class described above. It would open a tab with an irc connectinon tied to it. 
+The new tab will be in IRC mode, 
 
-An example would be.
+If there is someone using your nick, it will be needed to send the command below to the IRC server. 
 
-~~~python
-ircmode('irc.freenode.org', 6667)
+~~~
+NICK new_nick
 ~~~
 
-It would open a tab with an irc connectinon tied to it. The new tab will be in IRC mode, it will be needed
-to send the command below to the IRC server. For such, switch to the IRC connection tab then press 
+For such, switch to the IRC connection tab then press 
 
     <Control-e> 
 
 in IRC mode.
 
-~~~
-USER vyirc vyirc vyirc: real name
-~~~
-
-then again 
-
-    <Control-e> 
-
-and type.
-
-~~~
-NICK your_nick
-~~~
-
-If there is no one using your nick and the commands were typed correctly then you'll be connected to the IRC server.
-
 ***
 
 ### Switch to IRC mode
 
-After having executed the function ircmode and opening an irc connection then it is possible
+After having executed the function IrcMode and opening an irc connection then it is possible
 to put the areavi instance tied to the connection in IRC mode by switching the focus to that
 areavi instance then switching to GAMMA mode and pressing.
 
@@ -1885,6 +1870,37 @@ in IRC mode to type
 the nick of the user. It will create a new tab whose title is the user's nick.
 
 ***
+
+### Create shortcut functions for IRC networks
+
+It is possible to create shortcut functions to connect to IRC networks by importing the IrcMode class
+from your vyrc file then defining a new function that instantiates the IrcMode class with defined arguments.
+The scheme is better described below.
+
+**The vyrc file**
+
+~~~python
+# The vy irc mode.
+from vyapp.plugins.vyirc import IrcMode
+
+# Here, the network connections can be defined. 
+def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
+             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#vy']):
+    IrcMode(addr, port, user, nick, irccmd, channels)
+
+def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
+             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
+    IrcMode(addr, port, user, nick, irccmd, channels)
+~~~
+
+After adding the piece of code above in your vyrc file then it is possible to instantiate new IRC connections
+to irc.freenode.org by executing the function irc_freenode either from 
+    
+    <Control-e>
+
+or
+
+    <Key-semicolon>
 
 Using vy as a terminal
 ======================
@@ -2420,6 +2436,7 @@ area.chmode('NEW_MODE_NAME')
 ### The sys.stdout object
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 

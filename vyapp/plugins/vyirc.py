@@ -8,27 +8,18 @@ tabs, IRC network channels turn into tabs as well.
 Usage
 =====
 
-Vyirc implements the ircmode function that has the following definition.
+Vyirc implements the IrcMode class that has the following constructor definition.
 
-    ircmode(irc_server, irc_port)
+    def __init__(self, addr, port, user, nick, irccmd, channels=[]):
 
 In order to initiate an IRC connection one would execute something like below by pressing <Control-semicolon> in NORMAL mode.
 
-    ircmode('irc.freenode.org', 6667)
+    IrcMode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
+             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#vy'])
 
-It would start an IRC connection on a new tab. After initializing the socket connection one would send the user host to
-the irc server by pressing <Control-e> in IRC mode then typing
-
-    USER user user user :real name
-
-again <Control-e> then
-
-    NICK user_nick
-
-It is enough to stabilish a connection with the IRC server. After executing the function ircmode
-the new tab will be in IRC mode. In order to make the areavi instance go back to NORMAL mode it is enough to press
-<Escape>. It is possible to get back in IRC mode by pressing <Key-i> in GAMMA mode. However, only areavi instances that are
-tied to IRC connections can be in IRC mode.
+It is enough to stabilish a connection with the IRC server. 
+After calling IrcMode constructor it will open a new tab tied to the IRC connection. The new tab
+will be in IRC mode.
 
 It is possible to send only raw IRC commands to the IRC network by pressing <Control-e> in IRC mode. Some users
 have a registered nick, in order to identify to an user nick, type the command below after pressing <Control-e>.
@@ -37,7 +28,7 @@ have a registered nick, in order to identify to an user nick, type the command b
 
 Some IRC networks may vary the command format described above.
 
-The command to join channel is as usually implemented in other irc clients. It is as follow. It is used the
+The command to join a channel is as usually implemented in other irc clients. It is as follow. It is used the
 key-command <Control-e> in IRC mode.
 
     JOIN #channel
@@ -48,6 +39,15 @@ In order to leave a channel type the IRC command below.
 
 One can query an user by pressing <Control-c> then typing its nick. It will open an areavi instance
 for private chatting with the user.
+
+For creating shortcuts for IRC networks, just import IrcMode from vyrc file then define IRC network functions like below.
+
+def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
+             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#vy']):
+    IrcMode(addr, port, user, nick, irccmd, channels)
+
+The irc_freenode function will be exposed in vyapp.plugins.ENV, so it is possible to call it from <Control-e> or
+<Key-semicolon>
 
 Key-Commands
 ============
@@ -67,11 +67,14 @@ Description: Used to open a private chat channel with an user.
 Commands
 ========
 
-Command: ircmode(irc_server, irc_port)
+Command: IrcMode(self, addr, port, user, nick, irccmd, channels=[])
 Description: Initiate a new IRC connection.
-Args:
-irc_server = The IRC network address.
-irc_port   = The port to connect to. It is normally 6667
+addr     = The IRC network address.
+port     = The IRC network port.
+user     = The user parameters like 'vy vy vy :vy'
+irccmd   = A sequence of IRC commands to be executed on motd.
+           It is used to identify nick.
+channels = A list of channels to join in.
 
 """
 
@@ -241,6 +244,7 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
 
 
 
