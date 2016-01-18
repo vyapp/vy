@@ -76,6 +76,7 @@ Table of Contents
       * [Syntax highlight](#syntax-highlight)
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
       * [Execute Inline Python](#execute-inline-python)
+      * [The sys.stdout object](#the-sysstdout-object)
       * [Getting help](#getting-help)
       * [Set an AreaVi instance as target for commands](#set-an-areavi-instance-as-target-for-commands)
       * [Execute selected regions of python code](#execute-selected-regions-of-python-code)
@@ -136,7 +137,6 @@ Table of Contents
       * [The AreaVi.save_data method](#the-areavisave_data-method)
       * [Vy Global Mode](#vy-global-mode)
       * [The AreaVi.add_mode and AreaVi.chmode methods](#the-areaviadd_mode-and-areavichmode-methods)
-      * [The sys.stdout object](#the-sysstdout-object)
       * [The AreaVi.ACTIVE attribute](#the-areaviactive-attribute)
 
 
@@ -1252,6 +1252,19 @@ all kind of different tasks.
 
 Vy offers a consistent plugin interface with a powerful scheme to affect the state of the editor
 through python code.
+
+***
+
+### The sys.stdout object
+
+The default sys.stdout object is replaced by a new class that redirects the output of python code
+to AreaVi instances. It is possible to make output of python code be dropped over multiple AreaVi
+instances by switching the focus to the AreaVi instance then pressing
+
+    <Tab>
+
+in NORMAL mode. Once an output target is added to the sys.stdout object then a message at the statusbar
+will show the row and col at where python code output will be dropped.
 
 ***
 
@@ -2433,9 +2446,8 @@ area.chmode('NEW_MODE_NAME')
 
 ~~~
 
-### The sys.stdout object
-
 ### The AreaVi.ACTIVE attribute
+
 
 
 
