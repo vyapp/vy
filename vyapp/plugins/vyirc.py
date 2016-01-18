@@ -93,20 +93,28 @@ H6 = 'Peers:%s\n'
 H7 = '>>>%s has quit (%s)<<<\n'
 
 class IrcMode(object):
-    def __init__(self, area, addr, port):
+    def __init__(self, addr, port, user, nick, irccmd, channels=[]):
         con = Spin()
         con.connect_ex((addr, int(port)))
         Client(con)
 
-        xmap(con, CONNECT, lambda con: self.set_up_con(con, area))
+        xmap(con, CONNECT, self.set_up_con)
         xmap(con, CONNECT_ERR, self.on_connect_err)
-        self.misc = None
+        self.misc      = None
+        self.addr      = addr
+        self.port      = port
+        self.user      = user
+        self.nick      = nick
+        self.irccmd    = irccmd
+        self.channels  = channels
 
     def send_cmd(self, area, con):
         ask = Ask(area)
         send_cmd(con, ask.data)
 
-    def set_up_con(self, con, area):
+    def set_up_con(self, con):
+        area = root.note.create(self.addr)    
+
         Stdin(con)
         Stdout(con)
         Shrug(con)
@@ -115,6 +123,11 @@ class IrcMode(object):
         xmap(con, CLOSE, lambda con, err: lose(con))
         self.set_common_irc_handles(area, con)
         self.set_common_irc_commands(area, con)
+        xmap(con, '376', lambda con, *args: send_cmd(con, self.irccmd))
+        xmap(con, '376', self.auto_join)
+
+        send_cmd(con, 'NICK %s' % self.nick)
+        send_cmd(con, 'USER %s' % self.user) 
 
     def create_channel(self, area, con, chan):
         area_chan = self.create_area(chan)
@@ -201,7 +214,8 @@ class IrcMode(object):
             pass
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
-            ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7))
+                  ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), 
+                  ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7))
 
         for key, value in events:
             xmap(con, key, value)
@@ -213,6 +227,12 @@ class IrcMode(object):
 
         xmap(con, 'PART->%s->MEPART' % chan, unset)
 
+    def auto_join(self, con, *args):
+        for ind in self.channels:
+            send_cmd(con, 'JOIN %s' % ind)
+
+        pass
+
     def send_msg(self, area, chan, con):
         data = area.cmd_like()
         area.insee('CHDATA', H1 % (self.misc.nick, data))
@@ -221,18 +241,6 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
-
-def ircmode(addr='irc.freenode.org', port=6667):
-    area = root.note.create(addr)    
-    IrcMode(area, addr, port)
-
-ENV['ircmode'] = ircmode
-
-
-
-
-
-
 
 
 

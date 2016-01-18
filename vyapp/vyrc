@@ -340,8 +340,16 @@ import vyapp.plugins.iocmd
 import vyapp.plugins.cmd_search
 
 # The vy irc mode.
-import vyapp.plugins.vyirc
+from vyapp.plugins.vyirc import IrcMode
 
+# Here, the network connections can be defined. 
+def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
+             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#vy']):
+    IrcMode(addr, port, user, nick, irccmd, channels)
+
+def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
+             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
+    IrcMode(addr, port, user, nick, irccmd, channels)
 
 
 
