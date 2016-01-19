@@ -2409,6 +2409,19 @@ It is useful when needing to have handles called when a given file type is loade
 
 ### The AreaVi.save_data method
 
+This method is used to dump the contents of an AreaVi instance into a file. It spawns
+the virtual event below
+
+    <<SaveData>>
+
+as well as the virtual event
+
+    <<Save-type>>
+
+where type is is the file type determined by the function guess_type form the standard module
+mimetypes.
+
+
 ### Vy Global Mode
 
 The vy global mode is the '-1', such a mode dispatches events regardless of the mode in which an AreaVi instance is in.
@@ -2447,6 +2460,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
