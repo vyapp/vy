@@ -105,7 +105,7 @@ Key-Commands
 
 Mode: NORMAL
 Event: <Control-W>
-Description: Delete all the output dropped from sys.stdout to an AreaVi instance.
+Description: Delete all the output dropped on an AreaVi instance.
 
 Mode: NORMAL
 Event: <Control-Tab>
@@ -141,29 +141,4 @@ def install(area):
            ('NORMAL', '<Key-W>', lambda event: event.widget.tag_delete(Stdout.TAG_CODE)),
            ('NORMAL', '<Control-w>', lambda event: exec_quiet(sys.stdout.remove, event.widget)),
            ('NORMAL', '<Tab>', lambda event: redirect_stdout(event.widget)))
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
