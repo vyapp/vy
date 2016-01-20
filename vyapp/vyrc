@@ -267,11 +267,15 @@ autoload(vyapp.plugins.status)
 # syntax plugin is used to highlight code.
 # The themes are placed in the themes folder.
 import vyapp.plugins.syntax.spider
-# import vyapp.plugins.syntax.themes.sun
-# import vyapp.plugins.syntax.themes.dark
-import vyapp.plugins.syntax.themes.snake
-autoload(vyapp.plugins.syntax.spider, vyapp.plugins.syntax.themes.snake.THEME)
 
+# from pygments.styles.emacs import EmacsStyle
+# autoload(vyapp.plugins.syntax.spider, EmacsStyle())
+
+# from pygments.styles.murphy import MurphyStyle
+# autoload(vyapp.plugins.syntax.spider, MurphyStyle())
+
+from pygments.styles.vim import VimStyle
+autoload(vyapp.plugins.syntax.spider, VimStyle())
 
 # shade plugin is used to mark lines then quickly
 # go to the previous or next mark.
@@ -350,6 +354,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 

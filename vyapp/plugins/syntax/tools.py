@@ -6,7 +6,7 @@ def colorize(area, lexer, theme, index, stopindex):
     count, offset = area.indref(index)
     for ((srow, scol), (erow, ecol)), token, value in get_tokens_unprocessed_matrix(count, offset, 
                                                                                     area.get(index, stopindex), lexer):
-        if theme.has_key(str(token)):
+        if theme.has_key(token):
             area.tag_add(str(token), '%s.%s' % (srow, scol), 
                          '%s.%s' % (erow, ecol))
 
@@ -50,13 +50,40 @@ def get_tokens_unprocessed_matrix(count, offset, data, lexer):
         yield(((srow + count, scol), (erow + count, ecol)), 
                token, value)
 
+def get_setting_fg(setting):
+    for ind in setting:
+        if ind.startswith('#'):
+            return ind
+    return ''
+
+def get_setting_bg(setting):
+    for ind in setting:
+        if ind.startswith('bg:'):
+            return ind.split(':')[1]
+    return ''
+
+def get_token_setting(theme, token, extractor):
+    while token:
+        setting = theme.styles[token]
+        setting = extractor(setting.split(' '))
+        if setting: 
+            return setting
+        token = token.parent
+    return []
+
+def setup_token_scheme(area, theme, token):
+    fg = get_token_setting(theme, token, get_setting_fg)
+    area.tag_configure(str(token), foreground=fg)
+    bg = get_token_setting(theme, token, get_setting_bg)
+    area.tag_configure(str(token), background=bg)
 
 
+def setup_theme_scheme(area, theme):
+    area.configure(background=theme.background_color)
+    # area.configure(foreground=theme.highlight_color)
 
-
-
-
-
+    for ind in theme.styles.iterkeys():
+        setup_token_scheme(area, theme, ind)
 
 
 
