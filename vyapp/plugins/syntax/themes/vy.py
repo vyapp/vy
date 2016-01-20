@@ -49,6 +49,12 @@ class VyStyle(Style):
         Name.Variable:             "#00cdcd",
 
         String:                    "#0094f0",
+        String.Backtick:           "#FF470A",
+        String.Char:               "#FF470A",
+        String.Doc:                "#f0d400",
+        String.Regex:              "#82ad00",
+        String.Interpol:           "#397472",
+        String.Symbol:             "#657439",
         Number:                    "#cd00cd",
 
         Generic.Heading:           "bold #000080",
@@ -64,5 +70,6 @@ class VyStyle(Style):
 
         Error:                     "border:#FF0000"
     }
+
 
 
