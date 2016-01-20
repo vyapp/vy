@@ -32,11 +32,11 @@ class PanedHorizontalWindow(PanedWindow):
 
         from vyapp.plugins import INSTALL, HANDLE
 
-        for plugin, args, kwargs in INSTALL:
-            plugin.install(area, *args, **kwargs)
-
         for handle, args, kwargs in HANDLE:
             handle(area, *args, **kwargs)
+
+        for plugin, args, kwargs in INSTALL:
+            plugin.install(area, *args, **kwargs)
 
         area.pack(expand=True, side='left', fill=BOTH)
         area.focus_set()
@@ -131,6 +131,7 @@ class NoteVi(Notebook):
             self.add(base)        
             for indj in indi:
                 base.load(*indj)
+
 
 
 
