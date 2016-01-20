@@ -9,6 +9,14 @@ sys.path.append(join(expanduser('~'), '.vy'))
 from vyapp.plugins import autoload, autocall
 
 ##############################################################################
+# Setup area settings, like default background, foreground, font style etc.
+
+def setup(area):
+    area.config(blockcursor=True, insertbackground='red', background='black', 
+                foreground='yellow', font=('Monospace', 8, 'bold'), undo=True)
+
+autocall(setup) 
+##############################################################################
 # The basic modes.
 
 import vyapp.plugins.delta_mode
@@ -263,9 +271,11 @@ autoload(vyapp.plugins.symbol_jumps)
 import vyapp.plugins.status
 autoload(vyapp.plugins.status)
 
-
+##############################################################################
 # syntax plugin is used to highlight code.
-# The themes are placed in the themes folder.
+# It uses python pygments styles to highlight code :)
+# Check out more pygments styles.
+# Note: When uncommenting a theme dont forget to comment the previously used one.
 import vyapp.plugins.syntax.spider
 
 # from pygments.styles.emacs import EmacsStyle
@@ -274,8 +284,18 @@ import vyapp.plugins.syntax.spider
 # from pygments.styles.murphy import MurphyStyle
 # autoload(vyapp.plugins.syntax.spider, MurphyStyle())
 
-from pygments.styles.vim import VimStyle
-autoload(vyapp.plugins.syntax.spider, VimStyle())
+# from pygments.styles.colorful import ColorfulStyle
+# autoload(vyapp.plugins.syntax.spider, ColorfulStyle())
+
+# from pygments.styles.tango import TangoStyle
+# autoload(vyapp.plugins.syntax.spider, TangoStyle())
+
+from pygments.styles.paraiso_dark import ParaisoDarkStyle
+autoload(vyapp.plugins.syntax.spider, ParaisoDarkStyle())
+
+# from pygments.styles.vim import VimStyle
+# autoload(vyapp.plugins.syntax.spider, VimStyle())
+##############################################################################
 
 # shade plugin is used to mark lines then quickly
 # go to the previous or next mark.
@@ -304,14 +324,6 @@ autoload(vyapp.plugins.toggle_mode)
 # '/home/your_home/.vy_history'
 # import vyapp.plugins.log_opened_file
 # autoload(vyapp.plugins.log_opened_file, '.vy_history')
-
-##############################################################################
-
-def setup(area):
-    area.config(blockcursor=True, insertbackground='red', background='black', 
-                foreground='yellow', font=('Monospace', 8, 'bold'), undo=True)
-
-autocall(setup) 
 
 ##############################################################################
 # Command plugins.
@@ -354,6 +366,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
