@@ -1,6 +1,6 @@
 from pygments.style import Style
 from pygments.token import Keyword, Name, Comment, String, Error, \
-     Number, Operator, Generic, Whitespace, Token
+     Number, Operator, Generic, Whitespace, Token, Punctuation
 
 
 class VyStyle(Style):
@@ -15,25 +15,40 @@ class VyStyle(Style):
         Token:                     "#cccccc",
         Whitespace:                "",
         Comment:                   "#000080",
+        Comment.Hashbang:          "#006680",
+        Comment.Multiline:         "#807100",
         Comment.Preproc:           "",
-        Comment.Special:           "bold #cd0000",
+        Comment.Single:            "#f55600",
+        Comment.Special:           "#cd0000",
 
-        Keyword:                   "#cdcd00",
+        Keyword:                   "#7a7a7a",
+        Keyword.Constant:          "",
         Keyword.Declaration:       "#00cd00",
         Keyword.Namespace:         "#cd00cd",
-        Keyword.Pseudo:            "",
+        Keyword.Pseudo:            "#7a7a7a",
+        Keyword.Reserved:          "#7a7a7a",
         Keyword.Type:              "#00cd00",
 
-        Operator:                  "#3399cc",
-        Operator.Word:             "#cdcd00",
+        Operator:                  "#7a7a7a",
+        Operator.Word:             "#7a7a7a",
 
+        Punctuation:               "#7a7a7a",
         Name:                      "",
+        Name.Attribute:            "",
+        Name.Builtin:              "#cccccc",
         Name.Class:                "#00cdcd",
-        Name.Builtin:              "#cd00cd",
+        # Name.Constant:             "",
+        # Name.Decorator:            "",
+        # Name.Entity:               "",
+        # Name.Function:             "",
+        # Name.Label:                "",
+        # Name.Namespace:            "",
+        # Name.Other:                "",
+        # Name.Tag:                  "",
         Name.Exception:            "bold #666699",
         Name.Variable:             "#00cdcd",
 
-        String:                    "#cd0000",
+        String:                    "#0094f0",
         Number:                    "#cd00cd",
 
         Generic.Heading:           "bold #000080",
@@ -49,4 +64,5 @@ class VyStyle(Style):
 
         Error:                     "border:#FF0000"
     }
+
 
