@@ -38,9 +38,9 @@ Such a feature turns it simple browsing documentation of functions/commands as w
 
 The syntax highlighting plugin is very minimalistic and extremely fast. It supports syntax highlighting 
 for all languages that python-pygments supports. The source code of the syntax highlighting plugin is about 
-80 lines of code. It is faster than the syntax highlighting plugins of both vim and emacs. :)
-It is possible to easily implement new syntax highlighting themes that work for all languages.
-The syntax highlighting plugin permits you to set specific background/colour for a language tokens type.
+120 lines of code. It is faster than the syntax highlighting plugins of both vim and emacs. :)
+It is possible to easily implement new syntax highlighting themes that work for all languages because it uses
+python pygments styles scheme.
 
 There is a simple and consistent terminal-like plugin in vy that turns it possible to talk to external processes.
 Such a feature is very handy when dealing with interpreters. One can just drop pieces of code to an interpreter
@@ -148,6 +148,7 @@ My nick there is Tau.
 
 Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
