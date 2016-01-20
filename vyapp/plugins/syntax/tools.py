@@ -62,6 +62,7 @@ def get_setting_bg(setting):
             return ind.split(':')[1]
     return ''
 
+
 def get_token_setting(theme, token, extractor):
     while token:
         setting = theme.styles[token]
@@ -69,7 +70,7 @@ def get_token_setting(theme, token, extractor):
         if setting: 
             return setting
         token = token.parent
-    return []
+    return ''
 
 def setup_token_scheme(area, theme, token):
     fg = get_token_setting(theme, token, get_setting_fg)
@@ -80,12 +81,8 @@ def setup_token_scheme(area, theme, token):
 
 def setup_theme_scheme(area, theme):
     area.configure(background=theme.background_color)
-    # area.configure(foreground=theme.highlight_color)
+    area.configure(foreground='black' if not theme.default_style else theme.default_style)
 
     for ind in theme.styles.iterkeys():
         setup_token_scheme(area, theme, ind)
-
-
-
-
 

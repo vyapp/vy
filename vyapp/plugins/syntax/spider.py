@@ -46,8 +46,8 @@ def install(area, theme, max=10):
         index2 = area.index('%s +%sl' % (index1, max))
         index2 = area.tag_prev_occur(TAG_KEYS_PRECEDENCE, index2, 'insert', 'end')
 
-        for ind in theme.styles.keys():
-            area.tag_remove(ind, index0, index2)
+        for ind in theme.styles.iterkeys():
+            area.tag_remove(str(ind), index0, index2)
 
         colorize(area, lexer, theme.styles, index0, index2)
 
@@ -63,5 +63,6 @@ def install(area, theme, max=10):
                  (-1, '<Escape>', lambda event: update_scheme()))
 
     setup_theme_scheme(area, theme)
+
 
 
