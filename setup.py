@@ -9,7 +9,7 @@ setup(name="vy",
       packages=["vyapp", 
                 "vyapp.plugins",
                 "vyapp.plugins.syntax",
-                "vyapp.plugins.syntax.themes",
+                "vyapp.plugins.syntax.styles",
                 "vyapp.plugins.omen",             
                 "vyapp.plugins.jdb",
                 "vyapp.plugins.pdb"],
@@ -18,6 +18,7 @@ setup(name="vy",
       package_data={'vyapp': ['vyrc', join('vyapp', 'vyrc')]},
       author="Iury O. G. Figueiredo",
       author_email="ioliveira@id.uff.br")
+
 
 
 

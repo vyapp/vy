@@ -293,8 +293,12 @@ import vyapp.plugins.syntax.spider
 # from pygments.styles.paraiso_dark import ParaisoDarkStyle
 # autoload(vyapp.plugins.syntax.spider, ParaisoDarkStyle())
 
-from pygments.styles.vim import VimStyle
-autoload(vyapp.plugins.syntax.spider, VimStyle())
+# from pygments.styles.vim import VimStyle
+# autoload(vyapp.plugins.syntax.spider, VimStyle())
+
+from vyapp.plugins.syntax.styles.vy import VyStyle
+autoload(vyapp.plugins.syntax.spider, VyStyle())
+
 ##############################################################################
 
 # shade plugin is used to mark lines then quickly
@@ -366,6 +370,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 

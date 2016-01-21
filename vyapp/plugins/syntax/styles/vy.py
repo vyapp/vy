@@ -9,11 +9,11 @@ class VyStyle(Style):
 
     background_color = "#000000"
     highlight_color = "#222222"
-    default_style = "#cccccc"
+    default_style = "#999999"
 
     styles = {
         Token:                     "#cccccc",
-        Whitespace:                "",
+        # Whitespace:                "",
         Comment:                   "#000080",
         Comment.Hashbang:          "#006680",
         Comment.Multiline:         "#807100",
@@ -21,34 +21,34 @@ class VyStyle(Style):
         Comment.Single:            "#f55600",
         Comment.Special:           "#cd0000",
 
-        Keyword:                   "#7a7a7a",
-        Keyword.Constant:          "",
+        Keyword:                   "#269900",
+        # Keyword.Constant:          "",
         Keyword.Declaration:       "#00cd00",
         Keyword.Namespace:         "#cd00cd",
-        Keyword.Pseudo:            "#7a7a7a",
-        Keyword.Reserved:          "#7a7a7a",
+        Keyword.Pseudo:            "#269900",
+        Keyword.Reserved:          "#269900",
         Keyword.Type:              "#00cd00",
 
-        Operator:                  "#7a7a7a",
-        Operator.Word:             "#7a7a7a",
+        Operator:                  "#269900",
+        Operator.Word:             "#269900",
 
-        Punctuation:               "#7a7a7a",
+        Punctuation:               "#269900",
         Name:                      "",
         Name.Attribute:            "",
-        Name.Builtin:              "#cccccc",
+        Name.Builtin:              "#999999",
         Name.Class:                "#00cdcd",
         # Name.Constant:             "",
-        # Name.Decorator:            "",
+        Name.Decorator:            "#cd00cd",
         # Name.Entity:               "",
         # Name.Function:             "",
         # Name.Label:                "",
         # Name.Namespace:            "",
         # Name.Other:                "",
         # Name.Tag:                  "",
-        Name.Exception:            "bold #666699",
+        Name.Exception:            "#666699",
         Name.Variable:             "#00cdcd",
 
-        String:                    "#0094f0",
+        String:                    "#805E00",
         String.Backtick:           "#FF470A",
         String.Char:               "#FF470A",
         String.Doc:                "#f0d400",
@@ -57,19 +57,20 @@ class VyStyle(Style):
         String.Symbol:             "#657439",
         Number:                    "#cd00cd",
 
-        Generic.Heading:           "bold #000080",
-        Generic.Subheading:        "bold #800080",
+        Generic.Heading:           "#000080",
+        Generic.Subheading:        "#800080",
         Generic.Deleted:           "#cd0000",
         Generic.Inserted:          "#00cd00",
         Generic.Error:             "#FF0000",
-        Generic.Emph:              "italic",
-        Generic.Strong:            "bold",
-        Generic.Prompt:            "bold #000080",
+        # Generic.Emph:              "",
+        # Generic.Strong:            "",
+        Generic.Prompt:            "#000080",
         Generic.Output:            "#888",
         Generic.Traceback:         "#04D",
 
-        Error:                     "border:#FF0000"
+        Error:                     "#FF0000"
     }
+
 
 
 
