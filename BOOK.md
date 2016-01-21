@@ -60,7 +60,18 @@ Table of Contents
       * [Undo](#undo)
       * [Redo](#redo)
       * [Jump to a given Line.Col position](#jump-to-a-given-linecol-position)
-      * [The screen search feature](#the-screen-search-feature)
+      * [Word completion](#word-completion)
+   * [Switch focus between AreaVi instances](#switch-focus-between-areavi-instances)
+      * [Move focus one tab left](#move-focus-one-tab-left)
+      * [Move focus one tab right](#move-focus-one-tab-right)
+      * [Move focus one pane up](#move-focus-one-pane-up)
+      * [Move focus one pane down](#move-focus-one-pane-down)
+      * [Move focus one pane left](#move-focus-one-pane-left)
+      * [Move focus one pane right](#move-focus-one-pane-right)
+   * [Command line](#command-line)
+      * [Opening files in panes/tabs from command line](#opening-files-in-panestabs-from-command-line)
+   * [The screen search feature](#the-screen-search-feature)
+   * [Search scheme](#search-scheme)
       * [Set a search pattern](#set-a-search-pattern)
       * [Set a replacement pattern](#set-a-replacement-pattern)
       * [Search up](#search-up)
@@ -71,9 +82,7 @@ Table of Contents
       * [Replace on](#replace-on)
       * [Search patterns inside selected text](#search-patterns-inside-selected-text)
       * [Replace matched patterns inside selected text](#replace-matched-patterns-inside-selected-text)
-      * [Word completion](#word-completion)
-      * [Opening files in panes/tabs from command line](#opening-files-in-panestabs-from-command-line)
-      * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
+  * [Code execution](#code-execution)
       * [Execute Inline Python](#execute-inline-python)
       * [Set output targets](#set-output-targets)
       * [Remove output targets](#remove-output-targets)
@@ -83,14 +92,8 @@ Table of Contents
       * [Set an AreaVi instance as target for commands](#set-an-areavi-instance-as-target-for-commands)
       * [Execute selected regions of python code](#execute-selected-regions-of-python-code)
       * [The scope of plugin functions](#the-scope-of-plugin-functions)
+  * [Other modes](#other-modes)
       * [The global mode](#the-global-mode)
-      * [Move focus one tab left](#move-focus-one-tab-left)
-      * [Move focus one tab right](#move-focus-one-tab-right)
-      * [Move focus one pane up](#move-focus-one-pane-up)
-      * [Move focus one pane down](#move-focus-one-pane-down)
-      * [Move focus one pane left](#move-focus-one-pane-left)
-      * [Move focus one pane right](#move-focus-one-pane-right)
-      * [Toggle mode](#toggle-mode)
       * [The BETA mode](#the-beta-mode)
       * [The GAMMA mode](#the-gamma-mode)
       * [The DELTA mode](#the-delta-mode)
@@ -99,6 +102,7 @@ Table of Contents
       * [Highlighting code](#highlighting-code)
       * [Changing syntax highlight style](#changing-syntax-highlight-style)
       * [Creating new syntax highlight styles](#creating-new-syntax-highlight-styles)
+  * [Toggle mode](#toggle-mode)
   * [The PDB mode](#the-pdb-mode)
       * [Getting ready to debug a python application](#getting-ready-to-debug-a-python-application)
       * [Switch to PDB mode](#switch-to-pdb-mode)
@@ -127,6 +131,8 @@ Table of Contents
       * [Query an user](#query-an-user)
       * [Create shortcut functions for IRC networks](#create-shortcut-functions-for-irc-networks)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
+  * [Misc](#misc)
+      * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
   * [The plugin API](#the-plugin-api)
       * [The vyrc, plugin system and user plugin space](#the-vyrc-plugin-system-and-user-plugin-space)
       * [A help on Tkinter events](#a-help-on-tkinter-events)
@@ -919,7 +925,142 @@ In a file with more than 5 lines.
 
 ***
 
-### The screen search feature
+### Word completion
+
+In INSERT mode it is useful to have completion of words. The word completion
+searches for all possible combinations in all the opened files.
+
+Write down a word that you know to appear in one of the opened files by vy, place
+the cursor at the end of such a word then press the keycommand below in INSERT mode:
+
+    <Control-q>
+
+If you keep pressing it other possible combinations will appear.
+
+***
+
+Switch focus between AreaVi instances
+=====================================
+
+### Move focus one tab left
+
+It is possible to open files in multiple tabs, there is a handy keycommand to move the focus
+between tabs. For moving focus one tab left, press the key-command below regardless of the mode
+that vy is in. The key-command below works in GLOBAL mode it is a mode whose events have their handles
+called regardless of the mode in which an AreaVi instance is in:
+
+    <Alt-o>
+
+***
+
+### Move focus one tab right
+
+In order to move the focus one tab right, press the key-command below:
+
+    <Alt-p>
+
+***
+
+### Move focus one pane up
+
+It is possible to have more than one file opened per tab, to move the focus
+one pane up, press:
+
+    <Key-K>
+
+in NORMAL mode.
+
+***
+
+### Move focus one pane down
+
+In order to move focus one pane down, switch to NORMAL mode then press:
+
+
+    <Key-J>
+
+***
+
+### Move focus one pane left
+
+Switch to NORMAL mode then press:
+
+    <Key-H>
+
+to move the focus one pane left.
+
+***
+
+### Move focus one pane right
+
+In order to move focus one pane right, switch to NORMAL mode then press:
+
+    <Key-L>
+
+***
+
+Command line
+============
+
+### Opening files in panes/tabs from command line
+
+It is possible to open files from command lines in different panes/tabs.
+
+Consider you have three files, alpha, beta, gamma.
+
+if you type in a terminal:
+
+    vy -l "[[['alpha', 'beta'], ['gamma']]]"
+
+The vy editor will open these three files in one tab.
+It will look like:
+
+    |Alpha|
+    ----------------
+    | alpha | beta |
+    ----------------    
+    |    gamma     |
+    ----------------
+    
+If you hve four files, alpha, beta, gamma, zeta
+then you type:
+
+    vy -l "[[['alpha', 'beta'], ['gamma']], [['zeta']]]"
+
+
+It will open alpha, beta, gamma in a tab and zeta in other tab:
+
+    |Alpha|zeta|
+    ----------------
+    | alpha | beta |
+    ----------------    
+    |    gamma     |
+    ----------------
+
+
+If you switch the focused tab with <Shift-F10| to the right then you will get:
+
+    |Alpha|zeta|
+    ----------------
+    |              |
+    |     zeta     |
+    |              |
+    ----------------
+
+
+It is useful when dealing with some scheme of files. I use vy as a terminal like
+because i use e-scripts to automatize all kind of tasks like pushing onto github etc.
+So, i keep a quick-esc.sh file in which i open two panes, one for the file quick-esc.sh
+and one for /dev/null like:
+
+    vy -l "[[['/home/tau/lib/esc-code/bash/cmd-esc.sh', '/dev/null']]]"
+   
+
+***
+
+
+The screen search feature
+=========================
 
 This is an awesome feature in which one can do searches through the visible region of the document. It does searches
 from the beginning of the visible region of the document until the end of the visible region. Such a feature
@@ -973,6 +1114,9 @@ You can switch back to NORMAL mode by pressing:
 The cursor will remain at the matched pattern position.
 
 ***
+
+Search scheme
+=============
 
 ### Set a search pattern
 
@@ -1080,92 +1224,8 @@ inside a selected region by pressing the keycommand below in NORMAL mode:
 
 ***
 
-### Word completion
-
-In INSERT mode it is useful to have completion of words. The word completion
-searches for all possible combinations in all the opened files.
-
-Write down a word that you know to appear in one of the opened files by vy, place
-the cursor at the end of such a word then press the keycommand below in INSERT mode:
-
-    <Control-q>
-
-If you keep pressing it other possible combinations will appear.
-
-***
-
-### Opening files in panes/tabs from command line
-
-It is possible to open files from command lines in different panes/tabs.
-
-Consider you have three files, alpha, beta, gamma.
-
-if you type in a terminal:
-
-    vy -l "[[['alpha', 'beta'], ['gamma']]]"
-
-The vy editor will open these three files in one tab.
-It will look like:
-
-    |Alpha|
-    ----------------
-    | alpha | beta |
-    ----------------    
-    |    gamma     |
-    ----------------
-    
-If you hve four files, alpha, beta, gamma, zeta
-then you type:
-
-    vy -l "[[['alpha', 'beta'], ['gamma']], [['zeta']]]"
-
-
-It will open alpha, beta, gamma in a tab and zeta in other tab:
-
-    |Alpha|zeta|
-    ----------------
-    | alpha | beta |
-    ----------------    
-    |    gamma     |
-    ----------------
-
-
-If you switch the focused tab with <Shift-F10| to the right then you will get:
-
-    |Alpha|zeta|
-    ----------------
-    |              |
-    |     zeta     |
-    |              |
-    ----------------
-
-
-It is useful when dealing with some scheme of files. I use vy as a terminal like
-because i use e-scripts to automatize all kind of tasks like pushing onto github etc.
-So, i keep a quick-esc.sh file in which i open two panes, one for the file quick-esc.sh
-and one for /dev/null like:
-
-    vy -l "[[['/home/tau/lib/esc-code/bash/cmd-esc.sh', '/dev/null']]]"
-   
-
-***
-
-### Copy the opened file path to the clipboard
-
-Consider opening a file with:
-
-~~~
-vy /tmp/tmpfile
-~~~
-
-Then switch the focus to the AreaVi instance that maps to the file above and in NORMAL mode, press:
-
-    <Key-u>
-
-It will appear on the statusbar a msg saying the file path was copied to the clipboard.
-Try pasting it somewhere.
-
-***
+Code execution
+==============
 
 ### Execute Inline Python
 
@@ -1400,105 +1460,13 @@ or:
     <Key-semicolon>
 
 
+Other modes
+===========
+
 ### The global mode
 
 The global mode is a mode that if there is a handle/function mapped to an event in such a mode
 then such a handle will be called no matter in which mode is in.
-
-### Move focus one tab left
-
-It is possible to open files in multiple tabs, there is a handy keycommand to move the focus
-between tabs. For moving focus one tab left, press the key-command below regardless of the mode
-that vy is in. The key-command below works in GLOBAL mode it is a mode whose events have their handles
-called regardless of the mode in which an AreaVi instance is in:
-
-    <Alt-o>
-
-***
-
-### Move focus one tab right
-
-In order to move the focus one tab right, press the key-command below:
-
-    <Alt-p>
-
-***
-
-### Move focus one pane up
-
-It is possible to have more than one file opened per tab, to move the focus
-one pane up, press:
-
-    <Key-K>
-
-in NORMAL mode.
-
-***
-
-### Move focus one pane down
-
-In order to move focus one pane down, switch to NORMAL mode then press:
-
-
-    <Key-J>
-
-***
-
-### Move focus one pane left
-
-Switch to NORMAL mode then press:
-
-    <Key-H>
-
-to move the focus one pane left.
-
-***
-
-### Move focus one pane right
-
-In order to move focus one pane right, switch to NORMAL mode then press:
-
-    <Key-L>
-
-***
-
-### Toggle mode
-
-The standard mode is the NORMAL one, in such a mode it is possible to move cursor, copy text, paste text, delete text
-and a lot of other stuff. There are other secundary modes that implement keycommands for other kind of tasks. One example
-is the PDB mode that is implemented by the plugin below.
-
-~~~
-vyapp.plugins.pdb
-~~~
-
-Such a mode implements keycommands to set break points, run python code etc. 
-In some situations it is useful to quickly switch to NORMAL mode to perform some task then go back to the
-previous mode. It is possible by using a keycommand that is implemented in ALPHA, BETA, GAMMA, DELTA and PDB mode.
-
-In order to examplify the scenary, switch to ALPHA mode by pressing:
-
-    <Key-3>
-
-in NORMAL mode. Once in ALPHA mode, try holding the key:
-
-    <KeyPress-space>
-
-You will notice the mode has changed to NORMAL, once you release the key then you'll go back to the previous mode
-that is ALPHA. It is possible to extend the plugin below to work with other modes.
-
-For such, edit the line in your ~/.vy/vyrc file:
-
-~~~
-autoload(vyapp.plugins.toggle_mode)
-~~~
-
-to
-
-~~~
-autoload(vyapp.plugins.toggle_mode, modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'PDB', 'SOME_OTHER_MODE'])
-~~~
-
 
 ***
 
@@ -1556,10 +1524,51 @@ In order to highligh the inserted text based on the file extension, just press:
 
 ### Changing syntax highlight style
 
+***
+
 ### Creating new syntax highlight styles
 
 ***
 
+Toggle mode
+===========
+
+The standard mode is the NORMAL one, in such a mode it is possible to move cursor, copy text, paste text, delete text
+and a lot of other stuff. There are other secundary modes that implement keycommands for other kind of tasks. One example
+is the PDB mode that is implemented by the plugin below.
+
+~~~
+vyapp.plugins.pdb
+~~~
+
+Such a mode implements keycommands to set break points, run python code etc. 
+In some situations it is useful to quickly switch to NORMAL mode to perform some task then go back to the
+previous mode. It is possible by using a keycommand that is implemented in ALPHA, BETA, GAMMA, DELTA and PDB mode.
+
+In order to examplify the scenary, switch to ALPHA mode by pressing:
+
+    <Key-3>
+
+in NORMAL mode. Once in ALPHA mode, try holding the key:
+
+    <KeyPress-space>
+
+You will notice the mode has changed to NORMAL, once you release the key then you'll go back to the previous mode
+that is ALPHA. It is possible to extend the plugin below to work with other modes.
+
+For such, edit the line in your ~/.vy/vyrc file:
+
+~~~
+autoload(vyapp.plugins.toggle_mode)
+~~~
+
+to
+
+~~~
+autoload(vyapp.plugins.toggle_mode, modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'PDB', 'SOME_OTHER_MODE'])
+~~~
+
+***
 
 The PDB mode
 ============
@@ -1931,6 +1940,27 @@ or
 
 Using vy as a terminal
 ======================
+
+Misc
+====
+
+### Copy the opened file path to the clipboard
+
+Consider opening a file with:
+
+~~~
+vy /tmp/tmpfile
+~~~
+
+Then switch the focus to the AreaVi instance that maps to the file above and in NORMAL mode, press:
+
+    <Key-u>
+
+It will appear on the statusbar a msg saying the file path was copied to the clipboard.
+Try pasting it somewhere.
+
+***
+
 
 The plugin API
 ==============
@@ -2445,6 +2475,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
