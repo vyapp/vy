@@ -1,7 +1,35 @@
+"""
+This module implements basic input data scheme.
+"""
+
 from Tkinter import *
 from vyapp.app import root
 
 class Ask(Entry):
+    """
+    This class implements vy default input text scheme. Plugins that demand user input
+    could use this class to retrieve user's data in a consistent way. When this class constructor
+    is called it shows an entry widget at the bottom of the vy editor.
+
+    This widget takes the focus when the constructor is called. It is a useful
+    behavior in the common scenaries of vy editor.
+
+    When user presses <Escape> the widget is destroyed and the focus scheme
+    is restored. The same occurs when <Return> is pressed while the widget has focus.
+
+    Consider:
+    
+    def handle(area):
+        ask = Ask(area)
+        if ask.data:
+            print 'Success!'
+        else:
+            print 'Failure!'
+
+    In case of success it is if the user pressed <Return> then ask.data will be the user data
+    that was inputed otherwise it is ''.
+    """
+
     def __init__(self, area, default_data ='', wait=True):
         self.area  = area
         self.data  = '' 
@@ -39,20 +67,5 @@ class Ask(Entry):
         self.frame.destroy()
         root.read_data.pack_forget()
         self.area.focus_set()
-
-if __name__ == '__main__':
-    area = Tk()
-    search_dialog = Ask(area, 'Ask')
-    area.mainloop()
-
-
-
-
-
-
-
-
-
-
 
 
