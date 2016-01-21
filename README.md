@@ -137,7 +137,7 @@ Documentation
 
 **The Vy Book**
 
-[BOOK.md](vyapp/data/BOOK.md)
+[BOOK.md](BOOK.md)
 
 
 Help
@@ -148,6 +148,7 @@ My nick there is Tau.
 
 Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
