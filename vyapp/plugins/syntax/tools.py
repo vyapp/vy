@@ -6,16 +6,15 @@ def colorize(area, lexer, theme, index, stopindex):
     count, offset = area.indref(index)
     for ((srow, scol), (erow, ecol)), token, value in get_tokens_unprocessed_matrix(count, offset, 
                                                                                     area.get(index, stopindex), lexer):
-        if theme.has_key(token):
-            area.tag_add(str(token), '%s.%s' % (srow, scol), 
-                         '%s.%s' % (erow, ecol))
+        area.tag_add(str(token), '%s.%s' % (srow, scol), 
+                     '%s.%s' % (erow, ecol))
 
 
 def thread_colorize(area, lexer, theme, index, stopindex):
     for pos, token, value in lexer.get_tokens_unprocessed(area.get(index, stopindex)):
-        if theme.has_key(str(token)):
-            area.tag_add(str(token), '%s +%sc' % (index, pos), 
-                         '%s +%sc' % (index, pos + len(value)))
+        area.tag_add(str(token), '%s +%sc' % (index, pos), 
+                     '%s +%sc' % (index, pos + len(value)))
+
         yield
 
 
@@ -85,4 +84,5 @@ def setup_theme_scheme(area, theme):
 
     for ind in theme.styles.iterkeys():
         setup_token_scheme(area, theme, ind)
+
 

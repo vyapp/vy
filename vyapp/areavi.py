@@ -1,3 +1,7 @@
+"""
+
+"""
+
 from Tkinter import *
 import mimetypes
 
@@ -1654,6 +1658,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 

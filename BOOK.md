@@ -73,7 +73,6 @@ Table of Contents
       * [Replace matched patterns inside selected text](#replace-matched-patterns-inside-selected-text)
       * [Word completion](#word-completion)
       * [Opening files in panes/tabs from command line](#opening-files-in-panestabs-from-command-line)
-      * [Syntax highlight](#syntax-highlight)
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
       * [Execute Inline Python](#execute-inline-python)
       * [Set output targets](#set-output-targets)
@@ -96,6 +95,7 @@ Table of Contents
       * [The GAMMA mode](#the-gamma-mode)
       * [The DELTA mode](#the-delta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
+  * [Syntax highlight](#syntax-highlight)
   * [The PDB mode](#the-pdb-mode)
       * [Getting ready to debug a python application](#getting-ready-to-debug-a-python-application)
       * [Switch to PDB mode](#switch-to-pdb-mode)
@@ -1147,15 +1147,6 @@ and one for /dev/null like:
 
 ***
 
-### Syntax highlight
-
-The vy syntax highlight plugin works for all languages that python pygments library works for.
-In order to highligh the inserted text based on the file extension, just press:
-
-    <Escape>
-
-***
-
 ### Copy the opened file path to the clipboard
 
 Consider opening a file with:
@@ -1549,6 +1540,17 @@ is opened in vy it turns possible to type a python object name following a perio
 It will open a small window with the possible attributes of the object.
 
 ***
+
+Syntax highlight
+================
+
+The vy syntax highlight plugin works for all languages that python pygments library works for.
+In order to highligh the inserted text based on the file extension, just press:
+
+    <Escape>
+
+***
+
 
 The PDB mode
 ============
@@ -2434,6 +2436,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 

@@ -11,9 +11,17 @@ from vyapp.plugins import autoload, autocall
 ##############################################################################
 # Setup area settings, like default background, foreground, font style etc.
 
+# Note: Plugins like syntax highlighting will define AreaVi instance settings 
+# like background and foreground. # It is possible to override these settings 
+# by uncommenting foreground and background arguments below. 
+
+# Handles like setup are the last ones
+# to be executed in the vyrc file regardless of where them appear in the file.
+
 def setup(area):
-    area.config(blockcursor=True, insertbackground='red', background='black', 
-                foreground='yellow', font=('Monospace', 8, 'bold'), undo=True)
+    area.config(blockcursor=True, insertbackground='red', 
+                # background='black', foreground='yellow', 
+                font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
 ##############################################################################
@@ -92,7 +100,8 @@ import vyapp.plugins.notebook
 autoload(vyapp.plugins.notebook)
 
 
-# Implement keycommands to select text from the cursor position to the start/end of the file.
+# Implement keycommands to select text from the cursor position 
+# to the start/end of the file.
 import vyapp.plugins.text_sel
 autoload(vyapp.plugins.text_sel)
 
@@ -370,18 +379,6 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
