@@ -68,7 +68,7 @@ Table of Contents
       * [Move focus one pane down](#move-focus-one-pane-down)
       * [Move focus one pane left](#move-focus-one-pane-left)
       * [Move focus one pane right](#move-focus-one-pane-right)
-   * [Command line](#command-line)
+  * [Command line](#command-line)
       * [Opening files in panes/tabs from command line](#opening-files-in-panestabs-from-command-line)
    * [The screen search feature](#the-screen-search-feature)
    * [Search scheme](#search-scheme)
