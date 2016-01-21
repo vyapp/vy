@@ -1,3 +1,11 @@
+"""
+This module implements the App class widget widget which is one of the most important vy
+editor's widgets.
+
+This module exposes the vyapp.app.root attribute that is a variable pointing
+to the App class instance. The App class instance holds all vy editor's widgets.
+"""
+
 from vyapp.stdout import Transmitter
 from Tkinter import *
 from vyapp.notevi import NoteVi
@@ -11,12 +19,22 @@ root = None
 
 class App(Tk):
     """
+    This class implements the most basic vy editor widget. It holds a NoteVi
+    widget instance and a StatusBar widget instance. Plugins that demand
+    accessing the NoteVi instance could use:
 
+    from vyapp.app import root
+    area = root.note.create('filename')
+
+    Plugins that demand accessing the StatusBar instance could use.
+
+    from vyapp.app import root
+    root.status.set_msg('Message!')
     """
 
     def __init__(self, *args, **kwargs):
         """
-
+        App class constructor. The arguments are passed to Tk class widget.
         """
 
         Tk.__init__(self, *args, **kwargs)
@@ -51,6 +69,7 @@ class App(Tk):
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
 
 
 
