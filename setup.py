@@ -12,12 +12,16 @@ setup(name="vy",
                 "vyapp.plugins.syntax.themes",
                 "vyapp.plugins.omen",             
 		"vyapp.plugins.jdb",
-		"vyapp.plugins.pdb"],
-      #package_dir={'vyapp':'vyapp'},
+		"vyapp.plugins.pdb",
+                "vyapp.data"],
+      # package_dir={'vyapp':'vyapp'},
       scripts=['vy'],
-      package_data={'vyapp': ['vyrc', join('vyapp', 'vyrc')]},
+      package_data={'vyapp': ['vyrc', join('vyapp', 'vyrc')],
+                    'vyapp.data':['BOOK.md', join('vyapp', 'data', 'BOOK.md')]},
       author="Iury O. G. Figueiredo",
       author_email="ioliveira@id.uff.br")
+
+
 
 
 
