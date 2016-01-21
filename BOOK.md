@@ -96,6 +96,9 @@ Table of Contents
       * [The DELTA mode](#the-delta-mode)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
   * [Syntax highlight](#syntax-highlight)
+      * [Highlighting code](#highlighting-code)
+      * [Changing syntax highlight style](#changing-syntax-highlight-style)
+      * [Creating new syntax highlight styles](#creating-new-syntax-highlight-styles)
   * [The PDB mode](#the-pdb-mode)
       * [Getting ready to debug a python application](#getting-ready-to-debug-a-python-application)
       * [Switch to PDB mode](#switch-to-pdb-mode)
@@ -1544,10 +1547,16 @@ It will open a small window with the possible attributes of the object.
 Syntax highlight
 ================
 
+### Highlighting code
+
 The vy syntax highlight plugin works for all languages that python pygments library works for.
 In order to highligh the inserted text based on the file extension, just press:
 
     <Escape>
+
+### Changing syntax highlight style
+
+### Creating new syntax highlight styles
 
 ***
 
@@ -2436,6 +2445,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
