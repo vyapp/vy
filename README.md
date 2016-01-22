@@ -12,10 +12,10 @@ In vy it is easy to create modes like it is in emacs, modes that support program
 provide all kind of functionalities that varies from accessing irc or email checking.
 
 There is no need for a mouse with vy, everything is made from the keyboard. There are tons of key commands to help 
-you spare a lot of time when programming or just editing some text. vy has a powerful set of key commands that
+you spare a lot of time when programming or just editing some text. vy has a handy set of key commands that
 permits you to quickly switch the cursor to a given position. 
 
-There is a powerful feature that permits making the cursor jump to positions in the visible region of the file 
+There is a smart feature that permits making the cursor jump to positions in the visible region of the file 
 that match a given pattern. Such a plugin spares a lot of time in almost all situations.
 
 vy has a plugin that implements a mode to quickly jump backwards/forwards to a given character. It is possible
@@ -31,7 +31,7 @@ all text, everything that vim does and a lot more but with a better scheme of ke
 
 There is a powerful scheme for finding patterns of text as well as replacing ranges of text with regular 
 expressions. It is possible to select regions of text then perform matching operations inside such regions; 
-such a feature lets you format some documents more easily with no expense of time.
+Such a feature lets you format some documents more easily with no expense of time.
 
 There are ways to perform fuzzy searches whose input is a set of words, with the effect of finding lines which contain the words in any order;
 Such a feature turns it simple browsing documentation of functions/commands as well as finding specific sections in large files.
@@ -56,7 +56,7 @@ One can set break points, remove break points, run the code then see the cursor 
 that is being executed and much more.
 
 It is possible to open multiple vertical/horizontal panes to edit different files. Such a feature makes it possible
-to edit multiple files in a given tab. vy supports multiple tabs as well with a very powerful scheme of keys
+to edit multiple files in a given tab. vy supports multiple tabs as well with a handy scheme of keys
 to switch focus between tabs and panes. 
 
 vy has a very well defined scheme for user plugins. One can easily develop a plugin then make vy load it.
@@ -148,6 +148,7 @@ My nick there is Tau.
 
 Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
