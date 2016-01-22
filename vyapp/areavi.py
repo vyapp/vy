@@ -779,26 +779,14 @@ class AreaVi(Text):
         It puts the cursor on the beginning of the next word.
         """
 
-        count = IntVar()
-        # It seems that regexp doesnt match ^ as starting of the line when nolinestop=True
-        index = self.search(' [^ ]|^[^ ]', 'insert +1c', regexp=True, nolinestop=False, count=count)
-        if not index: return
-
-        self.mark_set('insert', '%s +%sc' % (index, count.get() - 1))
-        self.see('insert')
+        self.seek_next_down('\M')
 
     def go_prev_word(self):
         """
         It puts the cursor in the beginning of the previous word.
         """
 
-        count = IntVar()
-        # It seems that regexp doesnt match ^ as starting of the line when nolinestop=True
-        index = self.search(' [^ ]|^[^ ]', 'insert -1c', '1.0', regexp=True, nolinestop=False, count=count, backwards=True)
-
-        if not index: return 
-        self.mark_set('insert', '%s +%sc' % (index, count.get() - 1))
-        self.see('insert')
+        self.seek_next_up('\M')
 
     def go_next_sym(self, chars):
         """
@@ -1182,8 +1170,6 @@ class AreaVi(Text):
             pos1  = self.index('%s +%sc' % (index, len))
             index = '%s +1l' % pos0
             yield(chunk, pos0, pos1)
-
-
 
     def find(self, regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
