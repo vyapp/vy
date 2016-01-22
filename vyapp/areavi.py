@@ -1245,10 +1245,8 @@ class AreaVi(Text):
     
         return str(self.tk.call(tuple(args)))
 
-
-    def pick_next_up(self, name, regex, index0='insert', stopindex='1.0', exact=None, regexp=True, 
+    def seek_next_up(self, regex, index0='insert', stopindex='1.0', exact=None, regexp=True, 
                         nocase=None, elide=None, nolinestop=None):
-
         """
         Find the next match with regex up the cursor.
         It sets the cursor at the index of the occurrence.
@@ -1261,14 +1259,12 @@ class AreaVi(Text):
         if not index: return
 
         index1 = self.index('%s +%sc' % (index, count.get())) 
-
-        self.tag_add(name, index, index1)
         self.mark_set('insert', index)
         self.see('insert')
 
         return index, index1
 
-    def pick_next_down(self, name, regex, index0='insert', stopindex='end', exact=None, regexp=True, 
+    def seek_next_down(self, regex, index0='insert', stopindex='end', exact=None, regexp=True, 
                        nocase=None, elide=None, nolinestop=None):
 
         """
@@ -1284,12 +1280,35 @@ class AreaVi(Text):
         if not index: return
 
         index1 = self.index('%s +%sc' % (index, count.get())) 
-        self.tag_add(name, index, index1)
-
         self.mark_set('insert', index1)
         self.see('insert')
 
         return index, index1
+
+    def pick_next_up(self, name, *args, **kwargs):
+
+        """
+        """
+
+        index = self.seek_next_up(*args, **kwargs)
+        if not index:
+            return
+
+        self.tag_add(name, *index)
+        return index
+
+    def pick_next_down(self, name, *args, **kwargs):
+
+        """
+        """
+
+        index = self.seek_next_down(*args, **kwargs)
+
+        if not index:    
+            return
+
+        self.tag_add(name, *index)
+        return index
 
     def replace(self, regex, data, index=None, stopindex=None, forwards=None,
                 backwards=None, exact=None, regexp=True, nocase=None, elide=None, nolinestop=None):
@@ -1658,6 +1677,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 

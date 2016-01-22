@@ -164,7 +164,7 @@ Table of Contents
 Introduction
 ============
 
-The vy editor is one of the most powerful text editors around. It has a great plugin API, a nift scheme of keystrokes
+The vy editor is one of the most powerful text editors around. It has a great plugin API, a nifty scheme of keystrokes
 and it is extremely efficient in terms of hardware resources. The vy power comes at a cost, however: When getting
 started users face a sleep learning curve.
 
@@ -2497,6 +2497,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 

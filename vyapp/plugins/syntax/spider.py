@@ -39,8 +39,6 @@ TAG_KEYS_PRECEDENCE =('Token.Name.Tag',
     'Token.Generic.Subheading',
     'Token.Generic.Traceback')
 
-
-
 def install(area, theme, max=10):
     """
     """
@@ -58,7 +56,6 @@ def install(area, theme, max=10):
         index2 = area.index(index1)
         index2 = area.index('%s +%sl' % (index1, max))
         index2 = area.tag_prev_occur(TAG_KEYS_PRECEDENCE, index2, 'insert', 'end')
-        print index0, index2
         for ind in theme.styles.iterkeys():
             area.tag_remove(str(ind), index0, index2)
 
@@ -76,6 +73,8 @@ def install(area, theme, max=10):
                  (-1, '<Escape>', lambda event: update_scheme()))
 
     setup_theme_scheme(area, theme)
+
+
 
 
 

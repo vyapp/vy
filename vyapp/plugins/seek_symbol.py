@@ -34,17 +34,21 @@ Description: Switch to JUMP_BACK mode.
 
 """
 
-def jump_next(area, char):
-    index = area.search(char, 'insert', stopindex='end')
-    if not index: return
-    area.mark_set('insert', area.index('%s +1c' % index))
-    area.see('insert')
+def jump_next(area, keysym_num):
+    try:
+        char = chr(keysym_num)
+    except ValueError:
+        pass
+    else:
+        area.seek_next_down(char, regexp=False)
 
-def jump_back(area, char):
-    index = area.search(char, 'insert', stopindex='1.0', backwards=True)
-    if not index: return
-    area.mark_set('insert', index)
-    area.see('insert')
+def jump_back(area, keysym_num):
+    try:
+        char = chr(keysym_num)
+    except ValueError:
+        pass
+    else:
+        area.seek_next_up(char, regexp=False)
 
 def install(area):
         area.add_mode('JUMP_BACK')
@@ -52,19 +56,10 @@ def install(area):
 
         area.install(('NORMAL', '<Key-v>', lambda event: event.widget.chmode('JUMP_NEXT')), 
                      ('NORMAL', '<Key-c>', lambda event: event.widget.chmode('JUMP_BACK')),
-                     ('JUMP_BACK', '<Key>', lambda event: jump_back(event.widget, chr(event.keysym_num))),
-                     ('JUMP_NEXT', '<Key>', lambda event: jump_next(event.widget, chr(event.keysym_num))))
-
-
-
-
-
-
-
-
-
-
-
+                     ('JUMP_BACK', '<Key>', lambda event: jump_back(event.widget, event.keysym_num)),
+                     ('JUMP_BACK', '<Tab>', lambda event: event.widget.chmode('INSERT')),
+                     ('JUMP_NEXT', '<Tab>', lambda event: event.widget.chmode('INSERT')),
+                     ('JUMP_NEXT', '<Key>', lambda event: jump_next(event.widget, event.keysym_num)))
 
 
 
