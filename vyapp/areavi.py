@@ -934,9 +934,8 @@ class AreaVi(Text):
         It selects a word from the cursor position.
         """
 
-        index1 = self.search(' ', 'insert', stopindex='insert linestart', backwards=True)
-        index2 = self.search(' ', 'insert', stopindex='insert lineend')
-    
+        index1 = self.search('\W', 'insert', regexp=True, stopindex='insert linestart', backwards=True)
+        index2 = self.search('\W', 'insert', regexp=True, stopindex='insert lineend')
         self.tag_add('sel', 'insert linestart' if not index1 else '%s +1c' % index1, 
                      'insert lineend' if not index2 else index2)
     
@@ -1652,6 +1651,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
