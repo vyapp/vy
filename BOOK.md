@@ -60,7 +60,6 @@ Table of Contents
       * [Undo](#undo)
       * [Redo](#redo)
       * [Jump to a given Line.Col position](#jump-to-a-given-linecol-position)
-      * [Word completion](#word-completion)
   * [Switch focus between AreaVi instances](#switch-focus-between-areavi-instances)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
@@ -97,7 +96,6 @@ Table of Contents
       * [The BETA mode](#the-beta-mode)
       * [The GAMMA mode](#the-gamma-mode)
       * [The DELTA mode](#the-delta-mode)
-      * [The python autocomplete plugin](#the-python-autocomplete-plugin)
   * [Syntax highlight](#syntax-highlight)
       * [Highlighting code](#highlighting-code)
       * [Changing syntax highlight style](#changing-syntax-highlight-style)
@@ -131,8 +129,18 @@ Table of Contents
       * [Query an user](#query-an-user)
       * [Create shortcut functions for IRC networks](#create-shortcut-functions-for-irc-networks)
   * [Using vy as a terminal](#using-vy-as-a-terminal)
+  * [The ibash plugin](#the-ibash-plugin)
+      * [First steps](#first-steps)
+      * [Send a code line](#send-a-code-line)
+      * [Send a SIGINT signal](#send-a-sigint-signal)
+      * [Send a SIGQUIT signal](#send-a-sigquit-signal)
+      * [Send code lines](#send-code-lines)
+      * [Restart the bash process](#restart-the-bash-process)
+  * [The shell plugin]
   * [Misc](#misc)
+      * [Word completion](#word-completion)
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
+      * [The python autocomplete plugin](#the-python-autocomplete-plugin)
   * [The plugin API](#the-plugin-api)
       * [The vyrc, plugin system and user plugin space](#the-vyrc-plugin-system-and-user-plugin-space)
       * [A help on Tkinter events](#a-help-on-tkinter-events)
@@ -925,20 +933,6 @@ In a file with more than 5 lines.
 
 ***
 
-### Word completion
-
-In INSERT mode it is useful to have completion of words. The word completion
-searches for all possible combinations in all the opened files.
-
-Write down a word that you know to appear in one of the opened files by vy, place
-the cursor at the end of such a word then press the keycommand below in INSERT mode:
-
-    <Control-q>
-
-If you keep pressing it other possible combinations will appear.
-
-***
-
 Switch focus between AreaVi instances
 =====================================
 
@@ -1501,17 +1495,6 @@ It would get vy in DELTA mode.
 
 ***
 
-### The python autocomplete plugin
-
-Vy uses jedi python library to implement auto completion for python code. Whenever a python file
-is opened in vy it turns possible to type a python object name following a period then pressing:
-
-    <Control-period>
-
-It will open a small window with the possible attributes of the object.
-
-***
-
 Syntax highlight
 ================
 
@@ -1938,11 +1921,40 @@ or
 
     <Key-semicolon>
 
-Using vy as a terminal
-======================
+The ibash plugin
+================
+
+### First steps
+
+### Send a code line
+
+### Send a SIGINT signal
+
+### Send a SIGQUIT signal
+
+### Send code lines
+
+### Restart the bash process
+
+The shell plugin
+================
 
 Misc
 ====
+
+### Word completion
+
+In INSERT mode it is useful to have completion of words. The word completion
+searches for all possible combinations in all the opened files.
+
+Write down a word that you know to appear in one of the opened files by vy, place
+the cursor at the end of such a word then press the keycommand below in INSERT mode:
+
+    <Control-q>
+
+If you keep pressing it other possible combinations will appear.
+
+***
 
 ### Copy the opened file path to the clipboard
 
@@ -1961,6 +1973,16 @@ Try pasting it somewhere.
 
 ***
 
+### The python autocomplete plugin
+
+Vy uses jedi python library to implement auto completion for python code. Whenever a python file
+is opened in vy it turns possible to type a python object name following a period then pressing:
+
+    <Control-period>
+
+It will open a small window with the possible attributes of the object.
+
+***
 
 The plugin API
 ==============
@@ -2475,6 +2497,8 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
+
 
 
 
