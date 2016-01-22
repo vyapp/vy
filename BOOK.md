@@ -136,7 +136,7 @@ Table of Contents
       * [Send a SIGQUIT signal](#send-a-sigquit-signal)
       * [Send code lines](#send-code-lines)
       * [Restart the bash process](#restart-the-bash-process)
-  * [The shell plugin]
+  * [The shell plugin](#the-shell-plugin)
   * [Misc](#misc)
       * [Word completion](#word-completion)
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
@@ -2497,6 +2497,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
