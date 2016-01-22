@@ -3,6 +3,7 @@
 """
 
 from Tkinter import *
+from re import escape
 import mimetypes
 
 class AreaVi(Text):
@@ -176,6 +177,9 @@ class AreaVi(Text):
             self.tag_add(name, indi, indj)
 
     def insee(self, index, data):
+        """
+        """
+
         self.insert(index, data)
         self.see('insert')
 
@@ -713,7 +717,7 @@ class AreaVi(Text):
 
     def sel_text_end(self):
         """
-        It selects all text form the insert position to the end of the text.
+        It selects all text from the insert position to the end of the text.
         """
 
         index = self.index('insert')
@@ -796,37 +800,23 @@ class AreaVi(Text):
         self.mark_set('insert', '%s +%sc' % (index, count.get() - 1))
         self.see('insert')
 
-    def go_next_sym(self, chars=('(', ')', '.', '[', ']', '{', '}', ',', ':', ';', "'", '"')):
+    def go_next_sym(self, chars):
         """
-        It puts the cursor on the next occurency of:
-        ('(', ')', '.', '[', ']', '{', '}', ',', ':', ';', '"', "'")
-
+        It puts the cursor on the next occurency of the symbols in chars.
         """
 
-        chars = map(lambda ind: '\%s' % ind, chars)
+        chars = map(lambda ind: escape(ind), chars)
         REG   = '|'.join(chars)
-        index = self.search(REG, 'insert +1c', 'end', regexp=True, nolinestop=True)
+        self.seek_next_down(REG)
 
-        if not index: return 
-
-        self.mark_set('insert', index)
-        self.see('insert')
-
-    def go_prev_sym(self, chars=('(', ')', '.', '[', ']', '{', '}', ',', ':', ';', "'", '"')):
+    def go_prev_sym(self, chars):
         """
         It puts the cursor on the previous occurency of:
-        ('(', ')', '.', '[', ']', '{', '}', ',', ':', ';', '"', "'")
-
         """
-        chars = map(lambda ind: '\%s' % ind, chars)
+
+        chars = map(lambda ind: escape(ind), chars)
         REG   = '|'.join(chars)
-        index = self.search(REG, 'insert', '1.0', regexp=True, nolinestop=True, backwards=True)
-
-        if not index: return 
-
-        self.mark_set('insert', index)
-        self.see('insert')
-
+        self.seek_next_up(REG)
     
     def cllin(self):
         """
@@ -1255,7 +1245,6 @@ class AreaVi(Text):
         count = IntVar()
         index = self.search(regex, index0, stopindex=stopindex, regexp=regexp, exact=exact, 
                             nocase=nocase, elide=elide, nolinestop=nolinestop, backwards=True, count=count)
-        
         if not index: return
 
         index1 = self.index('%s +%sc' % (index, count.get())) 
@@ -1677,6 +1666,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 

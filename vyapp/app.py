@@ -70,18 +70,3 @@ class App(Tk):
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
