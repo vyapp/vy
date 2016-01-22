@@ -393,8 +393,8 @@ class AreaVi(Text):
 
     def rmsel(self, index0, index1):
         """
-        This method is a short hand for area.tag_remove('sel', index0, index1)
-
+        It removes the tag sel from the range that is delimited by index0 and index1
+        regardless whether index0 <= index1.
         """
 
         index2 = self.min(index0, index1)
@@ -404,8 +404,8 @@ class AreaVi(Text):
 
     def addsel(self, index0, index1):
         """
-        It adds 'sel' to the range (AreaVi.min(index0, index1), 
-                                    AreaVi.max(index0, index1))
+        It adds the tag sel to the range delimited by index0 and index1 regardless
+        whether index0 <= index1.
         """
 
         index2 = self.min(index0, index1)
@@ -417,7 +417,6 @@ class AreaVi(Text):
     def min(self, index0, index1):
         """
         It returns the min between index0 and index1.
-
         """
 
         if self.compare(index0, '<=', index1):
@@ -1088,19 +1087,17 @@ class AreaVi(Text):
 
             self.replace_all(regex, data, index3, index4, *args, **kwargs)
 
-    def tag_setup(self, theme):
+    def setup_tags_conf(self, kwargs):
         """
-        Just a short hand for
+        kwargs is a dictionary like:
 
-        theme = {'tag_name': {'background': 'blue'}
+        kwargs = {'tag_name': {'background': 'blue'}}
 
-        for name, kwargs in theme.iteritems():
-            self.tag_config(name, **kwargs)
-            self.tag_lower(name)
-
+        In the kwargs above, this method would set the background value to 'blue'
+        for the tag named 'tag_name'.
         """
 
-        for name, kwargs in theme.iteritems():
+        for name, kwargs in kwargs.iteritems():
             self.tag_config(name, **kwargs)
             self.tag_lower(name)
     
@@ -1651,6 +1648,8 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
+
 
 
 
