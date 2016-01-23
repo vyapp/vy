@@ -61,7 +61,7 @@ class Process(object):
         self.stdin.dump('%s\t\t' % data)
 
     def dump_region(self, area):
-        data = area.tag_get_ranges('sel')
+        data = area.join_ranges('sel')
         data = data.encode('utf-8')
         self.stdin.dump(data)
 
@@ -94,6 +94,7 @@ class Process(object):
 extern(root)
 process = Process()
 install = process
+
 
 
 

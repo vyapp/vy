@@ -63,7 +63,7 @@ def exec_cmd(area, env):
     exc(ask.data, env)
 
 def exec_region(area, env):
-    data = area.tag_get_ranges('sel')
+    data = area.join_ranges('sel')
     data = data.encode('utf-8')
     exc(data, env)
     area.clear_selection()
@@ -75,6 +75,7 @@ def set_target(area):
 install = lambda area: area.install(('NORMAL', '<Key-semicolon>', lambda event: exec_cmd(event.widget, ENV)), 
            ('NORMAL', '<Control-e>', lambda event: exec_region(event.widget, ENV)),
            ('NORMAL', '<Control-E>', lambda event: set_target(event.widget)))
+
 
 
 

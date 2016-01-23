@@ -124,14 +124,14 @@ class Pdb(object):
         area.add_mode('PDB')
 
         area.install(('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
-                    ('PDB', '<Key-p>', lambda event: self.send('print %s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+                    ('PDB', '<Key-p>', lambda event: self.send('print %s' % event.widget.join_ranges('sel', sep='\r\n'))), 
                     ('PDB', '<Key-x>', lambda event: self.evaluate_expression(event.widget)), 
                     ('PDB', '<Key-r>', lambda event: self.execute_statement(event.widget)), 
                     ('PDB', '<Key-1>', lambda event: self.start_debug(event.widget)), 
                     ('PDB', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
                     ('PDB', '<Key-q>', lambda event: self.terminate_process()), 
                     ('PDB', '<Key-c>', lambda event: self.send('continue\r\n')), 
-                    ('PDB', '<Key-e>', lambda event: self.send('!%s' % event.widget.tag_get_ranges('sel', sep='\r\n'))), 
+                    ('PDB', '<Key-e>', lambda event: self.send('!%s' % event.widget.join_ranges('sel', sep='\r\n'))), 
                     ('PDB', '<Key-w>', lambda event: self.send('where\r\n')), 
                     ('PDB', '<Key-a>', lambda event: self.send('args\r\n')), 
                     ('PDB', '<Key-s>', lambda event: self.send('step\r\n')), 
@@ -282,6 +282,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 

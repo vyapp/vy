@@ -822,7 +822,7 @@ class AreaVi(Text):
         that are selected and removes the selection.
         """
 
-        data = self.tag_get_ranges('sel')
+        data = self.join_ranges('sel')
         self.clipboard_clear()
         self.clipboard_append(data)
         self.tag_remove('sel', 'sel.first', 'sel.last')
@@ -833,7 +833,7 @@ class AreaVi(Text):
         It copies blocks of text that are selected
         with a separator '\n'.
         """
-        data = self.tag_get_ranges('sel', '\n')
+        data = self.join_ranges('sel', '\n')
         self.clipboard_clear()
         self.clipboard_append(data)
         self.tag_remove('sel', 'sel.first', 'sel.last')
@@ -844,11 +844,11 @@ class AreaVi(Text):
         It cuts blocks of text with a separator '\n'.
         """
 
-        data = self.tag_get_ranges('sel', '\n')
+        data = self.join_ranges('sel', '\n')
         self.clipboard_clear()
         self.clipboard_append(data)
         self.edit_separator()
-        self.tag_delete_ranges('sel')
+        self.delete_ranges('sel')
     
 
     def ctsel(self):
@@ -856,11 +856,11 @@ class AreaVi(Text):
         It cuts the selected text.
         """
 
-        data = self.tag_get_ranges('sel')
+        data = self.join_ranges('sel')
         self.clipboard_clear()
         self.clipboard_append(data)
         self.edit_separator()
-        self.tag_delete_ranges('sel')
+        self.delete_ranges('sel')
 
 
     def clsel(self):
@@ -868,7 +868,7 @@ class AreaVi(Text):
         It deletes all selected text.
         """
         self.edit_separator()
-        self.tag_delete_ranges('sel')
+        self.delete_ranges('sel')
     
 
     def ptsel(self):
@@ -1504,53 +1504,47 @@ class AreaVi(Text):
         r2 = self.is_in_range(index1, index2, index3)
         return r1 and r2
 
-    def tag_sub_ranges(self, name, data, index0='1.0', index1='end'):
+    def replace_range(self, data, index0, index1):
+        self.delete(index0, index1)
+        self.insert(index0, data)
+
+    def replace_ranges(self, name, data, index0='1.0', index1='end'):
         """
-        It replaces ranges of text delimited by tag between index0
-        and index1 for data.
-        """
-
-        while 1:
-            map = self.tag_nextrange(name, index0, index1)
-            if not map: break
-
-            index3, index4 = map
-            self.delete(index3, index4)
-            self.insert(index3, data)
-
-
-    def tag_delete_ranges(self, name, *args):
-        """
-        It deletes ranges of text that are mapped to tag name.
+        It replaces ranges of text that are mapped to a tag name for data between index0
+        and index1.
         """
 
-        self.tag_sub_ranges(name, '', *args)
+        while True:
+            range = self.tag_nextrange(name, index0, index1)
+            if not range: break
+            self.replace_range(data, *range)
 
-    def tag_get_ranges(self, name, sep=''):
+    def delete_ranges(self, name, index0='1.0', index1='end'):
+        """
+        It deletes ranges of text that are mapped to tag name between index0 and index1.
+        """
+
+        self.replace_ranges(name, '', index0, index1)
+
+    def join_ranges(self, name, sep=''):
         """     
-        It should be built from get_slices_data 
         """
 
         data = ''
     
-        for ind in self.tag_get_data(name):
+        for ind in self.get_ranges(name):
             data = data + ind + sep
         return data
 
 
-    def tag_get_data(self, name):
+    def get_ranges(self, name):
         """
-        It returns an iterator with the text inside tag name.
         """
 
-        try:
-            map = self.tag_ranges(name)
-        except Exception:
-            pass
-        else:
-            for ind in xrange(0, len(map) - 1, 2):
-                data = self.get(map[ind], map[ind + 1])
-                yield(data)
+        ranges = self.tag_ranges(name)
+        for ind in xrange(0, len(ranges) - 1, 2):
+            data = self.get(ranges[ind], ranges[ind + 1])
+            yield(data)
 
 
     def mark_set_next(self, tag, mark):
@@ -1643,6 +1637,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
