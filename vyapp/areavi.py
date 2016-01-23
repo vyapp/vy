@@ -1083,8 +1083,7 @@ class AreaVi(Text):
             if not map: break
 
             index3, index4 = map
-            index = index4
-            self.replace_all(regex, data, index3, index4, *args, **kwargs)
+            index = self.replace_all(regex, data, index3, index4, *args, **kwargs)
 
     def setup_tags_conf(self, kwargs):
         """
@@ -1638,6 +1637,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
