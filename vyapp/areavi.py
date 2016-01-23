@@ -920,7 +920,7 @@ class AreaVi(Text):
 
 
     def toggle_line_selection(self):
-        map = self.tag_contains('sel', 'insert linestart', 'insert +1l linestart')
+        map = self.is_tag_range('sel', 'insert linestart', 'insert +1l linestart')
 
         if map:
             self.unselect_line()
@@ -1479,35 +1479,30 @@ class AreaVi(Text):
         self.save_data()
 
 
-    def tag_contains(self, name, index0, index1):
+    def is_tag_range(self, name, index0, index1):
         """
-        It returns True if there is a tag range for
-        a tag name which contains index0 and index1.
-    
-        The algorithm consists of:
-    
-        It calls text.tag_ranges(name)
-        which returns a list of indexs
-        that the tag is attached to.
-      
-    
-        Then it goes through the list of indexs
-        checking which of the indexes contains index0 and index1.
-    
         """ 
 
-        ls = self.tag_ranges(name)
+        ranges = self.tag_ranges(name)
+        for ind in xrange(0, len(ranges) - 1, 2):
+            if self.is_subrange(index0, index1, ranges[ind].string, 
+                                ranges[ind + 1].string):
+                return ranges[ind].string, ranges[ind + 1].string
 
-        for ind in xrange(0, len(ls) - 1, 2):
-            index2 = ls[ind].string
-            index3 = ls[ind + 1].string
-            r1     = self.compare(index2, '<=', index0)
-            r2     = self.compare(index3, '>=', index1)
+    def is_in_range(self, index, index0, index1):
+        index2 = self.min(index0, index1)
+        index3 = self.max(index0, index1)
 
-            if r1 and r2: return index2, index3
+        r1     = self.compare(index2, '<=', index)
+        r2     = self.compare(index3, '>=', index)
 
-        return ()
+        if r1 and r2: return True
+        else: return False
 
+    def is_subrange(self, index0, index1, index2, index3):
+        r1 = self.is_in_range(index0, index2, index3)
+        r2 = self.is_in_range(index1, index2, index3)
+        return r1 and r2
 
     def tag_sub_ranges(self, name, data, index0='1.0', index1='end'):
         """
@@ -1648,6 +1643,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
