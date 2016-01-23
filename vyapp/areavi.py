@@ -1050,7 +1050,7 @@ class AreaVi(Text):
             self.delete('%s.0' % ind, '%s.%s' % (ind, width)) 
     
 
-    def tag_find_ranges(self, name, regex, *args, **kwargs):
+    def collect(self, name, regex, *args, **kwargs):
         """
         It returns an interator corresponding to calling AreaVi.find
         between the ranges of the tag specified by name.
@@ -1065,7 +1065,7 @@ class AreaVi(Text):
             for indj in seq: 
                 yield indj
 
-    def tag_replace_ranges(self, name, regex, data, index='1.0', stopindex='end', 
+    def rep_match_ranges(self, name, regex, data, index='1.0', stopindex='end', 
                            *args, **kwargs):
         """
         It replaces all occurrences of regex inside a tag ranges
@@ -1084,7 +1084,6 @@ class AreaVi(Text):
 
             index3, index4 = map
             index = index4
-
             self.replace_all(regex, data, index3, index4, *args, **kwargs)
 
     def setup_tags_conf(self, kwargs):
@@ -1101,16 +1100,16 @@ class AreaVi(Text):
             self.tag_config(name, **kwargs)
             self.tag_lower(name)
     
-    def tag_add_found(self, name, map):
+    def map_matches(self, name, matches):
         """"
         It adds a tag to the match ranges from either AreaVi.find or
-        AreaVi.tag_find_ranges.
+        AreaVi.collect.
     
         name - The tag to be added.
-        map  - An iterator from AreaVi.find or AreaVi.tag_find_ranges.
+        map  - An iterator from AreaVi.find or AreaVi.collect.
         """
 
-        for _, index0, index1 in map:
+        for _, index0, index1 in matches:
             self.tag_add(name, index0, index1)
 
     def split_with_cond(self, regex, cond, *args, **kwargs):
@@ -1173,7 +1172,6 @@ class AreaVi(Text):
         It returns an iterator of matches. It is based on the Text.search method
 
         """
-
         count = IntVar()
 
         while True:
@@ -1189,7 +1187,8 @@ class AreaVi(Text):
 
             pos0  = self.index(index)
             pos1  = self.index('%s +%sc' % (index, len))
-            index = '%s +1c' % tmp
+            index = '%s' % tmp
+
             yield(chunk, pos0, pos1)
 
     def search(self, pattern, index, stopindex=None, forwards=None,
@@ -1322,10 +1321,12 @@ class AreaVi(Text):
             map = self.replace(regex, data, index, self.STOP_REPLACE_INDEX, exact=exact, nocase=nocase, 
                                nolinestop=nolinestop, regexp=regexp, elide=elide)
 
-            if not map: return
+            if not map: 
+                return index
 
             index, size = map
             index = self.index('%s +%sc' % (index, size))
+
 
     def get_paren_search_dir(self, start, end):
         """
