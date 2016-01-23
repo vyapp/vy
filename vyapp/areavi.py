@@ -1111,18 +1111,9 @@ class AreaVi(Text):
         for _, index0, index1 in matches:
             self.tag_add(name, index0, index1)
 
-    def split_with_cond(self, regex, cond, *args, **kwargs):
+    def tokenize(self, *args, **kwargs):
         """
-        It determines which chunks should be yielded based on cond.
-        """
-
-        for chk, index0, index1 in self.split(regex, *args, **kwargs):
-            data = cond(chk, index0, index1)
-            if data: yield data
-
-    def split(self, *args, **kwargs):
-        """
-        It splits the contents of the text widget into chunks based on a regex.
+        It tokenizes the contents of an AreaVi widget based on a regex.
         """
 
         index0 = '1.0'
@@ -1133,17 +1124,6 @@ class AreaVi(Text):
             yield(chk, index1, index2)
             index0 = index2
     
-
-    def find_with_cond(self, regex, cond, *args, **kwargs):
-        """
-        It determines which matches should be yielded.
-        """
-
-        for chk, index0, index1 in self.find(regex, *args, **kwargs):
-            data = cond(chk, index0, index1)
-            if not data: continue
-            yield(data)
-            
     def find_one_by_line(self, regex, index, stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
 
@@ -1637,6 +1617,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
