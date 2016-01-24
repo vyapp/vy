@@ -1505,25 +1505,6 @@ class AreaVi(Text):
             data = self.get(ranges[ind], ranges[ind + 1])
             yield(data)
 
-
-    def mark_set_next(self, tag, mark):
-        """
-
-        """
-
-        next_tag = self.tag_nextrange(tag, '%s +1c' % mark)
-        if next_tag:
-            self.mark_set(mark, next_tag[0])
-    
-    def mark_set_prev(self, tag, mark):
-        """
-
-        """
-
-        prev_tag = self.tag_prevrange(tag, mark)
-        if prev_tag:
-            self.mark_set(mark, prev_tag[0])
-    
     def tag_prev_occur(self, tag_names, index0, index1, default):
         for ind in tag_names:
             pos = self.tag_prevrange(ind, index0, index1)
