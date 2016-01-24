@@ -55,10 +55,12 @@ class AreaVi(Text):
     def active(self):
         """
         It is used to create a model of target for plugins
-        defining python functions to run on fly.
+        defining python functions to access the AreaVi instance that was
+        set as target.
         
-        With such an abstraction it is possible to define a AreaVi instance target
-        that python code will act on.
+        Plugins that expose python functions to be executed from vy
+        should access AreaVi.ACTIVE when having to manipulate some AreaVi
+        instance content.
         """
 
         AreaVi.ACTIVE = self
@@ -67,7 +69,12 @@ class AreaVi(Text):
         """
         This function is used to change the AreaVi instance's mode.
         It receives one parameter named id which means the
-        mode number.
+        mode name.
+
+        area = AreaVi('None')
+        area.chmode('INSERT')
+
+        It would make area be in INSERT mode.
         """
         opt     = self.setup[id]
         self.id = id
@@ -83,6 +90,19 @@ class AreaVi(Text):
         """
         It adds a new mode. The opt argument means whether
         it should propagate the event to the internal text widget callbacks.
+
+        def install(area):
+            area.add_mode('MODE')
+
+        The code above would add a mode named MODE to the AreaVi instance.
+
+
+        def install(area):
+            area.add_mode('TYPING', opt=True)
+
+        The code above would add a mode named 'TYPING' that is possible to edit
+        the content of the AreaVi instance. It means that keystrokes that maps
+        printable characters it would be dropped over the AreaVi instance that has focus.
         """
 
         self.setup[id] = opt
@@ -1577,6 +1597,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
