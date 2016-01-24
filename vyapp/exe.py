@@ -1,5 +1,6 @@
 """
-
+This file implements functions that are used by plugins 
+to execute python code from vy.
 """
 
 from traceback import print_exc as debug
@@ -7,6 +8,18 @@ import sys
 
 def execute(handle, *args, **kwargs):
     """
+    It executes handle and avoids throwing a exception.
+
+    Example:
+
+    def func(a, b):
+        return a/b
+
+    # It wouldnt throw an exception.
+    r = execute(func, 1, 0)
+
+    # It would print None.
+    print r
 
     """
 
@@ -63,6 +76,7 @@ def exc(data, env):
         debug()
     finally:
         sys.stderr = tmp
+
 
 
 
