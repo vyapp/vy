@@ -83,6 +83,10 @@ def remove_tab():
     name = root.note.select()
     wid  = root.note.nametowidget(name)
     wid.destroy()
+    wid = root.note.nametowidget(root.note.select(0))
+    seq  = AreaVi.areavi_widgets(wid)
+    area = seq.next()
+    area.focus_set()
 
     # We don't need to call forget after destroy.
     # It seems the method forget from note doesnt destroy
@@ -96,7 +100,7 @@ def select_left():
 
     root.note.select(root.note.index(root.note.select()) - 1)
     wid  = root.note.nametowidget(root.note.select())
-    seq  = AreaVi.get_all_areavi_instances(wid)
+    seq  = AreaVi.areavi_widgets(wid)
     area = seq.next()
     area.focus_set()
 
@@ -106,7 +110,7 @@ def select_right():
 
     root.note.select(root.note.index(root.note.select()) + 1)
     wid  = root.note.nametowidget(root.note.select())
-    seq  = AreaVi.get_all_areavi_instances(wid)
+    seq  = AreaVi.areavi_widgets(wid)
     area = seq.next()
     area.focus_set()
 
@@ -117,6 +121,8 @@ def install(area):
                  ('NORMAL', '<Delete>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
+
 
 
 

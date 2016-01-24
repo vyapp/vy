@@ -1534,14 +1534,14 @@ class AreaVi(Text):
         return default
     
     @staticmethod
-    def get_all_areavi_instances(wid):
+    def areavi_widgets(wid):
         """
         This method is a static method that receives a widget as argument
-        then returns an iterator of AreaVi instances that have the widget as
-        master. It is used like:
+        then returns an iterator of AreaVi instances that have the wid paramater as
+        master widget. It is used like:
 
         from vyapp.app import root
-        for ind in AreaVi.get_all_areavi_instances(root):
+        for ind in AreaVi.areavi_widgets(root):
             ind.insert('end', 'FOO')
 
         The code above would insert 'FOO' at the end of all AreaVi widgets
@@ -1552,7 +1552,7 @@ class AreaVi(Text):
             if isinstance(ind, AreaVi):
                 yield ind
             else:
-                for ind in AreaVi.get_all_areavi_instances(ind):
+                for ind in AreaVi.areavi_widgets(ind):
                     yield ind
 
     @staticmethod
@@ -1571,7 +1571,7 @@ class AreaVi(Text):
         """
 
         map = dict()
-        for ind in AreaVi.get_all_areavi_instances(wid):
+        for ind in AreaVi.areavi_widgets(wid):
             map[ind.filename] = ind
         return map
     
@@ -1589,7 +1589,7 @@ class AreaVi(Text):
         index0 and index1 are the positions in the text.
         """
 
-        for indi in AreaVi.get_all_areavi_instances(wid):
+        for indi in AreaVi.areavi_widgets(wid):
             it = indi.find(regex, index, stopindex, *args, **kwargs)
     
             for indj in it:
@@ -1631,6 +1631,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
