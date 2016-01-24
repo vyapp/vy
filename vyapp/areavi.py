@@ -1576,9 +1576,21 @@ class AreaVi(Text):
         return map
     
     @staticmethod
-    def find_on_all(wid, chunk):
+    def find_on_all(wid, regex, index='1.0', stopindex='end', *args, **kwargs):
+        """
+        This method is used to perform pattern searches over all AreaVi instances that have
+        wid as master. It basically returns an iterator that corresponds to:
+
+        from vyapp.app import root
+        for ind, (match, index0, index1) in area.find_on_all(root, 'pattern'):
+            pass
+
+        Where ind is the AreaVi widget that the pattern matched and match is the match, 
+        index0 and index1 are the positions in the text.
+        """
+
         for indi in AreaVi.get_all_areavi_instances(wid):
-            it = indi.find(chunk, '1.0', 'end')
+            it = indi.find(regex, index, stopindex, *args, **kwargs)
     
             for indj in it:
                 yield indi, indj
@@ -1619,19 +1631,6 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
