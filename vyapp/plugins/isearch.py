@@ -79,7 +79,7 @@ class ISearch(object):
         if not ask.data: return
 
         data     = ask.data.split(' ')
-        find     = lambda ind: area.find_one_by_line(escape(ind), '1.0')
+        find     = lambda ind: area.find(escape(ind), '1.0', step='+1l')
         self.seq = self.match_possible_regions(find, data)
 
         area.chmode('ISEARCH')
@@ -151,6 +151,7 @@ class ISearch(object):
         self.index = self.index + 1
 
 install = ISearch
+
 
 
 
