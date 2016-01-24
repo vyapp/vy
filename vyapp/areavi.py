@@ -1535,6 +1535,19 @@ class AreaVi(Text):
     
     @staticmethod
     def get_all_areavi_instances(wid):
+        """
+        This method is a static method that receives a widget as argument
+        then returns an iterator of AreaVi instances that have the widget as
+        master. It is used like:
+
+        from vyapp.app import root
+        for ind in AreaVi.get_all_areavi_instances(root):
+            ind.insert('end', 'FOO')
+
+        The code above would insert 'FOO' at the end of all AreaVi widgets
+        that have root as one of its master widget.
+        """
+
         for ind in wid.winfo_children():
             if isinstance(ind, AreaVi):
                 yield ind
@@ -1544,6 +1557,19 @@ class AreaVi(Text):
 
     @staticmethod
     def get_opened_files(wid):
+        """
+        This method returns a dictionary that maps all AreaVi instances
+        that have widget as master like:
+
+        from vyapp.app import root
+        map = area.get_opened_files(root)
+
+        Where map is a dictionary like:
+
+        map = { '/home/tau/file.c':AreaVi_Instance,
+                '/home/tau/file.b': AreaVi_Instance}
+        """
+
         map = dict()
         for ind in AreaVi.get_all_areavi_instances(wid):
             map[ind.filename] = ind
@@ -1593,6 +1619,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
