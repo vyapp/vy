@@ -96,7 +96,6 @@ class AreaVi(Text):
 
         The code above would add a mode named MODE to the AreaVi instance.
 
-
         def install(area):
             area.add_mode('TYPING', opt=True)
 
@@ -109,18 +108,25 @@ class AreaVi(Text):
 
     def del_mode(self, id):
         """
-        It performs the opposite of add_mode.
         """
 
-        del self.setup[id]
-
+        pass
 
     def hook(self, id, seq, callback):
         """
         This method is used to hook a callback to a sequence
-        specified with its mode. The standard modes are insert and selection.
-        The insert mode prints the key character on the text area.
+        specified with its mode:
+        
+        def callback(event):
+            event.widget.insert('An event happened!')
+
+        def install(area):
+            area.hook(('INSERT' '<Key-i>', callback))
+
+        In the example above, whenever the event <Key-i> happens then
+        the function named callback will be called with the event object.
         """
+
         MODE_Y = 'mode%s%s' % (self, id)
 
         self.bind_class(MODE_Y, seq, callback, add=True)
@@ -128,16 +134,19 @@ class AreaVi(Text):
 
     def unhook(self, id, seq, callback=None):
         """
-        It performs the opposite of unhook.
         """
-        MODE_Y = 'mode%s%s' % (self, id)
 
+        MODE_Y = 'mode%s%s' % (self, id)
         self.unbind_class(MODE_Y, seq)
 
     def install(self, *args):
         """
-        It is like self.hook but accepts
-        a sequence of (id, seq, callback).
+        It is a shorthand for AreaVi.hook. It is used as follows:
+
+        def install(area):
+            area.install(('MODE1', '<Event1>', callback1),
+                         ('MODE2', '<Event2>', callback2),
+                         ('MODE3', '<Event3>', callback3), ...)
         """
 
         for id, seq, callback in args:
@@ -145,8 +154,6 @@ class AreaVi(Text):
 
     def uninstall(self, *args):
         """
-        Like self.hook but accepts.
-        (id, seq, callback).
         """
 
         for id, seq, callback in args:
@@ -154,6 +161,9 @@ class AreaVi(Text):
 
     def append(self, data):
         """
+        This method is used to insert data to the end of the AreaVi instance widget
+        and place the cursor at the end of the data that was appended. It makes the cursor
+        visible.
         """
 
         self.insert('end', data)
@@ -162,9 +172,7 @@ class AreaVi(Text):
 
     def curline(self):
         """
-        A short hand for.
-
-        area.get('insert linestart', 'insert +1l linestart')
+        This method returns the string that corresponds to the cursor line.
         """
         return self.get('insert linestart', 'insert +1l linestart')
 
@@ -198,6 +206,7 @@ class AreaVi(Text):
 
     def insee(self, index, data):
         """
+        This method inserts data at index position then makes the cursor visible.
         """
 
         self.insert(index, data)
@@ -205,6 +214,7 @@ class AreaVi(Text):
 
     def cmd_like(self):
         """
+        This method retrieves the cursor line then deletes it afterwards.
         """
 
         data = self.get('insert linestart', 'insert lineend')
@@ -213,11 +223,8 @@ class AreaVi(Text):
 
     def indref(self, index):
         """
-        This is a short hand function. 
-        It is used to convert a Text index
-        into two integers.
-
-        Ex:
+        This is a short hand function. It is used to convert a Text index
+        into two integers like:
 
         a, b = area.indref('insert')
 
@@ -230,13 +237,8 @@ class AreaVi(Text):
 
     def setcur(self, line, col):
         """
-        It is used to set the cursor position at
-        a given index using line and col.
-
-        line is a number which represents
-        a given line index in the AreaVi instance.
-    
-        col is a column.
+        It is used to set the cursor position at a given index using line 
+        and col. 
         """
 
         self.mark_set('insert', '%s.%s' % (line, col))
@@ -244,7 +246,6 @@ class AreaVi(Text):
 
     def setcurl(self, line):
         """
-        set cursor line.
         It is used to set the cursor position at a given
         line. It sets the cursor at line.0 position.
         """
@@ -255,15 +256,10 @@ class AreaVi(Text):
 
     def indint(self, index):
         """ 
-        This method is used
-        when i can't use self.indref.
-
-        It seems self.indref returns 
-
-        2.10 when the input is 2.34
-
-        it happens when the index col
-        is longer than the actual line col.
+        Just a shorthand for:
+        
+        a, b = index.split('2.3')
+        a, b = int(a), int(b)
         """
 
         a, b = index.split('.')
@@ -1597,6 +1593,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
