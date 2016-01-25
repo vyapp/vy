@@ -8,7 +8,7 @@ import sys
 
 def execute(handle, *args, **kwargs):
     """
-    It executes handle and avoids throwing a exception.
+    It executes handle and avoids throwing a exception but it prints the exception.
 
     Example:
 
@@ -30,22 +30,9 @@ def execute(handle, *args, **kwargs):
     else:
         return val
 
-def burn(chain, event, opt = None):
-    """
-
-    """
-
-    for ind in chain:
-        val = execute(ind, event)
-
-        if val == True:    opt = True
-        elif val == False: opt = False
-
-    return opt
-
 def exec_quiet(handle, *args, **kwargs):
     """
-
+    Like exe.execute but doesnt print the exception.
     """
 
     try:
@@ -57,7 +44,15 @@ def exec_quiet(handle, *args, **kwargs):
 
 def exc(data, env):
     """
+    This function is used to execute python code and it sets 
+    the sys.stderr to sys.stdout so exceptions would be printed on sys.stdout. 
+    After the code being executed then sys.stderr is restored to its 
+    default value.
 
+    The data argument is python code to be executed and env is a dictionary where
+    the code will be executed.
+
+    Note: It is mostly used to execute python code from vy.
     """
 
     import sys
@@ -76,6 +71,7 @@ def exc(data, env):
         debug()
     finally:
         sys.stderr = tmp
+
 
 
 
