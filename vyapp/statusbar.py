@@ -1,6 +1,13 @@
+"""
+This module implements the vy statusbar widget.
+"""
+
 from Tkinter import *
 
 class StatusBar(Frame):
+    """
+    This class implements a statusbar.
+    """
 
     def __init__(self, master):
         Frame.__init__(self, master)
@@ -25,23 +32,43 @@ class StatusBar(Frame):
 
 
     def set_msg(self, data):
+        """
+        Set statusbar msg.
+        """
+
         self.msg.config(text=data)
         self.msg.update_idletasks()
 
     def clear_msg(self):
+        """
+        Clear statusbar msg.
+        """
+
         self.msg.config(text="")
         self.msg.update_idletasks()
 
 
     def set_column(self, col):
+        """
+        Set the column field with col.
+        """
+
         self.column.config(text='Col: %s' % col)
         self.column.update_idletasks()
 
     def set_line(self, line):
+        """
+        Set the line field.
+        """
+
         self.line.config(text='Line: %s' % line)
         self.line.update_idletasks()
 
     def set_mode(self, mode):
+        """
+        Set the mode field.
+        """
+
         self.mode.config(text='Mode: %s' % mode)
         self.mode.update_idletasks()
 
@@ -58,6 +85,7 @@ class StatusBar(Frame):
     def switch(self):    
         if self.is_on: self.pack_forget()
         else: self.pack(*self.args, **self.kwargs)
+
 
 
 
