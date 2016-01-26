@@ -128,7 +128,6 @@ Table of Contents
       * [Change nick](#change-nick)
       * [Query an user](#query-an-user)
       * [Create shortcut functions for IRC networks](#create-shortcut-functions-for-irc-networks)
-  * [Using vy as a terminal](#using-vy-as-a-terminal)
   * [The ibash plugin](#the-ibash-plugin)
       * [First steps](#first-steps)
       * [Send a code line](#send-a-code-line)
@@ -2516,6 +2515,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
