@@ -134,6 +134,8 @@ Table of Contents
       * [Send a SIGINT signal](#send-a-sigint-signal)
       * [Send a SIGQUIT signal](#send-a-sigquit-signal)
       * [Send code lines](#send-code-lines)
+      * [Run a command as root](#run-a-command-as-root)
+      * [Starting processes](#starting-processes)
       * [Restart the bash process](#restart-the-bash-process)
   * [The shell plugin](#the-shell-plugin)
   * [Misc](#misc)
@@ -1942,6 +1944,9 @@ or
 The ibash plugin
 ================
 
+The ibash plugin is a python module that permits to talk to the bash interpreter. It is possible
+to execute commands through bash and start some processes like a python interpreter, maxima etc.
+
 ### First steps
 
 ### Send a code line
@@ -1951,6 +1956,10 @@ The ibash plugin
 ### Send a SIGQUIT signal
 
 ### Send code lines
+
+### Run a command as root
+
+### Starting processes
 
 ### Restart the bash process
 
@@ -2515,6 +2524,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
