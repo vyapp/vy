@@ -936,13 +936,28 @@ class AreaVi(Text):
 
 
     def toggle_line_selection(self):
-        map = self.is_tag_range('sel', 'insert linestart', 'insert +1l linestart')
+        """
+        """
 
+        self.toggle_sel('insert linestart', 'insert +1l linestart')
+
+    def toggle_sel(self, index0, index1):
+        """
+        """
+
+        self.toggle_range('sel', index0, index1)
+
+
+    def toggle_range(self, name, index0, index1):
+        index2 = index0
+        index0 = self.min(index0, index1)
+        index1 = self.max(index2, index1)
+
+        map = self.is_tag_range(name, index0, index1)
         if map:
-            self.unselect_line()
+            self.tag_remove('sel', index0, index1)
         else:
-            self.select_line()
-
+            self.tag_add('sel', index0, index1)
 
     def select_word(self):
         """
@@ -1631,6 +1646,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 

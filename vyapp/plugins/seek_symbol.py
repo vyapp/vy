@@ -43,26 +43,48 @@ Mode: JUMP_NEXT
 Event: <Return>
 Description: Switch to INSERT mode.
 
+Mode: JUMP_NEXT
+Event: <Control-Key>
+Description: It adds/removes selection from the cursor position to the first occurrence of the 
+printable char that corresponds to the pressed key.
+
 Mode: JUMP_BACK
 Event: <Return>
 Description: Switch to INSERT mode.
+
+Mode: JUMP_BACK
+Event: <Control-Key>
+Description: It adds/removes selection from the cursor position to the previous occurrence of the 
+printable char that corresponds to the pressed key.
 """
 
-def jump_next(area, keysym_num):
+def get_char(num):
     try:
-        char = chr(keysym_num)
+        char = chr(num)
     except ValueError:
-        pass
+        return ''
     else:
-        area.seek_next_down(char, regexp=False)
+        return char
 
-def jump_back(area, keysym_num):
-    try:
-        char = chr(keysym_num)
-    except ValueError:
-        pass
-    else:
-        area.seek_next_up(char, regexp=False)
+def sel_next(area, num):
+    char = get_char(num)
+    index0 = area.index('insert')
+    index1 = area.seek_next_down(char, regexp=False)
+    if index1: area.toggle_sel(index0, index1[1])
+
+def sel_back(area, num):
+    char = get_char(num)
+    index0 = area.index('insert')
+    index1 = area.seek_next_up(char, regexp=False)
+    if index1: area.toggle_sel(index0, index1[0])
+
+def jump_next(area, num):
+    char = get_char(num)
+    area.seek_next_down(char, regexp=False)
+
+def jump_back(area, num):
+    char = get_char(num)
+    area.seek_next_up(char, regexp=False)
 
 def install(area):
         area.add_mode('JUMP_BACK')
@@ -71,13 +93,13 @@ def install(area):
         area.install(('NORMAL', '<Key-v>', lambda event: event.widget.chmode('JUMP_NEXT')), 
                      ('NORMAL', '<Key-c>', lambda event: event.widget.chmode('JUMP_BACK')),
                      ('JUMP_BACK', '<Key>', lambda event: jump_back(event.widget, event.keysym_num)),
+                     ('JUMP_BACK', '<Control-Key>', lambda event: sel_back(event.widget, event.keysym_num)),
                      ('JUMP_BACK', '<Return>', lambda event: event.widget.chmode('INSERT')),
                      ('JUMP_NEXT', '<Return>', lambda event: event.widget.chmode('INSERT')),
                      ('JUMP_NEXT', '<Tab>', lambda event: event.widget.chmode('JUMP_BACK')),
                      ('JUMP_BACK', '<Tab>', lambda event: event.widget.chmode('JUMP_NEXT')),
+                     ('JUMP_NEXT', '<Control-Key>', lambda event: sel_next(event.widget, event.keysym_num)),
                      ('JUMP_NEXT', '<Key>', lambda event: jump_next(event.widget, event.keysym_num)))
-
-
 
 
 
