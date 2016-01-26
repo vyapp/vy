@@ -31,7 +31,21 @@ Mode: NORMAL
 Event: <Key-c>
 Description: Switch to JUMP_BACK mode.
 
+Mode: JUMP_BACK
+Event: <Tab>
+Description: Switch to JUMP_NEXT mode.
 
+Mode: JUMP_NEXT
+Event: <Tab>
+Description: Switch to JUMP_BACK mode.
+
+Mode: JUMP_NEXT
+Event: <Return>
+Description: Switch to INSERT mode.
+
+Mode: JUMP_BACK
+Event: <Return>
+Description: Switch to INSERT mode.
 """
 
 def jump_next(area, keysym_num):
@@ -57,9 +71,13 @@ def install(area):
         area.install(('NORMAL', '<Key-v>', lambda event: event.widget.chmode('JUMP_NEXT')), 
                      ('NORMAL', '<Key-c>', lambda event: event.widget.chmode('JUMP_BACK')),
                      ('JUMP_BACK', '<Key>', lambda event: jump_back(event.widget, event.keysym_num)),
-                     ('JUMP_BACK', '<Tab>', lambda event: event.widget.chmode('INSERT')),
-                     ('JUMP_NEXT', '<Tab>', lambda event: event.widget.chmode('INSERT')),
+                     ('JUMP_BACK', '<Return>', lambda event: event.widget.chmode('INSERT')),
+                     ('JUMP_NEXT', '<Return>', lambda event: event.widget.chmode('INSERT')),
+                     ('JUMP_NEXT', '<Tab>', lambda event: event.widget.chmode('JUMP_BACK')),
+                     ('JUMP_BACK', '<Tab>', lambda event: event.widget.chmode('JUMP_NEXT')),
                      ('JUMP_NEXT', '<Key>', lambda event: jump_next(event.widget, event.keysym_num)))
+
+
 
 
 
