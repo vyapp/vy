@@ -1507,9 +1507,28 @@ In order to highligh the inserted text based on the file extension, just press:
 
 ### Changing syntax highlight style
 
+The vy syntax highlight plugin uses pygments to highlight source code so it is possible to use
+python pygments styles with vy. Check out python pygments syntax highlight styles.
+
+In the vyrc file, comment the lines that import the default style and do the import of the
+desired style as shown below.
+
+~~~python
+# default style.
+# from vyapp.plugins.syntax.styles.vy import VyStyle
+# autoload(vyapp.plugins.syntax.spider, VyStyle())
+
+from pygments.styles.tango import TangoStyle
+autoload(vyapp.plugins.syntax.spider, TangoStyle())
+~~~
+
 ***
 
 ### Creating new syntax highlight styles
+
+It is possible to implement new syntax highlight styles and do the import from the vyrc file.
+As vy uses python pygments to do syntax highlight, check out creation of new styles from python
+pygments.
 
 ***
 
@@ -2497,6 +2516,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
