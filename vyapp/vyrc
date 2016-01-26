@@ -233,8 +233,8 @@ autoload(vyapp.plugins.io)
 
 
 # Implement key-commands to delete selected text, lines, chars.
-import vyapp.plugins.text_deletion
-autoload(vyapp.plugins.text_deletion)
+import vyapp.plugins.data_del
+autoload(vyapp.plugins.data_del)
 
 
 # Used to talk to extern processes, playing with interpreters etc.
@@ -379,6 +379,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
