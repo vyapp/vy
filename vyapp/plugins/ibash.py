@@ -1,8 +1,100 @@
-""" To be able to run commands as root you can use sudo. You need to specify
-export SUDO_ASKPASS=/usr/bin/ssh-askpass in your .bashrc file.
+""" 
+Overview
+========
 
-To log on as root.
-sudo bash -i
+This plugin is used to control a bash process. It is possible to run commands 
+and start processes through bash and send some unix signals to the child processes.
+
+Usage
+=====
+
+This plugin writes to sys.stdout object, in order to read output from the bash interpreter
+it is first needed to select an output target by setting the focus to an AreaVi instance
+and pressing <Tab> in NORMAL mode. For a better explanation on output targets, check out:
+
+    help(vyapp.plugins.output_scheme)
+
+The most common keycommand that this module implements is the one to drop a code 
+line to the bash interpreter. In order to drop a code line, place the cursor at the 
+line that should be sent to the bash interpreter then press <F1> in INSERT mode 
+or in NORMAL mode. When <F1> is pressed in INSERT mode it drops the cursor line to 
+the bash interpreter and it adds a new line down the cursor position.  
+When <F1> is pressed in NORMAL mode it drops the code line and places the cursor one line 
+down. Sometimes it is useful to merely drop the cursor line but keeping the cursor in the 
+current line. In order to drop the cursor line  and not having the cursor placed down, 
+press <Return>.
+
+Sometimes it is interesting to drop an entire region of code to the bash interpreter, for such
+select the region then press <Control-Return>, all the code that is selected will be dropped.
+
+It is possible to run commands as root, for such it is needed to have 
+a ssh-askpass program installed. Once the ssh-askpass program is installed 
+it is needed to make the export below.
+
+Conidering your ssh-askpass program is placed in /usr/bin/:
+
+    echo 'export SUDO_ASKPASS=/usr/bin/ssh-askpass' >> ~/.bashrc
+
+After having set properly SUDO_ASKPASS variable, run commands as root using sudo like below:
+
+    sudo some_command
+
+The ssh-askpass program will ask for root password, type it then the command will be executed 
+as root. Sometimes it is more useful to have a bash interpreter process running as root so
+it is possible to run commands as root without having to retype password, for such, start
+a bash process as shown below:
+
+    sudo bash -i
+
+Sometimes it is neeeded to restart the bash process, for such, press <Control-F1>. It is possible
+to send a SIGINT by pressing <Control-c>, for sending a SIGQUIT, press <Control-backslash>.
+
+There are times that it is useful to run interpreters through bash, some interpreters would run 
+better if started with special arguments. It happens with the python interpreter for example:
+
+    tee >(python -i -u)
+
+Running the python interpreter using the command above would permit to neatly send and receive output.
+
+Key-Commands
+============
+
+Mode: NORMAL
+Event: <F1>
+Description: Send the cursor line to the bash interpreter and place the cursor one line down.
+
+Mode: INSERT
+Event: <F1>
+Description: Send the cursor line to the bash and insert a new line down the cursor position.
+
+Mode: NORMAL
+Event: <Control-C>
+Description: Send a SIGINT signal to the bash interpreter.
+
+Mode: NORMAL
+Event: <Control-backslash>
+Description: Send  SIGQUIT signal to the bash interpreter.
+
+Mode: NORMAL
+Event: <Control-F1>
+Description: Restart the bash interpreter process.
+
+Mode: NORMAL
+Event: Return
+Description: Send the cursor line to the bash interpreter.
+
+Mode: NORMAL
+Event: <Control-Return>
+Description: Send the region of code that is selected to the bash interpreter.
+
+Mode: NORMAL
+Event: <Shift-F1>
+Description: Send the current line and a Tab character to the bash interpreter,
+asking for auto completion of the command.
+
+Mode: NORMAL
+Event: <Control-semicolon>
+Description: Ask for the user to type a command to be dropped to the bash interpreter.
 """
 
 
@@ -94,14 +186,5 @@ class Process(object):
 extern(root)
 process = Process()
 install = process
-
-
-
-
-
-
-
-
-
 
 
