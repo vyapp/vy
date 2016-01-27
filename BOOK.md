@@ -135,6 +135,7 @@ Table of Contents
       * [Send a SIGQUIT signal](#send-a-sigquit-signal)
       * [Send code lines](#send-code-lines)
       * [Run a command as root](#run-a-command-as-root)
+      * [Run a bash process as root](#run-a-bash-process-as-root)
       * [Starting processes](#starting-processes)
       * [Restart the bash process](#restart-the-bash-process)
   * [The shell plugin](#the-shell-plugin)
@@ -1949,19 +1950,114 @@ to execute commands through bash and start some processes like a python interpre
 
 ### First steps
 
+The ibash plugin uses the scheme of output target. 
+It is needed to set an AreaVi instance as output target to be able to read output
+from commands that are sent to the bash interpreter.
+
+First of all, pick up an AreaVi instance that you want to read output from bash commands or processes.
+Once you have decided where to read output from commands, switch the focus to the AreaVi instance
+then press <Tab> in NORMAL mode. After setting a set of output targets then it is possible to send
+commands to the bash interpreter and read the commands output.
+
 ### Send a code line
+
+This is the most used feature of the ibash plugin, consider it was already set an output target
+and you want to send the command below to the bash interpreter:
+
+~~~
+ls -la
+~~~
+
+How would you proceed?
+you would place the cursor over that line then press:
+
+    <F1>
+
+in NORMAL mode or in INSERT mode. When the keycommand above happens in NORMAL mode, the code line
+over the cursor is sent to the bash interpreter and the cursor is placed one line down. When it happens
+in INSERT mode, the code line is sent to the bash and a newline is inserted down the cursor position. It is
+means that either in NORMAL mode or in INSERT mode it is possible to drop code to the bash interpreter;
+Such a behavior is useful when dealing with e-scripts or when using vy as a terminal-like.
 
 ### Send a SIGINT signal
 
+It is possible to start processes that run on top of the bash process, in such a situation it will be useful
+to send unix signals to the child processes like SIGINT. For such, switch to NORMAL mode then press:
+
+    <Control-C>
+
 ### Send a SIGQUIT signal
+
+It is possible to send a SIGQUIT to the bash process by switching to NORMAL mode then pressing:
+
+    <Control-backslash>
 
 ### Send code lines
 
+Sometimes it will be useful to drop entire regions of code to the bash interpreter, for such, select
+the region that needs to be sent to the bash interpreter then press the keycommand below in NORMAL mode:
+
+    <Control-Return>
+
 ### Run a command as root
+
+Sometimes it is interesting to run commands as root, for such it is needed to have set the environment variable below:
+
+~~~
+SUDO_ASKPASS
+~~~
+
+It is needed to have an askpass program installed. It is possible to get one by installing the ssh-askpass program.
+In debian like systems you would do:
+
+
+~~~
+apt-get install ssh-askpass
+~~~
+
+After having installed the askpass program then it is needed to set the environment variable as follows:
+
+~~~
+echo 'export SUDO_ASKPASS=/usr/bin/ssh-askpass' >> ~/.bashrc
+~~~
+
+It will make the environment variable be set whenever the bash reads its bashrc file. 
+When everything is set then it is possible to run commands as root using the command below:
+
+~~~
+sudo command
+~~~
+
+The askpass program will show up asking for the password then the command will be run as root.
+
+### Run a bash process as root
+
+It is useful to run a bash process as root sometimes, for such, drop the command below to the bash interpreter:
+
+~~~
+sudo bash -i
+~~~
+
+It will run a bash process with different permissions on top of the bash process.
 
 ### Starting processes
 
+Some processes like the python interpreter when started through the ibash plugin would have
+the output correctly outputed over the AreaVi instance that was set as target by passing some
+special arguments. An example follows:
+
+~~~
+tee >(python -i -u)
+~~~
+
+When the python interpreter is started through tee and with -i and -u it adjusts the correct scheme of
+buffering. The -i argument means that the python interpreter would run in interactive mode.
+
 ### Restart the bash process
+
+Sometimes it is needed to restart the bash process, for such, switch to NORMAL mode then press:
+
+    <Control-F1>
 
 The shell plugin
 ================
@@ -2524,6 +2620,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 

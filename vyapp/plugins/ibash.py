@@ -68,7 +68,7 @@ Event: <F1>
 Description: Send the cursor line to the bash and insert a new line down the cursor position.
 
 Mode: NORMAL
-Event: <Control-C>
+Event: <Control-c>
 Description: Send a SIGINT signal to the bash interpreter.
 
 Mode: NORMAL
@@ -186,5 +186,6 @@ class Process(object):
 extern(root)
 process = Process()
 install = process
+
 
 
