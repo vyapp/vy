@@ -1,12 +1,19 @@
 """
-"""
+Overview
+========
 
-def normal(area):
-    area.chmode('NORMAL')
-    area.clear_selection()
+Usage
+=====
+
+Key-Commands
+============
+
+"""
 
 def install(area):
     area.add_mode('NORMAL')
     area.chmode('NORMAL')
-    area.install((-1, '<Escape>', lambda event: normal(event.widget)))
+    area.install((-1, '<Escape>', lambda event: area.chmode('NORMAL')))
+    area.install(('NORMAL', '<Escape>', lambda event: area.clear_selection()))
+
 

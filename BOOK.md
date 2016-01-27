@@ -2,6 +2,7 @@ Table of Contents
 =================
 
   * [Introduction](#introduction)
+  * [How to read this book?](#how-to-read-this-book-)
   * [What is a modal editor?](#what-is-a-modal-editor)
   * [What is a keycommand?](#what-is-a-keycommand)
   * [Running vy](#running-vy)
@@ -170,8 +171,14 @@ The vy editor is one of the most powerful text editors around. It has a great pl
 and it is extremely efficient in terms of hardware resources. The vy power comes at a cost, however: When getting
 started users face a sleep learning curve.
 
+How to read this book?
+======================
+
 This book goes through all standard cases of using vy as an editor/ide. It describes some possible
 scenaries in which the keycommands are useful as well as explain step by step how to use the keycommands.
+
+This book should work as a complete introduction and a reference for vy editor. It covers all cases from
+keystrokes to implementing new plugins. 
 
 What is a modal editor?
 =======================
@@ -214,7 +221,7 @@ Consider the following keycommand below:
 
     <Control-h>
 
-In order to execute the code mapped to that event one would keep the key Control pressed
+In order to execute the code mapped to that event one would keep the Control key pressed
 then press the key 'h'.
 
 Consider now:
