@@ -1,6 +1,7 @@
 Table of Contents
 =================
 
+  * [Dedication](#dedication)
   * [Introduction](#introduction)
   * [How to read this book?](#how-to-read-this-book-)
   * [What is a modal editor?](#what-is-a-modal-editor)
@@ -163,6 +164,11 @@ Table of Contents
       * [The AreaVi.add_mode and AreaVi.chmode methods](#the-areaviadd_mode-and-areavichmode-methods)
       * [The AreaVi.ACTIVE attribute](#the-areaviactive-attribute)
 
+
+Dedication
+==========
+
+This work is dedicated to glau who is a wonderful girl and helped me with her shiny soul.
 
 Introduction
 ============
@@ -2627,6 +2633,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
