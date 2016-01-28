@@ -98,10 +98,12 @@ Table of Contents
       * [Remove output targets](#remove-output-targets)
       * [Restore the sys.stdout object](#restore-the-sysstdout-object)
       * [Delete text that was dropped at an AreaVi instance fom sys.stdout](#delete-text-that-was-dropped-at-an-areavi-instance-fom-sysstdout)
-      * [Getting help](#getting-help)
       * [Set an AreaVi instance as target for commands](#set-an-areavi-instance-as-target-for-commands)
       * [Execute selected regions of python code](#execute-selected-regions-of-python-code)
       * [The scope of plugin functions](#the-scope-of-plugin-functions)
+  * [Getting help](#getting-help)
+      * [List installed plugins](#list-installed-plugins)
+      * [Print plugin help](#print-plugin-help)
   * [Syntax highlight](#syntax-highlight)
       * [Highlighting code](#highlighting-code)
       * [Changing syntax highlight style](#changing-syntax-highlight-style)
@@ -1375,82 +1377,6 @@ then press in NORMAL mode:
 
 ***
 
-### Getting help
-
-Vy is highly modular, it permits a good level of self documentation. Every plugin
-implemented in vy is self documented. The best way to get help is through the help python function.
-
-Set the output target on an AreaVi instance with 
-
-    <Tab> 
-
-in NORMAL mode.
-
-Press 
-
-    <Key-semicolon> 
-
-in NORMAL mode. It will show up an input text field then insert.
-
-    help(vyapp.plugins.plugin_name) 
-
-Then press:
-
-    <Enter>
-
-Then it will output the docs for the plugin.
-
-    Help on module vyapp.plugins.main_jumps in vyapp.plugins:
-    
-    NAME
-        vyapp.plugins.main_jumps
-    
-    FILE
-        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/main_jumps.py
-    
-    DESCRIPTION
-        Overview
-        ========
-        
-        This plugin implements the basic cursor movements.
-        
-        Usage
-        =====
-        
-        The way to move the cursor up is by pressing <Key-k>, to move the cursor down <Key-j>,
-        to move the cursor left <Key-h>, to move the cursor right <Key-l>. These events
-        work in NORMAL mode.
-        
-        keycommands
-        ============
-        
-        Mode: NORMAL
-        Event: <Key-j> 
-        Description: Move the cursor one line down.
-        
-        
-        Mode: NORMAL
-        Event: <Key-k> 
-        Description: Move the cursor one line up.
-        
-        
-        Mode: NORMAL
-        Event: <Key-h> 
-        Description: Move the cursor one character left.
-        
-        
-        Mode: NORMAL
-        Event: <Key-l> 
-        Description: Move the cursor one character right.
-    
-    FUNCTIONS
-        install(area)
-
-
-That is great. You got your first help. Vy is self documented, that is our philosophy !
-
-***
-
 ### Set an AreaVi instance as target for commands
 
 Some of vy plugins expose some functions/commands that work on the concept of an AreaVi target. Some functions operate on
@@ -1508,6 +1434,79 @@ When code is executed through the key commands below then it is executed in the 
 or:
 
     <Key-semicolon>
+
+***
+
+Getting help
+============
+
+Every plugin implemented in vy is self documented. A good way to get help 
+is through the help python function and dir function.
+
+### List installed plugins
+
+Set an output target on an AreaVi instance then execute the python code below:
+
+~~~python
+print dir(vyapp.plugins)
+~~~
+
+### Print plugin help
+
+In order to get builtin help for the main_jumps plugin one would set the output 
+target on an AreaVi instance then run the python code below:
+
+~~~python
+help(vyapp.plugins.main_jumps) 
+~~~
+
+Then it will output the docs for the plugin.
+
+    Help on module vyapp.plugins.main_jumps in vyapp.plugins:
+    
+    NAME
+        vyapp.plugins.main_jumps
+    
+    FILE
+        /usr/local/lib/python2.7/dist-packages/vyapp/plugins/main_jumps.py
+    
+    DESCRIPTION
+        Overview
+        ========
+        
+        This plugin implements the basic cursor movements.
+        
+        Usage
+        =====
+        
+        The way to move the cursor up is by pressing <Key-k>, to move the cursor down <Key-j>,
+        to move the cursor left <Key-h>, to move the cursor right <Key-l>. These events
+        work in NORMAL mode.
+        
+        keycommands
+        ============
+        
+        Mode: NORMAL
+        Event: <Key-j> 
+        Description: Move the cursor one line down.
+        
+        
+        Mode: NORMAL
+        Event: <Key-k> 
+        Description: Move the cursor one line up.
+        
+        
+        Mode: NORMAL
+        Event: <Key-h> 
+        Description: Move the cursor one character left.
+        
+        
+        Mode: NORMAL
+        Event: <Key-l> 
+        Description: Move the cursor one character right.
+    
+    FUNCTIONS
+        install(area)
 
 ***
 
@@ -2653,6 +2652,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
