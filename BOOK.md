@@ -1,7 +1,6 @@
 Table of Contents
 =================
 
-  * [Dedication](#dedication)
   * [Introduction](#introduction)
   * [How to read this book?](#how-to-read-this-book)
   * [What is a modal editor?](#what-is-a-modal-editor)
@@ -29,8 +28,6 @@ Table of Contents
       * [Move backward one word](#move-backward-one-word)
       * [Search forward for ( ) { } [ ] : .](#search-forward-for--------)
       * [Search backward for ( ) { } [ ] : .](#search-backward-for--------)
-      * [JUMP_NEXT mode](#jump_next-mode)
-      * [JUMP_BACK mode](#jump_back-mode)
       * [Scroll one line up](#scroll-one-line-up)
       * [Scroll one line down](#scroll-one-line-down)
       * [Scroll one page up](#scroll-one-page-up)
@@ -65,6 +62,14 @@ Table of Contents
       * [Undo](#undo)
       * [Redo](#redo)
       * [Jump to a given Line.Col position](#jump-to-a-given-linecol-position)
+  * [JUMP_NEXT mode](#jump_next-mode)
+      * [Switch to JUMP_NEXT mode](#switch-to-jump_next-mode)
+      * [Switch to INSERT mode from JUMP_NEXT mode](#switch-to-insert-mode-from-jump_next-mode)
+      * [Select a range of text in JUMP_NEXT mode](#select-a-range-of-text-in-jump_next-mode)
+  * [JUMP_BACK mode](#jump_back-mode)
+      * [Switch to JUMP_BACK mode](#switch-to-jump_back-mode)
+      * [Switch to INSERT mode from JUMP_BACK mode](#switch-to-insert-mode-from-jump_back-mode)
+      * [Select a range of text in JUMP_BACK mode](#select-a-range-of-text-in-jump_back-mode)
   * [Tabs](#tabs)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
@@ -165,13 +170,6 @@ Table of Contents
       * [The AreaVi.add_mode and AreaVi.chmode methods](#the-areaviadd_mode-and-areavichmode-methods)
       * [The AreaVi.ACTIVE attribute](#the-areaviactive-attribute)
 
-
-
-
-Dedication
-==========
-
-This work is dedicated to glau who is a wonderful girl and helped me with her shiny soul.
 
 Introduction
 ============
@@ -508,39 +506,6 @@ Switch to NORMAL mode then press:
     <Key-O>
 
 That would put the cursor on the previous occurrence of the symbols.
-
-***
-
-### JUMP_NEXT mode
-
-There are circumstance that some keycommands wouldn't work well to place the cursor
-at the desired position. This mode will solve the problem. 
-
-When vy is in JUMP_NEXT mode and you press some key then the cursor will be placed on the 
-next char that corresponds such a key.
-
-Turn the NORMAL mode on, then press:
-
-    <Key-v>
-
-It will appear JUMP_NEXT in the statusbar mode field. 
-
-Press some key that maps to a printable character that is ahead of the cursor position 
-then the cursor will jump to the corresponding char.
-
-***
-
-### JUMP_BACK mode
-
-This mode performs the opposite of the JUMP_NEXT, it places the cursor on the previous occurrence
-of a char. 
-
-Switch to NORMAL mode then press:
-
-    <Key-c>
-
-Vy will be in JUMP_BACK mode. Press some key that maps to a printable char then
-the cursor will jump to the previous occurrence of the char.
 
 ***
 
@@ -967,6 +932,57 @@ to place the cursor on. Try inserting the following values
     2.3
 
 In a file with more than 5 lines.
+
+***
+
+JUMP_NEXT mode
+==============
+
+There are circumstance that some keycommands wouldn't work well to place the cursor
+at the desired position. This mode will solve the problem. 
+
+When vy is in JUMP_NEXT mode and you press some key then the cursor will be placed on the 
+next char that corresponds such a key.
+
+### Switch to JUMP_NEXT mode
+
+Turn the NORMAL mode on, then press:
+
+    <Key-v>
+
+It will appear JUMP_NEXT in the statusbar mode field. 
+
+Press some key that maps to a printable character that is ahead of the cursor position 
+then the cursor will jump to the corresponding char.
+
+### Switch to INSERT mode from JUMP_NEXT mode
+
+***
+
+### Select a range of text in JUMP_NEXT mode
+
+***
+
+JUMP_BACK mode
+==============
+
+This mode performs the opposite of the JUMP_NEXT, it places the cursor on the previous occurrence
+of a char. 
+
+### Switch to JUMP_BACK mode
+
+Switch to NORMAL mode then press:
+
+    <Key-c>
+
+Vy will be in JUMP_BACK mode. Press some key that maps to a printable char then
+the cursor will jump to the previous occurrence of the char.
+
+### Switch to INSERT mode from JUMP_BACK mode
+
+***
+
+### Select a range of text in JUMP_BACK mode
 
 ***
 
@@ -2637,5 +2653,6 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
