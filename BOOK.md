@@ -3,12 +3,18 @@ Table of Contents
 
   * [Dedication](#dedication)
   * [Introduction](#introduction)
-  * [How to read this book?](#how-to-read-this-book-)
+  * [How to read this book?](#how-to-read-this-book)
   * [What is a modal editor?](#what-is-a-modal-editor)
   * [What is a keycommand?](#what-is-a-keycommand)
   * [Running vy](#running-vy)
   * [The statusbar](#the-statusbar)
   * [Basic Modes](#basic-modes)
+  * [Other modes](#other-modes)
+      * [The global mode](#the-global-mode)
+      * [The ALPHA mode](#the-alpha-mode)
+      * [The BETA mode](#the-beta-mode)
+      * [The GAMMA mode](#the-gamma-mode)
+      * [The DELTA mode](#the-delta-mode)
   * [Common keycommands](#common-keycommands)
       * [Basic movements](#basic-movements)
       * [Opening files](#opening-files)
@@ -53,18 +59,16 @@ Table of Contents
       * [Delete a line](#delete-a-line)
       * [Delete a word](#delete-a-word)
       * [Highlight pairs of () [] {}](#highlight-pairs-of---)
-      * [The ALPHA mode](#the-alpha-mode)
       * [Shade a line](#shade-a-line)
       * [Jump to the previous shaded line](#jump-to-the-previous-shaded-line)
       * [Jump to the next shaded line](#jump-to-the-next-shaded-line)
-      * [Comment a block of code](#comment-a-block-of-code)
-      * [Uncomment a block of code](#uncomment-a-block-of-code)
       * [Undo](#undo)
       * [Redo](#redo)
       * [Jump to a given Line.Col position](#jump-to-a-given-linecol-position)
-  * [Switch focus between AreaVi instances](#switch-focus-between-areavi-instances)
+  * [Tabs](#tabs)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
+  * [Panes](#panes)
       * [Move focus one pane up](#move-focus-one-pane-up)
       * [Move focus one pane down](#move-focus-one-pane-down)
       * [Move focus one pane left](#move-focus-one-pane-left)
@@ -93,11 +97,6 @@ Table of Contents
       * [Set an AreaVi instance as target for commands](#set-an-areavi-instance-as-target-for-commands)
       * [Execute selected regions of python code](#execute-selected-regions-of-python-code)
       * [The scope of plugin functions](#the-scope-of-plugin-functions)
-  * [Other modes](#other-modes)
-      * [The global mode](#the-global-mode)
-      * [The BETA mode](#the-beta-mode)
-      * [The GAMMA mode](#the-gamma-mode)
-      * [The DELTA mode](#the-delta-mode)
   * [Syntax highlight](#syntax-highlight)
       * [Highlighting code](#highlighting-code)
       * [Changing syntax highlight style](#changing-syntax-highlight-style)
@@ -145,6 +144,8 @@ Table of Contents
       * [Word completion](#word-completion)
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
+      * [Comment a block of code](#comment-a-block-of-code)
+      * [Uncomment a block of code](#uncomment-a-block-of-code)
   * [The plugin API](#the-plugin-api)
       * [The vyrc, plugin system and user plugin space](#the-vyrc-plugin-system-and-user-plugin-space)
       * [A help on Tkinter events](#a-help-on-tkinter-events)
@@ -163,6 +164,8 @@ Table of Contents
       * [Vy Global Mode](#vy-global-mode)
       * [The AreaVi.add_mode and AreaVi.chmode methods](#the-areaviadd_mode-and-areavichmode-methods)
       * [The AreaVi.ACTIVE attribute](#the-areaviactive-attribute)
+
+
 
 
 Dedication
@@ -256,7 +259,7 @@ Some keycommands display messages to inform the user of the success of an operat
 Basic Modes
 ===========
 
-The basic two modes of vy are NORMAL and INSERT. The normal mode is in which vy starts. The INSERT mode is used
+The basic two modes of vy are NORMAL and INSERT. The NORMAL mode is in which vy starts. The INSERT mode is used
 to insert data in the AreaVi instance. In order to switch to INSERT mode from NORMAL mode you press: 
 
     <Key-i>
@@ -270,6 +273,61 @@ The NORMAL mode is where most basic functinonalities are implemented in. This mo
 like opening files, saving files, making the cursor jump to positions, searching pattern of text, replacing ranges
 of text etc.
 
+Other modes
+===========
+
+### The global mode
+
+The global mode is a mode that if there is a handle/function mapped to an event in such a mode
+then such a handle will be called no matter in which mode is in.
+
+***
+
+### The ALPHA mode
+
+The ALPHA mode implements some keycommands that aren't very often used.
+Switch to NORMAL mode then press:
+
+    <Key-3>
+
+It will appear in the statusbar mode field that vy is in ALPHA mode.
+You can switch back to NORMAL mode by pressing:
+
+    <Escape>
+
+***
+
+
+### The BETA mode
+
+The BETA mode is an extra mode that may be used to implement extra functionalities. The PDB mode
+is implemented in BETA mode.
+
+In order to switch to BETA mode, press the key below in NORMAL mode:
+
+    <Key-4>
+
+***
+
+### The GAMMA mode
+
+The GAMMA mode is an extra mode. It is implemented in NORMAL mode:
+
+    <Key-5>
+
+It would get vy in GAMMA mode.
+
+***
+
+### The DELTA mode
+
+DELTA is an auxiliary mode as ALPHA, BETA, GAMMA are. It is implemented in NORMAL mode:
+
+    <Key-6>
+
+It would get vy in DELTA mode.
+
+***
 
 Common keycommands
 ==================
@@ -823,23 +881,6 @@ one of these chars.
 
 ***
 
-### The ALPHA mode
-
-The ALPHA mode implements some keycommands that aren't very often used.
-Switch to NORMAL mode then press:
-
-    <Key-3>
-
-It will appear in the statusbar mode field that vy is in ALPHA mode.
-You can switch back to NORMAL mode by pressing:
-
-    <Escape>
-
-This mode implements keycommands to comment/uncomment blocks of code, drop marks at
-specific positions, shade lines and a few other features:
-
-***
-
 ### Shade a line
 
 Sometimes we need to create marks to remember text positions. The way to create a mark
@@ -888,25 +929,6 @@ It will make the cursor jump to the next shaded line.
 
 ***
 
-### Comment a block of code
-
-There is a keycommand in ALPHA mode to comment a block of code based on the
-extension of the file being edited. It will add inline comments to the selected region
-of text when the keycommand below is pressed in ALPHA mode:
-
-    <Key-e>
-
-I use this keycommand with the keycommand to select lines in NORMAL mode.
-
-### Uncomment a block of code
-
-Once a block of code is commented you can uncomment it by selectiong the lines then pressing the
-keycommand below in ALPHA mode:
-
-    <Key-r>
-
-***
-
 ### Undo 
 
 After some keycommand is performed you can undo the text changes by pressing in NORMAL mode the 
@@ -948,8 +970,8 @@ In a file with more than 5 lines.
 
 ***
 
-Switch focus between AreaVi instances
-=====================================
+Tabs
+====
 
 ### Move focus one tab left
 
@@ -969,6 +991,9 @@ In order to move the focus one tab right, press the key-command below:
     <Alt-p>
 
 ***
+
+Panes
+=====
 
 ### Move focus one pane up
 
@@ -1467,46 +1492,6 @@ When code is executed through the key commands below then it is executed in the 
 or:
 
     <Key-semicolon>
-
-
-Other modes
-===========
-
-### The global mode
-
-The global mode is a mode that if there is a handle/function mapped to an event in such a mode
-then such a handle will be called no matter in which mode is in.
-
-***
-
-### The BETA mode
-
-The BETA mode is an extra mode that may be used to implement extra functionalities. The PDB mode
-is implemented in BETA mode.
-
-In order to switch to BETA mode, press the key below in NORMAL mode:
-
-    <Key-4>
-
-***
-
-### The GAMMA mode
-
-The GAMMA mode is an extra mode. It is implemented in NORMAL mode:
-
-    <Key-5>
-
-It would get vy in GAMMA mode.
-
-***
-
-### The DELTA mode
-
-DELTA is an auxiliary mode as ALPHA, BETA, GAMMA are. It is implemented in NORMAL mode:
-
-    <Key-6>
-
-It would get vy in DELTA mode.
 
 ***
 
@@ -2120,6 +2105,25 @@ It will open a small window with the possible attributes of the object.
 
 ***
 
+### Comment a block of code
+
+There is a keycommand in ALPHA mode to comment a block of code based on the
+extension of the file being edited. It will add inline comments to the selected region
+of text when the keycommand below is pressed in ALPHA mode:
+
+    <Key-e>
+
+I use this keycommand with the keycommand to select lines in NORMAL mode.
+
+### Uncomment a block of code
+
+Once a block of code is commented you can uncomment it by selectiong the lines then pressing the
+keycommand below in ALPHA mode:
+
+    <Key-r>
+
+***
+
 The plugin API
 ==============
 
@@ -2633,22 +2637,5 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
