@@ -969,6 +969,11 @@ class AreaVi(Text):
         self.tag_add('sel', 'insert linestart' if not index1 else '%s +1c' % index1, 
                      'insert lineend' if not index2 else index2)
     
+    def select_seq(self):
+        index1 = self.search(' ', 'insert', regexp=True, stopindex='insert linestart', backwards=True)
+        index2 = self.search(' ', 'insert', regexp=True, stopindex='insert lineend')
+        self.tag_add('sel', 'insert linestart' if not index1 else '%s +1c' % index1, 
+                     'insert lineend' if not index2 else index2)
 
     def scroll_line_up(self):
         """
@@ -1646,6 +1651,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 

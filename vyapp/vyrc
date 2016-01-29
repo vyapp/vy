@@ -53,6 +53,12 @@ autoload(vyapp.plugins.normal_mode)
 ##############################################################################
 # Plugin list.
 
+# Implement keycommands to select special sequences of chars.
+import vyapp.plugins.data_sel
+autoload(vyapp.plugins.data_sel)
+
+
+# Implement keycommand to remove selection from chars.
 import vyapp.plugins.clear_sel
 autoload(vyapp.plugins.clear_sel)
 
@@ -379,6 +385,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
