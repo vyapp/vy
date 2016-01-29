@@ -1,3 +1,30 @@
+"""
+Overview
+========
+
+This plugin implements python functions to get text in lower case and upper case.
+
+Usage
+=====
+
+Select the text that should be turned into lower or upper case then issue one of the functions below.
+
+    lower()
+
+or
+
+    upper()
+
+Commands
+========
+
+Command: lower()
+Description: Turn the selected text into lower case.
+
+Command: uppwer()
+Description: Turn the selected text into upper case.
+"""
+
 from vyapp.areavi import AreaVi
 from vyapp.plugins import ENV
 
@@ -17,3 +44,4 @@ def upper():
 
 ENV['lower'] = lower
 ENV['upper'] = upper
+
