@@ -1,12 +1,4 @@
 """
-Overview
-========
-
-Usage
-=====
-
-Key-Commands
-============
 
 """
 
@@ -14,7 +6,7 @@ from vyapp.ask import Ask
 from re import escape, split
 from vyapp.tools import set_status_msg
 
-class Leap(object):
+class QuickSearch(object):
 
     def __init__(self, area):
         """
@@ -35,14 +27,22 @@ class Leap(object):
     def start_range(self):
         return ('1.0', 'end')
 
-    def search_down_range(self):
+    def range_down(self):
+        """
+        This method return the range to be searched that is down to the cursor position.
+        """
+
         ranges = self.area.tag_ranges('sel')
         if ranges:
             return (ranges[-1], 'end')
         else:
             return ('insert', 'end')
 
-    def search_up_range(self):
+    def range_up(self):
+        """
+        The range to be searched up to the cursor position.
+        """
+
         ranges = self.area.tag_ranges('sel')
         if ranges:
             return (ranges[0], '1.0')
@@ -78,7 +78,7 @@ class Leap(object):
         """
 
         pattern = self.make_pattern(event.widget.get())
-        range = self.search_up_range()
+        range = self.range_up()
         self.area.tag_remove('sel', *self.start_range())
         self.area.pick_next_up('sel', pattern, *range)
 
@@ -89,12 +89,11 @@ class Leap(object):
         """
 
         pattern = self.make_pattern(event.widget.get())
-        range = self.search_down_range()
+        range = self.range_down()
         self.area.tag_remove('sel', *self.start_range())
         self.area.pick_next_down('sel', pattern, *range)
 
-install = Leap
-
+install = QuickSearch
 
 
 

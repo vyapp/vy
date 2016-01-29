@@ -15,15 +15,15 @@ Consider the following text below.
     3 the commands and options used for it.  Use these two commands:
     
 
-Suppose the cursor is placed at the line 1 and you want to place on nthe string below at the line 3.
+Suppose the cursor is placed at the line 1 and you want to place the cursor on the string below at the line 3:
 
     these two
 
-You would type the Key-Command below in NORMAL mode to switch to SCREEN_SEARCH
+You would type the Key-Command below in NORMAL mode:
 
     <Key-backslash>
 
-Whatever the keys you press in SCREEN_SEARCH mode it will be seen as a search pattern. The search pattern
+Try typing something, you'll notice the incremental search process. The search pattern
 will appear on the statusbar whenever you press a key. There will happen match attempts whenever a key is
 pressed. So, in order to place the cursor over the desired line, one could press the keys to produce the 
 following string.
@@ -37,11 +37,11 @@ If you press the key below it will delete a char from the search pattern.
 
 In order to make the cursor jump to the next possible match just press the Key-Command below in SCREEN_SEARCH mode.
 
-    <Tab>
+    <Control-j>
 
 If you want to go back to the previous match just press the command below in SCREEN_SEARCH mode.
 
-    <Control-Tab>
+    <Control-k>
 
 In order to switch to NORMAL mode just press.
 
@@ -63,53 +63,39 @@ Mode: NORMAL
 Event: <Key-backslash>
 Description: Switch to SCREEN_SEARCH mode.
 
-Mode: SCREEN_SEARCH
-Event: <Tab>
+Event: <Control-j>
 Description: Place the cursor over the next match.
 
-Mode: SCREEN_SEARCH
-Event: <Control-Tab>
+Event: <Control-k>
 Description: Place the cursor over the previous match.
-
-Mode: SCREEN_SEARCH
-Event: <BackSpace>
-Description: Delete the last char from the search pattern.
-
-Mode: SCREEN_SEARCH
-Event: <Key>
-Description: Append a char to the search pattern.
 """
 
-from vyapp.plugins.quicksearch import *
+from vyapp.plugins.quick_search import QuickSearch
 
 class ScreenSearch(QuickSearch):
     def __init__(self, area):
         """
 
         """
-        area.add_mode('SCREEN_SEARCH')
-        area.install(('SCREEN_SEARCH', '<Key>', lambda event: self.add_data(event.widget, event.keysym_num)),
-                        ('NORMAL', '<Key-backslash>', lambda event: self.start_mode(event.widget)),
-                        ('SCREEN_SEARCH', '<Escape>', lambda event: self.clear_data(event.widget)),
-                        ('SCREEN_SEARCH', '<BackSpace>', lambda event: self.del_data(event.widget)),
-                        ('SCREEN_SEARCH', '<Tab>', lambda event: self.go_down(event.widget)),
-                        ('SCREEN_SEARCH', '<Control-Tab>', lambda event: self.go_up(event.widget)),
-                        ('SCREEN_SEARCH', '<Key-space>', lambda event: self.data.append('')))
+        self.area = area
+        area.install(('NORMAL', '<Key-backslash>', lambda event: self.start_search()))
 
+    def start_range(self):
+        return ('@0,0', self.area.index('@0,%s' % self.area.winfo_height()))
 
-    def start_mode(self, area):
-        self.data = ['']
-        set_status_msg('')
-        area.chmode('SCREEN_SEARCH')
+    def range_down(self):
+        ranges = self.area.tag_ranges('sel')
+        if ranges:
+            return (ranges[-1], self.area.index('@0,%s' % self.area.winfo_height()))
+        else:
+            return ('insert', self.area.index('@0,%s' % self.area.winfo_height()))
 
-    def start_range(self, area):
-        return ('@0,0', area.index('@0,%s' % area.winfo_height()))
-
-    def search_down_range(self, area):
-        return ('insert', area.index('@0,%s' % area.winfo_height()))
-
-    def search_up_range(self, area):
-        return ('insert', '@0,0')
+    def range_up(self):
+        ranges = self.area.tag_ranges('sel')
+        if ranges:
+            return (ranges[0], '@0,0')
+        else:
+            return ('insert', '@0,0')
 
 install = ScreenSearch
 

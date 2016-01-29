@@ -125,23 +125,15 @@ import vyapp.plugins.main_jumps
 autoload(vyapp.plugins.main_jumps)
 
 
-# Quick search.
-# import vyapp.plugins.quicksearch
-# autoload(vyapp.plugins.quicksearch)
+# The quick_search plugin implements incremental search.
+import vyapp.plugins.quick_search
+autoload(vyapp.plugins.quick_search)
 
 
-# import vyapp.plugins.screen_search
-# autoload(vyapp.plugins.screen_search)
-
-
-# A different implementation of quicksearch.
-import vyapp.plugins.leap
-autoload(vyapp.plugins.leap)
-
-
-# A different implementation of screen_search
-import vyapp.plugins.hop
-autoload(vyapp.plugins.hop)
+# The screen_search plugin implements incremental search that
+# works only in the visible region of the text.
+import vyapp.plugins.screen_search
+autoload(vyapp.plugins.screen_search)
 
 
 # It implements keycommands to select/unselect a char on the cursor.
@@ -383,6 +375,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
