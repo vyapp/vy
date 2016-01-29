@@ -19,7 +19,6 @@ Commands
 Command: find(self, regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
 Description: Highlight patterns in the AreaVi instance that has focus.
-Args: 
 regex     = The pattern to be searched.
 index     = The starting index of the search.
 stopindex = The stop index of the search.
@@ -28,15 +27,14 @@ Command: replace_all(self, regex, data, index='1.0', stopindex='end', exact=None
              elide=None, nolinestop=None):
 
 Description: Replace all occurrences of a given pattern for data.
-Args:
 regex = The pattern to be searched.
 data  = The replacement for the pattern.
 
 Command: get(index, stopindex)
-Description: Get the text from an AreaVi instance the AreaVi instance that is
-the target for commands.
-
-
+Description: Get the text between index and stopindex from an AreaVi instance
+that was set as target for commands.
+index     = The start index.
+stopindex = The stopindex.
 """
 
 from vyapp.plugins import ENV
@@ -45,6 +43,7 @@ from vyapp.areavi import AreaVi
 ENV['find'] = lambda *args, **kwargs: AreaVi.ACTIVE.tag_add_found('sel', AreaVi.ACTIVE.find(*args, **kwargs))
 ENV['sub'] = lambda *args, **kwargs: AreaVi.ACTIVE.replace_all(*args, **kwargs)
 ENV['get'] = lambda *args: AreaVi.ACTIVE.get(*args)
+
 
 
 

@@ -98,14 +98,14 @@ import vyapp.plugins.text_jumps
 autoload(vyapp.plugins.text_jumps)
 
 
-# Used to deal with panels.
-import vyapp.plugins.panel
-autoload(vyapp.plugins.panel)
+# Used to deal with panes.
+import vyapp.plugins.splits
+autoload(vyapp.plugins.splits)
 
 
 # Used to deal with tabs.
-import vyapp.plugins.notebook
-autoload(vyapp.plugins.notebook)
+import vyapp.plugins.tabs
+autoload(vyapp.plugins.tabs)
 
 
 # Implement keycommands to select text from the cursor position 
@@ -145,9 +145,9 @@ import vyapp.plugins.char_sel
 autoload(vyapp.plugins.char_sel)
 
 
-# Used to insert tab_size spaces.
-import vyapp.plugins.tab
-autoload(vyapp.plugins.tab, 
+# Used to insert tab, spaces.
+import vyapp.plugins.spacing
+autoload(vyapp.plugins.spacing, 
          tab_scheme= {'.rb': (2, ' '),
                       '.c' : (4, ' '),
                       '.cpp' : (4, ' '),
@@ -379,6 +379,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
