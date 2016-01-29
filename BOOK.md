@@ -959,9 +959,18 @@ then the cursor will jump to the corresponding char.
 
 ### Switch to INSERT mode from JUMP_NEXT mode
 
+When in JUMP_NEXT mode it is possible to switch to INSERT mode by pressing:
+
+    <Tab>
+
+It spares some time in some occasions.
+
 ***
 
 ### Select a range of text in JUMP_NEXT mode
+
+When in JUMP_NEXT mode it is possible to add selection from the cursor position
+to the next match position by keeping the Control key pressed.
 
 ***
 
@@ -982,9 +991,19 @@ the cursor will jump to the previous occurrence of the char.
 
 ### Switch to INSERT mode from JUMP_BACK mode
 
+In order to spare some time when in JUMP_BACK mode it is possible to press:
+
+    <Tab>
+
+Then get in INSERT mode.
+
 ***
 
 ### Select a range of text in JUMP_BACK mode
+
+When in JUMP_BACK mode it is possible to keep the Control key pressed
+to get the range of text between the cursor position and the previous occurrence
+of the char.
 
 ***
 
@@ -2652,6 +2671,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
