@@ -89,11 +89,13 @@ from vyapp.areavi import AreaVi
 
 H1 = '<%s> %s\n' 
 H2 = 'Topic :%s\n' 
-H3 = '>>>%s has left %s.<<<\n' 
-H4 = '>>>%s has joined %s.<<<\n' 
-H5 = '>>>%s is now known as %s<<<\n'
+H3 = '>>> %s has left %s <<<\n' 
+H4 = '>>> %s has joined %s <<<\n' 
+H5 = '>>> %s is now known as %s <<<\n'
 H6 = 'Peers:%s\n'
-H7 = '>>>%s has quit (%s)<<<\n'
+H7 = '>>> %s has quit (%s) <<<\n'
+H8 = '>>> %s has kicked %s from %s (%s) <<<\n'
+H9 = '>>> %s sets mode %s %s on %s <<<\n'
 
 class IrcMode(object):
     def __init__(self, addr, port, user, nick, irccmd, channels=[]):
@@ -212,13 +214,15 @@ class IrcMode(object):
         l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
         l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
+        l8 = lambda con, nick, user, host, chan, target, msg: area.insee('CHDATA', H8 % (nick, target, chan, msg))
+        l9 = lambda con, nick, user, host, chan, mode, target='': area.insee('CHDATA', H9 % (nick, chan, mode, target))
 
         def l7(con, nick, user, host, msg):
             pass
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
                   ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), 
-                  ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7))
+                  ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7), ('KICK', l8), ('MODE', l9))
 
         for key, value in events:
             xmap(con, key, value)
@@ -244,6 +248,7 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
 
 
 
