@@ -214,7 +214,7 @@ class IrcMode(object):
         l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
         l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
-        l8 = lambda con, nick, user, host, chan, target, msg: area.insee('CHDATA', H8 % (nick, target, chan, msg))
+        l8 = lambda con, nick, user, host, target, msg: area.insee('CHDATA', H8 % (nick, target, chan, msg))
         l9 = lambda con, nick, user, host, chan, mode, target='': area.insee('CHDATA', H9 % (nick, chan, mode, target))
 
         def l7(con, nick, user, host, msg):
@@ -222,7 +222,8 @@ class IrcMode(object):
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
                   ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), 
-                  ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7), ('KICK', l8), ('MODE', l9))
+                  ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7), 
+                  ('KICK->%s' % chan, l8), ('MODE', l9))
 
         for key, value in events:
             xmap(con, key, value)
@@ -233,6 +234,7 @@ class IrcMode(object):
             zmap(con, 'PART->%s->MEPART' % chan, unset)
 
         xmap(con, 'PART->%s->MEPART' % chan, unset)
+        xmap(con, 'KICK->%s->ME' % chan, unset)
 
     def auto_join(self, con, *args):
         for ind in self.channels:
@@ -248,9 +250,6 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
-
-
-
 
 
 
