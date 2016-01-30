@@ -75,11 +75,13 @@ Table of Contents
       * [Open a file in a new tab](#open-a-file-in-a-new-tab)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
+      * [Remove a tab](#remove-a-tab)
   * [Panes](#panes)
       * [Move focus one pane up](#move-focus-one-pane-up)
       * [Move focus one pane down](#move-focus-one-pane-down)
       * [Move focus one pane left](#move-focus-one-pane-left)
       * [Move focus one pane right](#move-focus-one-pane-right)
+      * [Remove a pane](#remove-a-pane)
   * [Command line](#command-line)
       * [Opening files in panes/tabs from command line](#opening-files-in-panestabs-from-command-line)
   * [The screen search feature](#the-screen-search-feature)
@@ -1026,6 +1028,8 @@ In order to open a file in a new tab, switch to NORMAL mode then press:
 
 It shows a file dialog window to select a file to be opened in a new tab.
 
+***
+
 ### Move focus one tab left
 
 It is possible to open files in multiple tabs, there is a handy keycommand to move the focus
@@ -1042,6 +1046,14 @@ called regardless of the mode in which an AreaVi instance is in:
 In order to move the focus one tab right, press the keycommand below:
 
     <Alt-p>
+
+***
+
+### Remove a tab
+
+In order to remove the focused tab, press in NORMAL mode the keycommand below:
+
+    <Delete>
 
 ***
 
@@ -1083,6 +1095,16 @@ to move the focus one pane left.
 In order to move focus one pane right, switch to NORMAL mode then press:
 
     <Key-L>
+
+***
+
+### Remove a pane
+
+The way to remove a focused pane is by pressing:
+
+    <F6>
+
+in NORMAL mode.
 
 ***
 
@@ -2687,6 +2709,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
