@@ -195,7 +195,7 @@ class IrcMode(object):
         l3 = lambda con, data: area.insee('end', '%s\n' % data)
 
         self.misc = Misc(con)
-        xmap(con, 'MEJOIN', l1)
+        xmap(con, '*JOIN', l1)
         xmap(con, 'PING', l2)
         xmap(con, FOUND, l3)
         xmap(con, 'PMSG', self.deliver_user_msg)
@@ -215,15 +215,15 @@ class IrcMode(object):
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
         l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
         l8 = lambda con, nick, user, host, target, msg: area.insee('CHDATA', H8 % (nick, target, chan, msg))
-        l9 = lambda con, nick, user, host, chan, mode, target='': area.insee('CHDATA', H9 % (nick, chan, mode, target))
+        l9 = lambda con, nick, user, host, mode, target='': area.insee('CHDATA', H9 % (nick, chan, mode, target))
 
         def l7(con, nick, user, host, msg):
             pass
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
                   ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), 
-                  ('MENICK', l5), ('353->%s' % chan, l6), ('QUIT', l7), 
-                  ('KICK->%s' % chan, l8), ('MODE', l9))
+                  ('*NICK', l5), ('353->%s' % chan, l6), ('QUIT', l7), 
+                  ('KICK->%s' % chan, l8), ('MODE->%s' % chan, l9))
 
         for key, value in events:
             xmap(con, key, value)
@@ -231,16 +231,14 @@ class IrcMode(object):
         def unset(con, *args):
             for key, value in events:
                 zmap(con, key, value)
-            zmap(con, 'PART->%s->MEPART' % chan, unset)
+            zmap(con, '*PART->%s' % chan, unset)
 
-        xmap(con, 'PART->%s->MEPART' % chan, unset)
-        xmap(con, 'KICK->%s->ME' % chan, unset)
+        xmap(con, '*PART->%s' % chan, unset)
+        xmap(con, '*KICK->%s' % chan, unset)
 
     def auto_join(self, con, *args):
         for ind in self.channels:
             send_cmd(con, 'JOIN %s' % ind)
-
-        pass
 
     def send_msg(self, area, chan, con):
         data = area.cmd_like()
@@ -250,6 +248,8 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
+
 
 
 
