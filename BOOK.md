@@ -1029,8 +1029,8 @@ It shows a file dialog window to select a file to be opened in a new tab.
 ### Move focus one tab left
 
 It is possible to open files in multiple tabs, there is a handy keycommand to move the focus
-between tabs. For moving focus one tab left, press the key-command below regardless of the mode
-that vy is in. The key-command below works in GLOBAL mode it is a mode whose events have their handles
+between tabs. For moving focus one tab left, press the keycommand below regardless of the mode
+that vy is in. The keycommand below works in GLOBAL mode it is a mode whose events have their handles
 called regardless of the mode in which an AreaVi instance is in:
 
     <Alt-o>
@@ -1039,7 +1039,7 @@ called regardless of the mode in which an AreaVi instance is in:
 
 ### Move focus one tab right
 
-In order to move the focus one tab right, press the key-command below:
+In order to move the focus one tab right, press the keycommand below:
 
     <Alt-p>
 
@@ -1722,11 +1722,11 @@ in PDB mode. The arguments are split using shlex module.
 
 ### Set a break point
 
-The line over the cursor is set as a breakpoint if the key-command:
+The line over the cursor is set as a breakpoint if the keycommand:
 
     <Key-b> 
 
-is issued in PDB mode. The line will be shaded then it is possible to run other key-commands like:
+is issued in PDB mode. The line will be shaded then it is possible to run other keycommands like:
 
     <Key-c> 
 
@@ -1759,7 +1759,7 @@ then it will clear all breakpoints, all the lines will be unshaded.
 
 ### Run code step by step
 
-The key-command:
+The keycommand:
 
     <Key-s> 
 
@@ -1776,7 +1776,7 @@ in PDB mode. It sends a '(c)ontinue' to the debugger process.
 
 ### Print a stack trace most recent frame at the bottom
 
-Press the key-command:
+Press the keycommand:
 
     <Key-w> 
 
@@ -1804,7 +1804,7 @@ in PDB mode.
 ### Inject python code to be executed in the current context
 
 It is very useful to change the state of variables or even redefinie functions in some scopes
-when debugging an application, through this key-command it is possible to inject python code
+when debugging an application, through this keycommand it is possible to inject python code
 to be executed. For such, press:
 
     <Key-r> 
@@ -1870,7 +1870,7 @@ areavi instance then switching to GAMMA mode and pressing:
 
     <Key-i>
 
-When the areavi instance is in IRC mode then it is possible to use key-commands to send IRC commands
+When the areavi instance is in IRC mode then it is possible to use keycommands to send IRC commands
 by pressing:
 
     <Control-e>
@@ -1879,7 +1879,7 @@ by pressing:
 
 ### Send IRC commands
 
-Vy implements a key-command to send raw irc commands to the irc server. It shows an inputbox where to type irc commands.
+Vy implements a keycommand to send raw irc commands to the irc server. It shows an inputbox where to type irc commands.
 Switch to an irc connection tab or an irc channel tab then press:
 
     <Control-e> 
