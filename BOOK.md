@@ -71,6 +71,8 @@ Table of Contents
       * [Switch to INSERT mode from JUMP_BACK mode](#switch-to-insert-mode-from-jump_back-mode)
       * [Select a range of text in JUMP_BACK mode](#select-a-range-of-text-in-jump_back-mode)
   * [Tabs](#tabs)
+      * [Create a new tab](#create-a-new-tab)
+      * [Open a file in a new tab](#open-a-file-in-a-new-tab)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
   * [Panes](#panes)
@@ -1009,6 +1011,20 @@ of the char.
 
 Tabs
 ====
+
+### Create a new tab
+
+Switch to NORMAL mode then press:
+
+    <F7>
+
+### Open a file in a new tab
+
+In order to open a file in a new tab, switch to NORMAL mode then press:
+
+    <F8>
+
+It shows a file dialog window to select a file to be opened in a new tab.
 
 ### Move focus one tab left
 
@@ -2671,6 +2687,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
