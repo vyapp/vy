@@ -112,7 +112,7 @@ Table of Contents
       * [Highlighting code](#highlighting-code)
       * [Changing syntax highlight style](#changing-syntax-highlight-style)
       * [Creating new syntax highlight styles](#creating-new-syntax-highlight-styles)
-  * [Toggle mode](#toggle-mode)
+  * [Mode switch](#mode-switch)
   * [The PDB mode](#the-pdb-mode)
       * [Getting ready to debug a python application](#getting-ready-to-debug-a-python-application)
       * [Switch to PDB mode](#switch-to-pdb-mode)
@@ -1604,43 +1604,38 @@ pygments.
 
 ***
 
-Toggle mode
+Mode switch
 ===========
 
-The standard mode is the NORMAL one, in such a mode it is possible to move cursor, copy text, paste text, delete text
-and a lot of other stuff. There are other secundary modes that implement keycommands for other kind of tasks. One example
-is the PDB mode that is implemented by the plugin below.
+The NORMAL mode is the mode in which most editing keycommands are implemented, it is possible
+to use the keycommand:
 
-~~~
-vyapp.plugins.pdb
-~~~
+    <Escape>
 
-Such a mode implements keycommands to set break points, run python code etc. 
-In some situations it is useful to quickly switch to NORMAL mode to perform some task then go back to the
-previous mode. It is possible by using a keycommand that is implemented in ALPHA, BETA, GAMMA, DELTA and PDB mode.
+when in NORMAL mode to get in another mode. It spares some keycommands when dealing with modes
+that demand more than two keycommands to get in. 
 
-In order to examplify the scenary, switch to ALPHA mode by pressing:
+Suppose that one needs to use a set of keycommands that is implemented in a mode X
+whose keycommand to get in the mode X is implemented in the mode Y. Sometimes
+it will be needed to use editing keycommands by switching to NORMAL mode, if it is
+needed to switch back to mode X then the user will have to switch to Y then to X.
+In order to spare keycommands in such a situation, it is possible to use
+the keycommand:
 
-    <Key-3>
+    <Alt-Escape>
 
-in NORMAL mode. Once in ALPHA mode, try holding the key:
+That works in GLOBAL mode, it i means regardless of the mode in which the AreaVi instance is in
+then the keycommand handle will be executed. When the user is in mode X and press the keycommand above
+then the current AreaVi instance mode will be yielded then whenever the user press:
 
-    <KeyPress-space>
+    <Escape>
 
-You will notice the mode has changed to NORMAL, once you release the key then you'll go back to the previous mode
-that is ALPHA. It is possible to extend the plugin below to work with other modes.
+in NORMAL mode it will get the AreaVi instance in X mode. In order to get back
+the standard behavior, just press:
 
-For such, edit the line in your ~/.vy/vyrc file:
+    <Alt-Escape>
 
-~~~
-autoload(vyapp.plugins.toggle_mode)
-~~~
-
-to
-
-~~~
-autoload(vyapp.plugins.toggle_mode, modes=['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'PDB', 'SOME_OTHER_MODE'])
-~~~
+in NORMAL mode.
 
 ***
 
@@ -2709,6 +2704,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 

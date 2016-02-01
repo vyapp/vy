@@ -53,6 +53,10 @@ autoload(vyapp.plugins.normal_mode)
 ##############################################################################
 # Plugin list.
 
+import vyapp.plugins.mode_switch
+autoload(vyapp.plugins.mode_switch)
+
+
 # Implement keycommands to select special sequences of chars.
 import vyapp.plugins.data_sel
 autoload(vyapp.plugins.data_sel)
@@ -332,12 +336,6 @@ import vyapp.plugins.block_sel
 autoload(vyapp.plugins.block_sel)
 
 
-# toggle_mode plugin is used to switch quickly between
-# modes. It is useful when debugging.
-import vyapp.plugins.toggle_mode
-autoload(vyapp.plugins.toggle_mode)
-
-
 # Used to log the files that you opened/saved.
 # You must change the '.vy_history' to something like.
 # '/home/your_home/.vy_history'
@@ -385,6 +383,8 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
+
 
 
 
