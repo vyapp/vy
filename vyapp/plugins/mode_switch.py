@@ -40,19 +40,22 @@ Description: Switch from NORMAL mode to the target mode that was set by pressing
 """
 
 from vyapp.tools import set_status_msg
+from vyapp.exe import exec_quiet
 
 class Switch(object):
-    def __init__(self, area, default_id = 'NORMAL'):
-        self.target_id  = default_id
+    target_id  = 'NORMAL'
+    default_id = 'NORMAL'
+    def __init__(self, area):
         area.install(('-1', '<Alt-Escape>',  lambda event: self.set_target_id(event.widget)),
-                     (default_id, '<Escape>', lambda event: event.widget.chmode(self.target_id)))
+                     (Switch.default_id, '<Escape>', lambda event: exec_quiet(event.widget.chmode, Switch.target_id)))
 
     def set_target_id(self, area):
         """
         """
 
-        self.target_id = area.id
+        Switch.target_id = area.id
         set_status_msg('%s mode pinned!' % area.id)
 
 install = Switch
+
 
