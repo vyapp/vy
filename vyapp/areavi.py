@@ -38,8 +38,8 @@ class AreaVi(Text):
 
         # Shouldn't it be LAST_COL and MSEL?
         self.mark_set('(CURSOR_LAST_COL)', '1.0')
-
-        # This mark is used in AreaVi.replace_all.
+        self.mark_set('(RANGE_SEL_MARK)', '1.0')
+        self.mark_set('(BLOCK_SEL_MARK)', '1.0')
 
         # def cave(event):
             # AreaVi.ACTIVE = event.widget
@@ -260,26 +260,6 @@ class AreaVi(Text):
         a, b = index.split('.')
         return int(a), int(b)
 
-    def indcol(self):
-        """
-        This is a short hand method for getting
-        the last col in which the cursor was in.
-
-        It is useful when implementing functions to
-        select pieces of text.
-        """
-
-        a, b  = self.indref('(CURSOR_LAST_COL)')
-        return int(a), int(b)
-
-    def setcol(self, line, col):
-        """
-        It sets the mark used by the arrows
-        keys and selection state.
-        """
-
-        self.mark_set('(CURSOR_LAST_COL)', '%s.%s' % (line, col))
-
     def indcur(self):
         """
         It returns the actual line, col for the
@@ -337,23 +317,25 @@ class AreaVi(Text):
         It sets the cursor position one line down.  
         """
 
-        if self.is_end():
-        # We first check if it is at the end
-        # so we avoid the cursor jumping at odd positions.
-            a, b = self.indcol()
-            c, d = self.indcur()
-            self.setcur(c + 1, b)        
-        
+        if not self.is_end():
+            return
+
+        a, b = self.indref('(CURSOR_LAST_COL)')
+        c, d = self.indcur()
+        self.setcur(c + 1, b)        
+    
     def up(self):   
         """  
         It sets the cursor one line up.  
         """
 
-        if self.is_start():
-            a, b = self.indcol()
-            c, d = self.indcur()
-            self.setcur(c - 1, b)
-        
+        if not self.is_start():
+            return
+
+        a, b = self.indref('(CURSOR_LAST_COL)')
+        c, d = self.indcur()
+        self.setcur(c - 1, b)
+    
     def left(self):
         """  
         It moves the cursor one character left.
@@ -382,10 +364,10 @@ class AreaVi(Text):
         called then they will select a region from this mark.  
         """
 
-        self.mark_set('_sel_start_', 'insert')
+        self.mark_set('(RANGE_SEL_MARK)', 'insert')
     
     def start_block_selection(self):
-        self.mark_set('_block_sel_start_', 'insert')
+        self.mark_set('(BLOCK_SEL_MARK)', 'insert')
 
 
     def is_add_up(self, index):
@@ -394,7 +376,7 @@ class AreaVi(Text):
         removed or added.
         
         If it returns True then the selection must be
-        removed. True means that the '_sel_start_'
+        removed. True means that the '(RANGE_SEL_MARK)'
         mark is positioned above the cursor position.
         So, it must remove the selection instead of
         adding it.
@@ -451,14 +433,14 @@ class AreaVi(Text):
         and sets the cursor one line up.
         """
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.rmsel(index0, index1)
         self.up()
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.addsel(index0, index1)
 
@@ -478,14 +460,14 @@ class AreaVi(Text):
         It adds or removes selection one line down. 
         """
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.rmsel(index0, index1)
         self.down()
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.addsel(index0, index1)
     
@@ -503,14 +485,14 @@ class AreaVi(Text):
         It adds or removes selection one character right.
         """
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.rmsel(index0, index1)
         self.right()
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.addsel(index0, index1)
     
@@ -528,14 +510,14 @@ class AreaVi(Text):
         It adds or removes selection one character left.
         """
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.rmsel(index0, index1)
         self.left()
 
-        index0 = self.min('_sel_start_', 'insert')
-        index1 = self.max('_sel_start_', 'insert')
+        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
+        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
         self.addsel(index0, index1)
 
@@ -544,7 +526,7 @@ class AreaVi(Text):
         It is just a shorthand for getting the last selection mark.
         """
 
-        a, b = self.indref('_sel_start_')
+        a, b = self.indref('(RANGE_SEL_MARK)')
         return int(a), int(b)
 
     def addblock(self, index0, index1):
@@ -584,14 +566,14 @@ class AreaVi(Text):
         It adds or removes block selection one line down.  
         """
 
-        a, b   = self.indcol()
+        a, b   = self.indref('(CURSOR_LAST_COL)')
         c, d   = self.indcur()
 
-        index = self.index('_block_sel_start_')
+        index = self.index('(BLOCK_SEL_MARK)')
         self.rmblock(index, '%s.%s' % (c, b))
         self.down()
 
-        a, b   = self.indcol()
+        a, b   = self.indref('(CURSOR_LAST_COL)')
         c, d = self.indcur()
 
         self.addblock(index, '%s.%s' % (c, b))
@@ -601,14 +583,14 @@ class AreaVi(Text):
         It adds or removes block selection one line up.  
         """
 
-        a, b   = self.indcol()
+        a, b   = self.indref('(CURSOR_LAST_COL)')
         c, d   = self.indcur()
-        index  = self.index('_block_sel_start_')
+        index  = self.index('(BLOCK_SEL_MARK)')
 
         self.rmblock(index, '%s.%s' % (c, b))
         self.up()
 
-        a, b = self.indcol()
+        a, b = self.indref('(CURSOR_LAST_COL)')
         c, d = self.indcur()
 
         self.addblock(index, '%s.%s' % (c, b))
@@ -625,14 +607,14 @@ class AreaVi(Text):
         It adds block selection to the left.
         """
 
-        a, b   = self.indcol()
+        a, b   = self.indref('(CURSOR_LAST_COL)')
         c, d   = self.indcur()
 
-        index = self.index('_block_sel_start_')
+        index = self.index('(BLOCK_SEL_MARK)')
         self.rmblock(index, '%s.%s' % (c, b))
         self.left()
 
-        a, b   = self.indcol()
+        a, b   = self.indref('(CURSOR_LAST_COL)')
         c, d = self.indcur()
 
         self.addblock(index, '%s.%s' % (c, b))
@@ -649,14 +631,14 @@ class AreaVi(Text):
         It adds a block selection to the right.
         """
 
-        a, b   = self.indcol()
+        a, b   = self.indref('(CURSOR_LAST_COL)')
         c, d   = self.indcur()
 
-        index = self.index('_block_sel_start_')
+        index = self.index('(BLOCK_SEL_MARK)')
         self.rmblock(index, '%s.%s' % (c, b))
         self.right()
 
-        a, b   = self.indcol()
+        a, b   = self.indref('(CURSOR_LAST_COL)')
         c, d = self.indcur()
 
         self.addblock(index, '%s.%s' % (c, b))
@@ -1646,6 +1628,8 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
+
 
 
 
