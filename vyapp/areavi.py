@@ -955,9 +955,9 @@ class AreaVi(Text):
 
         map = self.is_tag_range(name, index0, index1)
         if map:
-            self.tag_remove('sel', index0, index1)
+            self.tag_remove(name, index0, index1)
         else:
-            self.tag_add('sel', index0, index1)
+            self.tag_add(name, index0, index1)
 
     def select_word(self):
         """
@@ -1651,6 +1651,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
