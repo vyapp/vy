@@ -37,14 +37,9 @@ class AreaVi(Text):
         self.filename = default_filename
 
         # Shouldn't it be LAST_COL and MSEL?
-        self.last_col = '_last_col_'
-        self.mark_set(self.last_col, '1.0')
+        self.mark_set('(CURSOR_LAST_COL)', '1.0')
 
         # This mark is used in AreaVi.replace_all.
-
-        self.STOP_REPLACE_INDEX = '_stop_replace_index_'
-        # Tags have name starting and ending with __
-
 
         # def cave(event):
             # AreaVi.ACTIVE = event.widget
@@ -274,7 +269,7 @@ class AreaVi(Text):
         select pieces of text.
         """
 
-        a, b  = self.indref(self.last_col)
+        a, b  = self.indref('(CURSOR_LAST_COL)')
         return int(a), int(b)
 
     def setcol(self, line, col):
@@ -283,7 +278,7 @@ class AreaVi(Text):
         keys and selection state.
         """
 
-        self.mark_set(self.last_col, '%s.%s' % (line, col))
+        self.mark_set('(CURSOR_LAST_COL)', '%s.%s' % (line, col))
 
     def indcur(self):
         """
@@ -367,7 +362,7 @@ class AreaVi(Text):
         self.mark_set('insert', 'insert -1c')
 
         # The mark used by self.down, self.up.
-        self.mark_set(self.last_col, 'insert')
+        self.mark_set('(CURSOR_LAST_COL)', 'insert')
     
     def right(self):
         """  
@@ -377,7 +372,7 @@ class AreaVi(Text):
         self.mark_set('insert', 'insert +1c')
 
         # The mark used by self.down, self.up.
-        self.mark_set(self.last_col, 'insert')
+        self.mark_set('(CURSOR_LAST_COL)', 'insert')
     
     def start_selection(self):
         """  
@@ -1309,14 +1304,14 @@ class AreaVi(Text):
         # It is needed because the range will grow
         # when data is inserted, the intent is searching
         # over a pre defined range.
-        self.mark_set(self.STOP_REPLACE_INDEX, stopindex)
+        self.mark_set('(REP_STOPINDEX)', stopindex)
 
         while True:
-            map = self.replace(regex, data, index, self.STOP_REPLACE_INDEX, exact=exact, nocase=nocase, 
+            map = self.replace(regex, data, index, '(REP_STOPINDEX)', exact=exact, nocase=nocase, 
                                nolinestop=nolinestop, regexp=regexp, elide=elide)
 
             if not map: 
-                return index
+                return self.index('(REP_STOPINDEX)')
 
             index, size = map
             index = self.index('%s +%sc' % (index, size))
@@ -1651,6 +1646,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
