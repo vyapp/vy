@@ -20,7 +20,12 @@ class Pdb(vyapp.plugins.pdb.unix_platform.Pdb):
         xmap(self.expect, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
         xmap(self.expect, 'BREAKPOINT', self.handle_breakpoint)
         xmap(self.expect, CLOSE, lambda expect: expect.destroy())
-        root.bind('<Destroy>', lambda event: self.kill_debug_process())
+
+        def on_quit():
+            self.kill_debug_process()
+            root.destroy()
+
+        root.protocol("WM_DELETE_WINDOW", on_quit)
 
     def kill_debug_process(self):
         try:
@@ -33,6 +38,7 @@ class Pdb(vyapp.plugins.pdb.unix_platform.Pdb):
 
 pdb = Pdb()
 install = pdb
+
 
 
 
