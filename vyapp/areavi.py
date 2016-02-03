@@ -1396,31 +1396,31 @@ class AreaVi(Text):
         r2 = self.is_in_range(index1, index2, index3)
         return r1 and r2
 
-    def replace_range(self, data, index0, index1):
+    def swap(self, data, index0, index1):
         """
-        Replace the text in the range index0, index1 for data.
+        Swap the text in the range index0, index1 for data.
         """
 
         self.delete(index0, index1)
         self.insert(index0, data)
 
-    def replace_ranges(self, name, data, index0='1.0', index1='end'):
+    def swap_ranges(self, name, data, index0='1.0', index1='end'):
         """
-        It replaces ranges of text that are mapped to a tag name for data between index0
+        It swaps ranges of text that are mapped to a tag name for data between index0
         and index1.
         """
 
         while True:
             range = self.tag_nextrange(name, index0, index1)
             if not range: break
-            self.replace_range(data, *range)
+            self.swap(data, *range)
 
     def delete_ranges(self, name, index0='1.0', index1='end'):
         """
         It deletes ranges of text that are mapped to tag name between index0 and index1.
         """
 
-        self.replace_ranges(name, '', index0, index1)
+        self.swap_ranges(name, '', index0, index1)
 
     def join_ranges(self, name, sep=''):
         """     
@@ -1538,7 +1538,7 @@ class AreaVi(Text):
                 table.append(data)
             else:
                 continue
-            self.replace_range(data, index, 'insert')
+            self.swap(data, index, 'insert')
             yield
 
 
