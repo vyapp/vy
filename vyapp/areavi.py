@@ -369,21 +369,6 @@ class AreaVi(Text):
     def start_block_selection(self):
         self.mark_set('(BLOCK_SEL_MARK)', 'insert')
 
-
-    def is_add_up(self, index):
-        """
-        It checks whether the selection must be
-        removed or added.
-        
-        If it returns True then the selection must be
-        removed. True means that the '(RANGE_SEL_MARK)'
-        mark is positioned above the cursor position.
-        So, it must remove the selection instead of
-        adding it.
-        """
-
-        return self.compare('%s linestart' % index, '<=', 'insert linestart')
-
     def rmsel(self, index0, index1):
         """
         It removes the tag sel from the range that is delimited by index0 and index1
@@ -433,101 +418,37 @@ class AreaVi(Text):
         and sets the cursor one line up.
         """
 
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
-
-        self.rmsel(index0, index1)
+        self.rmsel('(RANGE_SEL_MARK)', 'insert')
         self.up()
-
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
-
-        self.addsel(index0, index1)
-
-    def is_add_down(self, index):
-        """
-        It returns True if the cursor is positioned below
-        the initial mark for selection. 
-
-        It determins if the selection must be removed or added when
-        sel_down is called.
-        """
-
-        return self.compare('%s linestart' % index, '>=', 'insert linestart')
+        self.addsel('(RANGE_SEL_MARK)', 'insert')
 
     def sel_down(self):
         """ 
         It adds or removes selection one line down. 
         """
 
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
-
-        self.rmsel(index0, index1)
+        self.rmsel('(RANGE_SEL_MARK)', 'insert')
         self.down()
-
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
-
-        self.addsel(index0, index1)
+        self.addsel('(RANGE_SEL_MARK)', 'insert')
     
-
-    def is_add_right(self, index):
-        """
-        It returns True if the cursor is positioned at the left
-        of the initial selection mark. It is useful for sel_right method.
-        """
-
-        return self.compare(index, '>=', 'insert')
-
     def sel_right(self):
         """ 
         It adds or removes selection one character right.
         """
 
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
 
-        self.rmsel(index0, index1)
+        self.rmsel('(RANGE_SEL_MARK)', 'insert')
         self.right()
-
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
-
-        self.addsel(index0, index1)
+        self.addsel('(RANGE_SEL_MARK)', 'insert')
     
-
-    def is_add_left(self, index):
-        """
-        It returns True if the cursor is positioned at the right of
-        the initial mark selection.
-        """
-
-        return self.compare(index, '<=', 'insert')
-
     def sel_left(self):
         """ 
         It adds or removes selection one character left.
         """
 
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
-
-        self.rmsel(index0, index1)
+        self.rmsel('(RANGE_SEL_MARK)', 'insert')
         self.left()
-
-        index0 = self.min('(RANGE_SEL_MARK)', 'insert')
-        index1 = self.max('(RANGE_SEL_MARK)', 'insert')
-
-        self.addsel(index0, index1)
-
-    def indmsel(self):
-        """
-        It is just a shorthand for getting the last selection mark.
-        """
-
-        a, b = self.indref('(RANGE_SEL_MARK)')
-        return int(a), int(b)
+        self.addsel('(RANGE_SEL_MARK)', 'insert')
 
     def addblock(self, index0, index1):
         """
@@ -541,9 +462,7 @@ class AreaVi(Text):
         c, d   = self.indint(index3)
 
         for ind in xrange(a, c + 1):
-            e = min(b, d)
-            f = max(b, d)
-            self.addsel('%s.%s' % (ind, e), '%s.%s' % (ind, f))
+            self.addsel('%s.%s' % (ind, min(b, d)), '%s.%s' % (ind, max(b, d)))
 
     def rmblock(self, index0, index1):
         """
@@ -557,9 +476,7 @@ class AreaVi(Text):
         c, d   = self.indint(index3)
 
         for ind in xrange(a, c + 1):
-            e = min(b, d)
-            f = max(b, d)
-            self.rmsel('%s.%s' % (ind, e),  '%s.%s' % (ind, f))
+            self.rmsel('%s.%s' % (ind, min(b, d)),  '%s.%s' % (ind, max(b, d)))
 
     def block_down(self):
         """  
@@ -1628,6 +1545,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
