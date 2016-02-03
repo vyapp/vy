@@ -33,10 +33,19 @@ from vyapp.ask import *
 
 def go_to_pos(area):
     ask = Ask(area)
-    area.setcur(ask.data)
-    area.setcur(line, col)    
+
+    try:
+        area.seecur(ask.data)
+    except TclError:
+        pass
+
+    try:
+        area.setcur(ask.data)
+    except TclError:
+        pass
 
 install = lambda area: area.install(('NORMAL', '<F3>', lambda event: go_to_pos(event.widget)))
+
 
 
 
