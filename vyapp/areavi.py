@@ -1044,6 +1044,10 @@ class AreaVi(Text):
     def tokenize(self, *args, **kwargs):
         """
         It tokenizes the contents of an AreaVi widget based on a regex.
+        The *args, **kwargs are the same passed to AreaVi.find method.
+
+        for token, index0, index1 in area.tokenize(PATTERN):
+            pass
         """
 
         index0 = '1.0'
@@ -1058,6 +1062,9 @@ class AreaVi(Text):
              elide=None, nolinestop=None, step=''):
         """
         It returns an iterator of matches. It is based on the Text.search method.
+
+        for match, index0, index1 in area.find('pattern'):
+            passs
         """
 
         count = IntVar()
@@ -1083,10 +1090,11 @@ class AreaVi(Text):
                 backwards=None, exact=None, regexp=None, nocase=None,
                 count=None, elide=None, nolinestop=None):
             
-        '''Standard search method, but with support for the nolinestop
+        """
+        Standard search method, but with support for the nolinestop
         option which is new in tk 8.5 but not supported by tkinter out
         of the box.
-        '''
+        """
     
         args = [self._w, 'search']
         if forwards: args.append('-forwards')
