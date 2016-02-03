@@ -585,7 +585,7 @@ class AreaVi(Text):
 
         self.rmsel('insert', 'insert +1c')
 
-    def clchar(self):
+    def del_char(self):
         """
         It deletes a char from the cursor position.
         """
@@ -715,7 +715,7 @@ class AreaVi(Text):
         REG   = '|'.join(chars)
         self.seek_next_up(REG)
     
-    def cllin(self):
+    def del_line(self):
         """
         It deletes the cursor position line, makes the cursor visible
         and adds a separator to the undo stack.
@@ -773,7 +773,7 @@ class AreaVi(Text):
         self.delete_ranges('sel')
 
 
-    def clsel(self):
+    def del_sel(self):
         """
         It deletes all selected text.
         """
