@@ -129,9 +129,7 @@ class ISearch(object):
         pos0 = '%s.0' % line
         pos1 = '%s.0 lineend' % line
         area.tag_add('sel', pos0, pos1)
-        area.inset(pos0)
-        area.see('insert')
-
+        area.seecur(pos0)
         self.index = self.index - 1
 
     
@@ -145,12 +143,12 @@ class ISearch(object):
         pos0 = '%s.0' % line
         pos1 = '%s.0 lineend' % line
         area.tag_add('sel', pos0, pos1)
-        area.inset(pos0)
-        area.see('insert')
+        area.seecur(pos0)
 
         self.index = self.index + 1
 
 install = ISearch
+
 
 
 

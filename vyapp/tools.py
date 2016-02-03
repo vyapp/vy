@@ -25,8 +25,7 @@ def set_line(area, line):
     sys.stderr.write(area.filename + '\n')
     root.note.select(get_area_tab_index(area))
     area.focus()
-    area.inset('%s.0' % int(line))
-    area.seecur()
+    area.setcur(line)
 
 def set_status_msg(msg):
     """
@@ -59,6 +58,7 @@ def set_status_mode(mode):
 
     from vyapp.app import root
     root.status.set_mode(mode)
+
 
 
 

@@ -18,12 +18,6 @@ class AreaVi(Text):
 
         default_filename:   
         The default path file where contents are saved.        
-
-        It implements a system of modes to handle
-        tkinter keypresses events. 
-        
-        The method hook can be used to bind events
-        to callbacks mapped to specific modes.
         """
 
         Text.__init__(self, *args, **kwargs)
@@ -36,7 +30,6 @@ class AreaVi(Text):
         # The file's path and name.
         self.filename = default_filename
 
-        # Shouldn't it be LAST_COL and MSEL?
         self.mark_set('(CURSOR_LAST_COL)', '1.0')
         self.mark_set('(RANGE_SEL_MARK)', '1.0')
         self.mark_set('(BLOCK_SEL_MARK)', '1.0')
@@ -230,7 +223,7 @@ class AreaVi(Text):
         a, b  = self.index(index).split('.')
         return int(a), int(b)
 
-    def setcur(self, line, col):
+    def setcur(self, line, col='0'):
         """
         It is used to set the cursor position at a given index using line 
         and col. 
@@ -238,16 +231,6 @@ class AreaVi(Text):
 
         self.mark_set('insert', '%s.%s' % (line, col))
         self.see('insert')
-
-    def setcurl(self, line):
-        """
-        It is used to set the cursor position at a given
-        line. It sets the cursor at line.0 position.
-        """
-
-        self.mark_set('insert', '%s.%s' % (line, '0'))
-        self.see('insert')
-
 
     def indint(self, index):
         """ 
@@ -270,22 +253,16 @@ class AreaVi(Text):
         a, b  = self.indref('insert')
         return int(a), int(b)
 
-    def seecur(self):
+    def seecur(self, index):
         """
-        Just a shorthand for area.see('insert')
-        which makes the cursor visible wherever it is in.
-        """
+        Just a shorthand for:
 
-        self.see('insert')
-
-    def inset(self, index):
-        """
-        Just a shorthand for area.mark_set('insert', index)
-        so we spare some typing.
+        area.mark_set('insert', index)
+        area.see('insert')
         """
 
         self.mark_set('insert', index)
-
+        self.see('insert')
 
     def is_end(self):
         """
@@ -1545,6 +1522,8 @@ class AreaVi(Text):
                 continue
             self.replace_range(data, index, 'insert')
             yield
+
+
 
 
 
