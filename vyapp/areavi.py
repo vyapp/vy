@@ -1355,6 +1355,15 @@ class AreaVi(Text):
 
     def is_tag_range(self, name, index0, index1):
         """
+        Consider:
+        
+        area.tag_add('tag', '2.0', '5.0')
+
+        # It returns True.
+        area.is_tag_range('tag', '2.0', '3.0')
+
+        # It returns False.
+        area.is_tag_range('tag', '1.0', '2.0')
         """ 
 
         ranges = self.tag_ranges(name)
@@ -1364,16 +1373,25 @@ class AreaVi(Text):
                 return ranges[ind].string, ranges[ind + 1].string
 
     def is_in_range(self, index, index0, index1):
+        """
+        It returns True if index0 <= index <= index1 otherwise
+        it returns False.
+        """
+
         index2 = self.min(index0, index1)
         index3 = self.max(index0, index1)
 
         r1     = self.compare(index2, '<=', index)
         r2     = self.compare(index3, '>=', index)
 
-        if r1 and r2: return True
-        else: return False
+        return r1 and r2
 
     def is_subrange(self, index0, index1, index2, index3):
+        """
+        It returns True if index2 <= index0 <= index1 <= index2 otherwise
+        it returns False.
+        """
+
         r1 = self.is_in_range(index0, index2, index3)
         r2 = self.is_in_range(index1, index2, index3)
         return r1 and r2
@@ -1522,6 +1540,7 @@ class AreaVi(Text):
                 continue
             self.replace_range(data, index, 'insert')
             yield
+
 
 
 
