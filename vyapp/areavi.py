@@ -1517,30 +1517,36 @@ class AreaVi(Text):
             for indj in it:
                 yield indi, indj
     
-    def get_cursor_word(self):
+    def word_border(self):
+        """
+        This function returns two index's that are the
+        border delimiters of the closest word from the cursor..
         """
 
-        """
-
-        if self.compare('insert', '==', 'insert linestart'):
-            return ''
-
-        index = self.search(' ', 'insert', 
+        index0 = self.search('\W', 'insert', 
                                       stopindex='insert linestart',regexp=True, 
                                       backwards=True)
+        index1 = self.search('\W', 'insert', 
+                                      stopindex='insert lineend',regexp=True)
+        index0 = 'insert linestart' if not index0 else '%s +1c' % index0
+        index1 = 'insert lineend' if not index1 else index1
+        return index0, index1
 
-        if not index: index = 'insert linestart'
-        else: index = '%s +1c' % index
-        if self.compare(index, '==', 'insert'): return ''
-        data = self.get(index, 'insert')
-        return data, index
-    
-    def match_word(self, wid, delim=' '):
-        data, index = self.get_cursor_word()
-        for area, (chk, pos0, pos1) in self.find_all(wid, '[^ ]*%s[^ ]+' % data):
-            yield chk, index
+    def match_word(self, wid):
+        """
+        """
+
+        index0, index1 = self.word_border()
+        data           = self.get(index0, 'insert')
+        # it has to be rewritten.
+        seq            = self.find_all(wid, '\w*%s\w*' % data)
+        for area, (chk, pos0, pos1) in seq:
+            yield chk, index0
 
     def complete_word(self, wid):
+        """
+        """
+
         seq   = self.match_word(wid)
         table = []
 
@@ -1553,6 +1559,7 @@ class AreaVi(Text):
             self.delete(index, 'insert')
             self.insert(index, data)
             yield
+
 
 
 
