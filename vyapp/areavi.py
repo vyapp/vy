@@ -1402,6 +1402,10 @@ class AreaVi(Text):
         return r1 and r2
 
     def replace_range(self, data, index0, index1):
+        """
+        Replace the text in the range index0, index1 for data.
+        """
+
         self.delete(index0, index1)
         self.insert(index0, data)
 
@@ -1425,6 +1429,7 @@ class AreaVi(Text):
 
     def join_ranges(self, name, sep=''):
         """     
+        Join ranges of text that corresponds to a tag defined by name using a seperator.
         """
 
         data = ''
@@ -1436,6 +1441,8 @@ class AreaVi(Text):
 
     def get_ranges(self, name):
         """
+        It returns an iterator whose elements are ranges of text that
+        corresponds to the ranges of the tag name.
         """
 
         ranges = self.tag_ranges(name)
@@ -1519,6 +1526,8 @@ class AreaVi(Text):
     
     def complete_word(self, wid):
         """
+        It returns an iterator with possible word completions
+        for a word that is close to the cursor.
         """
 
         index = self.search('\W', 'insert', 
@@ -1534,10 +1543,9 @@ class AreaVi(Text):
                 table.append(data)
             else:
                 continue
-
-            self.delete(index, 'insert')
-            self.insert(index, data)
+            self.replace_range(data, index, 'insert')
             yield
+
 
 
 
