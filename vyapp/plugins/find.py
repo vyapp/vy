@@ -93,7 +93,7 @@ class Find(object):
                         ('NORMAL', '<Control-Q>'    , lambda event: self.set_data()),
                         ('NORMAL', '<Key-Q>'        , lambda event: self.area.tag_remove(self.TAG_FOUND, '1.0', 'end')),
                         ('NORMAL', '<Control-Left>' , lambda event: self.area.map_matches(self.TAG_FOUND, self.area.collect('sel', self.regex))),
-                        ('NORMAL', '<Shift-Left>' , lambda event: self.area.rep_match_ranges('sel', self.regex, self.data)),
+                        ('NORMAL', '<Shift-Left>' , lambda event: self.area.replace_ranges('sel', self.regex, self.data)),
                         ('NORMAL', '<Control-Right>', lambda event: self.area.replace(self.regex, self.data, 'insert')),
                         ('NORMAL', '<Shift-Up>'     , lambda event: self.area.replace_all(self.regex, self.data, '1.0', 'insert')),
                         ('NORMAL', '<Shift-Right>'  , lambda event: self.area.replace_all(self.regex, self.data)),
@@ -117,6 +117,7 @@ class Find(object):
 
 
 install = Find
+
 
 
 

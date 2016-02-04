@@ -959,10 +959,11 @@ class AreaVi(Text):
 
     def collect(self, name, regex, *args, **kwargs):
         """
-        It returns an interator corresponding to calling AreaVi.find
-        between the ranges of the tag specified by name.
-
-        You shouldn't delete or insert data while performing this operation.
+        The code below would find for 'PATTERN' in all selected text of an
+        AreaVi instance:
+        
+        for data, pos0, pos1 in area.collect('sel', 'PATTERN'):
+            pass
         """
         
         # It should be built on top of nextrange.
@@ -972,11 +973,10 @@ class AreaVi(Text):
             for indj in seq: 
                 yield indj
 
-    def rep_match_ranges(self, name, regex, data, index='1.0', stopindex='end', 
+    def replace_ranges(self, name, regex, data, index='1.0', stopindex='end', 
                            *args, **kwargs):
         """
-        It replaces all occurrences of regex inside a tag ranges
-        for data.
+        It replaces all occurrences of regex in the ranges that are mapped to tag name.
 
         name     - Name of the tag.
         regex    - The pattern.
@@ -1540,11 +1540,6 @@ class AreaVi(Text):
                 continue
             self.swap(data, index, 'insert')
             yield
-
-
-
-
-
 
 
 
