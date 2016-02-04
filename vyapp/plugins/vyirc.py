@@ -64,6 +64,11 @@ Mode: IRC
 Event: <Control-c>
 Description: Used to open a private chat channel with an user.
 
+Mode: IRC
+Event: <F1>
+Description: Used to pick up a different position in the AreaVi instance where to drop
+the text coming from the irc network.
+
 Commands
 ========
 
@@ -169,13 +174,13 @@ class IrcMode(object):
     def set_common_irc_commands(self, area, con):
         area.add_mode('IRC', opt=True)
         area.chmode('IRC')
-        area.hook('GAMMA', '<Key-i>', 
-                lambda event: event.widget.chmode('IRC'))
-        area.hook('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con))
-        area.hook('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con))
-        area.install(('IRC', '<Control-q>', lambda event: self.complete_nick(event.widget)))
-        area.install(('IRC', '<Control_R>', lambda event: self.reset(event.widget)))
-        area.install(('IRC', '<Control_L>', lambda event: self.reset(event.widget)))
+        area.install(('GAMMA', '<Key-i>', lambda event: event.widget.chmode('IRC')),
+                     ('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con)),
+                     ('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con)),
+                     ('IRC', '<Control-q>', lambda event: self.complete_nick(event.widget)),
+                     ('IRC', '<Control_R>', lambda event: self.reset(event.widget)),
+                     ('IRC', '<Control_L>', lambda event: self.reset(event.widget)),
+                     ('IRC', '<F1>', lambda event: event.widget.mark_set('CHDATA', 'insert')))
 
     def complete_nick(self, area):
         """
@@ -248,6 +253,7 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
 
 
 

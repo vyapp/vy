@@ -139,6 +139,7 @@ Table of Contents
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
       * [Query an user](#query-an-user)
+      * [Set IRC network output position](#query-an-user)
       * [Create shortcut functions for IRC networks](#create-shortcut-functions-for-irc-networks)
   * [The ibash plugin](#the-ibash-plugin)
       * [First steps](#first-steps)
@@ -1976,6 +1977,15 @@ It will create a new tab whose title is the user's nick.
 
 ***
 
+### Set IRC network output position
+
+The keycommand to reset the position where data coming from
+the IRC network is dropped on is:
+
+    <F1>
+
+In IRC mode.
+
 ### Create shortcut functions for IRC networks
 
 It is possible to create shortcut functions to connect to IRC networks by importing the IrcMode class
@@ -2704,6 +2714,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
