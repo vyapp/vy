@@ -251,9 +251,8 @@ class AreaVi(Text):
 
     def indcur(self):
         """
-        It returns the actual line, col for the
-        cursor position. So, the values can be
-        manipulated with integers.
+        It returns two integers that corresponds to the cursor
+        position line and col.
         """
 
         a, b  = self.indref('insert')
@@ -274,11 +273,6 @@ class AreaVi(Text):
         """
         This function returns True if the cursor is positioned
         at the end of the AreaVi instance.
-        
-        This is useful when implementing other methods.
-        Like those from visual block selection to avoid
-        the cursor jumping to odd places when it achieves
-        the end of the text region.
         """
 
         # I have to use 'end -1l linestart' since it seems the 'end' tag
@@ -341,15 +335,16 @@ class AreaVi(Text):
     
     def start_selection(self):
         """  
-        It sets the mark sel_start to the insert position.
-
-        So, when sel_up, sel_down, sel_right, sel_left are
-        called then they will select a region from this mark.  
+        Start range selection.
         """
 
         self.mark_set('(RANGE_SEL_MARK)', 'insert')
     
     def start_block_selection(self):
+        """
+        Start block selection.
+        """
+
         self.mark_set('(BLOCK_SEL_MARK)', 'insert')
 
     def rmsel(self, index0, index1):
@@ -528,7 +523,7 @@ class AreaVi(Text):
 
     def block_right(self):
         """
-        It adds a block selection to the right.
+        It adds/removes block selection to the right.
         """
 
         a, b   = self.indref('(CURSOR_LAST_COL)')
@@ -546,7 +541,7 @@ class AreaVi(Text):
                 
     def clear_selection(self):
         """
-        It removes 'sel' tag from all ranges.
+        Unselect all text.
         """
 
         try:
@@ -556,14 +551,14 @@ class AreaVi(Text):
 
     def select_char(self):
         """
-        it adds 'sel' a char ahead the cursor position.
+        Select the cursor char.
         """
 
         self.addsel('insert', 'insert +1c')
     
     def unselect_char(self):
         """
-        It removes 'sel' a char from the cursor position.
+        Unselect the cursor char.
         """
 
         self.rmsel('insert', 'insert +1c')
@@ -598,7 +593,7 @@ class AreaVi(Text):
 
     def sel_text_start(self):
         """
-        It selects all text from insert position to the start position
+        It selects all text from cursor position to the start position
         of the text.
 
         """
@@ -609,7 +604,7 @@ class AreaVi(Text):
 
     def sel_text_end(self):
         """
-        It selects all text from the insert position to the end of the text.
+        It selects all text from the cursor position to the end of the text.
         """
 
         index = self.index('insert')
@@ -634,7 +629,7 @@ class AreaVi(Text):
     
     def sel_line_start(self):
         """
-        It adds selection from the insert position to the 
+        It adds selection from the cursor position to the 
         start of the line.
         """
 
@@ -644,7 +639,7 @@ class AreaVi(Text):
 
     def sel_line_end(self):
         """
-        It selects all text from insert position to the end of the line.
+        It selects all text from the cursor position to the end of the line.
         """
 
         index = self.index('insert')
@@ -1553,6 +1548,7 @@ class AreaVi(Text):
                 continue
             self.swap(data, index, 'insert')
             yield
+
 
 
 
