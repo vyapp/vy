@@ -100,7 +100,7 @@ class AreaVi(Text):
 
         pass
 
-    def hook(self, id, seq, callback):
+    def hook(self, id, seq, callback, add=True):
         """
         This method is used to hook a callback to a sequence
         specified with its mode:
@@ -117,11 +117,14 @@ class AreaVi(Text):
 
         MODE_Y = 'mode%s%s' % (self, id)
 
-        self.bind_class(MODE_Y, seq, callback, add=True)
+        self.bind_class(MODE_Y, seq, callback, add)
 
 
-    def unhook(self, id, seq, callback=None):
+    def unhook(self, id, seq):
         """
+        The opposite of AreaVi.hook.
+    
+        area.unhook('mode' '<Event>')
         """
 
         MODE_Y = 'mode%s%s' % (self, id)
@@ -137,11 +140,14 @@ class AreaVi(Text):
                          ('MODE3', '<Event3>', callback3), ...)
         """
 
-        for id, seq, callback in args:
-            self.hook(id, seq, callback)
+        for ind in args:
+            self.hook(*ind)
 
     def uninstall(self, *args):
         """
+        The opposite of AreaVi.install.
+
+        area.uninstall(('mode', '<Event>'), ...)
         """
 
         for id, seq, callback in args:
@@ -612,7 +618,7 @@ class AreaVi(Text):
 
     def go_text_start(self):
         """
-        It goes to the first position in the text.
+        Place the cursor at the beginning of the file.
         """
 
         self.mark_set('insert', '1.0')
@@ -620,7 +626,7 @@ class AreaVi(Text):
     
     def go_text_end(self):
         """
-        It goes to the end of the text.
+        Place the cursor at the end of the file.
         """
 
         self.mark_set('insert', 'end linestart')
@@ -647,7 +653,7 @@ class AreaVi(Text):
 
     def go_line_start(self):
         """
-        It goes to the beginning of the cursor position line.
+        Place the cursor at the beginning of the line.
         """
 
         self.mark_set('insert', 'insert linestart')
@@ -655,28 +661,28 @@ class AreaVi(Text):
 
     def go_line_end(self):
         """
-        It goes to the end of the cursor position line.
+        Place the cursor at the end of the line.
         """
 
         self.mark_set('insert', 'insert lineend')
 
     def go_next_word(self):
         """
-        It puts the cursor on the beginning of the next word.
+        Place the cursor at the next word.
         """
 
         self.seek_next_down('\M')
 
     def go_prev_word(self):
         """
-        It puts the cursor in the beginning of the previous word.
+        Place the cursor at the previous word.
         """
 
         self.seek_next_up('\M')
 
     def go_next_sym(self, chars):
         """
-        It puts the cursor on the next occurency of the symbols in chars.
+        Place the cursor at the next occurrence of one of the chars.
         """
 
         chars = map(lambda ind: escape(ind), chars)
@@ -685,7 +691,7 @@ class AreaVi(Text):
 
     def go_prev_sym(self, chars):
         """
-        It puts the cursor on the previous occurency of:
+        Place the cursor at the previous occurrence of one of the chars.
         """
 
         chars = map(lambda ind: escape(ind), chars)
@@ -694,7 +700,7 @@ class AreaVi(Text):
     
     def del_line(self):
         """
-        It deletes the cursor position line, makes the cursor visible
+        It deletes the cursor line, makes the cursor visible
         and adds a separator to the undo stack.
         """
 
@@ -705,8 +711,7 @@ class AreaVi(Text):
 
     def cpsel(self):
         """
-        It copies to the clip board ranges of text
-        that are selected and removes the selection.
+        Copy selected text to the clipboard.
         """
 
         data = self.join_ranges('sel')
@@ -717,8 +722,7 @@ class AreaVi(Text):
 
     def cpblock(self):
         """
-        It copies blocks of text that are selected
-        with a separator '\n'.
+        Copy ranges of selected text using the separator '\n'.
         """
         data = self.join_ranges('sel', '\n')
         self.clipboard_clear()
@@ -728,7 +732,7 @@ class AreaVi(Text):
 
     def ctblock(self):
         """
-        It cuts blocks of text with a separator '\n'.
+        Cut ranges of selected text using the separator '\n'.
         """
 
         data = self.join_ranges('sel', '\n')
@@ -760,8 +764,7 @@ class AreaVi(Text):
 
     def ptsel(self):
         """
-        It pastes over the cursor position data from the clipboard 
-        and adds a separator.
+        Paste text at the cursor position.
         """
 
         data = self.clipboard_get()
@@ -771,8 +774,7 @@ class AreaVi(Text):
 
     def ptsel_after(self):
         """
-        It pastes one line after the cursor position data from clipboard
-        and adds a separator.
+        Paste text one line down the cursor position.
         """
 
         data = self.clipboard_get()
@@ -782,8 +784,7 @@ class AreaVi(Text):
 
     def ptsel_before(self):
         """
-        It pastes data from the cursor position one line before the cursor
-        position and adds a separator.
+        Paste text one line up the cursor position.
         """
 
         data = self.clipboard_get()
@@ -793,14 +794,14 @@ class AreaVi(Text):
 
     def select_line(self):
         """
-        It adds selection to the cursor position line.
+        It adds selection to the cursor line.
         """
 
         self.tag_add('sel', 'insert linestart', 'insert +1l linestart')
 
     def unselect_line(self):
         """
-        It removes selection from the cursor position line.
+        It removes selection from the cursor line.
         """
 
         self.tag_remove('sel', 'insert linestart', 'insert +1l linestart')
@@ -808,18 +809,26 @@ class AreaVi(Text):
 
     def toggle_line_selection(self):
         """
+        Toggle line selection.
         """
 
         self.toggle_sel('insert linestart', 'insert +1l linestart')
 
     def toggle_sel(self, index0, index1):
         """
+        Toggle selection in the range defined by index0 and index1.
         """
 
         self.toggle_range('sel', index0, index1)
 
 
     def toggle_range(self, name, index0, index1):
+        """
+        Toggle tag name in the range defined by index0 and index1.
+        It means it adds a tag name to the range index0 and index1 if there is no
+        tag mapped to that range otherwise it removes the tag name from the range.
+        """
+
         index2 = index0
         index0 = self.min(index0, index1)
         index1 = self.max(index2, index1)
@@ -832,7 +841,7 @@ class AreaVi(Text):
 
     def select_word(self):
         """
-        It selects a word from the cursor position.
+        Select the closest word from the cursor.
         """
 
         index1 = self.search('\W', 'insert', regexp=True, stopindex='insert linestart', backwards=True)
@@ -841,6 +850,10 @@ class AreaVi(Text):
                      'insert lineend' if not index2 else index2)
     
     def select_seq(self):
+        """
+        Select the closest sequence of non blank characters from the cursor.
+        """
+
         index1 = self.search(' ', 'insert', regexp=True, stopindex='insert linestart', backwards=True)
         index2 = self.search(' ', 'insert', regexp=True, stopindex='insert lineend')
         self.tag_add('sel', 'insert linestart' if not index1 else '%s +1c' % index1, 
@@ -869,7 +882,7 @@ class AreaVi(Text):
 
     def scroll_page_down(self):
         """
-        It goes one page down.
+        It scrolls one page down.
         """
         self.yview(SCROLL, 1, 'page')
         self.mark_set('insert', '@0,0')
@@ -877,7 +890,7 @@ class AreaVi(Text):
 
     def scroll_page_up(self):
         """
-        It goes one page up.
+        It scrolls one page up.
         """
 
         self.yview(SCROLL, -1, 'page')
@@ -913,7 +926,7 @@ class AreaVi(Text):
 
     def shift_sel_right(self, width, char):
         """
-
+        Shift ranges of selected text to the right.
         """
         srow, scol = self.indref('sel.first')
         erow, ecol = self.indref('sel.last')
@@ -921,7 +934,7 @@ class AreaVi(Text):
     
     def shift_sel_left(self, width):
         """
-
+        Shift ranges of selected text to the left.
         """
 
         srow, scol = self.indref('sel.first')
@@ -1540,6 +1553,7 @@ class AreaVi(Text):
                 continue
             self.swap(data, index, 'insert')
             yield
+
 
 
 
