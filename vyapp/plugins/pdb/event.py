@@ -1,5 +1,5 @@
 from untwisted.network import spawn, xmap
-from untwisted.utils.shrug import FOUND
+from untwisted.splits import FOUND
 from re import search
 
 def handle_found(device, data):
@@ -17,6 +17,7 @@ def handle_found(device, data):
 
 def install(device):
     xmap(device, FOUND, handle_found)
+
 
 
 

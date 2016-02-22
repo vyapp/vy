@@ -85,8 +85,8 @@ channels = A list of channels to join in.
 
 from untwisted.plugins.irc import Irc, Misc, send_cmd, send_msg
 from untwisted.network import Spin, xmap, spawn, zmap
-from untwisted.utils.stdio import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
-from untwisted.utils.shrug import Shrug, FOUND
+from untwisted.iostd import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
+from untwisted.splits import Shrug, FOUND
 from vyapp.plugins import ENV
 from vyapp.ask import Ask
 from vyapp.app import root
@@ -253,6 +253,7 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
 
 
 

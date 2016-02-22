@@ -100,7 +100,7 @@ Description: Ask for the user to type a command to be dropped to the bash interp
 
 from untwisted.network import core, xmap, cmap, READ, WRITE, Device
 from untwisted.tkinter import extern
-from untwisted.utils.iofd import *
+from untwisted.iofile import *
 from vyapp.app import root
 from vyapp.tools import set_status_msg
 from vyapp.ask import Ask
@@ -186,6 +186,7 @@ class Process(object):
 extern(root)
 process = Process()
 install = process
+
 
 
 

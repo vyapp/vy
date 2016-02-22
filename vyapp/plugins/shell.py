@@ -31,7 +31,7 @@ Description: Send the cursor line to the process and insert a line down.
 """
 
 from untwisted.expect import Expect, LOAD, CLOSE
-from untwisted.usual import xmap
+from untwisted.network import xmap
 from vyapp.ask import Ask
 from vyapp.tools import set_status_msg
 from vyapp.exe import exec_quiet
@@ -114,6 +114,7 @@ class Command(object):
         expect.destroy()
 
 install = Command
+
 
 
 

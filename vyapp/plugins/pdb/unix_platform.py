@@ -108,8 +108,8 @@ Description: Terminate the process.
 from untwisted.network import core, cmap, READ, Device
 from untwisted.tkinter import extern
 from subprocess import Popen, PIPE, STDOUT
-from untwisted.utils.iofd import *
-from untwisted.utils.shrug import *
+from untwisted.iofile import *
+from untwisted.splits import Shrug, FOUND
 from vyapp.plugins.pdb import event
 from vyapp.tools import set_status_msg, set_line
 from vyapp.ask import Ask
@@ -282,6 +282,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
