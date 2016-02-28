@@ -94,7 +94,7 @@ from vyapp.areavi import AreaVi
 
 H1 = '<%s> %s\n' 
 H2 = 'Topic :%s\n' 
-H3 = '>>> %s has left %s <<<\n' 
+H3 = '>>> %s has left %s :%s<<<\n' 
 H4 = '>>> %s has joined %s <<<\n' 
 H5 = '>>> %s is now known as %s <<<\n'
 H6 = 'Peers:%s\n'
@@ -213,8 +213,7 @@ class IrcMode(object):
         l1 = lambda con, nick, user, host, msg: area.insee('CHDATA', H1 % (nick, msg))
         l2 = lambda con, addr, nick, msg: area.insee('CHDATA', H2 % msg)
 
-        # it may be missing a msg='' parameter.
-        l3 = lambda con, nick, user, host: area.insee('CHDATA', H3 % (nick, chan))
+        l3 = lambda con, nick, user, host, msg: area.insee('CHDATA', H3 % (nick, chan, msg))
 
         l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
@@ -253,10 +252,5 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
-
-
-
-
-
 
 
