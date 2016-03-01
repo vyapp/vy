@@ -105,7 +105,7 @@ Description: Terminate the process.
 
 """
 
-from untwisted.network import core, cmap, READ, Device
+from untwisted.network import core, READ, Device
 from untwisted.tkinter import extern
 from subprocess import Popen, PIPE, STDOUT
 from untwisted.iofile import *
@@ -282,6 +282,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
