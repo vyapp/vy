@@ -88,15 +88,6 @@ A video
 
 https://youtu.be/0bBKOFdQKzo
 
-Install from pip
-================
-    
-    pip install untwisted
-    pip install pygments
-    pip install jedi
-    pip install vy
-
-
 Install from git
 ================
 
@@ -148,6 +139,7 @@ My nick there is Tau.
 
 Facebook group:
 https://www.facebook.com/groups/525968624207147/
+
 
 
 
