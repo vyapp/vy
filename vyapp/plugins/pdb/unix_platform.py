@@ -109,7 +109,7 @@ from untwisted.network import core, READ, Device
 from untwisted.tkinter import extern
 from subprocess import Popen, PIPE, STDOUT
 from untwisted.iofile import *
-from untwisted.splits import Shrug, FOUND
+from untwisted.splits import Shrug
 from vyapp.plugins.pdb import event
 from vyapp.tools import set_status_msg, set_line
 from vyapp.ask import Ask
@@ -182,6 +182,8 @@ class Pdb(object):
 
     def start_debug(self, area):
         self.kill_debug_process()
+        self.delete_all_breakpoints()
+        self.clear_breakpoint_map()
         self.create_process(['python', '-u', '-m', 'pdb', area.filename])
 
         set_status_msg('Debug started !')
@@ -192,6 +194,9 @@ class Pdb(object):
         ARGS = shlex.split(ARGS)
 
         self.kill_debug_process()
+        self.delete_all_breakpoints()
+        self.clear_breakpoint_map()
+
         self.create_process(ARGS)
         
         set_status_msg('Debug started ! Args: %s' % ask.data)
@@ -282,6 +287,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
