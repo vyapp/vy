@@ -86,7 +86,7 @@ channels = A list of channels to join in.
 from untwisted.plugins.irc import Irc, Misc, send_cmd, send_msg
 from untwisted.network import Spin, xmap, spawn, zmap
 from untwisted.iostd import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
-from untwisted.splits import Shrug
+from untwisted.splits import Terminator
 from vyapp.plugins import ENV
 from vyapp.ask import Ask
 from vyapp.app import root
@@ -127,7 +127,7 @@ class IrcMode(object):
 
         Stdin(con)
         Stdout(con)
-        Shrug(con)
+        Terminator(con)
         Irc(con)
 
         xmap(con, CLOSE, lambda con, err: lose(con))
@@ -202,7 +202,7 @@ class IrcMode(object):
         self.misc = Misc(con)
         xmap(con, '*JOIN', l1)
         xmap(con, 'PING', l2)
-        xmap(con, Shrug.FOUND, l3)
+        xmap(con, Terminator.FOUND, l3)
         xmap(con, 'PMSG', self.deliver_user_msg)
 
     def set_common_chan_commands(self, area, con, chan):
@@ -252,6 +252,7 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
 
 
 

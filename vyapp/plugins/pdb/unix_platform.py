@@ -109,7 +109,7 @@ from untwisted.network import core, READ, Device
 from untwisted.tkinter import extern
 from subprocess import Popen, PIPE, STDOUT
 from untwisted.iofile import *
-from untwisted.splits import Shrug
+from untwisted.splits import Terminator
 from vyapp.plugins.pdb import event
 from vyapp.tools import set_status_msg, set_line
 from vyapp.ask import Ask
@@ -155,7 +155,7 @@ class Pdb(object):
         self.stdin  = Device(self.child.stdin)
     
         Stdout(self.stdout)
-        Shrug(self.stdout, delim='\n')
+        Terminator(self.stdout, delim='\n')
         Stdin(self.stdin)
         event.install(self.stdout)
 
@@ -287,6 +287,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 

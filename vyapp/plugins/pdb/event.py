@@ -1,5 +1,5 @@
 from untwisted.network import spawn, xmap
-from untwisted.splits import Shrug
+from untwisted.splits import Terminator
 from re import search
 
 def handle_found(device, data):
@@ -16,7 +16,8 @@ def handle_found(device, data):
         break
 
 def install(device):
-    xmap(device, Shrug.FOUND, handle_found)
+    xmap(device, Terminator.FOUND, handle_found)
+
 
 
 
