@@ -2097,7 +2097,7 @@ Issue the command below to have the SUDO_ASKPASS permanently set.
 echo 'export SUDO_ASKPASS=path/askpass' >> ~/.bashrc
 ~~~
 
-Where path is the folder where the askpass script is located. It is generally located in /usr/bin.
+The path is the folder where askpass script is located. It is generally located in /usr/bin.
 
 Now it is possible to run commands with:
 
@@ -2716,6 +2716,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
