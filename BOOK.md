@@ -2076,28 +2076,30 @@ the region that needs to be sent to the bash interpreter then press the keycomma
 
 ### Run a command as root
 
-Sometimes it is interesting to run commands as root, for such it is needed to have set the environment variable below:
+Sometimes it is interesting to run commands as root, for such it is needed to have set the 
+environment variable SUDO_ASKPASS.
+
+Check out if it is already set with:
 
 ~~~
-SUDO_ASKPASS
+echo $SUDO_ASKPASS
 ~~~
 
-It is needed to have an askpass program installed. It is possible to get one by installing the ssh-askpass program.
-In debian like systems you would do:
-
+If it is not set then it is needed to check where vy askpass script is located.
 
 ~~~
-apt-get install ssh-askpass
+whereis askpass
 ~~~
 
-After having installed the askpass program then it is needed to set the environment variable as follows:
+Issue the command below to have the SUDO_ASKPASS permanently set.
 
 ~~~
-echo 'export SUDO_ASKPASS=/usr/bin/ssh-askpass' >> ~/.bashrc
+echo 'export SUDO_ASKPASS=path/askpass' >> ~/.bashrc
 ~~~
 
-It will make the environment variable be set whenever the bash reads its bashrc file. 
-When everything is set then it is possible to run commands as root using the command below:
+Where path is the folder where the askpass script is located. It is generally located in /usr/bin.
+
+Now it is possible to run commands with:
 
 ~~~
 sudo command
@@ -2714,6 +2716,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
