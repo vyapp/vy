@@ -73,27 +73,16 @@ can be accessed from a Python interpreter instance or from vy.
     help(vyapp.plugins.plugin_name)
 
 
-Screenshots
-===========
+**Tabs, Panes, Terminal, Python Autocompletion, Fuzzy Search, Incremental Search, Irc Client, File Manager**
 
-**Tabs, panes, terminal-like, Python autocompletion**
 ![screenshot-1](screenshot-1.jpg)
 
-**Dynamically extending the editor through Python**
-![screenshot-2](screenshot-2.jpg)
 
-
-A video
+Install
 =======
 
-https://youtu.be/0bBKOFdQKzo
-
-Install from git
-================
-
+**Note:** 
 vy requires Python 2.7 to run.
-
-This is a short script to install vy from the git repository.
 
     pip install pygments
     pip install jedi
@@ -107,15 +96,14 @@ This is a short script to install vy from the git repository.
     cd /tmp/vy-code
     python setup.py install
 
-Once you have installed vy and its dependencies,
-run in a terminal the following command:
+
+Once it is installed, run in a terminal:
 
     vy file1 file2 ...
 
 Or just:
 
     vy
-
 
 Upgrade
 =======
@@ -129,22 +117,14 @@ The vy Book
 [BOOK.md](BOOK.md)
 
 
-Help
-====
+Support
+=======
 
-I hang out at irc.freenode.org in the channel #vy.
-My nick there is Tau.
+#### Freenode
 
-Facebook group:
-https://www.facebook.com/groups/525968624207147/
+**Address:** irc.freenode.org
 
-
-
-
-
-
-
-
+**Channel:** #untwisted
 
 
 
