@@ -2031,7 +2031,11 @@ from commands that are sent to the bash interpreter.
 
 First of all, pick up an AreaVi instance that you want to read output from bash commands or processes.
 Once you have decided where to read output from commands, switch the focus to the AreaVi instance
-then press <Tab> in NORMAL mode. After setting a set of output targets then it is possible to send
+then press in NORMAL mode:
+
+    <Tab> 
+
+After setting a set of output targets then it is possible to send
 commands to the bash interpreter and read the commands output.
 
 ### Send a code line
@@ -2716,6 +2720,7 @@ area.chmode('NEW_MODE_NAME')
 ~~~
 
 ### The AreaVi.ACTIVE attribute
+
 
 
 
