@@ -15,23 +15,8 @@ There is no need for a mouse with vy, everything is made from the keyboard. Ther
 you spare a lot of time when programming or just editing some text. vy has a handy set of key commands that
 permits you to quickly switch the cursor to a given position. 
 
-There is a smart feature that permits making the cursor jump to positions in the visible region of the file 
-that match a given pattern. Such a plugin spares a lot of time in almost all situations.
-
-vy has a plugin that implements a mode to quickly jump backwards/forwards to a given character. It is possible
-to go through some blocks of code very fast as well as quickly edit some pieces of text. 
-
 The set of keys used in vy was carefully chosen to be handy although it is possible to make vy look like vim or emacs since
 there is a high level of modularity in vy.
-
-There are key commands for highlighting pairs of (), [], {} as well as selecting the text between these pairs. 
-It is very useful when playing with function definitions in some languages like LISP. There are
-key commands to make the cursor jump words backwards/forwards, selecting a word, selecting a line, selecting
-all text, everything that vim does and a lot more but with a better scheme of keys.
-
-There is a powerful scheme for finding patterns of text as well as replacing ranges of text with regular 
-expressions. It is possible to select regions of text then perform matching operations inside such regions; 
-Such a feature lets you format some documents more easily with no expense of time.
 
 There are ways to perform fuzzy searches whose input is a set of words, with the effect of finding lines which contain the words in any order;
 Such a feature turns it simple browsing documentation of functions/commands as well as finding specific sections in large files.
@@ -67,15 +52,37 @@ like vimscript or emacs LISP; since vy is written in Python, you use Python to d
 All built-in functions are well documented, which simplifies the process of plugin development as well as personalizing stuff.
 The plugins are documented: the documentation can be accessed from vy by dropping Python code to the interpreter.
 
-The plugins implement keycommands or Python functions. The complete reference for a set of key commands that a plugin implements 
-can be accessed from a Python interpreter instance or from vy.
+The vy plugins are documented, the complete reference for a set of key commands that a plugin implements 
+can be accessed easily from vy.
     
-    help(vyapp.plugins.plugin_name)
-
-
-**Tabs, Panes, Terminal, Python Autocompletion, Fuzzy Search, Incremental Search, Irc Client, File Manager**
-
 ![screenshot-1](screenshot-1.jpg)
+
+Features
+========
+
+- **Python Debugger**
+
+- **Terminal**
+
+- **Auto Completion**
+
+- **Fuzzy Search**
+
+- **Incremental Search**
+
+- **Tabs/Panes**
+
+- **Irc Client** 
+
+- **File Manager**
+
+- **Self documenting**
+
+- **Extensible with Python**
+
+- **Syntax highlighting for 300+ languages**
+
+- **Handy Shortcuts**
 
 
 Install
@@ -105,9 +112,7 @@ Or just:
 
     vy
 
-Upgrade
-=======
-
+**Note:**
 As vy is in development there may occur some changes to the vyrc file format, it is important to remove
 your ~/.vy directory before a new installation in order to upgrade to a new version.
 
@@ -125,6 +130,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #untwisted
+
 
 
 
