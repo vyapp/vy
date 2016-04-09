@@ -120,7 +120,7 @@ import shlex
 import sys
 
 class Pdb(object):
-    def __call__(self, area, setup={'background':'blue', 'foreground':'yellow'}):
+    def __call__(self, area, python='python2', setup={'background':'blue', 'foreground':'yellow'}):
         area.add_mode('PDB')
 
         area.install(('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
@@ -140,7 +140,8 @@ class Pdb(object):
                     ('PDB', '<Key-B>', lambda event: self.send('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
                     ('PDB', '<Key-b>', lambda event: self.send('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
 
-        self.setup = setup
+        self.python = python
+        self.setup  = setup
 
     def __init__(self):
         self.child = None
@@ -184,13 +185,13 @@ class Pdb(object):
         self.kill_debug_process()
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
-        self.create_process(['python', '-u', '-m', 'pdb', area.filename])
+        self.create_process([self.python, '-u', '-m', 'pdb', area.filename])
 
         set_status_msg('Debug started !')
 
     def start_debug_args(self, area):
         ask  = Ask(area)
-        ARGS = 'python -u -m pdb %s %s' % (area.filename, ask.data)
+        ARGS = '%s -u -m pdb %s %s' % (self.python, area.filename, ask.data)
         ARGS = shlex.split(ARGS)
 
         self.kill_debug_process()
@@ -287,6 +288,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
