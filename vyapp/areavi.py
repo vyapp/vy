@@ -570,7 +570,22 @@ class AreaVi(Text):
 
         self.edit_separator()
         self.delete('insert', 'insert +1c')
-    
+
+    def echo(self, data):
+        self.insert('insert', data)
+
+    def echo_num(self, keysym_num):
+        try:
+            self.echo(chr(keysym_num))
+        except ValueError:
+            pass
+
+    def backspace(self):
+        """
+        """
+
+        self.delete('insert -1c', 'insert')
+
     def do_undo(self):
         """
         It does undo.
@@ -1548,6 +1563,7 @@ class AreaVi(Text):
                 continue
             self.swap(data, index, 'insert')
             yield
+
 
 
 
