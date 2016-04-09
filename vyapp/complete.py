@@ -7,11 +7,13 @@ class CompleteBox(MatchBox):
         MatchBox.__init__(self, *args, **kwargs)
         self.completions = completions
         self.area        = area
+        self.focus_set()
+        self.grab_set()
+        self.feed()
 
         self.bind('<Key>', lambda event: area.echo_num(event.keysym_num), add=True)
         self.bind('<BackSpace>', lambda event: area.backspace(),  add=True)
         self.bind('<BackSpace>', self.check_cursor_position, add=True)
-
         self.bind('<Key>', self.update_selection, add=True)
         self.bind('<Return>', self.complete, add=True)
         self.bind('<Escape>', lambda event: self.master.destroy(), add=True)
@@ -28,6 +30,10 @@ class CompleteBox(MatchBox):
         data = self.area.get(self.master.start_index, 'insert')
         MatchBox.match_elem(self, data)
 
+    def elem_desc(self):
+        item, = self.curselection()
+        return self.completions[item].docstring()
+
     def complete(self, event):
         item = self.curselection()
         word = self.get(item)
@@ -42,23 +48,12 @@ class CompleteBox(MatchBox):
         if x != m or (m == x and y < n):
             self.master.destroy()
 
-# class CompleteBoxWithDescription(CompleteBox):
-    # def __init__(self, area, completions, *args, **kwargs):
-        # CompleteWindow.__init__(self, completions, *args, **kwargs)
-        # text = Text(master=self)
-        # text.pack(fill=BOTH, expand=True)
-
 class CompleteWindow(FloatingWindow):
     def __init__(self, area, completions, *args, **kwargs):
         FloatingWindow.__init__(self, area, *args, **kwargs)
 
         self.box = CompleteBox(area, completions, self)
-        self.box.feed()
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
-        self.box.focus_set()
-        self.box.grab_set()
-
-        self.area.wait_window(self)
 
 
 
