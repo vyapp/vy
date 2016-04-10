@@ -11,40 +11,33 @@ class Tern(object):
     def completions(self, data, line, col, filename):
         pass
 
+    def build(self, data):
+        pass
+
 class JavascriptCompleteWindow(CompleteWindow):
     """
     """
 
-    def __init__(self, area, *args, **kwargs):
+    def __init__(self, tern, area, *args, **kwargs):
         source      = self.area.get('1.0', 'end')
         line        = self.area.indcur()[0]
         size        = len(self.area.get('insert linestart', 'insert'))
-
-        script      = Script(source, line, size, self.area.filename)
-        completions = script.completions()
+        completions = tern.completions(source, line, size, area.filename)
 
         CompleteWindow.__init__(self, area, completions, *args, **kwargs)
-        self.area.wait_window(self)
-
-    def build(self, data):
-        pass
-
-    def make_request(self):
-        pass
 
 class JavascriptCompletion(object):
     def __init__(self, area, port, path):
-        self.port = port
-        self.path = path
+        self.tern = Tern(port, path)
 
-        x = lambda event: area.hook('INSERT', '<Control-Key-period>', show_window, add=False)
-        area.hook(-1, '<<Load-text/x-python>>', x, add=False)
-        area.hook(-1, '<<Save-text/x-python>>', x, add=False)
-        area.hook(-1, '<<LoadData>>', lambda event: area.unhook('INSERT', '<Control-Key-period>'))
+        trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
+                  lambda event: JavascriptCompleteWindow(self.tern, event.widget), add=False)
 
-    def show_window(event):
-        event.widget.after(100, lambda: JavascriptCompleteWindow(event.widget))
+        area.install((-1, '<<Load-text/x-python>>', trigger),
+        (-1, '<<Save-text/x-python>>', trigger), (-1, '<<LoadData>>', lambda event: 
+                                      area.unhook('INSERT', '<Control-Key-period>')))
 
-install = Tern
+install = JavascriptCompletion
+
 
 

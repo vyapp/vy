@@ -5,10 +5,11 @@ from Tkinter import *
 class CompleteBox(MatchBox):
     def __init__(self, area, completions, *args, **kwargs):
         MatchBox.__init__(self, *args, **kwargs)
+
         self.completions = completions
         self.area        = area
         self.focus_set()
-        self.grab_set()
+        # self.grab_set()
         self.feed()
 
         self.bind('<Key>', lambda event: area.echo_num(event.keysym_num), add=True)
@@ -51,6 +52,7 @@ class CompleteBox(MatchBox):
 class CompleteWindow(FloatingWindow):
     def __init__(self, area, completions, *args, **kwargs):
         FloatingWindow.__init__(self, area, *args, **kwargs)
+        self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
