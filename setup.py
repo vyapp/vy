@@ -14,9 +14,11 @@ setup(name="vy",
                 "vyapp.plugins.pdb"],
       # package_dir={'vyapp':'vyapp'},
       scripts=['vy', 'askpass'],
-      package_data={'vyapp': ['vyrc', join('vyapp', 'vyrc')]},
+      package_data={'vyapp': ['vyrc'], 'vyapp.plugins':['tern-config']},
       author="Iury O. G. Figueiredo",
       author_email="ioliveira@id.uff.br")
+
+
 
 
 

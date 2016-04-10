@@ -1,10 +1,61 @@
+"""
+Overview
+========
+
+This module implements javascript autocompletion using the tern javascript library.
+
+See: http://ternjs.net
+
+Usage
+=====
+
+This plugin places a tern-config file in the user home directory, such a file is used by tern
+to load plugins like nodejs, requirejs, angularjs, as well as other options for tern library.
+
+The ~/.tern-config file would look like:
+
+    {
+      "libs": [
+        "browser",
+        "jquery"
+      ],
+      "loadEagerly": [
+        "importantfile.js"
+      ],
+      "plugins": {
+        "requirejs": {
+          "baseURL": "./",
+          "paths": {}
+        },
+        "node": {}
+      }
+    }
+    
+
+In order to have completion working, press <Control-key-period> in INSERT mode.
+
+
+Key-Commands
+============
+
+Mode: INSERT
+Event: <Control-Key-period>
+Description: Open the completion window with possible python words for
+completion.
+"""
+
 from vyapp.complete import CompleteWindow
 from subprocess import Popen
 import json
 import requests
 import sys
-import os
 import atexit
+from os.path import expanduser, join, exists, dirname
+from os import getcwd
+from shutil import copyfile
+
+filename = join(expanduser('~'), '.tern-config')
+if not exists(filename): copyfile(join(dirname(__file__), 'tern-config'), filename)
 
 class Option(object):
     def __init__(self, name, docstring=''):
@@ -18,7 +69,7 @@ class Tern(object):
         atexit.register(self.child.terminate)
 
     def parse_port(self):
-        with open(os.path.join(os.getcwd(), '.tern-port'), 'r') as fd:
+        with open(join(getcwd(), '.tern-port'), 'r') as fd:
             return int(fd.read())
 
     def port(self):
@@ -71,4 +122,6 @@ class JavascriptCompletion(object):
                                       area.unhook('INSERT', '<Control-Key-period>')))
 
 install = JavascriptCompletion
+
+
 
