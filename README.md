@@ -93,6 +93,7 @@ vy requires Python 2.7 to run.
 
     pip install pygments
     pip install jedi
+    npm install tern
 
     cd /tmp
     git clone https://github.com/iogf/vy.git vy-code
@@ -130,6 +131,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #untwisted
+
 
 
 
