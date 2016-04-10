@@ -19,13 +19,23 @@ Mode: NORMAL
 Event: <Key-slash> 
 Description: Select text between pairs of ( ) [] {} when the cursor
 is placed over one of these characters.
+
+Mode: NORMAL
+Event: <Control-Key-slash> 
+Description: Select text between pairs of ( ) [] {} including the pairs when the cursor
+is placed over one of these characters.
 """
 
 
-def install(area):
-    area.install(('NORMAL', '<Key-slash>', lambda event: event.widget.select_case_pair(('(', ')'))),
-                 ('NORMAL', '<Key-slash>', lambda event: event.widget.select_case_pair(('[', ']'))),
-                 ('NORMAL', '<Key-slash>', lambda event: event.widget.select_case_pair(('{', '}'))))
+def install(area, max=2500):
+    area.install(('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data(max, ('(', ')'))),
+                 ('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data(max, ('[', ']'))),
+                 ('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data(max, ('{', '}'))),
+                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair(max, ('(', ')'))),
+                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair(max,  ('[', ']'))),
+                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair(max, ('{', '}'))),)
+
+
 
 
 

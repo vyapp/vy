@@ -13,11 +13,11 @@ in order to highligh its matching pair.
 """
 
 def install(area, setup={'background':'pink', 'foreground':'black'}, 
-            MAX=1500, TIME=500):
+            max=1500, timeout=500):
 
     def cave(tag, args):
-        area.after(TIME, cave, tag, args)
-        index = area.case_pair(MAX, *args)
+        area.after(timeout, cave, tag, args)
+        index = area.case_pair('insert', max, *args)
 
         if not index: 
             area.tag_remove(tag, '1.0', 'end')
@@ -31,6 +31,7 @@ def install(area, setup={'background':'pink', 'foreground':'black'},
     cave('_paren_', ('(', ')'))
     cave('_bracket_', ('[', ']'))
     cave('_brace_', ('{', '}'))
+
 
 
 

@@ -1224,12 +1224,12 @@ class AreaVi(Text):
             index = self.index('%s +%sc' % (index, size))
 
 
-    def get_paren_search_dir(self, start, end):
+    def get_paren_search_dir(self, index, start, end):
         """
 
         """
 
-        char  = self.get('insert', 'insert +1c')
+        char  = self.get(index, '%s +1c' % index)
         if char == start:
             return False
         elif char == end:
@@ -1237,12 +1237,12 @@ class AreaVi(Text):
         else:
             return None
 
-    def get_paren_search_sign(self, start, end):
+    def get_paren_search_sign(self, index, start, end):
         """
 
         """
 
-        char  = self.get('insert', 'insert +1c')
+        char  = self.get(index, '%s +1c' % index)
         if char == start:
             return '+'
         elif char == end:
@@ -1250,63 +1250,114 @@ class AreaVi(Text):
         else:
             return None
 
-    def select_case_pair(self, pair, MAX=1500):
-        """
-
-        """
-
-        index = self.case_pair(MAX, *pair)
+    def sel_matching_pair_data(self, max=1500, pair=('(', ')')):
+        index = self.case_pair('insert', max, *pair)
         if not index: return
-    
+
         min = self.min(index, 'insert')
-        if self.compare(min, '==', 'insert'): min = '%s +1c' % min
-    
         max = self.max(index, 'insert')
-        if self.compare(max, '==', 'insert'): min = '%s +1c' % min
-    
+        min = '%s +1c' % min
+
         self.tag_add('sel', min, max)
+
+    def sel_matching_pair(self, max=1500, pair=('(', ')')):
+        """
+        """
+
+        index = self.case_pair('insert', max, *pair)
+        if not index: return
+
+        min = self.min(index, 'insert')
+        max = self.max(index, 'insert')
+        max = '%s +1c' % max
+
+        self.tag_add('sel', min, max)
+
+    def sel_sexp_data(self, index, max=1500, pair=('(', ')')):
+        """
+
+        """
+
+        range = self.get_sexp_range(index, max, *pair)
+        if not range: return
     
-    def case_pair(self, max, start='(', end=')'):
+        index0, index1 = range
+        index0 = '%s +1c' % index0
+        self.tag_add('sel', index0, index1)
+
+    def sel_sexp(self, index, max=1500, pair=('(', ')')):
+        """
+
+        """
+
+        range = self.get_sexp_range(index, max, *pair)
+        if not range: return
+
+        index0, index1 = range
+        index1 = '%s +1c' % index1
+        self.tag_add('sel', index0, index1)
+
+    def get_sexp_range(self, index, max, start='(', end=')'):
+        """
+
+        """
+
+        index0 = self.search(start, regexp=False, index=index, backwards=True)
+        if not index0: return
+
+        index1 = self.search(end, regexp=False, index=index)
+        if not index1: return
+
+
+        index2 = self.case_pair(index0, max, start, end)
+        if not index2: return
+
+        index3 = self.case_pair(index1, max, start, end)
+        if not index3: return
+
+        if self.is_in_range(index, index0, index2):
+            return index0, index2
+        elif self.is_in_range(index, index3, index1):
+            return index3, index1
+        
+    def case_pair(self, index, max, start='(', end=')'):
         """
         Once this method is called, it returns an index for the next
         matching parenthesis or None if the char over the cursor
         isn't either '(' or ')'.
         """
 
-        dir = self.get_paren_search_dir(start, end)
+        dir = self.get_paren_search_dir(index, start, end)
 
         # If dir is None then there is no match.
         if dir == None: return ''
 
-        REG   = '\%s|\%s' % (start, end)
-        sign  = self.get_paren_search_sign(start, end)
+        sign  = self.get_paren_search_sign(index, start, end)
         count = 0
 
         # If we are searching fowards we don't need
         # to add 1c.
 
-        index = 'insert %s' % ('+1c' if dir else '')
+        index0 = '%s %s' % (index, '+1c' if dir else '')
         size  = IntVar(0)
 
         while True:
-            index = self.search(REG, index     = index,
-                                     stopindex = 'insert %s%sc' % (sign, max),
-                                     count     = size, 
-                                     backwards = dir, 
-                                     regexp    = True) 
+            index0 = self.search('\%s|\%s' % (start, end), index = index0,
+                                     stopindex = '%s %s%sc' % (index, sign, max), 
+                                     count = size, backwards = dir, regexp = True) 
 
-            if not index: return ''
+            if not index0: return ''
 
-            char  = self.get(index, '%s +1c' % index)
+            char  = self.get(index0, '%s +1c' % index0)
             count = count + (1 if char == start else -1)
 
             if not count: 
-                return index
+                return index0
 
             # When we are searching backwards we don't need
             # to set a character back because index will point
             # to the start of the match.
-            index = '%s %s' % (index, '+1c' if not dir else '')
+            index0 = '%s %s' % (index0, '+1c' if not dir else '')
                 
 
     def clear_data(self):
@@ -1563,6 +1614,7 @@ class AreaVi(Text):
                 continue
             self.swap(data, index, 'insert')
             yield
+
 
 
 
