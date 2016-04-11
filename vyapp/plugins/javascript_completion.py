@@ -65,7 +65,7 @@ class Option(object):
 class Tern(object):
     def __init__(self, path):
         self.path  = path
-        self.child = Popen([path])
+        self.child = Popen([path, '--persistent'])
         atexit.register(self.child.terminate)
 
     def parse_port(self):
@@ -122,6 +122,7 @@ class JavascriptCompletion(object):
                                       area.unhook('INSERT', '<Control-Key-period>')))
 
 install = JavascriptCompletion
+
 
 
 
