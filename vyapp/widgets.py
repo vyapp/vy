@@ -37,7 +37,11 @@ class FloatingWindow(Toplevel):
         self.area = area
         self.wm_overrideredirect(1)
         self.wm_geometry("+10000+10000")
+        self.bind('<Configure>', lambda event: self.update())
         self.update()
+
+    def update(self):
+        Toplevel.update(self)
 
         rootx                = self.area.winfo_rootx()
         rooty                = self.area.winfo_rooty()
@@ -57,6 +61,7 @@ class FloatingWindow(Toplevel):
                                                     line_height, win_height, area_height)
         hpos                 = self.calculate_horizontal_position(x, rootx, win_width, area_width)
 
+
         self.wm_geometry("+%d+%d" % (hpos, vpos))
 
     def calculate_vertical_position(self, y, rooty, line_height, win_height, area_height):
@@ -74,4 +79,5 @@ class FloatingWindow(Toplevel):
     def destroy(self):
         self.area.focus_set()
         Toplevel.destroy(self)
+
 
