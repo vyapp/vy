@@ -84,9 +84,10 @@ channels = A list of channels to join in.
 """
 
 from untwisted.plugins.irc import Irc, Misc, send_cmd, send_msg
-from untwisted.network import Spin, xmap, spawn, zmap
+from untwisted.network import Spin, xmap, spawn, zmap, once
 from untwisted.iostd import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
 from untwisted.splits import Terminator
+from vyapp.exe import exec_quiet
 from vyapp.plugins import ENV
 from vyapp.ask import Ask
 from vyapp.app import root
@@ -98,9 +99,10 @@ H3 = '>>> %s has left %s :%s<<<\n'
 H4 = '>>> %s has joined %s <<<\n' 
 H5 = '>>> %s is now known as %s <<<\n'
 H6 = 'Peers:%s\n'
-H7 = '>>> %s has quit (%s) <<<\n'
+H7 = '>>> Connection is down ! <<<\n'
 H8 = '>>> %s has kicked %s from %s (%s) <<<\n'
 H9 = '>>> %s sets mode %s %s on %s <<<\n'
+H10 = '>>> Connection is down ! <<<\n'
 
 class IrcMode(object):
     def __init__(self, addr, port, user, nick, irccmd, channels=[]):
@@ -108,7 +110,7 @@ class IrcMode(object):
         con.connect_ex((addr, int(port)))
         Client(con)
 
-        xmap(con, CONNECT, self.set_up_con)
+        xmap(con, CONNECT, self.on_connect)
         xmap(con, CONNECT_ERR, self.on_connect_err)
         self.misc      = None
         self.addr      = addr
@@ -122,8 +124,9 @@ class IrcMode(object):
         ask = Ask(area)
         send_cmd(con, ask.data)
 
-    def set_up_con(self, con):
+    def on_connect(self, con):
         area = root.note.create(self.addr)    
+        area.bind('<Destroy>', lambda event: send_cmd(con, 'QUIT :vyirc rules!'), add=True)
 
         Stdin(con)
         Stdout(con)
@@ -144,7 +147,16 @@ class IrcMode(object):
         self.set_common_irc_commands(area_chan, con)
         self.set_common_chan_commands(area_chan, con, chan)
         self.set_common_chan_handles(area_chan, con, chan)
-        area_chan.bind('<Destroy>', lambda event: send_cmd(con, 'PART %s' % chan))
+
+        # area_chan.bind('<Destroy>', lambda event: send_cmd(con, 'PART %s' % chan), add=True)
+        # on_close = lambda con, err: area_chan.unbind('<Destroy>')
+        # xmap(con, CLOSE, on_close)
+        # area_chan.bind('<Destroy>', lambda event: zmap(con, CLOSE, on_close), add=True)
+        # xmap(con, '*PART->%s' % chan, lambda con, *args: exec_quiet(area_chan.unbind, '<Destroy>'))
+        # xmap(con, '*PART->%s' % chan, lambda con, *args: zmap(con, CLOSE, on_close))
+
+        area_chan.bind('<Destroy>', lambda event: send_cmd(con, 'PART %s' % chan), add=True)
+        once(con, '*PART->%s' % chan, lambda con, *args: area_chan.unbind('<Destroy>'))
 
     def create_area(self, name):
         area = root.note.create(name)
@@ -218,15 +230,14 @@ class IrcMode(object):
         l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
         l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
         l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
+        l7 = lambda con, *args: area.insee('CHDATA', H7)
         l8 = lambda con, nick, user, host, target, msg: area.insee('CHDATA', H8 % (nick, target, chan, msg))
         l9 = lambda con, nick, user, host, mode, target='': area.insee('CHDATA', H9 % (nick, chan, mode, target))
 
-        def l7(con, nick, user, host, msg):
-            pass
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
                   ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), 
-                  ('*NICK', l5), ('353->%s' % chan, l6), ('QUIT', l7), 
+                  ('*NICK', l5), ('353->%s' % chan, l6), (CLOSE, l7), 
                   ('KICK->%s' % chan, l8), ('MODE->%s' % chan, l9))
 
         for key, value in events:
@@ -235,10 +246,10 @@ class IrcMode(object):
         def unset(con, *args):
             for key, value in events:
                 zmap(con, key, value)
-            zmap(con, '*PART->%s' % chan, unset)
 
-        xmap(con, '*PART->%s' % chan, unset)
+        once(con, '*PART->%s' % chan, unset)
         xmap(con, '*KICK->%s' % chan, unset)
+        area.bind('<Destroy>', lambda event: unset(con), add=True)
 
     def auto_join(self, con, *args):
         for ind in self.channels:
@@ -252,6 +263,7 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
 
 
 
