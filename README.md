@@ -130,7 +130,8 @@ Support
 
 **Address:** irc.freenode.org
 
-**Channel:** #untwisted
+**Channel:** #vy
+
 
 
 
