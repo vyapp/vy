@@ -75,6 +75,10 @@ import vyapp.plugins.find_sel
 autoload(vyapp.plugins.find_sel)
 
 
+import vyapp.plugins.tab_search
+autoload(vyapp.plugins.tab_search)
+
+
 import vyapp.plugins.shell
 autoload(vyapp.plugins.shell)
 
@@ -390,6 +394,9 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
+
+
 
 
 

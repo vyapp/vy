@@ -69,3 +69,4 @@ class Ask(Entry):
         self.area.focus_set()
 
 
+

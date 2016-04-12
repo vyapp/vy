@@ -37,9 +37,8 @@ class PanedHorizontalWindow(PanedWindow):
         for handle, args, kwargs in HANDLE:
             handle(area, *args, **kwargs)
 
-        area.pack(expand=True, side='left', fill=BOTH)
         area.focus_set()
-
+        area.pack(expand=True, side='left', fill=BOTH)
         self.add(frame)
 
         return area
@@ -138,7 +137,16 @@ class NoteVi(Notebook):
             for indj in indi:
                 base.load(*indj)
 
+    def find(self, func):
+        for ind in self.tabs():
+            if func(self.tab(ind, 'text')):
+                yield ind
 
+    def set_area_focus(self):
+        wid  = self.nametowidget(self.select())
+        seq  = AreaVi.areavi_widgets(wid)
+        area = seq.next()
+        area.focus_set()
 
 
 
