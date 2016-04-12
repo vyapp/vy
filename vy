@@ -21,7 +21,6 @@ if __name__ == '__main__':
 
     (opt, args) = parser.parse_args()
 
-    if not opt.debug: sys.stderr = Debug()
 
     root = App()
     lst  = eval(str(opt.lst))
@@ -29,7 +28,13 @@ if __name__ == '__main__':
 
     if not lst: root.note.create('None')
     else: root.note.load(*lst)
+    
+    # It first waits vyrc file to be loaded in order to set sys.stderr.
+    # Otherwise errors when loading the vyrc file will be missed as well as when
+    # attempting to load a non existing file.
+    if not opt.debug: sys.stderr = Debug()
     root.mainloop()
+
 
 
 
