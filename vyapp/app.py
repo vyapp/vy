@@ -58,7 +58,7 @@ class App(Tk):
         
         execfile(rc, ENV)
 
-        self.note = NoteVi(master=self)
+        self.note = NoteVi(master=self, takefocus=0)
         self.note.pack(expand=True, fill=BOTH)
         self.read_data = Frame()
 
@@ -69,4 +69,5 @@ class App(Tk):
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
 

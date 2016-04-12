@@ -41,7 +41,6 @@ class Ask(Entry):
 
         self.pack(side='left', expand=True, fill=BOTH)
         self.focus_set()
-
         self.bind('<Escape>', lambda event: self.restore_focus_scheme())
         self.bind('<Return>', lambda event: self.on_success())
 
@@ -56,7 +55,7 @@ class Ask(Entry):
         # It has to wait for self.frame otherwise it seems the marks
         # added by Stdout, the code_mark stuff disappear.
         # this was insanely crazy to find.
-        self.frame.grab_set()
+        self.grab_set()
         if wait: self.area.wait_window(self.frame)
 
     def on_success(self):
@@ -67,6 +66,8 @@ class Ask(Entry):
         self.frame.destroy()
         root.read_data.pack_forget()
         self.area.focus_set()
+
+
 
 
 
