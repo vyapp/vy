@@ -148,6 +148,17 @@ class NoteVi(Notebook):
         area = seq.next()
         area.focus_set()
 
+    def on(self, *args):
+        """
+        When the method Notebook.select is called it sets the application
+        focus to the last visible widget in the selected tab. This method
+        calls select then restores the focus. It may sound like a bug in tkinter.
+        """
+
+        wid=self.focus_get()
+        self.select(*args)
+        self.after(30, lambda : wid.focus_set())
+
 
 
 

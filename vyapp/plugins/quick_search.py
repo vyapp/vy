@@ -2,12 +2,11 @@
 
 """
 
-from vyapp.ask import Ask
+from vyapp.ask import Get
 from re import escape, split
 from vyapp.tools import set_status_msg
 
 class QuickSearch(object):
-
     def __init__(self, area):
         """
 
@@ -16,12 +15,8 @@ class QuickSearch(object):
         area.install(('NORMAL', '<Control-backslash>', lambda event: self.start_search()))
 
     def start_search(self):
-        ask = Ask(self.area, wait=False)
-        ask.bindtags(('Entry', ask, '.', 'all'))
-        ask.bind('<Control-k>', self.search_up)
-        ask.bind('<Control-j>', self.search_down)
-        ask.bind('<Key>', self.update_search)
-        ask.bind('<Destroy>', lambda event: self.area.tag_remove('sel', *self.start_range()))
+        ask = Get(self.area, on_next=self.search_down, on_prev=self.search_up, on_data=self.update_search, 
+                            on_done=lambda data: self.area.tag_remove('sel', *self.start_range()))
         set_status_msg('')
 
     def start_range(self):
@@ -49,12 +44,12 @@ class QuickSearch(object):
         else:
             return ('insert', '1.0')
 
-    def update_search(self, event):
+    def update_search(self, data):
         """
 
         """
 
-        pattern = self.make_pattern(event.widget.get())
+        pattern = self.make_pattern(data)
         set_status_msg('Pattern:%s' % pattern)
         range = self.start_range()
         self.area.tag_remove('sel', *range)
@@ -72,23 +67,23 @@ class QuickSearch(object):
         pattern = pattern + escape(data[-1])
         return pattern
 
-    def search_up(self, event):
+    def search_up(self, data):
         """
 
         """
 
-        pattern = self.make_pattern(event.widget.get())
+        pattern = self.make_pattern(data)
         range = self.range_up()
         self.area.tag_remove('sel', *self.start_range())
         self.area.pick_next_up('sel', pattern, *range)
 
         
-    def search_down(self, event):
+    def search_down(self, data):
         """
 
         """
 
-        pattern = self.make_pattern(event.widget.get())
+        pattern = self.make_pattern(data)
         range = self.range_down()
         self.area.tag_remove('sel', *self.start_range())
         self.area.pick_next_down('sel', pattern, *range)

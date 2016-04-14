@@ -5,69 +5,65 @@ This module implements basic input data scheme.
 from Tkinter import *
 from vyapp.app import root
 
-class Ask(Entry):
-    """
-    This class implements vy default input text scheme. Plugins that demand user input
-    could use this class to retrieve user's data in a consistent way. When this class constructor
-    is called it shows an entry widget at the bottom of the vy editor.
-
-    This widget takes the focus when the constructor is called. It is a useful
-    behavior in the common scenaries of vy editor.
-
-    When user presses <Escape> the widget is destroyed and the focus scheme
-    is restored. The same occurs when <Return> is pressed while the widget has focus.
-
-    Consider:
-    
-    def handle(area):
-        ask = Ask(area)
-        if ask.data:
-            print 'Success!'
-        else:
-            print 'Failure!'
-
-    In case of success it is if the user pressed <Return> then ask.data will be the user data
-    that was inputed otherwise it is ''.
-    """
-
-    def __init__(self, area, default_data ='', wait=True):
+class InputBox(object):
+    def __init__(self, area, default_data=''):
+        self.default_data = default_data
         self.area  = area
-        self.data  = '' 
         self.frame = Frame(root.read_data, border=1, padx=3, pady=3)
+
+        self.entry = Entry(self.frame)
+        self.entry.config(background='grey')
+        self.entry.focus_set()
+        self.entry.grab_set()
+
+        self.entry.insert('end', default_data)
+        self.entry.pack(side='left', expand=True, fill=BOTH)
         self.frame.pack(expand=True, fill=X)
-        
-        Entry.__init__(self, self.frame)
-        self.config(background='grey')
 
-        self.pack(side='left', expand=True, fill=BOTH)
-        self.focus_set()
-        self.bind('<Escape>', lambda event: self.restore_focus_scheme())
-        self.bind('<Return>', lambda event: self.on_success())
-
-        # It seems that if i put self.data = default_data
-        # after self.area.wait_window(self) it sets self.data
-        # after it has being set in self.ok then i get
-        # the insert mark being reset to insert again.
-
-        self.insert('end', default_data)
         root.read_data.pack(fill=X)
+        self.entry.bind('<Escape>', lambda event: self.done())
+        self.entry.bind('<Return>', lambda event: self.done())
 
-        # It has to wait for self.frame otherwise it seems the marks
-        # added by Stdout, the code_mark stuff disappear.
-        # this was insanely crazy to find.
-        self.grab_set()
-        if wait: self.area.wait_window(self.frame)
-
-    def on_success(self):
-        self.data = self.get()
-        self.restore_focus_scheme()
-
-    def restore_focus_scheme(self):
+    def done(self):
+        self.entry.destroy()
         self.frame.destroy()
         root.read_data.pack_forget()
         self.area.focus_set()
 
+class Get(InputBox):
+    def __init__(self, area, on_data, on_done, on_next, on_prev, default_data=''):
+        InputBox.__init__(self, area, default_data)
+        self.on_data = on_data
+        self.on_next = on_next
+        self.on_prev = on_prev
+        self.on_done = on_done
+        self.entry.bindtags(('Entry', self.entry, '.', 'all'))
+        self.entry.bind('<Control-k>', lambda event: self.on_prev(self.entry.get()))
+        self.entry.bind('<Control-j>', lambda event: self.on_next(self.entry.get()))
+        self.entry.bind('<Key>', lambda event: self.on_data(self.entry.get()))
 
+    def done(self):
+        data = self.entry.get()
+        InputBox.done(self)
+        self.on_done(data)
 
+class Ask(InputBox):
+    """
+    """
 
+    def __init__(self, area, default_data =''):
+        InputBox.__init__(self, area, default_data)
+        self.entry.bind('<Return>', lambda event: self.on_success())
+
+        self.data  = ''
+        self.area.wait_window(self.frame)
+
+    def on_success(self):
+        self.data = self.entry.get()
+        InputBox.done(self)
+
+    def __str__(self):
+        return self.data
+
+    __repr__ = __str__
 
