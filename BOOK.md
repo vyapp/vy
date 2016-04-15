@@ -151,7 +151,6 @@ Table of Contents
       * [Run a bash process as root](#run-a-bash-process-as-root)
       * [Starting processes](#starting-processes)
       * [Restart the bash process](#restart-the-bash-process)
-  * [The shell plugin](#the-shell-plugin)
   * [Misc](#misc)
       * [Word completion](#word-completion)
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
@@ -175,7 +174,6 @@ Table of Contents
       * [The AreaVi.save_data method](#the-areavisave_data-method)
       * [Vy Global Mode](#vy-global-mode)
       * [The AreaVi.add_mode and AreaVi.chmode methods](#the-areaviadd_mode-and-areavichmode-methods)
-      * [The AreaVi.ACTIVE attribute](#the-areaviactive-attribute)
 
 
 Introduction
@@ -2140,9 +2138,6 @@ Sometimes it is needed to restart the bash process, for such, switch to NORMAL m
 
     <Control-F1>
 
-The shell plugin
-================
-
 Misc
 ====
 
@@ -2718,17 +2713,6 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
-
-### The AreaVi.ACTIVE attribute
-
-
-
-
-
-
-
-
-
 
 
 
