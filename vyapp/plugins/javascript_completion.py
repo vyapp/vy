@@ -58,9 +58,13 @@ filename = join(expanduser('~'), '.tern-config')
 if not exists(filename): copyfile(join(dirname(__file__), 'tern-config'), filename)
 
 class Option(object):
-    def __init__(self, name, docstring=''):
-        self.name      = name
-        self.docstring = docstring
+    def __init__(self, name, type='', doc=''):
+        self.name = name
+        self.doc  = doc
+        self.type = type
+
+    def docstring(self):
+        return '%s\n%s' % (self.type, self.doc)
 
 class Tern(object):
     def __init__(self, path):
@@ -85,6 +89,8 @@ class Tern(object):
                     'query': { 
                                 'type': 'completions', 
                                 'file':filename,
+                                'docs': 'true',
+                                'types': 'true', 
                                 'end': {'line': line, 'ch':col},
                              },
 
@@ -99,7 +105,7 @@ class Tern(object):
 
     def build(self, data):
         data = json.loads(data)
-        return map(Option, data['completions'])
+        return map(lambda ind: Option(**ind), data['completions'])
 
 class JavascriptCompleteWindow(CompleteWindow):
     """
@@ -111,6 +117,7 @@ class JavascriptCompleteWindow(CompleteWindow):
         completions = tern.completions(source, line - 1, col, area.filename)
 
         CompleteWindow.__init__(self, area, completions, *args, **kwargs)
+        self.bind('<F1>', lambda event: sys.stdout.write('/*%s*/\n%s\n' % ('*' * 80, self.box.elem_desc())))
 
 class JavascriptCompletion(object):
     def __init__(self, area, tern):
@@ -122,6 +129,7 @@ class JavascriptCompletion(object):
                                       area.unhook('INSERT', '<Control-Key-period>')))
 
 install = JavascriptCompletion
+
 
 
 
