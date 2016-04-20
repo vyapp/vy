@@ -28,12 +28,13 @@ is placed over one of these characters.
 
 
 def install(area, max=2500):
-    area.install(('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data(max, ('(', ')'))),
-                 ('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data(max, ('[', ']'))),
-                 ('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data(max, ('{', '}'))),
-                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair(max, ('(', ')'))),
-                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair(max,  ('[', ']'))),
-                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair(max, ('{', '}'))),)
+    area.install(('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data('insert', max, ('(', ')'))),
+                 ('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data('insert', max, ('[', ']'))),
+                 ('NORMAL', '<Key-slash>', lambda event: event.widget.sel_matching_pair_data('insert', max, ('{', '}'))),
+                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair('insert', max, ('(', ')'))),
+                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair('insert', max,  ('[', ']'))),
+                 ('NORMAL', '<Control-Key-slash>', lambda event: event.widget.sel_matching_pair('insert', max, ('{', '}'))),)
+
 
 
 

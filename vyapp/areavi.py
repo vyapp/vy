@@ -1250,8 +1250,8 @@ class AreaVi(Text):
         else:
             return None
 
-    def sel_matching_pair_data(self, max=1500, pair=('(', ')')):
-        index = self.case_pair('insert', max, *pair)
+    def sel_matching_pair_data(self, index, max=1500, pair=('(', ')')):
+        index = self.case_pair(index, max, *pair)
         if not index: return
 
         min = self.min(index, 'insert')
@@ -1260,11 +1260,10 @@ class AreaVi(Text):
 
         self.tag_add('sel', min, max)
 
-    def sel_matching_pair(self, max=1500, pair=('(', ')')):
+    def sel_matching_pair(self, index, max=1500, pair=('(', ')')):
         """
         """
-
-        index = self.case_pair('insert', max, *pair)
+        index = self.case_pair(index, max, *pair)
         if not index: return
 
         min = self.min(index, 'insert')
@@ -1273,33 +1272,8 @@ class AreaVi(Text):
 
         self.tag_add('sel', min, max)
 
-    def sel_sexp_data(self, index, max=1500, pair=('(', ')')):
+    def get_matching_pair(self, index, max, start='(', end=')'):
         """
-
-        """
-
-        range = self.get_sexp_range(index, max, *pair)
-        if not range: return
-    
-        index0, index1 = range
-        index0 = '%s +1c' % index0
-        self.tag_add('sel', index0, index1)
-
-    def sel_sexp(self, index, max=1500, pair=('(', ')')):
-        """
-
-        """
-
-        range = self.get_sexp_range(index, max, *pair)
-        if not range: return
-
-        index0, index1 = range
-        index1 = '%s +1c' % index1
-        self.tag_add('sel', index0, index1)
-
-    def get_sexp_range(self, index, max, start='(', end=')'):
-        """
-
         """
 
         index0 = self.search(start, regexp=False, index=index, backwards=True)
@@ -1614,6 +1588,7 @@ class AreaVi(Text):
                 continue
             self.swap(data, index, 'insert')
             yield
+
 
 
 
