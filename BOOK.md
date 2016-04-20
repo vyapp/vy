@@ -75,6 +75,7 @@ Table of Contents
       * [Open a file in a new tab](#open-a-file-in-a-new-tab)
       * [Move focus one tab left](#move-focus-one-tab-left)
       * [Move focus one tab right](#move-focus-one-tab-right)
+      * [Move focus to a specific tab](#move-focus-to-a-specific-tab)
       * [Remove a tab](#remove-a-tab)
   * [Panes](#panes)
       * [Move focus one pane up](#move-focus-one-pane-up)
@@ -1047,6 +1048,17 @@ In order to move the focus one tab right, press the keycommand below:
     <Alt-p>
 
 ***
+
+### Move focus to a specific tab
+
+Imagine that there are a lot of opened tabs it would spend some time to get a specific tab 
+focused by moving focus one by one. This keycommand solves that problem.
+
+The keycommand below is used to move focus to a tab whose title matches a given pattern.
+
+    <Alt-i>
+
+It will open an input text area to type part of the tab title. 
 
 ### Remove a tab
 
@@ -2713,6 +2725,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
