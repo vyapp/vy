@@ -43,8 +43,11 @@ class PythonCompleteWindow(CompleteWindow):
 def install(area):
     trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
                         lambda event: PythonCompleteWindow(event.widget), add=False)
+    remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
+
     area.install((-1, '<<Load-text/x-python>>', trigger), (-1, '<<Save-text/x-python>>', trigger),
-                 (-1, '<<LoadData>>', lambda event: area.unhook('INSERT', '<Control-Key-period>')))
+                 (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
+
 
 
 

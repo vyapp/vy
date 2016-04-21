@@ -124,11 +124,15 @@ class JavascriptCompletion(object):
         self.tern = tern
         trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
                   lambda event: JavascriptCompleteWindow(self.tern, event.widget), add=False)
+        remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
         area.install((-1, '<<Load-application/x-javascript>>', trigger),
-        (-1, '<<Save-application/x-javascript>>', trigger), (-1, '<<LoadData>>', lambda event: 
-                                      area.unhook('INSERT', '<Control-Key-period>')))
+                     (-1, '<<Load-text/html>>', trigger), 
+                     (-1, '<<Save-application/x-javascript>>', trigger), 
+                     (-1, '<<Save-text/html>>', trigger), 
+                     (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 install = JavascriptCompletion
+
 
 
 
