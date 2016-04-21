@@ -24,6 +24,8 @@ completion.
 
 from vyapp.complete import CompleteWindow
 from jedi import Script
+from vyapp.plugins import ENV
+from vyapp.areavi import AreaVi
 import sys
 
 class PythonCompleteWindow(CompleteWindow):
@@ -48,6 +50,11 @@ def install(area):
     area.install((-1, '<<Load-text/x-python>>', trigger), (-1, '<<Save-text/x-python>>', trigger),
                  (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
+def active_python_completion():
+    AreaVi.ACTIVE.hook('INSERT', '<Control-Key-period>', 
+                  lambda event: PythonCompleteWindow(event.widget), add=False)
+
+ENV['active_python_completion'] = active_python_completion
 
 
 

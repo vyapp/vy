@@ -53,6 +53,8 @@ import atexit
 from os.path import expanduser, join, exists, dirname
 from os import getcwd
 from shutil import copyfile
+from vyapp.plugins import ENV
+from vyapp.areavi import AreaVi
 
 filename = join(expanduser('~'), '.tern-config')
 if not exists(filename): copyfile(join(dirname(__file__), 'tern-config'), filename)
@@ -131,7 +133,13 @@ class JavascriptCompletion(object):
                      (-1, '<<Save-text/html>>', trigger), 
                      (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
+def javascript_tools(tern):
+    active_completion = lambda :AreaVi.ACTIVE.hook('INSERT', '<Control-Key-period>', 
+                  lambda event: JavascriptCompleteWindow(tern, event.widget), add=False)
+    ENV['active_javascript_completion'] = active_completion
+
 install = JavascriptCompletion
+
 
 
 
