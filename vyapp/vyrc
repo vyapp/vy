@@ -86,6 +86,10 @@ autoload(vyapp.plugins.shell)
 import vyapp.plugins.url_source
 autoload(vyapp.plugins.url_source)
 
+# This plugin implements a keycommand to quickly load the user vyrc file
+# into the current AreaVi instance.
+import vyapp.plugins.editrc
+autoload(vyapp.plugins.editrc)
 
 # Python auto completion plugin using jedi.
 import vyapp.plugins.python_completion
@@ -397,6 +401,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
