@@ -849,25 +849,38 @@ class AreaVi(Text):
         else:
             self.tag_add(name, index0, index1)
 
-    def select_word(self):
+    def select_word(self, index='insert'):
         """
         Select the closest word from the cursor.
         """
 
-        index1 = self.search('\W', 'insert', regexp=True, stopindex='insert linestart', backwards=True)
-        index2 = self.search('\W', 'insert', regexp=True, stopindex='insert lineend')
-        self.tag_add('sel', 'insert linestart' if not index1 else '%s +1c' % index1, 
-                     'insert lineend' if not index2 else index2)
+        index1, index2 = self.get_word_range(index)
+        self.tag_add('sel', index1, index2)
     
-    def select_seq(self):
+    def get_word_range(self, index):
+        index1 = self.search('\W', index, regexp=True, stopindex='%s linestart' % index, backwards=True)
+        index2 = self.search('\W', index, regexp=True, stopindex='%s lineend' % index)
+        index1 = '%s linestart' % index if not index1 else '%s +1c' % index1
+        index2 = '%s lineend' % index if not index2 else index2
+        return index1, index2
+
+    def select_seq(self, index='insert'):
         """
         Select the closest sequence of non blank characters from the cursor.
         """
 
-        index1 = self.search(' ', 'insert', regexp=True, stopindex='insert linestart', backwards=True)
-        index2 = self.search(' ', 'insert', regexp=True, stopindex='insert lineend')
-        self.tag_add('sel', 'insert linestart' if not index1 else '%s +1c' % index1, 
-                     'insert lineend' if not index2 else index2)
+        index1, index2 = self.get_seq_range(index)
+        self.tag_add('sel', index1, index2)
+
+    def get_seq_range(self, index):
+        index1 = self.search(' ', index, regexp=True, stopindex='%s linestart' %index, backwards=True)
+        index2 = self.search(' ', index, regexp=True, stopindex='%s lineend' % index)
+        index1 = '%s linestart' % index if not index1 else '%s +1c' % index1
+        index2=  '%s lineend' % index if not index2 else index2
+        return index1, index2
+
+    def get_seq(self, index='insert'):
+        return self.get(*self.get_seq_range(index))
 
     def scroll_line_up(self):
         """
@@ -1588,6 +1601,8 @@ class AreaVi(Text):
                 continue
             self.swap(data, index, 'insert')
             yield
+
+
 
 
 
