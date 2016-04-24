@@ -2,6 +2,15 @@ from vyapp.exe import exec_quiet
 from vyapp.widgets import MatchBox, FloatingWindow
 from Tkinter import *
 
+class Option(object):
+    def __init__(self, name, type='', doc=''):
+        self.name = name
+        self.doc  = doc
+        self.type = type
+
+    def docstring(self):
+        return '%s\n%s' % (self.type, self.doc)
+
 class CompleteBox(MatchBox):
     def __init__(self, area, completions, *args, **kwargs):
         MatchBox.__init__(self, *args, **kwargs)
@@ -56,6 +65,7 @@ class CompleteWindow(FloatingWindow):
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+
 
 
 

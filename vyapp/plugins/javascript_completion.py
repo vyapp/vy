@@ -44,7 +44,7 @@ Description: Open the completion window with possible python words for
 completion.
 """
 
-from vyapp.complete import CompleteWindow
+from vyapp.complete import CompleteWindow, Option
 from subprocess import Popen
 import json
 import requests
@@ -58,15 +58,6 @@ from vyapp.areavi import AreaVi
 
 filename = join(expanduser('~'), '.tern-config')
 if not exists(filename): copyfile(join(dirname(__file__), 'tern-config'), filename)
-
-class Option(object):
-    def __init__(self, name, type='', doc=''):
-        self.name = name
-        self.doc  = doc
-        self.type = type
-
-    def docstring(self):
-        return '%s\n%s' % (self.type, self.doc)
 
 class Tern(object):
     def __init__(self, path):
@@ -139,6 +130,7 @@ def javascript_tools(tern):
     ENV['active_javascript_completion'] = active_completion
 
 install = JavascriptCompletion
+
 
 
 

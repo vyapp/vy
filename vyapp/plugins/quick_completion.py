@@ -21,7 +21,7 @@ Description: Complete word pattern based on all AreaVi instances.
 from vyapp.app import root
 
 
-class WordComplete(object):
+class QuickCompletion(object):
     """
 
     """
@@ -45,10 +45,7 @@ class WordComplete(object):
     def reset(self, area):
         self.seq = area.complete_word(root)
 
-install = WordComplete
-
-
-
+install = QuickCompletion
 
 
 

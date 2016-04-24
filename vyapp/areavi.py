@@ -1586,15 +1586,17 @@ class AreaVi(Text):
         for a word that is close to the cursor.
         """
 
-        index = self.search('\W', 'insert', 
+        index    = self.search('\W', 'insert', 
                                  stopindex='insert linestart',regexp=True, 
                                  backwards=True)
-        index = 'insert linestart' if not index else '%s +1c' % index
-        data  = self.get(index, 'insert')
-        if not data: return
+        index    = 'insert linestart' if not index else '%s +1c' % index
+        pattern  = self.get(index, 'insert')
+
+        if not pattern: return
+
         table = []
 
-        for area, (data, _, _) in self.find_all(wid, '\w*%s\w*' % data):
+        for area, (data, _, _) in self.find_all(wid, '\w*%s\w*' % pattern):
             if not data in table:
                 table.append(data)
             else:
@@ -1602,6 +1604,7 @@ class AreaVi(Text):
             self.swap(data, index, 'insert')
             yield
 
+        self.swap(pattern, index, 'insert')
 
 
 
