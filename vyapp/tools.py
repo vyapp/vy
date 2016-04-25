@@ -59,8 +59,12 @@ def set_status_mode(mode):
     from vyapp.app import root
     root.status.set_mode(mode)
 
-
-
-
+def match_sub_pattern(pattern, lst):
+    pattern = buffer(pattern)
+    for indi in lst:
+        for indj in xrange(0, len(pattern)):
+                if indi.startswith(pattern[indj:]):
+                    yield indi, indj
+                    
 
 
