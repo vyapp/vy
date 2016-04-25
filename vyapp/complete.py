@@ -28,17 +28,19 @@ class CompleteBox(MatchBox):
         self.bind('<Key>', self.update_selection, add=True)
         self.bind('<Return>', self.complete, add=True)
         self.bind('<Escape>', lambda event: self.master.destroy(), add=True)
+        self.pattern_index = self.calc_pattern_index()
 
-        pattern = area.get('%s linestart' % self.master.start_index, 
+    def calc_pattern_index(self):
+        pattern = self.area.get('%s linestart' % self.master.start_index, 
                                    '%s lineend' % self.master.start_index)
         seq     = match_sub_pattern(str(pattern), self.get(0, 'end'))
 
         try:
             match, index = next(seq)
         except StopIteration:
-            self.start_index = self.master.start_index
-        else:
-            self.start_index = '%s.%s' % (area.indint(self.master.start_index)[0], index)
+            return self.master.start_index
+        line = self.area.indint(self.master.start_index)[0]
+        return '%s.%s' % (line, index)
 
     def feed(self):
         for ind in self.completions:
@@ -49,7 +51,7 @@ class CompleteBox(MatchBox):
             self.match_elem()
 
     def match_elem(self):
-        data = self.area.get(self.start_index, 'insert')
+        data = self.area.get(self.pattern_index, 'insert')
         MatchBox.match_elem(self, data)
 
     def elem_desc(self):
@@ -59,13 +61,13 @@ class CompleteBox(MatchBox):
     def complete(self, event):
         item = self.curselection()
         word = self.get(item)
-        self.area.delete(self.start_index, 'insert')
-        self.area.insert(self.start_index, word)
+        self.area.delete(self.pattern_index, 'insert')
+        self.area.insert(self.pattern_index, word)
         self.master.destroy()
 
     def check_cursor_position(self, event):
         x, y = self.area.indcur()
-        m, n = self.area.indint(self.start_index)
+        m, n = self.area.indint(self.master.start_index)
 
         if x != m or (m == x and y < n):
             self.master.destroy()
@@ -77,6 +79,7 @@ class CompleteWindow(FloatingWindow):
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+
 
 
 
