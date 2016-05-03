@@ -299,9 +299,7 @@ import vyapp.plugins.clip_path
 autoload(vyapp.plugins.clip_path)
 
 
-# Used to jump back to the positions of the text whose cursor was on when the events
-# <Key-i> <Key-m> <Key-n> happened. So, if the user edits some part of the text then jumps
-# to other place, he can go back to the previous position by pressing <BackSpace>.
+# Used to remember an important position of the text and quickly switch back to it.
 import vyapp.plugins.quick_jumps
 autoload(vyapp.plugins.quick_jumps)
 
@@ -410,6 +408,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
