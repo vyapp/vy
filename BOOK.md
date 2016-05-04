@@ -1,7 +1,6 @@
 Table of Contents
 =================
 
-  * [Table of Contents](#table-of-contents)
   * [Introduction](#introduction)
   * [How to read this book?](#how-to-read-this-book)
   * [What is a modal editor?](#what-is-a-modal-editor)
@@ -87,6 +86,7 @@ Table of Contents
   * [Command line](#command-line)
       * [Opening files in panes/tabs from command line](#opening-files-in-panestabs-from-command-line)
   * [The screen search feature](#the-screen-search-feature)
+  * [ISearch](#isearch)
   * [Search scheme](#search-scheme)
       * [Set a search pattern](#set-a-search-pattern)
       * [Set a replacement pattern](#set-a-replacement-pattern)
@@ -1235,6 +1235,51 @@ You can switch back to NORMAL mode by pressing:
 The cursor will remain at the matched pattern position.
 
 ***
+
+ISearch
+=======
+
+Isearch is a vy plugin that permits to find occurrences of word patterns along the text
+regardless of the order of the words in the input.
+
+Consider an AreaVi instance with the following data:
+
+~~~
+word1 word2 word3 word4 word10
+word5 word6 word7 word8 word11 word2
+word1 word3 word7 word4 word15
+word3 word2 word5 word8
+~~~
+
+If you press the key command below in NORMAL mode.
+
+    <Key-0>
+
+It will show up an input box where it is possible to type text. 
+Type the following sequence of words then press <Return>.
+
+~~~
+word4 word1
+~~~
+
+It will highlight the first phrase in which the words 'word4' and 'word1' appear on.
+The keycommand below is used to highlight the next possible match:
+
+    <Control-j>
+
+While this one is used to go back to the previous match:
+
+    <Control-k>   
+
+
+If you give the input:
+
+~~~
+word2 word5 word11
+~~~
+
+It would highlight the first line in which the words 'word2', 'word5', 'word11' appear regardless of the order.
+Use the keycommands to highligh the next lines
 
 Search scheme
 =============
@@ -2726,6 +2771,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
