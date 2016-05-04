@@ -20,8 +20,8 @@ What you wanted to place the cursor over a line that appears the words?
     gaudy that mellow
     
 
-You would switch to ISEARCh mode by pressing <Key-0> then insert that pattern in the 
-input data field and press <Return>. It would place the cursor
+You would open an input box dialog by pressing <Key-0> in NORMAL mode then insert that pattern in the 
+input box field and press <Return>. It would place the cursor
 on the first occurrence of that pattern that is.
 
     mellowed to that tender light which heaven to gaudy
@@ -29,8 +29,8 @@ on the first occurrence of that pattern that is.
 If there are more occurrences of the set of patterns you can navigate through them 
 using Key-Commands. 
 
-The Key-Command <Key-j> places the cursor on the next less possible match. The way
-to go back to the previous possible match is using the Key-Command <Key-k>
+The Key-Command <Control-j> places the cursor on the next less possible match. The way
+to go back to the previous possible match is using the Key-Command <Control-k>
 
 
 Key-Commands
@@ -40,58 +40,46 @@ Mode: NORMAL
 Event: <Key-0>
 Description: Switch to ISEARCH mode.
 
-Mode: ISEARCH
-Event: <Key-j> 
+Event: <Control-j> 
 Description: Put the cursor on the next less possible match.
 
-Mode: ISEARCH
-Event: <Key-k>
+Event: <Control-k>
 Description: Put the cursor on the previous possible match.
 """
 
-from vyapp.ask import Ask
+from vyapp.ask import Edit
 from vyapp.tools import set_status_msg
 from itertools import permutations, product, groupby
 from re import escape
 
 class ISearch(object):
     def __init__(self, area):
-        """
-
-        """
-        area.add_mode('ISEARCH')
-        area.install(('NORMAL', '<Key-0>', lambda event: self.set_data(event.widget)),
-                        ('ISEARCH', '<Key-j>', lambda event: self.go_down(event.widget)),
-                        ('ISEARCH', '<Key-k>', lambda event: self.go_up(event.widget)))
-
+        self.area = area
+        area.install(('NORMAL', '<Key-0>', lambda event: 
+             Edit(area, on_data=self.start, on_next=lambda data: 
+                 self.go_down(), on_prev=lambda data: self.go_up(), 
+                     on_done=lambda data: self.area.tag_remove('sel', '1.0', 'end'))))
 
         self.seq   = []
         self.index = -1
 
-    def set_data(self, area):
+    def start(self, data):
         """
 
         """
 
         self.seq   = []
         self.index = -1
-        ask        = Ask(area)
-        if not ask.data: return
-
-        data     = ask.data.split(' ')
-        find     = lambda ind: area.find(escape(ind), '1.0', step='+1l')
-        self.seq = self.match_possible_regions(find, data)
-
-        area.chmode('ISEARCH')
-
+        data       = data.split(' ')
+        find       = lambda ind: self.area.find(escape(ind), '1.0', step='+1l linestart')
+        self.seq   = self.match_possible_regions(find, data)
         if not self.seq:
-            self.no_match(area)
+            self.no_match()
         else:
-            self.go_down(area)
+            self.go_down()
     
-    def no_match(self, area):
+    def no_match(self):
         set_status_msg('No pattern found!')
-        area.chmode('NORMAL')
 
     def match_possible_regions(self, find, data):
         regions = []
@@ -118,7 +106,7 @@ class ISearch(object):
         return matches
 
 
-    def go_up(self, area):
+    def go_up(self):
         """
 
         """
@@ -128,12 +116,13 @@ class ISearch(object):
         line = self.seq[self.index - 1][1]
         pos0 = '%s.0' % line
         pos1 = '%s.0 lineend' % line
-        area.tag_add('sel', pos0, pos1)
-        area.seecur(pos0)
+        self.area.tag_remove('sel', '1.0', 'end')
+        self.area.tag_add('sel', pos0, pos1)
+        self.area.seecur(pos0)
         self.index = self.index - 1
 
     
-    def go_down(self, area):
+    def go_down(self):
         """
 
         """
@@ -142,18 +131,12 @@ class ISearch(object):
         line = self.seq[self.index + 1][1]
         pos0 = '%s.0' % line
         pos1 = '%s.0 lineend' % line
-        area.tag_add('sel', pos0, pos1)
-        area.seecur(pos0)
+        self.area.tag_remove('sel', '1.0', 'end')
+        self.area.tag_add('sel', pos0, pos1)
+        self.area.seecur(pos0)
 
         self.index = self.index + 1
 
 install = ISearch
-
-
-
-
-
-
-
 
 
