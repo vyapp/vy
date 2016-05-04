@@ -74,8 +74,6 @@ Features
 
 - **Irc Client** 
 
-- **File Manager**
-
 - **Self documenting**
 
 - **Extensible with Python**
@@ -94,15 +92,8 @@ vy requires Python 2.7 to run.
     pip install pygments
     pip install jedi
     npm install tern
-
-    cd /tmp
-    git clone https://github.com/iogf/vy.git vy-code
-    git clone https://github.com/iogf/untwisted.git untwisted-code
-
-    cd /tmp/untwisted-code
-    python setup.py install
-    cd /tmp/vy-code
-    python setup.py install
+    pip install untwisted
+    pip install vy
 
 
 Once it is installed, run in a terminal:
@@ -131,6 +122,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
