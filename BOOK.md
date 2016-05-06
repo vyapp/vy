@@ -974,8 +974,12 @@ It spares some time in some occasions.
 
 ### Select a range of text in JUMP_NEXT mode
 
-When in JUMP_NEXT mode it is possible to add selection from the cursor position
-to the next match position by keeping the Control key pressed.
+When in JUMP_NEXT mode it is possible to press:
+
+    <Control-v>
+
+It will select the range of text between the initial cursor position to the current cursor position.
+It drops a range selection mark when it enters JUMP_NEXT mode.
 
 ***
 
@@ -1006,9 +1010,12 @@ Then get in INSERT mode.
 
 ### Select a range of text in JUMP_BACK mode
 
-When in JUMP_BACK mode it is possible to keep the Control key pressed
-to get the range of text between the cursor position and the previous occurrence
-of the char.
+When in JUMP_BACK mode it is possible to press:
+
+    <Control-v>
+
+It will select the range of text between the initial cursor position to the current cursor position.
+It drops a range selection mark when it enters JUMP_BACK mode.
 
 ***
 
@@ -2771,6 +2778,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 

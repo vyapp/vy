@@ -44,18 +44,16 @@ Event: <Return>
 Description: Switch to INSERT mode.
 
 Mode: JUMP_NEXT
-Event: <Control-Key>
-Description: It adds/removes selection from the cursor position to the first occurrence of the 
-printable char that corresponds to the pressed key.
+Event: <Control-v>
+Description: It adds/removes selection from initial cursor position to the insert position.
 
 Mode: JUMP_BACK
 Event: <Return>
 Description: Switch to INSERT mode.
 
 Mode: JUMP_BACK
-Event: <Control-Key>
-Description: It adds/removes selection from the cursor position to the previous occurrence of the 
-printable char that corresponds to the pressed key.
+Event: <Control-v>
+Description: It adds/removes selection from initial cursor position to the insert position.
 """
 
 def get_char(num):
@@ -66,40 +64,44 @@ def get_char(num):
     else:
         return char
 
-def sel_next(area, num):
-    char = get_char(num)
-    index0 = area.index('insert')
-    index1 = area.seek_next_down(char, regexp=False)
-    if index1: area.toggle_sel(index0, index1[1])
-
-def sel_back(area, num):
-    char = get_char(num)
-    index0 = area.index('insert')
-    index1 = area.seek_next_up(char, regexp=False)
-    if index1: area.toggle_sel(index0, index1[0])
-
-def jump_next(area, num):
-    char = get_char(num)
-    area.seek_next_down(char, regexp=False)
-
-def jump_back(area, num):
-    char = get_char(num)
-    area.seek_next_up(char, regexp=False)
-
-def install(area):
+class Seek(object):
+    def __init__(self, area):
         area.add_mode('JUMP_BACK')
         area.add_mode('JUMP_NEXT')
 
-        area.install(('NORMAL', '<Key-v>', lambda event: event.widget.chmode('JUMP_NEXT')), 
-                     ('NORMAL', '<Key-c>', lambda event: event.widget.chmode('JUMP_BACK')),
-                     ('JUMP_BACK', '<Key>', lambda event: jump_back(event.widget, event.keysym_num)),
-                     ('JUMP_BACK', '<Control-Key>', lambda event: sel_back(event.widget, event.keysym_num)),
+        area.install(('NORMAL', '<Key-v>', lambda event: self.start_next_mode()), 
+                     ('NORMAL', '<Key-c>', lambda event: self.start_back_mode()),
+                     ('JUMP_BACK', '<Control-v>', lambda event: self.select_data()),
+                     ('JUMP_BACK', '<Key>', lambda event: self.jump_back(event.keysym_num)),
                      ('JUMP_BACK', '<Return>', lambda event: event.widget.chmode('INSERT')),
                      ('JUMP_NEXT', '<Return>', lambda event: event.widget.chmode('INSERT')),
                      ('JUMP_NEXT', '<Tab>', lambda event: event.widget.chmode('JUMP_BACK')),
                      ('JUMP_BACK', '<Tab>', lambda event: event.widget.chmode('JUMP_NEXT')),
-                     ('JUMP_NEXT', '<Control-Key>', lambda event: sel_next(event.widget, event.keysym_num)),
-                     ('JUMP_NEXT', '<Key>', lambda event: jump_next(event.widget, event.keysym_num)))
+                     ('JUMP_NEXT', '<Control-v>', lambda event: self.select_data()),
+                     ('JUMP_NEXT', '<Key>', lambda event: self.jump_next(event.keysym_num)))
+        self.area = area
+
+    def start_next_mode(self):
+        self.area.start_selection()
+        self.area.chmode('JUMP_NEXT')
+
+    def start_back_mode(self):
+        self.area.start_selection()
+        self.area.chmode('JUMP_BACK')
+
+    def jump_next(self, num):
+        char = get_char(num)
+        self.area.seek_next_down(char, regexp=False)
+    
+    def jump_back(self, num):
+        char = get_char(num)
+        self.area.seek_next_up(char, regexp=False)
+    
+    def select_data(self):
+        self.area.addsel('insert', '(RANGE_SEL_MARK)')
+        self.area.chmode('NORMAL')
+
+install = Seek
 
 
 
