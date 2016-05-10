@@ -21,7 +21,7 @@ Suppose the cursor is placed at the line 1 and you want to place the cursor on t
 
 You would type the Key-Command below in NORMAL mode:
 
-    <Key-backslash>
+    <Key-g>
 
 Try typing something, you'll notice the incremental search process. The search pattern
 will appear on the statusbar whenever you press a key. There will happen match attempts whenever a key is
@@ -60,7 +60,7 @@ Key-Commands
 ============
 
 Mode: NORMAL
-Event: <Key-backslash>
+Event: <Key-g>
 Description: Switch to SCREEN_SEARCH mode.
 
 Event: <Control-j>
@@ -78,7 +78,7 @@ class ScreenSearch(QuickSearch):
 
         """
         self.area = area
-        area.install(('NORMAL', '<Key-backslash>', lambda event: self.start_search()))
+        area.install(('NORMAL', '<Key-g>', lambda event: self.start_search()))
 
     def start_range(self):
         return ('@0,0', self.area.index('@0,%s' % self.area.winfo_height()))
@@ -98,6 +98,7 @@ class ScreenSearch(QuickSearch):
             return ('insert', '@0,0')
 
 install = ScreenSearch
+
 
 
 

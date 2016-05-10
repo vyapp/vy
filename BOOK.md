@@ -1215,7 +1215,7 @@ word 'alsooo' is using the screen search feature.
 In order to better elucidade the situation, run vy then copy the text shown above to an AreaVi instance then switch
 to NORMAL mode and press:
 
-    <Key-backslash>
+    <Key-g>
 
 You will notice that an inputbox widget was displayed. Try typing the sequence of characters below:
     
@@ -2778,6 +2778,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 

@@ -40,6 +40,9 @@ class Edit(InputBox):
         self.on_prev = on_prev
         self.on_done = on_done
 
+
+        self.entry.bind('<Alt-o>', lambda event: self.on_prev(self.entry.get()))
+        self.entry.bind('<Alt-p>', lambda event: self.on_next(self.entry.get()))
         self.entry.bind('<Control-k>', lambda event: self.on_prev(self.entry.get()))
         self.entry.bind('<Control-j>', lambda event: self.on_next(self.entry.get()))
         self.entry.bind('<Return>', lambda event: self.on_data(self.entry.get()))
@@ -53,6 +56,9 @@ class Get(InputBox):
         self.on_prev = on_prev
         self.on_done = on_done
         self.entry.bindtags(('Entry', self.entry, '.', 'all'))
+        self.entry.bind('<Alt-o>', lambda event: self.on_prev(self.entry.get()))
+        self.entry.bind('<Alt-p>', lambda event: self.on_next(self.entry.get()))
+
         self.entry.bind('<Control-k>', lambda event: self.on_prev(self.entry.get()))
         self.entry.bind('<Control-j>', lambda event: self.on_next(self.entry.get()))
         self.entry.bind('<Key>', lambda event: self.on_data(self.entry.get()))
@@ -76,5 +82,6 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
+
 
 

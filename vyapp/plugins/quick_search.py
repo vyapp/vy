@@ -12,7 +12,7 @@ class QuickSearch(object):
 
         """
         self.area = area
-        area.install(('NORMAL', '<Control-backslash>', lambda event: self.start_search()))
+        area.install(('NORMAL', '<Key-backslash>', lambda event: self.start_search()))
 
     def start_search(self):
         ask = Get(self.area, on_next=self.search_down, on_prev=self.search_up, on_data=self.update_search, 
@@ -89,6 +89,7 @@ class QuickSearch(object):
         self.area.pick_next_down('sel', pattern, *range)
 
 install = QuickSearch
+
 
 
 
