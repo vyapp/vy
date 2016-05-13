@@ -98,6 +98,7 @@ def select_left():
 
     root.note.select(root.note.index(root.note.select()) - 1)
     root.note.set_area_focus()
+    return 'break'
 
 def select_right():
     """
@@ -105,6 +106,7 @@ def select_right():
 
     root.note.select(root.note.index(root.note.select()) + 1)
     root.note.set_area_focus()
+    return 'break'
 
 def install(area):
     area.install(('NORMAL', '<F8>', lambda event: load_tab()),
@@ -112,6 +114,7 @@ def install(area):
                  ('NORMAL', '<Delete>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 
