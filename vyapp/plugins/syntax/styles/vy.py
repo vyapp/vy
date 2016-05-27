@@ -14,10 +14,10 @@ class VyStyle(Style):
     styles = {
         Token:                     "#cccccc",
         # Whitespace:                "",
-        Comment:                   "#000080",
+        Comment:                   "#ffbf00",
         Comment.Hashbang:          "#006680",
         Comment.Multiline:         "#807100",
-        Comment.Preproc:           "",
+        Comment.Preproc:           "#ff8000",
         Comment.Single:            "#f55600",
         Comment.Special:           "#cd0000",
 
@@ -70,6 +70,9 @@ class VyStyle(Style):
 
         Error:                     "#FF0000"
     }
+
+
+
 
 
 
