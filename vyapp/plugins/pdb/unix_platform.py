@@ -115,7 +115,6 @@ from vyapp.tools import set_status_msg, set_line
 from vyapp.ask import Ask
 from vyapp.areavi import AreaVi
 from vyapp.app import root
-from os import environ, setsid, killpg
 import shlex
 import sys
 
@@ -149,6 +148,7 @@ class Pdb(object):
         self.map_line   = dict()
 
     def create_process(self, args):
+        from os import environ, setsid
         self.child  = Popen(args, shell=0, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
                             stderr=STDOUT,  env=environ)
     
@@ -280,6 +280,7 @@ class Pdb(object):
         area.tag_config(NAME, **self.setup)
 
     def dump_sigint(self, area):
+        from os import killpg
         killpg(child.pid, 2)
 
 
@@ -288,6 +289,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
