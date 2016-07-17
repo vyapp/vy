@@ -15,13 +15,18 @@ class QuickSearch(object):
         area.install(('NORMAL', '<Key-backslash>', lambda event: self.start_search()))
 
     def start_search(self):
-        ask = Get(self.area, on_next=self.search_down, on_prev=self.search_up, on_data=self.update_search, 
-                            on_done=lambda data: self.area.tag_remove('sel', *self.start_range()))
+        ask = Get(self.area, events = {'<Alt-p>':self.search_down, '<Alt-o>': self.search_up, '<Control-j>': self.search_down, 
+                                       '<Control-k>': self.search_up, '<<Data>>':self.update_search, '<BackSpace>': self.update_search,
+                                       '<Return>': lambda data: self.stop_search(), '<Escape>': lambda data: self.stop_search()})
         set_status_msg('')
+
+    def stop_search(self):
+        self.area.tag_remove('sel', *self.start_range())
+        return True
 
     def start_range(self):
         return ('1.0', 'end')
-
+        
     def range_down(self):
         """
         This method return the range to be searched that is down to the cursor position.
@@ -89,6 +94,8 @@ class QuickSearch(object):
         self.area.pick_next_down('sel', pattern, *range)
 
 install = QuickSearch
+
+
 
 
 

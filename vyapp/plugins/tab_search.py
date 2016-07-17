@@ -11,9 +11,14 @@ class TabSearch(object):
 
 
     def start_search(self):
-        get = Get(self.area, on_data=self.update_search, on_next=self.next_tab, 
-                    on_prev=self.prev_tab, on_done=lambda data: root.note.set_area_focus())
+        get = Get(self.area, events={'<<Data>>': self.update_search, '<Alt-p>': self.next_tab, 
+                    '<Control-j>': self.next_tab, '<Alt-o>': self.prev_tab, '<Control-k>': self.prev_tab, 
+                                '<Escape>': lambda data: self.stop_search(), '<Return>': lambda data: self.stop_search()})
         return 'break'
+
+    def stop_search(self):
+        root.note.set_area_focus()
+        return True
 
     def update_search(self, data):
         """
@@ -41,6 +46,7 @@ class TabSearch(object):
 
     
 install = TabSearch
+
 
 
 

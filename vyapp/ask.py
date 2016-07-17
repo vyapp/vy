@@ -4,6 +4,7 @@ This module implements basic input data scheme.
 
 from Tkinter import *
 from vyapp.app import root
+import string
 
 class InputBox(object):
     def __init__(self, area, default_data='', on_done=lambda data: None):
@@ -21,8 +22,6 @@ class InputBox(object):
         self.frame.pack(expand=True, fill=X)
 
         root.read_data.pack(fill=X)
-        self.entry.bind('<Escape>', lambda event: self.done())
-        self.entry.bind('<Return>', lambda event: self.done())
 
     def done(self):
         data = self.entry.get()
@@ -32,36 +31,25 @@ class InputBox(object):
         root.read_data.pack_forget()
         self.area.focus_set()
 
-class Edit(InputBox):
-    def __init__(self, area, on_data, on_done, on_next, on_prev, default_data=''):
-        InputBox.__init__(self, area, default_data)
-        self.on_data = on_data
-        self.on_next = on_next
-        self.on_prev = on_prev
-        self.on_done = on_done
-
-
-        self.entry.bind('<Alt-o>', lambda event: self.on_prev(self.entry.get()))
-        self.entry.bind('<Alt-p>', lambda event: self.on_next(self.entry.get()))
-        self.entry.bind('<Control-k>', lambda event: self.on_prev(self.entry.get()))
-        self.entry.bind('<Control-j>', lambda event: self.on_next(self.entry.get()))
-        self.entry.bind('<Return>', lambda event: self.on_data(self.entry.get()))
-
-    
 class Get(InputBox):
-    def __init__(self, area, on_data, on_done, on_next, on_prev, default_data=''):
+    def __init__(self, area, events={}, default_data=''):
         InputBox.__init__(self, area, default_data)
-        self.on_data = on_data
-        self.on_next = on_next
-        self.on_prev = on_prev
-        self.on_done = on_done
-        self.entry.bindtags(('Entry', self.entry, '.', 'all'))
-        self.entry.bind('<Alt-o>', lambda event: self.on_prev(self.entry.get()))
-        self.entry.bind('<Alt-p>', lambda event: self.on_next(self.entry.get()))
 
-        self.entry.bind('<Control-k>', lambda event: self.on_prev(self.entry.get()))
-        self.entry.bind('<Control-j>', lambda event: self.on_next(self.entry.get()))
-        self.entry.bind('<Key>', lambda event: self.on_data(self.entry.get()))
+        self.entry.bindtags(('Entry', self.entry, '.', 'all'))
+        self.entry.bind('<Key>', self.dispatch_change_event, add=True)
+
+        for indi, indj in events.iteritems():
+            self.entry.bind(indi, lambda event, handle=indj: 
+                        self.dispatch_event(handle) , add=True)
+
+    def dispatch_change_event(self, event):
+        if event.keysym in string.printable:
+            self.entry.event_generate('<<Data>>')
+
+    def dispatch_event(self, handle):
+        is_done = handle(self.entry.get())
+        if is_done: 
+            self.done()
 
 class Ask(InputBox):
     """
@@ -70,6 +58,7 @@ class Ask(InputBox):
     def __init__(self, area, default_data =''):
         InputBox.__init__(self, area, default_data)
         self.entry.bind('<Return>', lambda event: self.on_success())
+        self.entry.bind('<Escape>', lambda event: self.done())
 
         self.data  = ''
         self.area.wait_window(self.frame)
@@ -82,6 +71,7 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
+
 
 
 

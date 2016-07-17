@@ -47,7 +47,7 @@ Event: <Control-k>
 Description: Put the cursor on the previous possible match.
 """
 
-from vyapp.ask import Edit
+from vyapp.ask import Get
 from vyapp.tools import set_status_msg
 from itertools import permutations, product, groupby
 from re import escape
@@ -56,9 +56,9 @@ class ISearch(object):
     def __init__(self, area):
         self.area = area
         area.install(('NORMAL', '<Key-0>', lambda event: 
-             Edit(area, on_data=self.start, on_next=lambda data: 
-                 self.go_down(), on_prev=lambda data: self.go_up(), 
-                     on_done=lambda data: self.area.tag_remove('sel', '1.0', 'end'))))
+             Get(area, events={'<Return>' : self.start, '<Alt-p>': lambda data: self.go_down(), 
+                        '<Control-j>': lambda data: self.go_down(), '<Control-k>' : lambda data: self.go_up(),
+                            '<Alt-o>': lambda data: self.go_up(), '<Escape>': lambda data: self.stop()})))
 
         self.seq   = []
         self.index = -1
@@ -78,6 +78,10 @@ class ISearch(object):
         else:
             self.go_down()
     
+    def stop(self):
+        self.area.tag_remove('sel', '1.0', 'end')
+        return True
+
     def no_match(self):
         set_status_msg('No pattern found!')
 
@@ -138,5 +142,7 @@ class ISearch(object):
         self.index = self.index + 1
 
 install = ISearch
+
+
 
 
