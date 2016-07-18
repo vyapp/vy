@@ -7,10 +7,9 @@ from vyapp.app import root
 import string
 
 class InputBox(object):
-    def __init__(self, area, default_data='', on_done=lambda data: None):
+    def __init__(self, area, default_data=''):
         self.default_data = default_data
         self.area    = area
-        self.on_done = on_done
         self.frame   = Frame(root.read_data, border=1, padx=3, pady=3)
         self.entry   = Entry(self.frame)
         self.entry.config(background='grey')
@@ -24,8 +23,6 @@ class InputBox(object):
         root.read_data.pack(fill=X)
 
     def done(self):
-        data = self.entry.get()
-        self.on_done(data)
         self.entry.destroy()
         self.frame.destroy()
         root.read_data.pack_forget()
@@ -48,7 +45,7 @@ class Get(InputBox):
 
     def dispatch_event(self, handle):
         is_done = handle(self.entry.get())
-        if is_done: 
+        if is_done == True: 
             self.done()
 
 class Ask(InputBox):
@@ -59,8 +56,7 @@ class Ask(InputBox):
         InputBox.__init__(self, area, default_data)
         self.entry.bind('<Return>', lambda event: self.on_success())
         self.entry.bind('<Escape>', lambda event: self.done())
-
-        self.data  = ''
+        self.data = ''
         self.area.wait_window(self.frame)
 
     def on_success(self):
@@ -71,6 +67,7 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
+
 
 
 

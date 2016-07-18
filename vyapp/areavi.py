@@ -1086,7 +1086,8 @@ class AreaVi(Text):
             index = self.search(regex, index, stopindex, exact=exact, nocase=nocase, 
                                 nolinestop=nolinestop, regexp=regexp, elide=elide, count=count)
 
-            if not index:
+            # If regex = '' it ends in an infinite loop.
+            if not index or not regex:
                 break
 
             len   = count.get()
@@ -1605,6 +1606,7 @@ class AreaVi(Text):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
