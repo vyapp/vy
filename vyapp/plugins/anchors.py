@@ -12,11 +12,13 @@ class Anchors(object):
         except Exception:
             self.area.mark_set(name, 'insert')
         else:
-            if not self.area.compare(pos0, '==', 'insert'):
-                self.area.mark_set('insert', name)
-            else:
+            if self.area.compare(pos0, '==', 'insert'):
                 self.area.mark_unset(name)
+            else:
+                self.area.seecur(name)
+
         self.area.chmode('NORMAL')
 
 install = Anchors
+
 
