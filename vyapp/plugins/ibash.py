@@ -93,7 +93,7 @@ Description: Send the current line and a Tab character to the bash interpreter,
 asking for auto completion of the command.
 
 Mode: NORMAL
-Event: <Control-semicolon>
+Event: <Alt-F1>
 Description: Ask for the user to type a command to be dropped to the bash interpreter.
 """
 
@@ -117,7 +117,7 @@ class Process(object):
                    ('INSERT', '<Shift-F1>', lambda event: self.dump_line_and_tab(event.widget)),
                    ('NORMAL', '<F1>', lambda event: self.dump_line_and_down(event.widget)),
                    ('NORMAL', '<Control-F1>', lambda event: self.restart()),
-                   ('NORMAL', '<Control-semicolon>', lambda event: self.ask_data_and_dump(event.widget)),
+                   ('NORMAL', '<Alt-F1>', lambda event: self.ask_data_and_dump(event.widget)),
                    ('NORMAL', '<Control-backslash>', lambda event: self.dump_signal(3)),
                    ('NORMAL', '<Control-c>', lambda event: self.dump_signal(2)))
 
@@ -186,6 +186,7 @@ class Process(object):
 extern(root)
 process = Process()
 install = process
+
 
 
 
