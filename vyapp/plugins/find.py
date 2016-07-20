@@ -8,113 +8,97 @@ that has focus.
 Usage
 =====
 
-In order to start a search it is needed to set a pattern, it is done with the keycommand 
-<Control-q> in NORMAL mode. After having set a search pattern it is possible to set a 
-replacement for the pattern by using the keycommand <Control-Q> in NORMAL mode.
+In order to perform searches it is needed to press <Alt-slash> in NORMAL mode. It will show up
+an input field where to insert tcl regex patterns. 
 
-The keycommands <Control-Up> and <Control-Down> in NORMAL mode are used to pick the next and previous
-occurrence of the pattern from the cursor position. 
+Once inserting the pattern then it is possible to find the next/previous occurrence
+of the pattern by pressing <Alt-p>, <Alt-o> in the input text field
+that is a Get widget.
 
-It is possible to replace the next occurrence of the pattern for its replacement by issuing
-the keycommand <Control-Right> in NORMAL mode. The next match from the cursor position will be replaced.
+For replacements, it is needed to first set a text in NORMAL mode by pressing <Alt-bracketright>.
+Once the replacement is set then press <Alt-slash> to initiate the search process. Use <Alt-period>
+to replace the current picked pattern of text and <Alt-comma> to replace all matched patterns.
 
-The keycommands <Shift-Up> and <Shift-Down> in NORMAL mode are used to replace all occurrences of the pattern for its
-replacement that occurs upward and downward from the cursor position. The keycommand <Shift-Right> would
-replace all the occurrences.
-
-It is possible to perform searches/replacements inside regions of text that are selected.
-The keycommand <Control-Left> in NORMAL mode will highligh all matched patterns in regions of text that are
-selected. In order to perform replacement for these patterns, issue the keycommand <Shift-Left> in NORMAL mode.
-
-The ranges of text that corresponds to a match get highlighed, press <Key-Q> in NORMAL mode
-to remove the highligh from matched patterns.
+It is possible to perform searches over selected regions of text, for such, select a region of text
+then press <Alt-slash> and <Alt-b> to highligh all matched patterns in the region of text. In order
+to replace all matched patterns inside a region of text, use <Alt-semicolon>.
 
 Key-Commands
 ============
 
 Mode: NORMAL
-Event: <Control-q>
+Event: <Alt-slash>
 Description: Set a search pattern.
 
 Mode: NORMAL
-Event: <Control-Q>
+Event: <Alt-bracketright>
 Description: Set a replacement pattern.
 
-Mode: NORMAL
-Event: <Control-Up>
+Mode: Get
+Event: <Alt-o>
 Description: Pick the previous pattern from the cursor position.
 
-Mode: NORMAL
-Event: <Shift-Up>
-Description: Replace all occurrences upwards.
-
-Mode: NORMAL
-Event: <Shift-Down>
-Description: Replace all occurrences downwards.
-
-Mode: NORMAL
-Event: <Shift-Right>
+Mode: Get
+Event: <Alt-comma>
 Description: Replace all occurrences.
 
-Mode: NORMAL
-Event: <Control-Down>
+Mode: Get
+Event: <Alt-p>
 Description: Pick the next pattern from the cursor position.
 
-Mode: NORMAL
-Event: <Control-Right>
+Mode: Get
+Event: <Alt-period>
 Description: Replace the next matched pattern for the previously set replacement.
 
-Mode: NORMAL
-Event: <Control-Left>
+Mode: Get
+Event: <Alt-b>
 Description: Highligh all matched patterns inside a selected region of text.
 
-Mode: NORMAL
-Event: <Shift-Left>
+Mode: Get
+Event: <Alt-semicolon>
 Description: Replace all matched patterns inside a selected region of text for the
 previously set replacement.
 
-Mode: NORMAL
-Event: <Key-Q>
-Description: It removes highligh from all matched patterns.
 """
 
-from vyapp.ask import *
+from vyapp.ask import Get, Ask
 
 class Find(object):
-    def __init__(self, area, setup={'background':'blue', 'foreground':'yellow'}):
-        self.area         = area
-        self.regex        = ''
-        self.data         = ''
-        self.TAG_FOUND    = '__found__'
+    def __init__(self, area, setup={'background':'green', 'foreground':'white'}):
+        self.area  = area
+        self.data  = ''
+        self.index = None
+        self.regex = ''
 
-        area.tag_config(self.TAG_FOUND, **setup)
+        area.tag_config('(CATCHED)', **setup)
 
-        area.install(('NORMAL', '<Control-q>'    , lambda event: self.set_regex()),
-                        ('NORMAL', '<Control-Q>'    , lambda event: self.set_data()),
-                        ('NORMAL', '<Key-Q>'        , lambda event: self.area.tag_remove(self.TAG_FOUND, '1.0', 'end')),
-                        ('NORMAL', '<Control-Left>' , lambda event: self.area.map_matches(self.TAG_FOUND, self.area.collect('sel', self.regex))),
-                        ('NORMAL', '<Shift-Left>' , lambda event: self.area.replace_ranges('sel', self.regex, self.data)),
-                        ('NORMAL', '<Control-Right>', lambda event: self.area.replace(self.regex, self.data, 'insert')),
-                        ('NORMAL', '<Shift-Up>'     , lambda event: self.area.replace_all(self.regex, self.data, '1.0', 'insert')),
-                        ('NORMAL', '<Shift-Right>'  , lambda event: self.area.replace_all(self.regex, self.data)),
-                        ('NORMAL', '<Shift-Down>'   , lambda event: self.area.replace_all(self.regex, self.data, 'insert', 'end')),
-                        ('NORMAL', '<Control-Up>'   , lambda event: self.area.pick_next_up(self.TAG_FOUND, self.regex)),
-                        ('NORMAL', '<Control-Down>' , lambda event: self.area.pick_next_down(self.TAG_FOUND, self.regex)))
+        area.install(('NORMAL', '<Alt-slash>'    , lambda event: self.start()), 
+                     ('NORMAL', '<Alt-bracketright>'    , lambda event: self.set_data()))
 
 
-
-    def set_regex(self):
-        ask = Ask(self.area, self.regex)
-        self.regex = ask.data
-
-        # self.regex = self.area.get_ranges('sel')
-
+    def start(self):
+        self.index = ('insert', 'insert')
+        get = Get(self.area, events={'<Alt-o>': self.up, '<Escape>': self.stop, 
+                                     '<Alt-p>': self.down, '<Return>': self.stop,
+                                     '<Alt-b>': lambda regex: self.area.map_matches('(CATCHED)', self.area.collect('sel', regex)),
+                                     '<Alt-period>': lambda regex: self.area.replace(regex, self.data, self.index[0]),
+                                     '<Alt-semicolon>': lambda regex: self.area.replace_ranges('sel', regex, self.data), 
+                                     '<Alt-comma>': lambda regex: self.area.replace_all(regex, self.data, '1.0', 'end')}, default_data=self.regex)
     def set_data(self):
-        ask = Ask(self.area,  self.data)
+        ask = Ask(self.area, default_data = self.data)
         self.data = ask.data
 
-        # self.data = self.area.get_ranges('sel')
+    def stop(self, regex):
+        self.regex = regex
+        return True
 
+    def up(self, regex):
+        index = self.area.pick_next_up('(CATCHED)', regex, self.index[0])
+        self.index = ('insert', 'insert') if not index else index
+
+    def down(self, regex):
+        index = self.area.pick_next_down('(CATCHED)', regex, self.index[1])
+        self.index = ('insert', 'insert') if not index else index
 
 install = Find
 

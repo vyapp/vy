@@ -548,7 +548,9 @@ to make the cursor jump to the end of the file:
 
 Then press:
 
-    <Key-q>
+    <Key-Q>
+
+in NORMAL mode.
 
 ***
 
@@ -556,7 +558,9 @@ Then press:
 
 In NORMAL mode, open some big file then try pressing:
 
-    <Key-a>
+    <Key-A>
+
+in NORMAL mode.
 
 ***
 
@@ -1293,81 +1297,54 @@ Search scheme
 
 ### Set a search pattern
 
-Vy uses tcl regex scheme, you can insert a regex pattern to be used later by switching to NORMAL mode
+Vy uses tcl regex scheme, you can insert a regex pattern to be used by switching to NORMAL mode
 then pressing:
 
-    <Control-q>
+    <Alt-slash>
 
-It will open an input text widget in which you can insert a regex pattern.
+It will open an input text widget in which you can insert a regex pattern and perform operations by pressing
+key-commands while the input text is active. It is named Get mode.
 
 ***
 
 ### Set a replacement pattern
 
-After setting a pattern for search you can set a string to replace the occurrence of the search pattern.
 You achieve it by switching to NORMAL mode then pressing:
 
-    <Control-Q>
+    <Alt-bracketright>
 
 ***
+
+**Note:** The following key-commands should work on Get mode it is when the input field is active.
 
 ### Search up
 
 Once a search pattern is set, it is possible to make the cursor jump to the previous occurence of the pattern
 from the cursor position by pressing:
 
-    <Control-Up>
+    <Alt-o>
 
-In NORMAL mode.
+In Get mode.
 
 
 ***
 
 ### Search down
 
-After having set a search pattern, press the keycommand below in NORMAL mode:
+After having set a search pattern, press the keycommand below in Get mode:
 
-    <Control-Down>
+    <Alt-p>
 
 It will make the cursor jump to the next occurrence of the pattern.
-
-***
-
-### Unshade matched patterns
-
-After a pattern is matched it gets shaded, in order to unshade them, press:
-
-    <Key-Q>
-
-In NORMAL mode.
-
-***
-
-### Replace up
-
-Once a replacement text was set, press the keycommand below in NORMAL mode to replace all occurrences
-of the search pattern found up the cursor position:
-
-    <Shift-Up>
-
-***
-
-### Replace down
-
-Set a replacement and a search pattern, then press the keycommand below in NORMAL mode:
-
-    <Shift-Down>
-
-That will replace all occurrences of the pattern down the cursor position.
 
 ***
 
 ### Replace on
 
 Set a pattern and a replacement for the pattern. Make the cursor jump back/next to the pattern. 
-Once the cursor is positioned at the pattern then press the keycommand below in NORMAL mode:
+Once the cursor is positioned at the pattern then press the keycommand below in Get mode:
 
-    <Control-Right>
+    <Alt-period>
 
 The matched pattern will be replaced for the previously set replacement. This keycommand is
 specially useful when one doesn't know which matched pattern should be replaced really.
@@ -1380,9 +1357,9 @@ This is a powerful feature. One could select ranges of text then do
 searches inside these ranges. The matched patterns will be highlighed.
 
 First, use range selection or block selection or whatever other kind of selection to select some
-region. Set a search pattern then switch to NORMAL mode and press:
+region. Press <Alt-slash> , insert a pattern then:
 
-    <Control-Left>
+    <Alt-b>
 
 The matched patterns will be highlighed.
 
@@ -1393,7 +1370,7 @@ The matched patterns will be highlighed.
 Once a pattern is set, a replacement is set, then one can do replacement for the matched patterns
 inside a selected region by pressing the keycommand below in NORMAL mode:
 
-    <Shift-Right>
+    <Alt-semicolon>
 
 ***
 
@@ -2778,6 +2755,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 

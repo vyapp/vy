@@ -1169,7 +1169,7 @@ class AreaVi(Text):
 
         """
         """
-
+        self.tag_remove(name, '1.0', 'end')
         index = self.seek_next_up(*args, **kwargs)
         if not index:
             return
@@ -1181,7 +1181,7 @@ class AreaVi(Text):
 
         """
         """
-
+        self.tag_remove(name, '1.0', 'end')
         index = self.seek_next_down(*args, **kwargs)
 
         if not index:    
@@ -1606,6 +1606,7 @@ class AreaVi(Text):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
