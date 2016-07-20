@@ -1357,7 +1357,11 @@ This is a powerful feature. One could select ranges of text then do
 searches inside these ranges. The matched patterns will be highlighed.
 
 First, use range selection or block selection or whatever other kind of selection to select some
-region. Press <Alt-slash> , insert a pattern then:
+region. Press: 
+
+    <Alt-slash>  I
+
+nsert a pattern then:
 
     <Alt-b>
 
@@ -2755,6 +2759,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
