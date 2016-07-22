@@ -90,6 +90,7 @@ class Find(object):
 
     def stop(self, regex):
         self.regex = regex
+        self.area.tag_remove('(CATCHED)', '1.0', 'end')
         return True
 
     def up(self, regex):
@@ -101,6 +102,7 @@ class Find(object):
         self.index = ('insert', 'insert') if not index else index
 
 install = Find
+
 
 
 
