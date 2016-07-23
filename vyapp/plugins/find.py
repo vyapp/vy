@@ -85,8 +85,8 @@ class Find(object):
                                      '<Alt-semicolon>': lambda regex: self.area.replace_ranges('sel', regex, self.data), 
                                      '<Alt-comma>': lambda regex: self.area.replace_all(regex, self.data, '1.0', 'end')}, default_data=self.regex)
     def set_data(self):
-        ask = Ask(self.area, default_data = self.data)
-        self.data = ask.data
+        ask = Ask(self.area, default_data = self.data.encode('string_escape'))
+        self.data = ask.data.decode('string_escape')
 
     def stop(self, regex):
         self.regex = regex
@@ -102,6 +102,7 @@ class Find(object):
         self.index = ('insert', 'insert') if not index else index
 
 install = Find
+
 
 
 
