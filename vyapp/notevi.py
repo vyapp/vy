@@ -107,6 +107,7 @@ class NoteVi(Notebook):
 
     def __init__(self, *args, **kwargs):
         Notebook.__init__(self, *args, **kwargs)
+        self.bindtags((self, '.', 'all'))
 
     def create(self, filename):
         """
@@ -158,6 +159,7 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
+
 
 
 
