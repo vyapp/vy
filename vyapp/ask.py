@@ -44,7 +44,7 @@ class Get(InputBox):
             self.entry.event_generate('<<Data>>')
 
     def dispatch_event(self, handle):
-        is_done = handle(self.entry.get())
+        is_done = handle(self.entry)
         if is_done == True: 
             self.done()
 
@@ -67,6 +67,7 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
+
 
 
 

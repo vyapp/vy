@@ -17,7 +17,7 @@ class QuickSearch(object):
     def start_search(self):
         ask = Get(self.area, events = {'<Alt-p>':self.search_down, '<Alt-o>': self.search_up, '<Control-j>': self.search_down, 
                                        '<Control-k>': self.search_up, '<<Data>>':self.update_search, '<BackSpace>': self.update_search,
-                                       '<Return>': lambda data: self.stop_search(), '<Escape>': lambda data: self.stop_search()})
+                                       '<Return>': lambda wid: self.stop_search(), '<Escape>': lambda wid: self.stop_search()})
         set_status_msg('')
 
     def stop_search(self):
@@ -49,15 +49,14 @@ class QuickSearch(object):
         else:
             return ('insert', '1.0')
 
-    def update_search(self, data):
+    def update_search(self, wid):
         """
 
         """
-
+        data = wid.get()
         pattern = self.make_pattern(data)
         set_status_msg('Pattern:%s' % pattern)
         range = self.start_range()
-        self.area.tag_remove('sel', *range)
         self.area.pick_next_down('sel', pattern, *range)
 
     def make_pattern(self, data):
@@ -72,28 +71,27 @@ class QuickSearch(object):
         pattern = pattern + escape(data[-1])
         return pattern
 
-    def search_up(self, data):
+    def search_up(self, wid):
         """
 
         """
-
+        data = wid.get()
         pattern = self.make_pattern(data)
         range = self.range_up()
-        self.area.tag_remove('sel', *self.start_range())
         self.area.pick_next_up('sel', pattern, *range)
 
         
-    def search_down(self, data):
+    def search_down(self, wid):
         """
 
         """
-
+        data = wid.get()
         pattern = self.make_pattern(data)
         range = self.range_down()
-        self.area.tag_remove('sel', *self.start_range())
         self.area.pick_next_down('sel', pattern, *range)
 
 install = QuickSearch
+
 
 
 

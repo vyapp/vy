@@ -40,6 +40,9 @@ In order to leave a channel type the IRC command below.
 One can query an user by pressing <Control-c> then typing its nick. It will open an areavi instance
 for private chatting with the user.
 
+For sending messages to users and channels, just type <Key-i> in IRC mode, it would open an inputbox
+where to insert text then press enter. In order to give focus back to the AreaVi instance just press <Escape>
+
 For creating shortcuts for IRC networks, just import IrcMode from vyrc file then define IRC network functions like below.
 
 def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
@@ -89,7 +92,7 @@ from untwisted.iostd import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, C
 from untwisted.splits import Terminator
 from vyapp.exe import exec_quiet
 from vyapp.plugins import ENV
-from vyapp.ask import Ask
+from vyapp.ask import Ask, Get
 from vyapp.app import root
 from vyapp.areavi import AreaVi
 
@@ -126,7 +129,7 @@ class IrcMode(object):
 
     def on_connect(self, con):
         area = root.note.create(self.addr)    
-        area.bind('<Destroy>', lambda event: send_cmd(con, 'QUIT :vyirc rules!'), add=True)
+        area.bind('<Destroy>', lambda event: send_cmd(con, 'QUIT :vy rules!'), add=True)
 
         Stdin(con)
         Stdout(con)
@@ -160,8 +163,6 @@ class IrcMode(object):
 
     def create_area(self, name):
         area = root.note.create(name)
-        area.insert('end','\n\n')
-        area.mark_set('CHDATA', '1.0')
         return area
 
     def start_user_chat(self, area, con):
@@ -181,35 +182,19 @@ class IrcMode(object):
         except KeyError:
             area_user = self.create_user_chat(con, nick)
         finally:
-            area_user.insee('CHDATA', H1 % (nick, msg))
+            area_user.append(H1 % (nick, msg))
 
     def set_common_irc_commands(self, area, con):
-        area.add_mode('IRC', opt=True)
+        area.add_mode('IRC')
         area.chmode('IRC')
         area.install(('GAMMA', '<Key-i>', lambda event: event.widget.chmode('IRC')),
                      ('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con)),
-                     ('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con)),
-                     ('IRC', '<Control-q>', lambda event: self.complete_nick(event.widget)),
-                     ('IRC', '<Control_R>', lambda event: self.reset(event.widget)),
-                     ('IRC', '<Control_L>', lambda event: self.reset(event.widget)),
-                     ('IRC', '<F1>', lambda event: event.widget.mark_set('CHDATA', 'insert')))
-
-    def complete_nick(self, area):
-        """
-        """
-
-        try:    
-            self.seq.next()
-        except StopIteration:
-            pass
-
-    def reset(self, area):
-        self.seq = area.complete_word(area.master)
+                     ('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con)))
 
     def set_common_irc_handles(self, area, con):
         l1 = lambda con, chan: self.create_channel(area, con, chan)
         l2 = lambda con, prefix, servaddr: send_cmd(con, 'PONG :%s' % servaddr)
-        l3 = lambda con, data: area.insee('end', '%s\n' % data)
+        l3 = lambda con, data: area.append('%s\n' % data)
 
         self.misc = Misc(con)
         xmap(con, '*JOIN', l1)
@@ -219,21 +204,22 @@ class IrcMode(object):
 
     def set_common_chan_commands(self, area, con, chan):
         e1 = lambda event: self.send_msg(event.widget, chan, con)
-        area.hook('IRC', '<Return>', e1)
+
+        area.hook('IRC', '<Key-i>', lambda event: Get(area, 
+        events={'<Escape>': lambda wid: True, 
+                '<Return>': lambda wid: self.send_msg(area, wid, chan, con)}))
 
     def set_common_chan_handles(self, area, con, chan):
-        l1 = lambda con, nick, user, host, msg: area.insee('CHDATA', H1 % (nick, msg))
-        l2 = lambda con, addr, nick, msg: area.insee('CHDATA', H2 % msg)
+        l1 = lambda con, nick, user, host, msg: area.append(H1 % (nick, msg))
+        l2 = lambda con, addr, nick, msg: area.append(H2 % msg)
+        l3 = lambda con, nick, user, host, msg: area.append(H3 % (nick, chan, msg))
 
-        l3 = lambda con, nick, user, host, msg: area.insee('CHDATA', H3 % (nick, chan, msg))
-
-        l4 = lambda con, nick, user, host: area.insee('CHDATA', H4 % (nick, chan))
-        l5 = lambda con, nicka, user, host, nickb: area.insee('CHDATA', H5 % (nicka, nickb))
-        l6 = lambda con, prefix, nick, mode, peers: area.insee('CHDATA', H6 % peers)
-        l7 = lambda con, *args: area.insee('CHDATA', H7)
-        l8 = lambda con, nick, user, host, target, msg: area.insee('CHDATA', H8 % (nick, target, chan, msg))
-        l9 = lambda con, nick, user, host, mode, target='': area.insee('CHDATA', H9 % (nick, chan, mode, target))
-
+        l4 = lambda con, nick, user, host: area.append(H4 % (nick, chan))
+        l5 = lambda con, nicka, user, host, nickb: area.append(H5 % (nicka, nickb))
+        l6 = lambda con, prefix, nick, mode, peers: area.append(H6 % peers)
+        l7 = lambda con, *args: area.append(H7)
+        l8 = lambda con, nick, user, host, target, msg: area.append(H8 % (nick, target, chan, msg))
+        l9 = lambda con, nick, user, host, mode, target='': area.append(H9 % (nick, chan, mode, target))
 
         events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
                   ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), 
@@ -255,14 +241,15 @@ class IrcMode(object):
         for ind in self.channels:
             send_cmd(con, 'JOIN %s' % ind)
 
-    def send_msg(self, area, chan, con):
-        data = area.cmd_like()
-        area.insee('CHDATA', H1 % (self.misc.nick, data))
+    def send_msg(self, area, wid, chan, con):
+        data = wid.get()
+        area.append(H1 % (self.misc.nick, data))
         send_msg(con, chan, data.encode('utf-8'))
-        return 'break'
+        wid.delete(0, 'end')
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
 
 
 

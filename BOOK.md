@@ -141,7 +141,7 @@ Table of Contents
       * [Part from a channel](#part-from-a-channel)
       * [Change nick](#change-nick)
       * [Query an user](#query-an-user)
-      * [Set IRC network output position](#set-irc-network-output-position)
+      * [Send messages to channels and users](#send-messages-to-channels-and-users)
       * [Create shortcut functions for IRC networks](#create-shortcut-functions-for-irc-networks)
   * [The ibash plugin](#the-ibash-plugin)
       * [First steps](#first-steps)
@@ -2021,14 +2021,21 @@ It will create a new tab whose title is the user's nick.
 
 ***
 
-### Set IRC network output position
+### Send messages to channels and users
 
-The keycommand to reset the position where data coming from
-the IRC network is dropped on is:
+In IRC mode, press:
 
-    <F1>
+    <Key-i>
 
-In IRC mode.
+It will show up an input box field where to insert messages to send to users or channels.
+Insert the message then press:
+
+    <Return>
+
+In order to give back focus to the AreaVi instance just press:
+
+    <Escape>
+
 
 ### Create shortcut functions for IRC networks
 
@@ -2759,6 +2766,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 

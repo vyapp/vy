@@ -80,28 +80,32 @@ class Find(object):
         self.index = ('insert', 'insert')
         get = Get(self.area, events={'<Alt-o>': self.up, '<Escape>': self.stop, 
                                      '<Alt-p>': self.down, '<Return>': self.stop,
-                                     '<Alt-b>': lambda regex: self.area.map_matches('(CATCHED)', self.area.collect('sel', regex)),
-                                     '<Alt-period>': lambda regex: self.area.replace(regex, self.data, self.index[0]),
-                                     '<Alt-semicolon>': lambda regex: self.area.replace_ranges('sel', regex, self.data), 
-                                     '<Alt-comma>': lambda regex: self.area.replace_all(regex, self.data, '1.0', 'end')}, default_data=self.regex)
+                                     '<Alt-b>': lambda wid: self.area.map_matches('(CATCHED)', self.area.collect('sel', wid.get())),
+                                     '<Alt-period>': lambda wid: self.area.replace(wid.get(), self.data, self.index[0]),
+                                     '<Alt-semicolon>': lambda wid: self.area.replace_ranges('sel', wid.get(), self.data), 
+                                     '<Alt-comma>': lambda wid: self.area.replace_all(wid.get(), self.data, '1.0', 'end')}, default_data=self.regex)
     def set_data(self):
         ask = Ask(self.area, default_data = self.data.encode('string_escape'))
         self.data = ask.data.decode('string_escape')
 
-    def stop(self, regex):
-        self.regex = regex
+    def stop(self, wid):
+        self.regex = wid.get()
         self.area.tag_remove('(CATCHED)', '1.0', 'end')
         return True
 
-    def up(self, regex):
+    def up(self, wid):
+        regex = wid.get()
         index = self.area.pick_next_up('(CATCHED)', regex, self.index[0])
         self.index = ('insert', 'insert') if not index else index
 
-    def down(self, regex):
+    def down(self, wid):
+        regex = wid.get()
         index = self.area.pick_next_down('(CATCHED)', regex, self.index[1])
         self.index = ('insert', 'insert') if not index else index
 
 install = Find
+
+
 
 
 

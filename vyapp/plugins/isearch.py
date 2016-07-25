@@ -56,21 +56,21 @@ class ISearch(object):
     def __init__(self, area):
         self.area = area
         area.install(('NORMAL', '<Key-0>', lambda event: 
-             Get(area, events={'<Return>' : self.start, '<Alt-p>': lambda data: self.go_down(), 
-                        '<Control-j>': lambda data: self.go_down(), '<Control-k>' : lambda data: self.go_up(),
-                            '<Alt-o>': lambda data: self.go_up(), '<Escape>': lambda data: self.stop()})))
+             Get(area, events={'<Return>' : self.start, '<Alt-p>': lambda wid: self.go_down(), 
+                        '<Control-j>': lambda wid: self.go_down(), '<Control-k>' : lambda wid: self.go_up(),
+                            '<Alt-o>': lambda wid: self.go_up(), '<Escape>': lambda wid: self.stop()})))
 
         self.seq   = []
         self.index = -1
 
-    def start(self, data):
+    def start(self, wid):
         """
 
         """
 
         self.seq   = []
         self.index = -1
-        data       = data.split(' ')
+        data       = wid.get().split(' ')
         find       = lambda ind: self.area.find(escape(ind), '1.0', step='+1l linestart')
         self.seq   = self.match_possible_regions(find, data)
         if not self.seq:
@@ -142,6 +142,7 @@ class ISearch(object):
         self.index = self.index + 1
 
 install = ISearch
+
 
 
 
