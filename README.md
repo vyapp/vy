@@ -3,6 +3,8 @@
 
 A powerful modal editor written in python.
 
+Wiki: http://vy.branchable.com
+
 vy is a modal editor with a very modular architecture. Everything is very minimalistic and modular. 
 vy is built on top of Tkinter which is one of the most productive graphical toolkits; It permits vy
 to have such a great programming interface for plugins. Python is such an amazing language;
