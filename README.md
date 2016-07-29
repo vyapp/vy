@@ -3,7 +3,6 @@
 
 A powerful modal editor written in python.
 
-Wiki: http://vy.branchable.com
 
 vy is a modal editor with a very modular architecture. Everything is very minimalistic and modular. 
 vy is built on top of Tkinter which is one of the most productive graphical toolkits; It permits vy
@@ -113,8 +112,13 @@ your ~/.vy directory before a new installation in order to upgrade to a new vers
 The vy Book
 ===========
 
+**Official documentation in English**
+
 [BOOK.md](BOOK.md)
 
+**A Russian version**
+
+http://vy.branchable.com
 
 Support
 =======
@@ -124,6 +128,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
