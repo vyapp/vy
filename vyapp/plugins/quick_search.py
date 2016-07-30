@@ -7,11 +7,12 @@ from re import escape, split
 from vyapp.tools import set_status_msg
 
 class QuickSearch(object):
-    def __init__(self, area):
+    def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
         """
 
         """
         self.area = area
+        area.tag_configure('(SEARCH_MATCH)', **setup)
         area.install(('NORMAL', '<Key-backslash>', lambda event: self.start_search()))
 
     def start_search(self):
@@ -21,7 +22,7 @@ class QuickSearch(object):
         set_status_msg('')
 
     def stop_search(self):
-        self.area.tag_remove('sel', *self.start_range())
+        self.area.tag_remove('(SEARCH_MATCH)', *self.start_range())
         return True
 
     def start_range(self):
@@ -32,7 +33,7 @@ class QuickSearch(object):
         This method return the range to be searched that is down to the cursor position.
         """
 
-        ranges = self.area.tag_ranges('sel')
+        ranges = self.area.tag_ranges('(SEARCH_MATCH)')
         if ranges:
             return (ranges[-1], 'end')
         else:
@@ -43,7 +44,7 @@ class QuickSearch(object):
         The range to be searched up to the cursor position.
         """
 
-        ranges = self.area.tag_ranges('sel')
+        ranges = self.area.tag_ranges('(SEARCH_MATCH)')
         if ranges:
             return (ranges[0], '1.0')
         else:
@@ -57,7 +58,7 @@ class QuickSearch(object):
         pattern = self.make_pattern(data)
         set_status_msg('Pattern:%s' % pattern)
         range = self.start_range()
-        self.area.pick_next_down('sel', pattern, *range)
+        self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
 
     def make_pattern(self, data):
         """
@@ -78,7 +79,7 @@ class QuickSearch(object):
         data = wid.get()
         pattern = self.make_pattern(data)
         range = self.range_up()
-        self.area.pick_next_up('sel', pattern, *range)
+        self.area.pick_next_up('(SEARCH_MATCH)', pattern, *range)
 
         
     def search_down(self, wid):
@@ -88,14 +89,9 @@ class QuickSearch(object):
         data = wid.get()
         pattern = self.make_pattern(data)
         range = self.range_down()
-        self.area.pick_next_down('sel', pattern, *range)
+        self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
 
 install = QuickSearch
-
-
-
-
-
 
 
 

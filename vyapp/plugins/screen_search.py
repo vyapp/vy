@@ -84,20 +84,21 @@ class ScreenSearch(QuickSearch):
         return ('@0,0', self.area.index('@0,%s' % self.area.winfo_height()))
 
     def range_down(self):
-        ranges = self.area.tag_ranges('sel')
+        ranges = self.area.tag_ranges('(SEARCH_MATCH)')
         if ranges:
             return (ranges[-1], self.area.index('@0,%s' % self.area.winfo_height()))
         else:
             return ('insert', self.area.index('@0,%s' % self.area.winfo_height()))
 
     def range_up(self):
-        ranges = self.area.tag_ranges('sel')
+        ranges = self.area.tag_ranges('(SEARCH_MATCH)')
         if ranges:
             return (ranges[0], '@0,0')
         else:
             return ('insert', '@0,0')
 
 install = ScreenSearch
+
 
 
 
