@@ -30,16 +30,17 @@ Description: Remove inline comments from a selected block of text.
 
 """
 
-from os.path import splitext
+from mimetypes import guess_type
 from re import escape
 
 DEFAULT = '#'
 TABLE   = { 
-              'py'   :'#',
-              'sh'   :'#',
-              'c'    :'//',
-              'c++'  :'//',
-              'java' : '//'
+              'text/x-python'            :'#',
+              'text/x-java-source'       :'//',
+              'text/x-csrc'              :'//',
+              'text/x-sh'                :'//',
+              'application/x-javascript' :'//',
+              'text/x-c++src'            :'//'
           }
 
 def add_inline_comment(area):
@@ -47,10 +48,9 @@ def add_inline_comment(area):
     It adds inline comment to selected lines based on the file extesion.
     """
 
-    comment = TABLE.get(splitext(area.filename)[1], DEFAULT)
-    def rep(index0, index1):
-        return '%s%s ' % (area.get(index0, index1), comment)
-    area.replace_ranges('sel', '^ +|^', rep)
+    comment = TABLE.get(guess_type(area.filename)[0], DEFAULT)
+    area.replace_ranges('sel', '^ +|^', 
+    lambda index0, index1: '%s%s ' % (area.get(index0, index1), comment))
     area.clear_selection()
 
 def rm_inline_comment(area):
@@ -58,25 +58,16 @@ def rm_inline_comment(area):
     It removes the inline comments.
     """
 
-    comment = TABLE.get(splitext(area.filename)[1], DEFAULT)
-    def rep(index0, index1):
-        chk = area.get(index0, index1)
-        chk = chk.replace('%s ' % comment, '')
-        chk = chk.replace(comment, '')
-        return chk
-    area.replace_ranges('sel', '^ *%s ?' % comment, rep)
+    comment = TABLE.get(guess_type(area.filename)[0], DEFAULT)
+    area.replace_ranges('sel', '^ *%s ?' % comment, 
+    lambda index0, index1: area.get(index0, index1).replace(
+        '%s ' % comment, '').replace(comment, ''))
     area.clear_selection()
 
 def install(area):
-    area.install(('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
-                 ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
-
-
-
-
-
-
-
+    area.install(
+    ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
+    ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
 
 
 

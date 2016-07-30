@@ -103,13 +103,16 @@ autoload(vyapp.plugins.python_completion)
 
 # Initializes the tern daemon and installs javascript 
 # autocompletin plugin.
-import vyapp.plugins.javascript_completion
-from vyapp.plugins.javascript_completion import Tern, javascript_tools
-tern = Tern('tern')
+
+# import vyapp.plugins.javascript_completion
+# from vyapp.plugins.javascript_completion import Tern, javascript_tools
+# tern = Tern('tern')
+
 # Turns the command active_javascript_completion available, such a command
 # permits to have javascript autocompletion in files with no javascript extension.
-javascript_tools(tern)
-autoload(vyapp.plugins.javascript_completion, tern)
+
+# javascript_tools(tern)
+# autoload(vyapp.plugins.javascript_completion, tern)
 
 # The isearch plugin.
 import vyapp.plugins.isearch
@@ -411,6 +414,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
