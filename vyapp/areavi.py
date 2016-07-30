@@ -1203,13 +1203,15 @@ class AreaVi(Text):
         count = IntVar()
         index = self.search(regex, index, stopindex, forwards=forwards, backwards=backwards, exact=exact, nocase=nocase, 
                             nolinestop=nolinestop, regexp=regexp, elide=elide, count=count)
-
             
-        if not index: return
-
-        if callable(data): data = data(index, self.index('%s +%sc' % (index, count.get())))
+        if not index: 
+            return
 
         index0 = self.index('%s +%sc' % (index, count.get()))
+
+        if callable(data): 
+            data = data(self.get(index, index0), index, index0)
+
         self.delete(index, index0)
         self.insert(index, data)
 
@@ -1606,6 +1608,7 @@ class AreaVi(Text):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
