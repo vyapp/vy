@@ -54,6 +54,7 @@ def install(area):
                  ('NORMAL', '<Key-t>', lambda event: event.widget.ptsel()),
                  ('NORMAL', '<Key-r>', lambda event: event.widget.ptsel_after()),
                  ('NORMAL', '<Key-e>', lambda event: event.widget.ptsel_before()),
-                 ('NORMAL', '<Control-Y>', lambda event: event.widget.cpblock()),
-                 ('NORMAL', '<Control-U>', lambda event: event.widget.ctblock()))
+                 ('NORMAL', '<Control-Y>', lambda event: event.widget.cpsel('\n')),
+                 ('NORMAL', '<Control-U>', lambda event: event.widget.ctsel('\n')))
+
 

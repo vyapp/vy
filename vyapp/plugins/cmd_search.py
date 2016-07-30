@@ -40,9 +40,13 @@ stopindex = The stopindex.
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 
-ENV['find'] = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.find(*args, **kwargs))
-ENV['sub'] = lambda *args, **kwargs: AreaVi.ACTIVE.replace_all(*args, **kwargs)
-ENV['get'] = lambda *args: AreaVi.ACTIVE.get(*args)
+ENV['find']  = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.find(*args, **kwargs))
+ENV['sub']   = lambda *args, **kwargs: AreaVi.ACTIVE.replace_all(*args, **kwargs)
+ENV['get']   = lambda *args: AreaVi.ACTIVE.get(*args)
+ENV['split']  = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.split(*args, **kwargs))
+
+
+
 
 
 

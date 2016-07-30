@@ -719,45 +719,23 @@ class AreaVi(Text):
         self.see('insert')
     
 
-    def cpsel(self):
+    def cpsel(self, sep=''):
         """
         Copy selected text to the clipboard.
         """
 
-        data = self.join_ranges('sel')
+        data = self.join_ranges('sel', sep)
         self.clipboard_clear()
         self.clipboard_append(data)
         self.tag_remove('sel', 'sel.first', 'sel.last')
     
 
-    def cpblock(self):
-        """
-        Copy ranges of selected text using the separator '\n'.
-        """
-        data = self.join_ranges('sel', '\n')
-        self.clipboard_clear()
-        self.clipboard_append(data)
-        self.tag_remove('sel', 'sel.first', 'sel.last')
-    
-
-    def ctblock(self):
-        """
-        Cut ranges of selected text using the separator '\n'.
-        """
-
-        data = self.join_ranges('sel', '\n')
-        self.clipboard_clear()
-        self.clipboard_append(data)
-        self.edit_separator()
-        self.delete_ranges('sel')
-    
-
-    def ctsel(self):
+    def ctsel(self, sep=''):
         """
         It cuts the selected text.
         """
 
-        data = self.join_ranges('sel')
+        data = self.join_ranges('sel', sep)
         self.clipboard_clear()
         self.clipboard_append(data)
         self.edit_separator()
@@ -1028,20 +1006,6 @@ class AreaVi(Text):
             index3, index4 = map
             index = self.replace_all(regex, data, index3, index4, *args, **kwargs)
 
-    def setup_tags_conf(self, kwargs):
-        """
-        kwargs is a dictionary like:
-
-        kwargs = {'tag_name': {'background': 'blue'}}
-
-        In the kwargs above, this method would set the background value to 'blue'
-        for the tag named 'tag_name'.
-        """
-
-        for name, kwargs in kwargs.iteritems():
-            self.tag_config(name, **kwargs)
-            self.tag_lower(name)
-    
     def map_matches(self, name, matches):
         """"
         It adds a tag to the match ranges from either AreaVi.find or
@@ -1054,7 +1018,7 @@ class AreaVi(Text):
         for _, index0, index1 in matches:
             self.tag_add(name, index0, index1)
 
-    def tokenize(self, *args, **kwargs):
+    def split(self, regex, index='1.0', stopindex='end', *args, **kwargs):
         """
         It tokenizes the contents of an AreaVi widget based on a regex.
         The *args, **kwargs are the same passed to AreaVi.find method.
@@ -1063,13 +1027,13 @@ class AreaVi(Text):
             pass
         """
 
-        index0 = '1.0'
-        for chk, index1, index2 in self.find(*args, **kwargs):
+        index0 = index
+        for chk, index1, index2 in self.find(regex, index, stopindex, *args, **kwargs):
             if self.compare(index1, '>', index0): 
                 yield(self.get(index0, index1), index0, index1)
-            
-            yield(chk, index1, index2)
             index0 = index2
+        else:    
+            yield(chk, index2, stopindex)
     
     def find(self, regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None, step=''):
@@ -1608,6 +1572,7 @@ class AreaVi(Text):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
