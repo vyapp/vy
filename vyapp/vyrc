@@ -102,7 +102,8 @@ autoload(vyapp.plugins.python_completion)
 
 
 # Initializes the tern daemon and installs javascript 
-# autocompletin plugin.
+# autocomplete plugin. Notice 'tern' should stand for your tern plugin path.
+# It means where your tern script is in.
 
 # import vyapp.plugins.javascript_completion
 # from vyapp.plugins.javascript_completion import Tern, javascript_tools
@@ -274,8 +275,9 @@ autoload(vyapp.plugins.data_del)
 
 
 # Used to talk to extern processes, playing with interpreters etc.
-import vyapp.plugins.ibash
-autoload(vyapp.plugins.ibash)
+# Available: Unix/Linux
+# import vyapp.plugins.ibash
+# autoload(vyapp.plugins.ibash)
 
 
 # Used to highlight pairs of character like () {} [].
@@ -414,6 +416,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 

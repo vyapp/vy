@@ -84,18 +84,21 @@ Features
 - **Handy Shortcuts**
 
 
-Install
-=======
+Basic Install
+=============
 
 **Note:** 
 vy requires Python 2.7 to run.
 
     pip install pygments
     pip install jedi
-    npm install tern
     pip install untwisted
     pip install vy
 
+**Note:** 
+For javascript auto completion it is needed to have nodejs installed and the following package.
+
+    npm install tern
 
 Once it is installed, run in a terminal:
 
@@ -128,12 +131,6 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
-
-
-
-
-
-
 
 
 

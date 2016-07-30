@@ -157,6 +157,7 @@ Table of Contents
       * [Word completion](#word-completion)
       * [Copy the opened file path to the clipboard](#copy-the-opened-file-path-to-the-clipboard)
       * [The python autocomplete plugin](#the-python-autocomplete-plugin)
+      * [The javascript autocomplete plugin](#the-javascript-autocomplete-plugin)
       * [Comment a block of code](#comment-a-block-of-code)
       * [Uncomment a block of code](#uncomment-a-block-of-code)
   * [The plugin API](#the-plugin-api)
@@ -2074,6 +2075,16 @@ The ibash plugin
 The ibash plugin is a python module that permits to talk to the bash interpreter. It is possible
 to execute commands through bash and start some processes like a python interpreter, maxima etc.
 
+The ibash plugin doesn't work on all platforms, so it comes commented in the ~/.vy/vyrc file.
+In order to use this plugin it is needed to uncomment the following lines.
+
+~~~python
+# Used to talk to extern processes, playing with interpreters etc.
+# Available: Unix/Linux
+import vyapp.plugins.ibash
+autoload(vyapp.plugins.ibash)
+~~~
+
 ### First steps
 
 The ibash plugin uses the scheme of output target. 
@@ -2235,6 +2246,37 @@ is opened in vy it turns possible to type a python object name following a perio
 It will open a small window with the possible attributes of the object.
 
 ***
+
+### The javascript autocomplete plugin
+
+It is needed to have nodejs and tern package installed, if node is installed it's enough to run:
+
+    npm -g install tern
+
+In order to enable javascript autompletion it is needed to add the following lines of code
+in your ~/.vy/vyrc file.
+
+~~~python
+# Initializes the tern daemon and installs javascript 
+# autocomplete plugin. Notice 'tern' should stand for your tern plugin path.
+# It means where your tern script is in.
+
+import vyapp.plugins.javascript_completion
+from vyapp.plugins.javascript_completion import Tern, javascript_tools
+tern = Tern('tern')
+
+# Turns the command active_javascript_completion available, such a command
+# permits to have javascript autocompletion in files with no javascript extension.
+
+javascript_tools(tern)
+autoload(vyapp.plugins.javascript_completion, tern)
+~~~
+
+For autocompletion, just press:
+
+    <Control-period>
+
+In javascript files.
 
 ### Comment a block of code
 
@@ -2766,6 +2808,8 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
+
 
 
 
