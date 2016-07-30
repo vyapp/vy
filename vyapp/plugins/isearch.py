@@ -53,8 +53,9 @@ from itertools import permutations, product, groupby
 from re import escape
 
 class ISearch(object):
-    def __init__(self, area):
+    def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
         self.area = area
+        area.tag_configure('(ISEARCH_MATCH)', **setup)
         area.install(('NORMAL', '<Key-0>', lambda event: 
              Get(area, events={'<Return>' : self.start, '<Alt-p>': lambda wid: self.go_down(), 
                         '<Control-j>': lambda wid: self.go_down(), '<Control-k>' : lambda wid: self.go_up(),
@@ -79,7 +80,7 @@ class ISearch(object):
             self.go_down()
     
     def stop(self):
-        self.area.tag_remove('sel', '1.0', 'end')
+        self.area.tag_remove('(ISEARCH_MATCH)', '1.0', 'end')
         return True
 
     def no_match(self):
@@ -120,8 +121,8 @@ class ISearch(object):
         line = self.seq[self.index - 1][1]
         pos0 = '%s.0' % line
         pos1 = '%s.0 lineend' % line
-        self.area.tag_remove('sel', '1.0', 'end')
-        self.area.tag_add('sel', pos0, pos1)
+        self.area.tag_remove('(ISEARCH_MATCH)', '1.0', 'end')
+        self.area.tag_add('(ISEARCH_MATCH)', pos0, pos1)
         self.area.seecur(pos0)
         self.index = self.index - 1
 
@@ -135,13 +136,14 @@ class ISearch(object):
         line = self.seq[self.index + 1][1]
         pos0 = '%s.0' % line
         pos1 = '%s.0 lineend' % line
-        self.area.tag_remove('sel', '1.0', 'end')
-        self.area.tag_add('sel', pos0, pos1)
+        self.area.tag_remove('(ISEARCH_MATCH)', '1.0', 'end')
+        self.area.tag_add('(ISEARCH_MATCH)', pos0, pos1)
         self.area.seecur(pos0)
 
         self.index = self.index + 1
 
 install = ISearch
+
 
 
 

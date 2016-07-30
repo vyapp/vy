@@ -50,7 +50,7 @@ def add_inline_comment(area):
 
     comment = TABLE.get(guess_type(area.filename)[0], DEFAULT)
     area.replace_ranges('sel', '^ +|^', 
-    lambda index0, index1: '%s%s ' % (area.get(index0, index1), comment))
+    lambda data, index0, index1: '%s%s ' % (area.get(index0, index1), comment))
     area.clear_selection()
 
 def rm_inline_comment(area):
@@ -60,7 +60,7 @@ def rm_inline_comment(area):
 
     comment = TABLE.get(guess_type(area.filename)[0], DEFAULT)
     area.replace_ranges('sel', '^ *%s ?' % comment, 
-    lambda index0, index1: area.get(index0, index1).replace(
+    lambda data, index0, index1: area.get(index0, index1).replace(
         '%s ' % comment, '').replace(comment, ''))
     area.clear_selection()
 
@@ -68,6 +68,7 @@ def install(area):
     area.install(
     ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
     ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 
