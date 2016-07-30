@@ -16,14 +16,14 @@ that key-command automatically sets the AreaVi instance that has focus as target
 Commands
 ========
 
-Command: find(self, regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
+Command: find(regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
 Description: Highlight patterns in the AreaVi instance that has focus.
 regex     = The pattern to be searched.
 index     = The starting index of the search.
 stopindex = The stop index of the search.
 
-Command: replace_all(self, regex, data, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
+Command: sub(regex, data, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
 
 Description: Replace all occurrences of a given pattern for data.
@@ -40,9 +40,10 @@ stopindex = The stopindex.
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 
-ENV['find'] = lambda *args, **kwargs: AreaVi.ACTIVE.tag_add_found('sel', AreaVi.ACTIVE.find(*args, **kwargs))
+ENV['find'] = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.find(*args, **kwargs))
 ENV['sub'] = lambda *args, **kwargs: AreaVi.ACTIVE.replace_all(*args, **kwargs)
 ENV['get'] = lambda *args: AreaVi.ACTIVE.get(*args)
+
 
 
 
