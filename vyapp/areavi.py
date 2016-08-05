@@ -161,8 +161,8 @@ class AreaVi(Text):
         """
 
         self.insert('end', data)
-        self.mark_set('insert', 'end')
-        self.see('end')
+        # self.mark_set('insert', 'end')
+        self.see('insert')
 
     def curline(self):
         """
@@ -864,7 +864,8 @@ class AreaVi(Text):
         """
         It scrolls one line up
         """
-
+        # should be rewritten.
+        # it fails with append.
         self.yview(SCROLL, -1, 'units')
         is_visible = self.dlineinfo('insert')
         if not is_visible:
@@ -874,6 +875,8 @@ class AreaVi(Text):
         """
         It scrolls one line down.
         """
+        # should be rewritten.
+        # it fails with append.
 
         self.yview(SCROLL, 1, 'units')
         is_visible = self.dlineinfo('insert')
@@ -1572,6 +1575,7 @@ class AreaVi(Text):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
