@@ -35,6 +35,7 @@ vyapp/plugins/clip_path.py
 vyapp/plugins/clipboard.py
 vyapp/plugins/cmd.py
 vyapp/plugins/cmd_search.py
+vyapp/plugins/cmd_utils.py
 vyapp/plugins/codec.py
 vyapp/plugins/codepad.py
 vyapp/plugins/count_words.py
