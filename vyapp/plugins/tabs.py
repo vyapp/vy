@@ -8,40 +8,40 @@ open files, change the focus between opened tabs.
 Usage
 =====
 
-The way to create a blank tab is by pressing <F7> in NORMAL mode.    
+The way to create a blank tab is by pressing <Alt-period> in NORMAL mode.    
 It will open a new blank tab but keep the focus in the actual one.
 
 There is a handy Key-Command to create a tab and load the contents of a file into it.
-For such, just put in NORMAL mode then type <F8>. By pressig <F8> it pops a file
+For such, just put in NORMAL mode then type <Alt-comma>. By pressig <Alt-comma> it pops a file
 selection window to pick up a file.
 
 Sometimes you will be done with a given tab, you can remove such a tab by pressing <Delete> in
 NORMAL mode.
 
-It is possible to change the focus left from a given tab by pressing <Shift-O>
-or changing the focus right by pressing <Shift-P> in NORMAL mode.
+It is possible to change the focus left from a given tab by pressing <Alt-o>
+or changing the focus right by pressing <Alt-p> in NORMAL mode.
 
 
 Key-Commands
 ============
 
-Mode: NORMAL
-Event: <F8>
+Mode: Global
+Event: <Alt-comma>
 Description: It pops a file selection window to load the contents of a file in a new tab.
 
-Mode: NORMAL
-Event: <F7>
+Mode: Global
+Event: <Alt-period>
 Description: It creates a new blank tab.
 
-Mode: NORMAL
+Mode: Global
 Event: <Delete>
 Description: It removes the focused tab.
 
-Mode: NORMAL
+Mode: Global
 Event: <Alt-o>
 Description: It changes the focus left from a tab.
 
-Mode: NORMAL
+Mode: Global
 Event: <Alt-p>
 Description: It changes the focus right from a tab.
 
@@ -65,7 +65,7 @@ def load_tab():
     # the text area when one presses cancel.
 
     if not filename: 
-        return
+        return 'break'
 
     try:
         root.note.load([ [filename] ])
@@ -73,6 +73,11 @@ def load_tab():
         set_status_msg('It failed to load.')
     else:
         set_status_msg('File loaded.')
+    return 'break'
+
+def create_tab():
+    root.note.create('None')
+    return 'break'
 
 def remove_tab():
     """
@@ -109,18 +114,11 @@ def select_right():
     return 'break'
 
 def install(area):
-    area.install(('NORMAL', '<F8>', lambda event: load_tab()),
-                 ('NORMAL', '<F7>', lambda event: root.note.create('None')),
-                 ('NORMAL', '<Delete>', lambda event: remove_tab()),
+    area.install((-1, '<Alt-comma>', lambda event: load_tab()),
+                 (-1, '<Alt-period>', lambda event: create_tab()),
+                 (-1, '<Delete>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
-
-
-
-
-
-
-
 
 
 

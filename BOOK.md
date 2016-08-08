@@ -1029,15 +1029,15 @@ Tabs
 
 ### Create a new tab
 
-Switch to NORMAL mode then press:
+Switch to Global mode then press:
 
-    <F7>
+    <Alt-comma>
 
 ### Open a file in a new tab
 
-In order to open a file in a new tab, switch to NORMAL mode then press:
+In order to open a file in a new tab, in Global mode press:
 
-    <F8>
+    <Alt-period>
 
 It shows a file dialog window to select a file to be opened in a new tab.
 
@@ -1075,7 +1075,7 @@ It will open an input text area to type part of the tab title.
 
 ### Remove a tab
 
-In order to remove the focused tab, press in NORMAL mode the keycommand below:
+In order to remove the focused tab, press in Global mode the keycommand below:
 
     <Delete>
 
@@ -2808,6 +2808,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
