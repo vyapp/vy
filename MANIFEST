@@ -63,6 +63,7 @@ vyapp/plugins/line_sel.py
 vyapp/plugins/log_opened_file.py
 vyapp/plugins/main_jumps.py
 vyapp/plugins/match_sym_pair.py
+vyapp/plugins/mode_shortcut.py
 vyapp/plugins/mode_switch.py
 vyapp/plugins/normal_mode.py
 vyapp/plugins/output_scheme.py

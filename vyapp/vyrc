@@ -25,7 +25,7 @@ def setup(area):
 
 autocall(setup) 
 ##############################################################################
-# The basic modes.
+# The basic plugins/modes.
 
 import vyapp.plugins.delta_mode
 autoload(vyapp.plugins.delta_mode)
@@ -49,6 +49,9 @@ autoload(vyapp.plugins.insert_mode)
 
 import vyapp.plugins.normal_mode
 autoload(vyapp.plugins.normal_mode)
+
+# Start untwisted reactor.
+import vyapp.plugins.startup
 
 ##############################################################################
 # Plugin list.
@@ -77,11 +80,9 @@ autoload(vyapp.plugins.clear_sel)
 # import vyapp.plugins.quick_sel
 # autoload(vyapp.plugins.quick_sel)
 
+
 import vyapp.plugins.quick_url
 autoload(vyapp.plugins.quick_url)
-
-import vyapp.plugins.find_sel
-autoload(vyapp.plugins.find_sel)
 
 
 import vyapp.plugins.tab_search
@@ -94,6 +95,7 @@ autoload(vyapp.plugins.shell)
 
 import vyapp.plugins.url_source
 autoload(vyapp.plugins.url_source)
+
 
 # This plugin implements a keycommand to quickly load the user vyrc file
 # into the current AreaVi instance.
@@ -424,6 +426,8 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
+
 
 
 

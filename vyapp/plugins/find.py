@@ -78,8 +78,8 @@ class Find(object):
 
     def start(self):
         self.index = ('insert', 'insert')
-        get = Get(self.area, events={'<Alt-o>': self.up, '<Escape>': self.stop, 
-                                     '<Alt-p>': self.down, '<Return>': self.stop,
+        get = Get(self.area, events={'<Alt-o>': self.up, '<Escape>': lambda wid: self.cancel(), 
+                                     '<Alt-p>': self.down, '<Return>': self.set_regex,
                                      '<Alt-b>': lambda wid: self.area.map_matches('(CATCHED)', self.area.collect('sel', wid.get())),
                                      '<Alt-period>': lambda wid: self.area.replace(wid.get(), self.data, self.index[0]),
                                      '<Alt-semicolon>': lambda wid: self.area.replace_ranges('sel', wid.get(), self.data), 
@@ -88,8 +88,13 @@ class Find(object):
         ask = Ask(self.area, default_data = self.data.encode('string_escape'))
         self.data = ask.data.decode('string_escape')
 
-    def stop(self, wid):
+    def set_regex(self, wid):
         self.regex = wid.get()
+        self.area.tag_remove('(CATCHED)', '1.0', 'end')
+        return True
+
+    def cancel(self):
+        self.regex = ''
         self.area.tag_remove('(CATCHED)', '1.0', 'end')
         return True
 
@@ -104,6 +109,7 @@ class Find(object):
         self.index = ('insert', 'insert') if not index else index
 
 install = Find
+
 
 
 

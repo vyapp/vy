@@ -99,9 +99,7 @@ Description: Ask for the user to type a command to be dropped to the bash interp
 
 
 from untwisted.network import core, xmap, READ, WRITE, Device
-from untwisted.tkinter import extern
 from untwisted.iofile import *
-from vyapp.app import root
 from vyapp.tools import set_status_msg
 from vyapp.ask import Ask
 
@@ -183,9 +181,9 @@ class Process(object):
     def dump_signal(self, signal):
         killpg(self.child.pid, signal)
     
-extern(root)
 process = Process()
 install = process
+
 
 
 
