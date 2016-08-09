@@ -10,7 +10,7 @@ Usage
 When dealing with some programming files we get some warnings/errors from the interpreter/compiler
 then we need to quickly jump to that line to see whats going on.
 
-In order to make the cursor jump to a given line.row, just press <F3> in NORMAL mode.
+In order to make the cursor jump to a given line.row, just press <Control-q> in NORMAL mode.
 It will show up an input data field where you can insert the line or the row.
 
 Example:
@@ -25,7 +25,7 @@ Key-Commands
 ============
 
 Mode: NORMAL
-Event: <F3>
+Event: <Control-q>
 Description: Shows an input text field to insert a Line.Col value to place the cursor at that position.
 
 """
@@ -44,7 +44,8 @@ def go_to_pos(area):
     except TclError:
         pass
 
-install = lambda area: area.install(('NORMAL', '<F3>', lambda event: go_to_pos(event.widget)))
+install = lambda area: area.install(('NORMAL', '<Control-q>', lambda event: go_to_pos(event.widget)))
+
 
 
 

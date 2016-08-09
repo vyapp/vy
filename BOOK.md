@@ -932,7 +932,7 @@ Well, i would press in NORMAL mode the following keycommand below:
 
 Switch to NORMAL mode, then press:
 
-    <F3>
+    <Control-q>
 
 It will appear an inputbox widget in which you can insert the desired position
 to place the cursor on. Try inserting the following values
@@ -2825,6 +2825,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
