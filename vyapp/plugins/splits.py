@@ -181,10 +181,11 @@ def install(area):
     area.install((-1, '<Alt-less>', lambda event: add_horizontal_area(event.widget)),
                  (-1, '<Alt-greater>', lambda event: add_vertical_area(event.widget)),
                  (-1, '<Alt-X>', lambda event: remove_area(event.widget)),
-                 ('NORMAL', '<Shift-H>', lambda event: go_left_area(event.widget)),
-                 ('NORMAL', '<Shift-L>', lambda event: go_right_area(event.widget)),
-                 ('NORMAL', '<Shift-K>', lambda event: go_up_area(event.widget)),
-                 ('NORMAL', '<Shift-J>', lambda event: go_down_area(event.widget)))
+                 (-1, '<Control-Alt-h>', lambda event: go_left_area(event.widget)),
+                 (-1, '<Control-Alt-l>', lambda event: go_right_area(event.widget)),
+                 (-1, '<Control-Alt-k>', lambda event: go_up_area(event.widget)),
+                 (-1, '<Control-Alt-j>', lambda event: go_down_area(event.widget)))
+
 
 
 
