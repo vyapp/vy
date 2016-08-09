@@ -18,13 +18,13 @@ pane AreaVi named A.
     | A |
     -----
 
-After pressing <F4> in NORMAL mode you will get.
+After pressing <Alt-less> in Global mode you will get.
     
 ------------
 | A  |  B  |
 ------------
 
-Suppose now the cursor is over A or B. If you press <F5> in NORMAL mode 
+Suppose now the cursor is over A or B. If you press <Alt-greater> in Global mode 
 then you will get.
 
 ------------
@@ -33,7 +33,7 @@ then you will get.
 |    C     |
 ------------
 
-Now, suppose the cursor is over C then you press again <F4> in NORMAL mode.
+Now, suppose the cursor is over C then you press again <Alt-less> in Global mode.
 Then you will get.
 
 ------------
@@ -44,23 +44,23 @@ Then you will get.
 
 
 Consider the case that you want to remove a given pane. For such
-you place the cursor over the pane then type <F6>.
+you place the cursor over the pane then type <Alt-X>.
 
 For moving the focus between AreaVi instances, see the commands below.
 
 Key-Commands
 ============
 
-Mode: NORMAL
-Event: <F4>
+Mode: Global
+Event: <Alt-less>
 Description: Add a vertical pane.
 
-Mode: NORMAL
-Event: <F5>
+Mode: Global
+Event: <Alt-greater>
 Description: Add a horizontal pane.
 
-Mode: NORMAL
-Event: <F6> 
+Mode: Global
+Event: <Alt-X> 
 Description: Remove a pane.
 
 Mode: NORMAL
@@ -82,6 +82,7 @@ Description: Change focus one pane down.
 """
 
 from vyapp.areavi import AreaVi
+from vyapp.app import root
 
 def add_vertical_area(area):
     """
@@ -89,6 +90,7 @@ def add_vertical_area(area):
     """
 
     area.master.master.master.create()
+    return 'break'
 
 
 def add_horizontal_area(area):
@@ -97,6 +99,7 @@ def add_horizontal_area(area):
     """
 
     area.master.master.create()
+    return 'break'
 
 def remove_area(area):
     """
@@ -108,6 +111,8 @@ def remove_area(area):
     area.master.destroy()
 
     if not area.master.master.panes(): area.master.master.destroy()
+    root.note.set_area_focus()
+    return 'break'
 
 def go_left_area(area):
     wids  = area.master.master.panes()
@@ -119,6 +124,7 @@ def go_left_area(area):
     
     # as there is only one.
     wid[0].focus_set()
+    return 'break'
 
 def go_right_area(area):
     wids   = area.master.master.panes()
@@ -130,6 +136,7 @@ def go_right_area(area):
     
     # as there is only one.
     wid[0].focus_set()
+    return 'break'
 
 def go_down_area(area):
     wids   = area.master.master.panes()
@@ -149,6 +156,7 @@ def go_down_area(area):
 
     # as there is only one.
     wid[0].focus_set()
+    return 'break'
 
 def go_up_area(area):
     wids   = area.master.master.panes()
@@ -167,20 +175,16 @@ def go_up_area(area):
 
     # as there is only one.
     wid[0].focus_set()
+    return 'break'
 
 def install(area):
-    area.install(('NORMAL', '<F4>', lambda event: add_horizontal_area(event.widget)),
-                 ('NORMAL', '<F5>', lambda event: add_vertical_area(event.widget)),
-                 ('NORMAL', '<F6>', lambda event: remove_area(event.widget)),
+    area.install((-1, '<Alt-less>', lambda event: add_horizontal_area(event.widget)),
+                 (-1, '<Alt-greater>', lambda event: add_vertical_area(event.widget)),
+                 (-1, '<Alt-X>', lambda event: remove_area(event.widget)),
                  ('NORMAL', '<Shift-H>', lambda event: go_left_area(event.widget)),
                  ('NORMAL', '<Shift-L>', lambda event: go_right_area(event.widget)),
                  ('NORMAL', '<Shift-K>', lambda event: go_up_area(event.widget)),
                  ('NORMAL', '<Shift-J>', lambda event: go_down_area(event.widget)))
-
-
-
-
-
 
 
 

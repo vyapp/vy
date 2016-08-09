@@ -83,6 +83,8 @@ Table of Contents
       * [Move focus one pane left](#move-focus-one-pane-left)
       * [Move focus one pane right](#move-focus-one-pane-right)
       * [Remove a pane](#remove-a-pane)
+      * [Add a vertical pane](#add-a-vertical-pane)
+      * [Add a horizontal pane](#add-a-horizontal-pane)
   * [Command line](#command-line)
       * [Opening files in panes/tabs from command line](#opening-files-in-panestabs-from-command-line)
   * [The screen search feature](#the-screen-search-feature)
@@ -1031,13 +1033,13 @@ Tabs
 
 Switch to Global mode then press:
 
-    <Alt-comma>
+    <Alt-period>
 
 ### Open a file in a new tab
 
 In order to open a file in a new tab, in Global mode press:
 
-    <Alt-period>
+    <Alt-comma>
 
 It shows a file dialog window to select a file to be opened in a new tab.
 
@@ -1126,11 +1128,26 @@ In order to move focus one pane right, switch to NORMAL mode then press:
 
 The way to remove a focused pane is by pressing:
 
-    <F6>
+    <Alt-X>
 
-in NORMAL mode.
+in Global mode.
 
 ***
+
+### Add a vertical pane
+
+Just press in Global mode:
+
+    <Alt-less>
+
+***
+
+### Add a horizontal pane
+
+Just press in global mode:
+
+    <Alt-greater>
+
 
 Command line
 ============
@@ -1726,21 +1743,21 @@ def func_beta(m):
 
 Open these two files in two tabs by pressing:
 
-    <F8> 
+    <Alt-comma> 
 
-in NORMAL mode. Create a vertical/horizontal area for each one of the vy tabs that were created. For such, 
+in Global mode. Create a vertical/horizontal area for each one of the vy tabs that were created. For such, 
 switch the focus to the tab that has alpha.py then press:
 
-    <F4> 
+    <Alt-less> 
 
-in NORMAL mode, it will open a vertical areavi instance.  Switch the focus to that areavi instance then 
+in Global mode, it will open a vertical areavi instance.  Switch the focus to that areavi instance then 
 make it an output target by pressing: 
 
     <Tab> 
 
-in NORMAL mode. Switch the focus to the tab that has beta.py opened then press:
+in Global mode. Switch the focus to the tab that has beta.py opened then press:
 
-    <F4> 
+    <Alt-less> 
 
 to create a vertical area to set output target on by pressing:
 
@@ -2808,6 +2825,8 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
+
 
 
 

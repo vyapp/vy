@@ -34,7 +34,7 @@ Event: <Alt-period>
 Description: It creates a new blank tab.
 
 Mode: Global
-Event: <Delete>
+Event: <Alt-x>
 Description: It removes the focused tab.
 
 Mode: Global
@@ -97,6 +97,8 @@ def remove_tab():
     # spreaded.
     # root.note.forget(wid)
 
+    return 'break'
+
 def select_left():
     """
     """
@@ -116,9 +118,10 @@ def select_right():
 def install(area):
     area.install((-1, '<Alt-comma>', lambda event: load_tab()),
                  (-1, '<Alt-period>', lambda event: create_tab()),
-                 (-1, '<Delete>', lambda event: remove_tab()),
+                 (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 
