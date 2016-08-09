@@ -1091,26 +1091,26 @@ Panes
 It is possible to have more than one file opened per tab, to move the focus
 one pane up, press:
 
-    <Key-K>
+    <Control-Alt-k>
 
-in NORMAL mode.
+in Global mode.
 
 ***
 
 ### Move focus one pane down
 
-In order to move focus one pane down, switch to NORMAL mode then press:
+In order to move focus one pane down, switch to Global mode then press:
 
 
-    <Key-J>
+    <Control-Alt-j>
 
 ***
 
 ### Move focus one pane left
 
-Switch to NORMAL mode then press:
+Switch to Global mode then press:
 
-    <Key-H>
+    <Control-Alt-h>
 
 to move the focus one pane left.
 
@@ -1118,9 +1118,9 @@ to move the focus one pane left.
 
 ### Move focus one pane right
 
-In order to move focus one pane right, switch to NORMAL mode then press:
+In order to move focus one pane right, switch to Global mode then press:
 
-    <Key-L>
+    <Control-Alt-l>
 
 ***
 
@@ -2825,6 +2825,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 

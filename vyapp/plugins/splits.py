@@ -63,20 +63,20 @@ Mode: Global
 Event: <Alt-X> 
 Description: Remove a pane.
 
-Mode: NORMAL
-Event: <Shift-H>
+Mode: Global
+Event: <Control-Alt-h>
 Description: Change focus one pane left.
 
-Mode: NORMAL
-Event: <Shift-L>
+Mode: Global
+Event: <Control-Alt-l>
 Description: Change focus one pane right.
 
-Mode: NORMAL
-Event: <Shift-K>
+Mode: Global
+Event: <Control-Alt-k>
 Description: Change focus one pane up.
 
-Mode: NORMAL
-Event: <Shift-J>
+Mode: Global
+Event: <Control-Alt-j>
 Description: Change focus one pane down.
 
 """
@@ -185,6 +185,7 @@ def install(area):
                  (-1, '<Control-Alt-l>', lambda event: go_right_area(event.widget)),
                  (-1, '<Control-Alt-k>', lambda event: go_up_area(event.widget)),
                  (-1, '<Control-Alt-j>', lambda event: go_down_area(event.widget)))
+
 
 
 
