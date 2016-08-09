@@ -1079,7 +1079,7 @@ It will open an input text area to type part of the tab title.
 
 In order to remove the focused tab, press in Global mode the keycommand below:
 
-    <Delete>
+    <Alt-x>
 
 ***
 
@@ -2825,6 +2825,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
