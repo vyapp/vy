@@ -89,10 +89,6 @@ import vyapp.plugins.tab_search
 autoload(vyapp.plugins.tab_search)
 
 
-import vyapp.plugins.shell
-autoload(vyapp.plugins.shell)
-
-
 import vyapp.plugins.url_source
 autoload(vyapp.plugins.url_source)
 
@@ -408,6 +404,9 @@ import vyapp.plugins.count_words
 import vyapp.plugins.codec
 
 
+import vyapp.plugins.shell
+
+
 # Saving, opening files from vy python command line.
 import vyapp.plugins.iocmd
 
@@ -426,6 +425,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
