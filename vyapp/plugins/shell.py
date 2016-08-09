@@ -31,23 +31,22 @@ from vyapp.areavi import AreaVi
 import shlex
 
 class Shell(object):
-    def __init__(self, data):
-        self.area = AreaVi.ACTIVE
+    def __init__(self, data, area, output):
+        self.area = area
+        self.output = output
 
         try:
             self.expect = Expect(*shlex.split(data))
         except Exception as e:
             set_status_msg(e)
         else:
-            self.create_output()
+            self.install_events()
         
-    def create_output(self):
+    def install_events(self):
         """
 
         """
 
-        self.output = self.area.master.master.create()
-    
         # When one of the AreaVi instances are destroyed then
         # the process is killed.
         self.output.hook(-1, '<Destroy>', lambda event: 
@@ -56,9 +55,9 @@ class Shell(object):
         self.terminate_process())
 
         self.output.hook('NORMAL', '<Control-F2>', lambda event: 
-        self.map_commands())
+        self.map_process_input())
 
-        self.map_commands()
+        self.map_process_input()
         # When call.terminnate is called it may happen of having still data to be
         # processed. It would attempt to write on an AreaVi instance that no more exist.
         # So, it executes quietly the AreaVi.append method.
@@ -67,7 +66,7 @@ class Shell(object):
 
         xmap(self.expect, CLOSE, self.handle_close)
 
-    def map_commands(self):
+    def map_process_input(self):
         self.area.hook('NORMAL', '<F2>', lambda event: 
         self.dump_line_and_down(), add=False)
 
@@ -94,7 +93,10 @@ class Shell(object):
         set_status_msg('Killed process!')
         expect.destroy()
 
+
 ENV['Shell']  = Shell
+ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
+ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 
 
 
