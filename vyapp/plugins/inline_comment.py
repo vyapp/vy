@@ -38,7 +38,7 @@ TABLE   = {
               'text/x-python'            :'#',
               'text/x-java-source'       :'//',
               'text/x-csrc'              :'//',
-              'text/x-sh'                :'//',
+              'text/x-sh'                :'#',
               'application/x-javascript' :'//',
               'text/x-c++src'            :'//'
           }
@@ -68,6 +68,7 @@ def install(area):
     area.install(
     ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
     ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 
