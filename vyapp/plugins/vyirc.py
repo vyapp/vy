@@ -188,6 +188,7 @@ class IrcMode(object):
         area.add_mode('IRC')
         area.chmode('IRC')
         area.install(('GAMMA', '<Key-i>', lambda event: event.widget.chmode('IRC')),
+                     (-1, '<<Chmode-IRC>>', lambda event: event.widget.mark_set('insert', 'end')),
                      ('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con)),
                      ('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con)))
 
@@ -249,6 +250,8 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
+
 
 
 

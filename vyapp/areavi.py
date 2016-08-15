@@ -73,6 +73,7 @@ class AreaVi(Text):
         if opt: self.bindtags((MODE_X, MODE_Y, self, 'Text', '.'))
         else: self.bindtags((MODE_X, MODE_Y, self, '.'))
 
+        self.event_generate('<<Chmode-%s>>' % id)
 
     def add_mode(self, id, opt=False):
         """
@@ -1575,6 +1576,7 @@ class AreaVi(Text):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
