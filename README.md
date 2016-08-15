@@ -90,9 +90,7 @@ Basic Install
 **Note:** 
 vy requires Python 2.7 to run.
 
-    pip install pygments
-    pip install jedi
-    pip install untwisted
+    pip install -r requirements.txt
     pip install vy
 
 **Note:** 
