@@ -34,10 +34,19 @@ class Get(InputBox):
 
         self.entry.bindtags(('Entry', self.entry, '.', 'all'))
         self.entry.bind('<Key>', self.dispatch_change_event, add=True)
+        self.entry.bind('<Key>', self.dispatch_idle_event, add=True)
 
         for indi, indj in events.iteritems():
             self.entry.bind(indi, lambda event, handle=indj: 
                         self.dispatch_event(handle) , add=True)
+
+        self.timeout = 400
+        self.id      = ''
+
+    def dispatch_idle_event(self, event):
+        self.entry.after_cancel(self.id)
+        self.id = self.entry.after(self.timeout, 
+        lambda: self.entry.event_generate('<<Idle>>'))
 
     def dispatch_change_event(self, event):
         if event.keysym in string.printable:
@@ -67,6 +76,7 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
+
 
 
 
