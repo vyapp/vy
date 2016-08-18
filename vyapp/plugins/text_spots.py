@@ -28,42 +28,41 @@ back to NORMAL mode.
 Key-Commands
 ============
 
-Mode: ALPHA
-Event <Key-q>
+Mode: NORMAL
+Event <Control-b>
 Description: Shade/unshade a line.
 
-Mode: ALPHA
-Event: <Key-s>
+Mode: NORMAL
+Event: <Control-n>
 Description: Makes the cursor jump to the next shaded line from the cursor position.
 
-Mode: ALPHA
-Event: <Key-a>
+Mode: NORMAL
+Event: <Control-m>
 Description: Makes the cursor jump to the previous shaded line from the cursor position.
 
 """
 
-TAG_SHADE = '_shade_'
 
-def toggle_shade(area):
-    map0 = area.tag_nextrange(TAG_SHADE, 'insert', 'insert lineend')
-    map1 = area.tag_prevrange(TAG_SHADE, 'insert', 'insert linestart')
+def toggle_status(area):
+    map0 = area.tag_nextrange('(SPOT)', 'insert', 'insert lineend')
+    map1 = area.tag_prevrange('(SPOT)', 'insert', 'insert linestart')
 
     if map0 or map1:
-        area.tag_remove(TAG_SHADE, 'insert linestart', 
+        area.tag_remove('(SPOT)', 'insert linestart', 
                         'insert lineend')
     else:
-        area.tag_add(TAG_SHADE, 'insert linestart', 
+        area.tag_add('(SPOT)', 'insert linestart', 
                      'insert lineend')
         
-def go_prev_shade(area):
-    map = area.tag_prevrange(TAG_SHADE, 'insert linestart')
+def prev_spot(area):
+    map = area.tag_prevrange('(SPOT)', 'insert linestart')
     if not map: return
 
     area.mark_set('insert', map[0])
     area.see('insert')
 
-def go_next_shade(area):
-    map = area.tag_nextrange(TAG_SHADE, 'insert lineend')
+def next_spot(area):
+    map = area.tag_nextrange('(SPOT)', 'insert lineend')
     if not map: return
 
     area.mark_set('insert', map[0])
@@ -71,10 +70,11 @@ def go_next_shade(area):
 
 
 def install(area, setup={'background':'green', 'foreground':'black'}):
-    area.tag_configure(TAG_SHADE, **setup)
-    area.install(('ALPHA', '<Key-q>', lambda event: toggle_shade(event.widget)),
-           ('ALPHA', '<Key-a>', lambda event: go_prev_shade(event.widget)),
-           ('ALPHA', '<Key-s>', lambda event: go_next_shade(event.widget)))
+    area.tag_configure('(SPOT)', **setup)
+    area.install(('NORMAL', '<Control-b>', lambda event: toggle_status(event.widget)),
+           ('NORMAL', '<Control-n>', lambda event: prev_spot(event.widget)),
+           ('NORMAL', '<Control-m>', lambda event: next_spot(event.widget)))
+
 
 
 

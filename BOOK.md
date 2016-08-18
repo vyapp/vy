@@ -863,14 +863,9 @@ one of these chars.
 ### Shade a line
 
 Sometimes we need to create marks to remember text positions. The way to create a mark
-in vy is by shading a line. Switch to NORMAL mode, then place the cursor on the desired line
-and press the keycommand below to switch to ALPHA mode:
+in vy is by shading a line. Switch to NORMAL mode, then place the cursor on the desired line:
 
-    <Key-3>
-
-Once in ALPHA mode, press:
-
-    <Key-q>
+    <Control-b>
 
 It will shade the line, in order to unshade just press again the same Key-Comamnd.
 
@@ -878,13 +873,7 @@ It will shade the line, in order to unshade just press again the same Key-Comamn
 
 ### Jump to the previous shaded line
 
-This is useful to remember positions of the text. Switch to ALPHA mode by pressing:
-
-    <Key-3>
-
-then press:
-
-    <Key-a>
+    <Control-n>
 
 It will make the cursor jump to the previous shaded line.
 
@@ -892,17 +881,8 @@ It will make the cursor jump to the previous shaded line.
 
 ### Jump to the next shaded line
 
-This makes the cursor jump to the next shaded line. Switch to ALPHA mode
-then shade a line that is in the middle of the file, then switch back to NORMAL mode.
 
-Press:
-
-    <Key-1>
-
-to make the cursor jump to the beginning of the file. Now, switch back to ALPHA mode
-then press:
-
-    <Key-s>
+    <Control-m>
 
 It will make the cursor jump to the next shaded line.
 
@@ -2825,6 +2805,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
