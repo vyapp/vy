@@ -4,9 +4,31 @@
 
 from Tkinter import *
 from re import escape
+import string
 import mimetypes
 
-class AreaVi(Text):
+class DataEvent(object):
+    def __init__(self, widget):
+        self.widget = widget
+        self.widget.bind('<Key>', self.dispatch_data, add=True)
+
+    def dispatch_data(self, event):
+        if event.keysym in string.printable:
+            self.widget.event_generate('<<Data>>')
+
+class IdleEvent(object):
+    def __init__(self, widget):
+        self.widget.bind('<Key>', self.dispatch_idle, add=True)
+        self.widget  = widget
+        self.timeout = 400
+        self.funcid  = ''
+
+    def dispatch_idle(self, event):
+        self.widget.after_cancel(self.funcid)
+        self.funcid = self.widget.after(self.timeout, 
+        lambda: self.widget.event_generate('<<Idle>>'))
+
+class AreaVi(Text, DataEvent, IdleEvent):
     ACTIVE = None
 
     def __init__(self, default_filename, *args, **kwargs):
@@ -21,6 +43,9 @@ class AreaVi(Text):
         """
 
         Text.__init__(self, *args, **kwargs)
+        DataEvent.__init__(self, self)
+        IdleEvent.__init__(self, self)
+
         self.setup = dict()
 
         # Maybe it should be?
@@ -1576,6 +1601,7 @@ class AreaVi(Text):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 

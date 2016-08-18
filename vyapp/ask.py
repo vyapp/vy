@@ -4,6 +4,7 @@ This module implements basic input data scheme.
 
 from Tkinter import *
 from vyapp.app import root
+from vyapp.areavi import DataEvent, IdleEvent
 import string
 
 class InputBox(object):
@@ -28,31 +29,18 @@ class InputBox(object):
         root.read_data.pack_forget()
         self.area.focus_set()
 
-class Get(InputBox):
+class Get(InputBox, DataEvent, IdleEvent):
     def __init__(self, area, events={}, default_data=''):
         InputBox.__init__(self, area, default_data)
+        DataEvent.__init__(self, self.entry)
+        IdleEvent.__init__(self, self.entry)
 
         self.entry.bindtags(('Entry', self.entry, '.', 'all'))
-        self.entry.bind('<Key>', self.dispatch_change_event, add=True)
-        self.entry.bind('<Key>', self.dispatch_idle_event, add=True)
-
         for indi, indj in events.iteritems():
             self.entry.bind(indi, lambda event, handle=indj: 
-                        self.dispatch_event(handle) , add=True)
+                        self.dispatch(handle) , add=True)
 
-        self.timeout = 400
-        self.id      = ''
-
-    def dispatch_idle_event(self, event):
-        self.entry.after_cancel(self.id)
-        self.id = self.entry.after(self.timeout, 
-        lambda: self.entry.event_generate('<<Idle>>'))
-
-    def dispatch_change_event(self, event):
-        if event.keysym in string.printable:
-            self.entry.event_generate('<<Data>>')
-
-    def dispatch_event(self, handle):
+    def dispatch(self, handle):
         is_done = handle(self.entry)
         if is_done == True: 
             self.done()
@@ -76,10 +64,6 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
-
-
-
-
 
 
 

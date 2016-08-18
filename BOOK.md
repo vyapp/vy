@@ -1377,11 +1377,11 @@ searches inside these ranges. The matched patterns will be highlighed.
 First, use range selection or block selection or whatever other kind of selection to select some
 region. Press: 
 
-    <Alt-slash>  I
+    <Alt-slash>  
 
-nsert a pattern then:
+insert a pattern then:
 
-    <Alt-b>
+    <Alt-slash>
 
 The matched patterns will be highlighed.
 
@@ -2825,6 +2825,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 

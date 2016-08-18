@@ -20,7 +20,7 @@ Once the replacement is set then press <Alt-slash> to initiate the search proces
 to replace the current picked pattern of text and <Alt-comma> to replace all matched patterns.
 
 It is possible to perform searches over selected regions of text, for such, select a region of text
-then press <Alt-slash> and <Alt-b> to highligh all matched patterns in the region of text. In order
+then press <Alt-slash> and <Alt-slash> again to highligh all matched patterns in the region of text. In order
 to replace all matched patterns inside a region of text, use <Alt-semicolon>.
 
 Key-Commands
@@ -51,7 +51,7 @@ Event: <Alt-period>
 Description: Replace the next matched pattern for the previously set replacement.
 
 Mode: Get
-Event: <Alt-b>
+Event: <Alt-slash>
 Description: Highligh all matched patterns inside a selected region of text.
 
 Mode: Get
@@ -80,7 +80,7 @@ class Find(object):
         self.index = ('insert', 'insert')
         get = Get(self.area, events={'<Alt-o>': self.up, '<Escape>': lambda wid: self.cancel(), 
                                      '<Alt-p>': self.down, '<Return>': self.set_regex,
-                                     '<Alt-b>': lambda wid: self.area.map_matches('(CATCHED)', self.area.collect('sel', wid.get())),
+                                     '<Alt-slash>': lambda wid: self.area.map_matches('(CATCHED)', self.area.collect('sel', wid.get())),
                                      '<Alt-period>': lambda wid: self.area.replace(wid.get(), self.data, self.index[0]),
                                      '<Alt-semicolon>': lambda wid: self.area.replace_ranges('sel', wid.get(), self.data), 
                                      '<Alt-comma>': lambda wid: self.area.replace_all(wid.get(), self.data, '1.0', 'end')}, default_data=self.regex)
@@ -109,6 +109,7 @@ class Find(object):
         self.index = ('insert', 'insert') if not index else index
 
 install = Find
+
 
 
 
