@@ -18,7 +18,7 @@ class DataEvent(object):
 
 class IdleEvent(object):
     def __init__(self, widget):
-        self.widget.bind('<Key>', self.dispatch_idle, add=True)
+        self.widget.bind('<<Data>>', self.dispatch_idle, add=True)
         self.widget  = widget
         self.timeout = 400
         self.funcid  = ''
@@ -1601,6 +1601,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
