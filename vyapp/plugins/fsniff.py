@@ -1,6 +1,6 @@
 from vyapp.ask import Get
 from vyapp.app import root
-from re import escape, split
+from vyapp.regutils import build_regex
 from vyapp.tools import set_status_msg
 from subprocess import check_output, CalledProcessError
 
@@ -17,21 +17,9 @@ class Fsniff(object):
         Get(area, events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
         '<Return>': self.view_on_new_tab, '<Escape>': lambda wid: True})))
 
-    def make_pattern(self, data):
-        """
-
-        """
-
-        data    = split(' +', data)
-        pattern = ''
-        for ind in xrange(0, len(data)-1):
-            pattern = pattern + escape(data[ind]) + '.*'
-        pattern = pattern + escape(data[-1])
-        return pattern
-
     def run_cmd(self, data):
         path = check_output(['locate', '--limit', '1', 
-        '--regexp', self.make_pattern(data)])
+        '--regexp', build_regex(data, '.*')])
         path = path.strip('\n').rstrip('\n')
         return path
 
@@ -61,6 +49,7 @@ class Fsniff(object):
         set_status_msg('Locating...')
 
 install = Fsniff
+
 
 
 

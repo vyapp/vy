@@ -3,8 +3,8 @@
 """
 
 from vyapp.ask import Get
-from re import escape, split
 from vyapp.tools import set_status_msg
+from vyapp.regutils import build_regex
 
 class QuickSearch(object):
     def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
@@ -13,12 +13,19 @@ class QuickSearch(object):
         """
         self.area = area
         area.tag_configure('(SEARCH_MATCH)', **setup)
-        area.install(('NORMAL', '<Key-backslash>', lambda event: self.start_search()))
+        area.install(('NORMAL', '<Key-backslash>', 
+        lambda event: self.start_search()))
 
     def start_search(self):
-        ask = Get(self.area, events = {'<Alt-p>':self.search_down, '<Alt-o>': self.search_up, '<Control-j>': self.search_down, 
-                                       '<Control-k>': self.search_up, '<<Data>>':self.update_search, '<BackSpace>': self.update_search,
-                                       '<Return>': lambda wid: self.stop_search(), '<Escape>': lambda wid: self.stop_search()})
+        ask = Get(self.area, events = {'<Alt-p>':self.search_down, 
+        '<Alt-o>': self.search_up, 
+        '<Control-j>': self.search_down,     
+        '<Control-k>': self.search_up, 
+        '<<Data>>':self.update_search, 
+        '<BackSpace>': self.update_search,
+        '<Return>': lambda wid: self.stop_search(), 
+        '<Escape>': lambda wid: self.stop_search()})
+
         set_status_msg('')
 
     def stop_search(self):
@@ -54,45 +61,31 @@ class QuickSearch(object):
         """
 
         """
-        data = wid.get()
-        pattern = self.make_pattern(data)
+        data    = wid.get()
+        pattern = build_regex(data)
+        range   = self.start_range()
         set_status_msg('Pattern:%s' % pattern)
-        range = self.start_range()
         self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
-
-    def make_pattern(self, data):
-        """
-
-        """
-
-        data    = split(' +', data)
-        pattern = ''
-        for ind in xrange(0, len(data)-1):
-            pattern = pattern + escape(data[ind]) + '.+?'
-        pattern = pattern + escape(data[-1])
-        return pattern
 
     def search_up(self, wid):
         """
 
         """
-        data = wid.get()
-        pattern = self.make_pattern(data)
-        range = self.range_up()
+        data    = wid.get()
+        pattern = build_regex(data)
+        range   = self.range_up()
         self.area.pick_next_up('(SEARCH_MATCH)', pattern, *range)
-
         
     def search_down(self, wid):
         """
 
         """
-        data = wid.get()
-        pattern = self.make_pattern(data)
-        range = self.range_down()
+        data    = wid.get()
+        pattern = build_regex(data)
+        range   = self.range_down()
         self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
 
 install = QuickSearch
-
 
 
 
