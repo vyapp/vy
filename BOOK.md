@@ -1391,9 +1391,9 @@ in NORMAL mode. It will show on the status bar that the output was redirected to
 
 After redirecting the output, you're done, just press:
 
-    <Key-semicolon>
+    <Alt-semicolon>
 
-in NORMAL mode. It will appear an input text widget where you can drop python commands to vy 
+in Global mode. It will appear an input text widget where you can drop python commands to vy 
 whose output will be dropped at the AreaVi instance position that you have set as output target.
 
 Try inserting the following python code:
@@ -1402,7 +1402,7 @@ Try inserting the following python code:
     print 'Hello from vy'
 ~~~
 
-After you press enter, the AreaVi instance from where you issued the event in NORMAL mode will regain 
+After you press enter, the AreaVi instance from where you issued the event in Global mode will regain 
 the focus and the output from the command will be dropped at the position that you have set
 as target output.
 
@@ -2805,6 +2805,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
