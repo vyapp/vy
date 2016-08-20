@@ -244,9 +244,9 @@ import vyapp.plugins.inline_comment
 autoload(vyapp.plugins.inline_comment)
 
 
-# Used to set the cursor over a line.
-import vyapp.plugins.set_pos
-autoload(vyapp.plugins.set_pos)
+# Used to put the cursor on a given line.col.
+import vyapp.plugins.line_index
+autoload(vyapp.plugins.line_index)
 
 
 # Used to debug python applications. The python argument specifies the interpreter path.
@@ -431,6 +431,8 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
+
 
 
 

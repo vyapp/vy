@@ -1488,7 +1488,7 @@ using the key command below in NORMAL mode it has the last AreaVi instance that 
 
 
 But code that is executed from selected regions of text can have a different AreaVi instance as target to operate on.
-In order to set an AreaVi instance as target, switch to NORMAL mode then press:
+In order to set an AreaVi instance as target, switch to GLOBAL mode then press:
 
     <Control-E>
 
@@ -2805,6 +2805,7 @@ area.add_mode('MODE_NAME', opt=True)
 # argument set to True.
 area.chmode('NEW_MODE_NAME')
 ~~~
+
 
 
 
