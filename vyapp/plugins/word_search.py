@@ -52,7 +52,7 @@ from vyapp.tools import set_status_msg
 from itertools import permutations, product, groupby
 from re import escape
 
-class ISearch(object):
+class WordSearch(object):
     def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
         self.area = area
         area.tag_configure('(ISEARCH_MATCH)', **setup)
@@ -142,7 +142,8 @@ class ISearch(object):
 
         self.index = self.index + 1
 
-install = ISearch
+install = WordSearch
+
 
 
 
