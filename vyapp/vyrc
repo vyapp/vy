@@ -123,9 +123,9 @@ autoload(vyapp.plugins.python_completion)
 # javascript_tools(tern)
 # autoload(vyapp.plugins.javascript_completion, tern)
 
-# The isearch plugin.
-import vyapp.plugins.isearch
-autoload(vyapp.plugins.isearch)
+# The word_search plugin.
+import vyapp.plugins.word_search
+autoload(vyapp.plugins.word_search)
 
 
 # Shifting blocks of code.
@@ -431,6 +431,7 @@ def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nic
 def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
+
 
 
 
