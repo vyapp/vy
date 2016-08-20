@@ -111,7 +111,7 @@ from subprocess import Popen, PIPE, STDOUT
 from untwisted.iofile import *
 from untwisted.splits import Terminator
 from vyapp.plugins.pdb import event
-from vyapp.tools import set_status_msg, set_line
+from vyapp.tools import set_line
 from vyapp.ask import Ask
 from vyapp.areavi import AreaVi
 from vyapp.app import root
@@ -179,7 +179,7 @@ class Pdb(object):
         self.kill_debug_process()
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
-        set_status_msg('Debug finished !')
+        root.status.set_msg('Debug finished !')
 
     def start_debug(self, area):
         self.kill_debug_process()
@@ -187,7 +187,7 @@ class Pdb(object):
         self.clear_breakpoint_map()
         self.create_process([self.python, '-u', '-m', 'pdb', area.filename])
 
-        set_status_msg('Debug started !')
+        root.status.set_msg('Debug started !')
 
     def start_debug_args(self, area):
         ask  = Ask(area)
@@ -200,7 +200,7 @@ class Pdb(object):
 
         self.create_process(ARGS)
         
-        set_status_msg('Debug started ! Args: %s' % ask.data)
+        root.status.set_msg('Debug started ! Args: %s' % ask.data)
 
     def evaluate_expression(self, area):
         ask  = Ask(area)
@@ -289,6 +289,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 

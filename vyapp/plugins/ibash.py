@@ -100,7 +100,6 @@ Description: Ask for the user to type a command to be dropped to the bash interp
 
 from untwisted.network import core, xmap, READ, WRITE, Device
 from untwisted.iofile import *
-from vyapp.tools import set_status_msg
 from vyapp.ask import Ask
 
 from subprocess import Popen, PIPE, STDOUT
@@ -143,7 +142,7 @@ class Process(object):
         self.child.kill()
         self.start()
 
-        set_status_msg('Process killed and started !')
+        root.status.set_msg('Process killed and started !')
 
     def dump_line_and_tab(self, area):
         data = area.get('insert linestart', 'insert -1c lineend')
@@ -183,6 +182,7 @@ class Process(object):
     
 process = Process()
 install = process
+
 
 
 

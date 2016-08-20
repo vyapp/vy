@@ -3,8 +3,8 @@
 """
 
 from vyapp.ask import Get
-from vyapp.tools import set_status_msg
 from vyapp.regutils import build_regex
+from vyapp.app import root
 
 class QuickSearch(object):
     def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
@@ -26,7 +26,7 @@ class QuickSearch(object):
         '<Return>': lambda wid: self.stop_search(), 
         '<Escape>': lambda wid: self.stop_search()})
 
-        set_status_msg('')
+        root.status.set_msg('')
 
     def stop_search(self):
         self.area.tag_remove('(SEARCH_MATCH)', *self.start_range())
@@ -64,7 +64,7 @@ class QuickSearch(object):
         data    = wid.get()
         pattern = build_regex(data)
         range   = self.start_range()
-        set_status_msg('Pattern:%s' % pattern)
+        root.status.set_msg('Pattern:%s' % pattern)
         self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
 
     def search_up(self, wid):
@@ -86,6 +86,7 @@ class QuickSearch(object):
         self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
 
 install = QuickSearch
+
 
 
 

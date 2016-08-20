@@ -27,37 +27,7 @@ def set_line(area, line):
     area.focus()
     area.setcur(line)
 
-def set_status_msg(msg):
-    """
-    It sets the statusbar msg.
-    """
-
-    from vyapp.app import root
     root.status.set_msg(msg)
-
-def set_status_line(line):
-    """
-    It sets the statusbar line field.
-    """
-
-    from vyapp.app import root
-    root.status.set_line(line)
-
-def set_status_col(col):
-    """
-    It sets the statusbar col field.
-    """
-
-    from vyapp.app import root
-    root.status.set_column(col)
-
-def set_status_mode(mode):
-    """
-    It sets the statusbar mode field.
-    """
-
-    from vyapp.app import root
-    root.status.set_mode(mode)
 
 def match_sub_pattern(pattern, lst):
     pattern = buffer(pattern)
@@ -66,5 +36,6 @@ def match_sub_pattern(pattern, lst):
                 if indi.startswith(pattern[indj:]):
                     yield indi, indj
                     
+
 
 

@@ -48,7 +48,6 @@ Description: It changes the focus right from a tab.
 """
 
 from vyapp.app import root
-from vyapp.tools import set_status_msg
 from tkMessageBox import *
 from tkFileDialog import askopenfilename, asksaveasfilename
 from vyapp.areavi import AreaVi
@@ -70,9 +69,9 @@ def load_tab():
     try:
         root.note.load([ [filename] ])
     except Exception:
-        set_status_msg('It failed to load.')
+        root.status.set_msg('It failed to load.')
     else:
-        set_status_msg('File loaded.')
+        root.status.set_msg('File loaded.')
     return 'break'
 
 def create_tab():
@@ -121,6 +120,7 @@ def install(area):
                  (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

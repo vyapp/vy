@@ -48,9 +48,9 @@ Description: Put the cursor on the previous possible match.
 """
 
 from vyapp.ask import Get
-from vyapp.tools import set_status_msg
 from itertools import permutations, product, groupby
 from re import escape
+from vyapp.app import root
 
 class WordSearch(object):
     def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
@@ -84,7 +84,7 @@ class WordSearch(object):
         return True
 
     def no_match(self):
-        set_status_msg('No pattern found!')
+        root.status.set_msg('No pattern found!')
 
     def match_possible_regions(self, find, data):
         regions = []
@@ -143,6 +143,7 @@ class WordSearch(object):
         self.index = self.index + 1
 
 install = WordSearch
+
 
 
 

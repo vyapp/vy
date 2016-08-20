@@ -43,11 +43,11 @@ Event: <Control-L>
 Description: Add block selection one char right.
 
 """
-from vyapp.tools import set_status_msg
+from vyapp.app import root
 
 def drop_start_mark(area):
     area.start_block_selection()
-    set_status_msg('Dropped block selection mark.')
+    root.status.set_msg('Dropped block selection mark.')
 
 def install(area):
     area.install(('NORMAL', '<Control-K>', lambda event: event.widget.block_up()),
@@ -55,6 +55,7 @@ def install(area):
                  ('NORMAL', '<Control-H>', lambda event: event.widget.block_left()),
                  ('NORMAL', '<Control-L>', lambda event: event.widget.block_right()),
                  ('NORMAL', '<Control-V>', lambda event: drop_start_mark(event.widget)))
+
 
 
 

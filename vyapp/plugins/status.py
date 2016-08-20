@@ -1,7 +1,3 @@
-from vyapp.tools import set_status_mode
-from vyapp.tools import set_status_line
-from vyapp.tools import set_status_col
-from vyapp.tools import set_status_msg
 from vyapp.tools import get_area_tab_index
 from vyapp.app import root
 from os.path import basename
@@ -16,7 +12,7 @@ def update_mode(area):
 
     def cave():
         if not cave.keep: return
-        set_status_mode(area.id)
+        root.status.set_mode(area.id)
         area.after(TIME, cave)
 
     """
@@ -44,8 +40,8 @@ def update_cursor_pos(area):
     def cave():
         if not cave.keep: return
         row, col = area.indref('insert')
-        set_status_line(row)
-        set_status_col(col)
+        root.status.set_line(row)
+        root.status.set_column(col)
         area.after(TIME, cave) 
 
     """
@@ -66,7 +62,7 @@ def install(area):
     area.install((-1, '<FocusIn>', lambda event: update_mode(event.widget)),
            (-1, '<FocusIn>', lambda event: update_cursor_pos(event.widget)),
            (-1, '<Control-F9>', lambda event: root.status.switch()),
-           (-1, '<Escape>', lambda event: set_status_msg('')),
+           (-1, '<Escape>', lambda event: root.status.set_msg('')),
 
            (-1, '<<SaveData>>', lambda event: root.title('Vy %s' % event.widget.filename)),
            (-1, '<<LoadData>>', lambda event: root.title('Vy %s' % event.widget.filename)),
@@ -77,6 +73,7 @@ def install(area):
            (-1, '<<LoadData>>', lambda event: root.note.tab(get_area_tab_index(event.widget), text=basename(event.widget.filename))),
            (-1, '<<ClearData>>', lambda event: root.note.tab(get_area_tab_index(event.widget), text=basename(event.widget.filename))),
            (-1, '<FocusIn>', lambda event: root.note.tab(root.note.select(), text=basename(event.widget.filename))))
+
 
 
 

@@ -41,11 +41,11 @@ Event: <Control-v>
 Description: Drop a selection mark.
 """
 
-from vyapp.tools import set_status_msg
+from vyapp.app import root
 
 def drop_selection_mark(area):
     area.start_selection()
-    set_status_msg('Dropped selection mark.')
+    root.status.set_msg('Dropped selection mark.')
 
 def install(area):
     area.install(('NORMAL', '<Control-k>', lambda event: event.widget.sel_up()),
@@ -53,6 +53,7 @@ def install(area):
                  ('NORMAL', '<Control-h>', lambda event: event.widget.sel_left()),
                  ('NORMAL', '<Control-l>', lambda event: event.widget.sel_right()),
                  ('NORMAL', '<Control-v>', lambda event: drop_selection_mark(event.widget)))
+
 
 
 

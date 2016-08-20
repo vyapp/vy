@@ -2,8 +2,6 @@
 
 """
 
-from vyapp.tools import set_status_msg
-from vyapp.exe import exec_quiet
 
 class ModeShortcut(object):
     target_id  = 'NORMAL'
@@ -25,4 +23,5 @@ class ModeShortcut(object):
         self.area.chmode(self.DEFAULT_ID)
 
 install = ModeShortcut
+
 

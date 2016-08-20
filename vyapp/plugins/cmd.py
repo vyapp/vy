@@ -51,11 +51,10 @@ Description: Open an input box in order to type inline python code to be execute
 """
 
 
-from vyapp.tools import set_status_msg
 from vyapp.exe import exc
 from vyapp.ask import Ask
 from vyapp.plugins import ENV
-
+from vyapp.app import root
 import sys
 
 def exec_cmd(area, env):
@@ -78,7 +77,7 @@ def exec_all_data(area, env):
 
 def set_target(area):
     area.active()
-    set_status_msg('Target set !')
+    root.status.set_msg('Target set !')
     return 'break'
 
 install = lambda area: area.install(
@@ -86,6 +85,7 @@ install = lambda area: area.install(
 (-1, '<Alt-colon>', lambda event: exec_all_data(event.widget, ENV)),
 ('NORMAL', '<Key-semicolon>', lambda event: exec_region(event.widget, ENV)),
 (-1, '<Control-Alt-semicolon>', lambda event: set_target(event.widget)))
+
 
 
 

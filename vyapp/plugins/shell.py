@@ -22,11 +22,11 @@ Description: Send the cursor line to the process and insert a line down.
 from untwisted.expect import Expect, LOAD, CLOSE
 from untwisted.network import xmap
 from vyapp.ask import Ask
-from vyapp.tools import set_status_msg
 from vyapp.exe import exec_quiet
 from Tkinter import TclError
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
+from vyapp.app import root
 
 import shlex
 
@@ -38,7 +38,7 @@ class Shell(object):
         try:
             self.expect = Expect(*shlex.split(data))
         except Exception as e:
-            set_status_msg(e)
+            root.status.set_msg(e)
         else:
             self.install_events()
         
@@ -72,14 +72,14 @@ class Shell(object):
 
         self.area.hook('INSERT', '<F2>', lambda event: 
         self.dump_line_and_insert_line(), add=False)
-        set_status_msg('%s -> %s' % (self.area.filename, self.output.filename))
+        root.status.set_msg('%s -> %s' % (self.area.filename, self.output.filename))
 
     def terminate_process(self):
         try:
             self.expect.terminate()
         except Exception:
             pass
-        set_status_msg('Killed process!')
+        root.status.set_msg('Killed process!')
 
     def dump_line_and_down(self):
         self.expect.send(self.area.curline())
@@ -90,13 +90,14 @@ class Shell(object):
         self.area.down()
 
     def handle_close(self, expect):
-        set_status_msg('Killed process!')
+        root.status.set_msg('Killed process!')
         expect.destroy()
 
 
 ENV['Shell']  = Shell
 ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
+
 
 
 

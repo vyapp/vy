@@ -122,9 +122,9 @@ Description: It redirects output from sys.stdout to a given AreaVi instance.
 
 from traceback import format_exc as debug
 from vyapp.stdout import Stdout
-from vyapp.tools import set_status_msg
 from vyapp.exe import exec_quiet
 from vyapp.ask import *
+from vyapp.app import root
 import sys
 
 def redirect_stdout(area):
@@ -133,7 +133,7 @@ def redirect_stdout(area):
     except ValueError:
         pass
     sys.stdout.append(Stdout(area))
-    set_status_msg('Output redirected to %s' % area.index('insert'))
+    root.status.set_msg('Output redirected to %s' % area.index('insert'))
 
 def install(area):
     area.install(('NORMAL', '<Control-W>', lambda event: event.widget.delete_ranges(Stdout.TAG_CODE)),
@@ -141,5 +141,6 @@ def install(area):
            ('NORMAL', '<Key-W>', lambda event: event.widget.tag_delete(Stdout.TAG_CODE)),
            ('NORMAL', '<Control-w>', lambda event: exec_quiet(sys.stdout.remove, event.widget)),
            ('NORMAL', '<Tab>', lambda event: redirect_stdout(event.widget)))
+
 
 

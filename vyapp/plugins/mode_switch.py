@@ -39,8 +39,8 @@ Event: <Escape>
 Description: Switch from NORMAL mode to the target mode that was set by pressing <Alt-Escape>.
 """
 
-from vyapp.tools import set_status_msg
 from vyapp.exe import exec_quiet
+from vyapp.app import root
 
 class Switch(object):
     target_id  = 'NORMAL'
@@ -54,8 +54,9 @@ class Switch(object):
         """
 
         Switch.target_id = area.id
-        set_status_msg('%s mode pinned!' % area.id)
+        root.status.set_msg('%s mode pinned!' % area.id)
 
 install = Switch
+
 
 

@@ -54,7 +54,6 @@ Description: Quit.
 from tkMessageBox import *
 from tkFileDialog import askopenfilename, asksaveasfilename
 from vyapp.app import root
-from vyapp.tools import set_status_msg
 
 def save_as(area):
     """
@@ -72,9 +71,9 @@ def save_as(area):
     try:
         area.save_data_as(filename)
     except Exception:
-        set_status_msg('It failed to save data.')
+        root.status.set_msg('It failed to save data.')
     else:
-        set_status_msg('Data saved.')
+        root.status.set_msg('Data saved.')
         
 
 def save_quit(area):
@@ -85,7 +84,7 @@ def save_quit(area):
     try:
         area.save_data()
     except Exception:
-        set_status_msg('It failed to save data.')
+        root.status.set_msg('It failed to save data.')
     else:
         area.quit()
 
@@ -106,9 +105,9 @@ def load(area):
     try:
         area.load_data(filename)
     except Exception:
-        set_status_msg('It failed to load.')
+        root.status.set_msg('It failed to load.')
     else:
-        set_status_msg('File loaded.')
+        root.status.set_msg('File loaded.')
 
 
 def save(area):
@@ -120,9 +119,9 @@ def save(area):
     try:
         area.save_data()
     except Exception:
-        set_status_msg('It failed to save data.')
+        root.status.set_msg('It failed to save data.')
     else:
-        set_status_msg('Data saved.')
+        root.status.set_msg('Data saved.')
 
 
 
@@ -133,6 +132,7 @@ def install(area):
                  ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
                  ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
                  ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
+
 
 
 

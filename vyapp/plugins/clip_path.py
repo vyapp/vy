@@ -24,16 +24,17 @@ Description: Copies the complete path of the file to the clipboard.
 
 """
 
-from vyapp.tools import set_status_msg
+from vyapp.app import root
 
 def clip_ph(area):
     """ Sends filename path to clipboard. """
     area.clipboard_clear()
     area.clipboard_append(area.filename)
-    set_status_msg('File path copied to the clipboard.')
+    root.status.set_msg('File path copied to the clipboard.')
 
 def install(area):
     area.install(('ALPHA', '<Key-u>', lambda event: clip_ph(event.widget)))
+
 
 
 

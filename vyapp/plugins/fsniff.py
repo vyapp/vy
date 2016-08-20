@@ -1,7 +1,6 @@
 from vyapp.ask import Get
 from vyapp.app import root
 from vyapp.regutils import build_regex
-from vyapp.tools import set_status_msg
 from subprocess import check_output, CalledProcessError
 
 
@@ -27,9 +26,9 @@ class Fsniff(object):
         try:
             self.path = self.run_cmd(wid.get())
         except CalledProcessError:
-            set_status_msg('No match found.')
+            root.status.set_msg('No match found.')
         else:
-            set_status_msg(
+            root.status.set_msg(
             'Matched: %s' % self.path)
 
     def view_on_current(self, wid):
@@ -46,9 +45,10 @@ class Fsniff(object):
 
     def update_process(self, wid):
         self.path = ''
-        set_status_msg('Locating...')
+        root.status.set_msg('Locating...')
 
 install = Fsniff
+
 
 
 

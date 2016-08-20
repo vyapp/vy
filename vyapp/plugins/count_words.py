@@ -20,16 +20,17 @@ set as command target. The result would appear at the statusbar.
 """
 
 from vyapp.areavi import AreaVi
-from vyapp.tools import set_status_msg
 from vyapp.plugins import ENV
 from re import findall
+from vyapp.app import root
 
 def cw():
     area = AreaVi.ACTIVE
 
     data = area.get('1.0', 'end')
-    set_status_msg('Count of words:%s' % len(findall('\W+', data)))
+    root.status.set_msg('Count of words:%s' % len(findall('\W+', data)))
 
 ENV['cw'] = cw
+
 
 
