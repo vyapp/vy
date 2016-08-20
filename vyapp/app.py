@@ -8,7 +8,7 @@ to the App class instance. The App class instance holds all vy editor's widgets.
 
 from vyapp.stdout import Transmitter
 from Tkinter import *
-from vyapp.notevi import NoteVi
+from vyapp.core import NoteVi
 from vyapp.statusbar import *
 from vyapp.plugins import ENV
 import sys
@@ -67,6 +67,7 @@ class App(Tk):
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
 
 
 
