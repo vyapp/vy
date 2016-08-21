@@ -7,65 +7,72 @@ from vyapp.regutils import build_regex
 from vyapp.app import root
 
 class QuickSearch(object):
-    def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
+    def __init__(self, area, nocase=True, 
+        setup={'background':'yellow', 'foreground':'black'}):
+
         """
 
         """
-        self.area = area
+        self.area   = area
+        self.nocase = nocase
         area.tag_configure('(SEARCH_MATCH)', **setup)
-        area.install(('NORMAL', '<Key-backslash>', 
-        lambda event: self.start_search()))
 
-    def start_search(self):
-        ask = Get(self.area, events = {'<Alt-p>':self.search_down, 
+        area.install(
+        ('NORMAL', '<Key-q>', self.start_backwards),
+        ('NORMAL', '<Key-a>', self.start_forwards))
+
+
+
+    def start_forwards(self, event):
+        self.index     = self.area.index('insert')
+        self.stopindex = 'end'
+        self.backwards = False
+
+        Get(self.area, events = {
+        '<Alt-p>':self.search_down, 
         '<Alt-o>': self.search_up, 
         '<Control-j>': self.search_down,     
         '<Control-k>': self.search_up, 
-        '<<Data>>':self.update_search, 
-        '<BackSpace>': self.update_search,
-        '<Return>': lambda wid: self.stop_search(), 
-        '<Escape>': lambda wid: self.stop_search()})
+        '<<Data>>': self.update, 
+        '<BackSpace>': self.update,
+        '<Return>':  self.done, 
+        '<Escape>':  self.cancel})
 
-        root.status.set_msg('')
+    def start_backwards(self, event):
+        self.index     = self.area.index('insert')
+        self.backwards = True
+        self.stopindex = '1.0'
 
-    def stop_search(self):
-        self.area.tag_remove('(SEARCH_MATCH)', *self.start_range())
+        Get(self.area, events = {
+        '<Alt-p>':self.search_down, 
+        '<Alt-o>': self.search_up, 
+        '<Control-j>': self.search_down,     
+        '<Control-k>': self.search_up, 
+        '<<Data>>': self.update, 
+        '<BackSpace>': self.update,
+        '<Return>':  self.done, 
+        '<Escape>':  self.cancel})
+
+    def cancel(self, wid):
+        self.area.tag_remove('(SEARCH_MATCH)', '1.0', 'end')
+        self.area.seecur(self.index)
+
         return True
 
-    def start_range(self):
-        return ('1.0', 'end')
-        
-    def range_down(self):
-        """
-        This method return the range to be searched that is down to the cursor position.
-        """
+    def done(self, wid):
+        self.area.tag_remove('(SEARCH_MATCH)', '1.0', 'end')
+        return True
 
-        ranges = self.area.tag_ranges('(SEARCH_MATCH)')
-        if ranges:
-            return (ranges[-1], 'end')
-        else:
-            return ('insert', 'end')
-
-    def range_up(self):
-        """
-        The range to be searched up to the cursor position.
-        """
-
-        ranges = self.area.tag_ranges('(SEARCH_MATCH)')
-        if ranges:
-            return (ranges[0], '1.0')
-        else:
-            return ('insert', '1.0')
-
-    def update_search(self, wid):
+    def update(self, wid):
         """
 
         """
         data    = wid.get()
         pattern = build_regex(data)
-        range   = self.start_range()
         root.status.set_msg('Pattern:%s' % pattern)
-        self.area.ipick('(SEARCH_MATCH)', pattern, *range)
+        self.area.ipick('(SEARCH_MATCH)', pattern,
+        verbose=True, backwards=self.backwards, index=self.index, 
+        nocase=self.nocase, stopindex=self.stopindex)
 
     def search_up(self, wid):
         """
@@ -73,21 +80,20 @@ class QuickSearch(object):
         """
         data    = wid.get()
         pattern = build_regex(data)
-        range   = self.range_up()
-        self.area.ipick('(SEARCH_MATCH)', pattern, *range, backwards=True)
-        
+        self.area.ipick('(SEARCH_MATCH)', pattern, index='insert', 
+        nocase=self.nocase, stopindex='1.0', backwards=True)
+
     def search_down(self, wid):
         """
 
         """
         data    = wid.get()
         pattern = build_regex(data)
-        range   = self.range_down()
-        self.area.ipick('(SEARCH_MATCH)', pattern, *range)
+        self.area.ipick('(SEARCH_MATCH)', pattern, nocase=self.nocase, 
+        stopindex='end', index='insert')
+
 
 install = QuickSearch
-
-
 
 
 

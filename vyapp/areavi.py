@@ -1140,11 +1140,14 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         return index, index0
 
-    def ipick(self, name, regex, index='insert', stopindex='end', backwards=None, exact=None, regexp=True,
+    def ipick(self, name, regex, index='insert', stopindex='end', verbose=False, backwards=None, exact=None, regexp=True,
                         nocase=None, elide=None, nolinestop=None):
 
         """
         """
+
+        # Force to do a search from index.
+        if verbose: self.tag_remove(name, '1.0', 'end')
 
         if not backwards: ranges = self.tag_nextrange(name, index, 'end')
         else: ranges = self.tag_prevrange(name, index, '1.0')
@@ -1581,6 +1584,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 

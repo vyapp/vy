@@ -88,7 +88,7 @@ class Find(object):
         get = Get(self.area, events={
         '<Alt-o>': self.up, '<Escape>': lambda wid: self.cancel(), 
         '<Alt-p>': self.down, '<Return>': self.set_regex,
-        '<Alt-slash>':  self.pick_matches,
+        '<Alt-slash>':  self.pick_selection_matches,
         '<Alt-period>': self.replace_on_cur,
         '<Alt-semicolon>': self.replace_on_selection, 
         '<Alt-comma>': self.replace_all_matches, 
@@ -138,7 +138,7 @@ class Find(object):
         self.index = self.area.ipick('(CATCHED)', regex, index='insert', 
         stopindex='end', **self.opts)
 
-    def pick_matches(self, wid):
+    def pick_selection_matches(self, wid):
         regex = wid.get()
         self.area.map_matches('(CATCHED)', 
         self.area.collect('sel', regex, **self.opts))
@@ -156,6 +156,5 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
-
 
 
