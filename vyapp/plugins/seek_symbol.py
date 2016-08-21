@@ -64,21 +64,23 @@ def get_char(num):
     else:
         return char
 
-class Seek(object):
+class SeekSymbol(object):
     def __init__(self, area):
         area.add_mode('JUMP_BACK')
         area.add_mode('JUMP_NEXT')
 
-        area.install(('NORMAL', '<Key-v>', lambda event: self.start_next_mode()), 
-                     ('NORMAL', '<Key-c>', lambda event: self.start_back_mode()),
-                     ('JUMP_BACK', '<Control-v>', lambda event: self.select_data()),
-                     ('JUMP_BACK', '<Key>', lambda event: self.jump_back(event.keysym_num)),
-                     ('JUMP_BACK', '<Return>', lambda event: event.widget.chmode('INSERT')),
-                     ('JUMP_NEXT', '<Return>', lambda event: event.widget.chmode('INSERT')),
-                     ('JUMP_NEXT', '<Tab>', lambda event: event.widget.chmode('JUMP_BACK')),
-                     ('JUMP_BACK', '<Tab>', lambda event: event.widget.chmode('JUMP_NEXT')),
-                     ('JUMP_NEXT', '<Control-v>', lambda event: self.select_data()),
-                     ('JUMP_NEXT', '<Key>', lambda event: self.jump_next(event.keysym_num)))
+        area.install(
+        ('NORMAL', '<Key-v>', lambda event: self.start_next_mode()), 
+        ('NORMAL', '<Key-c>', lambda event: self.start_back_mode()),
+        ('JUMP_BACK', '<Control-v>', lambda event: self.select_data()),
+        ('JUMP_BACK', '<Key>', lambda event: self.jump_back(event.keysym_num)),
+        ('JUMP_BACK', '<Return>', lambda event: event.widget.chmode('INSERT')),
+        ('JUMP_NEXT', '<Return>', lambda event: event.widget.chmode('INSERT')),
+        ('JUMP_NEXT', '<Tab>', lambda event: event.widget.chmode('JUMP_BACK')),
+        ('JUMP_BACK', '<Tab>', lambda event: event.widget.chmode('JUMP_NEXT')),
+        ('JUMP_NEXT', '<Control-v>', lambda event: self.select_data()),
+        ('JUMP_NEXT', '<Key>', lambda event: self.jump_next(event.keysym_num)))
+    
         self.area = area
 
     def start_next_mode(self):
@@ -91,17 +93,18 @@ class Seek(object):
 
     def jump_next(self, num):
         char = get_char(num)
-        self.area.seek_next_down(char, regexp=False)
+        self.area.iseek(char, regexp=False)
     
     def jump_back(self, num):
         char = get_char(num)
-        self.area.seek_next_up(char, regexp=False)
+        self.area.iseek(char, regexp=False, backwards=True)
     
     def select_data(self):
         self.area.addsel('insert', '(RANGE_SEL_MARK)')
         self.area.chmode('NORMAL')
 
-install = Seek
+install = SeekSymbol
+
 
 
 

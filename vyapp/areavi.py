@@ -1119,67 +1119,48 @@ class AreaVi(Text, DataEvent, IdleEvent):
     
         return str(self.tk.call(tuple(args)))
 
-    def seek_next_up(self, regex, index0='insert', stopindex='1.0', exact=None, regexp=True, 
+    def iseek(self, regex, index='insert', backwards=None, exact=None, regexp=True,
                         nocase=None, elide=None, nolinestop=None):
         """
-        Find the next match with regex up the cursor.
-        It sets the cursor at the index of the occurrence.
-        """
-
-        count = IntVar()
-        index = self.search(regex, index0, stopindex=stopindex, regexp=regexp, exact=exact, 
-                            nocase=nocase, elide=elide, nolinestop=nolinestop, backwards=True, count=count)
-        if not index: return
-
-        index1 = self.index('%s +%sc' % (index, count.get())) 
-        self.mark_set('insert', index)
-        self.see('insert')
-
-        return index, index1
-
-    def seek_next_down(self, regex, index0='insert', stopindex='end', exact=None, regexp=True, 
-                       nocase=None, elide=None, nolinestop=None):
-
-        """
-        Find the next match with regex down.
-        It sets the cursor at the index of the occurrence.
+        Find regex backwards/fowards from index position and changes insert
+        mark to the prev/next match.
         """
 
         count = IntVar()
 
-        index = self.search(regex, index0, stopindex=stopindex, regexp=regexp, exact=exact, nocase=nocase, 
-                            elide=elide, nolinestop=nolinestop, count=count)
+        index = self.search(regex, index=index, 
+        stopindex='1.0' if backwards else 'end', regexp=regexp, 
+        exact=exact, nocase=nocase, elide=elide, nolinestop=nolinestop, 
+        backwards=backwards, count=count)
 
         if not index: return
 
-        index1 = self.index('%s +%sc' % (index, count.get())) 
-        self.mark_set('insert', index1)
+        index0 = self.index('%s +%sc' % (index, count.get())) 
+        self.mark_set('insert', index if backwards else index0)
         self.see('insert')
 
-        return index, index1
+        return index, index0
 
-    def pick_next_up(self, name, *args, **kwargs):
+    def ipick(self, name, regex, index='insert', backwards=None, exact=None, regexp=True,
+                        nocase=None, elide=None, nolinestop=None):
 
         """
         """
-        self.tag_remove(name, '1.0', 'end')
-        index = self.seek_next_up(*args, **kwargs)
+
+        if not backwards: ranges = self.tag_nextrange(name, index, 'end')
+        else: ranges = self.tag_prevrange(name, index, '1.0')
+
+        if ranges: index0, index1 = ranges[:2]
+        else: index0 = index1 = index
+
+        index = self.iseek(regex, index=index0 if backwards else index1,
+        backwards=backwards, exact=exact, regexp=regexp, nocase=nocase, 
+        elide=elide, nolinestop=nolinestop)
+
         if not index:
             return
 
-        self.tag_add(name, *index)
-        return index
-
-    def pick_next_down(self, name, *args, **kwargs):
-
-        """
-        """
         self.tag_remove(name, '1.0', 'end')
-        index = self.seek_next_down(*args, **kwargs)
-
-        if not index:    
-            return
-
         self.tag_add(name, *index)
         return index
 
@@ -1601,6 +1582,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 

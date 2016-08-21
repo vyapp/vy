@@ -62,9 +62,13 @@ previously set replacement.
 """
 
 from vyapp.ask import Get, Ask
+from vyapp.app import root
 
 class Find(object):
-    def __init__(self, area, setup={'background':'green', 'foreground':'white'}):
+    def __init__(self, area, nolinestop=False, 
+        regexp=True, nocase=True, exact=False, elide=False, 
+        setup={'background':'green', 'foreground':'white'}):
+
         self.area  = area
         self.data  = ''
         self.index = None
@@ -72,18 +76,44 @@ class Find(object):
 
         area.tag_config('(CATCHED)', **setup)
 
-        area.install(('NORMAL', '<Alt-slash>'    , lambda event: self.start()), 
-                     ('NORMAL', '<Alt-bracketright>'    , lambda event: self.set_data()))
+        area.install(
+        ('NORMAL', '<Alt-slash>', lambda event: self.start()), 
+        ('NORMAL', '<Alt-bracketright>', lambda event: self.set_data()))
 
+        self.opts = {'nolinestop': nolinestop, 'regexp': regexp,
+        'nocase': nocase, 'exact': exact,'elide': elide}
 
     def start(self):
         self.index = ('insert', 'insert')
-        get = Get(self.area, events={'<Alt-o>': self.up, '<Escape>': lambda wid: self.cancel(), 
-                                     '<Alt-p>': self.down, '<Return>': self.set_regex,
-                                     '<Alt-slash>': lambda wid: self.area.map_matches('(CATCHED)', self.area.collect('sel', wid.get())),
-                                     '<Alt-period>': lambda wid: self.area.replace(wid.get(), self.data, self.index[0]),
-                                     '<Alt-semicolon>': lambda wid: self.area.replace_ranges('sel', wid.get(), self.data), 
-                                     '<Alt-comma>': lambda wid: self.area.replace_all(wid.get(), self.data, '1.0', 'end')}, default_data=self.regex)
+        get = Get(self.area, events={
+        '<Alt-o>': self.up, '<Escape>': lambda wid: self.cancel(), 
+        '<Alt-p>': self.down, '<Return>': self.set_regex,
+        '<Alt-slash>':  self.pick_matches,
+        '<Alt-period>': self.replace_on_cur,
+        '<Alt-semicolon>': self.replace_on_selection, 
+        '<Alt-comma>': self.replace_all_matches, 
+        '<Control-n>': self.toggle_nocase_option,
+        '<Control-e>': self.toggle_exact_option,
+        '<Control-i>': self.toggle_elide_option,
+        '<Control-l>': self.toggle_nolinestop_option},
+        default_data=self.regex)
+
+    def toggle_nocase_option(self, wid):
+        self.opts['nocase'] = False if self.opts['nocase'] else True
+        root.status.set_msg('nocase=%s' % self.opts['nocase'])
+
+    def toggle_exact_option(self, wid):
+        self.opts['exact'] = False if self.opts['exact'] else True
+        root.status.set_msg('exact=%s' % self.opts['exact'])
+
+    def toggle_elide_option(self, wid):
+        self.opts['elide'] = False if self.opts['elide'] else True
+        root.status.set_msg('elide=%s' % self.opts['elide'])
+
+    def toggle_nolinestop_option(self, wid):
+        self.opts['nolinestop'] = False if self.opts['nolinestop'] else True
+        root.status.set_msg('nolinestop=%s' % self.opts['nolinestop'])
+
     def set_data(self):
         ask = Ask(self.area, default_data = self.data.encode('string_escape'))
         self.data = ask.data.decode('string_escape')
@@ -100,22 +130,30 @@ class Find(object):
 
     def up(self, wid):
         regex = wid.get()
-        index = self.area.pick_next_up('(CATCHED)', regex, self.index[0])
-        self.index = ('insert', 'insert') if not index else index
+        self.index = self.area.ipick('(CATCHED)', regex, 
+        backwards=True, **self.opts)
 
     def down(self, wid):
         regex = wid.get()
-        index = self.area.pick_next_down('(CATCHED)', regex, self.index[1])
-        self.index = ('insert', 'insert') if not index else index
+        self.index = self.area.ipick('(CATCHED)', regex, **self.opts)
+
+    def pick_matches(self, wid):
+        regex = wid.get()
+        self.area.map_matches('(CATCHED)', 
+        self.area.collect('sel', regex, **self.opts))
+
+    def replace_on_cur(self, wid):
+        regex = wid.get()
+        self.area.replace(regex, self.data, self.index[0], **self.opts)
+
+    def replace_on_selection(self, wid):
+        regex = wid.get()
+        self.area.replace_ranges('sel', regex, self.data, **self.opts)
+
+    def replace_all_matches(self, wid):
+        regex = wid.get()
+        self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
-
-
-
-
-
-
-
-
 
 
