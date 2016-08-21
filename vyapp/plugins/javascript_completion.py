@@ -44,7 +44,7 @@ Description: Open the completion window with possible python words for
 completion.
 """
 
-from vyapp.complete import CompleteWindow, Option
+from vyapp.widgets import CompleteWindow, Option
 from subprocess import Popen
 import json
 import requests
@@ -130,6 +130,7 @@ def javascript_tools(tern):
     ENV['active_javascript_completion'] = active_completion
 
 install = JavascriptCompletion
+
 
 
 

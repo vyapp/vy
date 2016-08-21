@@ -22,7 +22,7 @@ completion.
 
 """
 
-from vyapp.complete import CompleteWindow
+from vyapp.widgets import CompleteWindow
 from jedi import Script
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
@@ -55,6 +55,7 @@ def active_python_completion():
                   lambda event: PythonCompleteWindow(event.widget), add=False)
 
 ENV['active_python_completion'] = active_python_completion
+
 
 
 
