@@ -1119,7 +1119,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
     
         return str(self.tk.call(tuple(args)))
 
-    def iseek(self, regex, index='insert', backwards=None, exact=None, regexp=True,
+    def iseek(self, regex, index='insert', stopindex='end', backwards=None, exact=None, regexp=True,
                         nocase=None, elide=None, nolinestop=None):
         """
         Find regex backwards/fowards from index position and changes insert
@@ -1128,8 +1128,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         count = IntVar()
 
-        index = self.search(regex, index=index, 
-        stopindex='1.0' if backwards else 'end', regexp=regexp, 
+        index = self.search(regex, index=index, stopindex=stopindex, regexp=regexp, 
         exact=exact, nocase=nocase, elide=elide, nolinestop=nolinestop, 
         backwards=backwards, count=count)
 
@@ -1141,7 +1140,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         return index, index0
 
-    def ipick(self, name, regex, index='insert', backwards=None, exact=None, regexp=True,
+    def ipick(self, name, regex, index='insert', stopindex='end', backwards=None, exact=None, regexp=True,
                         nocase=None, elide=None, nolinestop=None):
 
         """
@@ -1153,7 +1152,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         if ranges: index0, index1 = ranges[:2]
         else: index0 = index1 = index
 
-        index = self.iseek(regex, index=index0 if backwards else index1,
+        index = self.iseek(regex, index=index0 if backwards else index1, stopindex=stopindex,
         backwards=backwards, exact=exact, regexp=regexp, nocase=nocase, 
         elide=elide, nolinestop=nolinestop)
 
@@ -1582,6 +1581,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 

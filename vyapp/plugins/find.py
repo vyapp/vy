@@ -130,12 +130,13 @@ class Find(object):
 
     def up(self, wid):
         regex = wid.get()
-        self.index = self.area.ipick('(CATCHED)', regex, 
-        backwards=True, **self.opts)
+        self.index = self.area.ipick('(CATCHED)', regex, index='insert', 
+        stopindex='1.0', backwards=True, **self.opts)
 
     def down(self, wid):
         regex = wid.get()
-        self.index = self.area.ipick('(CATCHED)', regex, **self.opts)
+        self.index = self.area.ipick('(CATCHED)', regex, index='insert', 
+        stopindex='end', **self.opts)
 
     def pick_matches(self, wid):
         regex = wid.get()
@@ -155,5 +156,6 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 

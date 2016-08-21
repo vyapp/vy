@@ -65,7 +65,7 @@ class QuickSearch(object):
         pattern = build_regex(data)
         range   = self.start_range()
         root.status.set_msg('Pattern:%s' % pattern)
-        self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
+        self.area.ipick('(SEARCH_MATCH)', pattern, *range)
 
     def search_up(self, wid):
         """
@@ -74,7 +74,7 @@ class QuickSearch(object):
         data    = wid.get()
         pattern = build_regex(data)
         range   = self.range_up()
-        self.area.pick_next_up('(SEARCH_MATCH)', pattern, *range)
+        self.area.ipick('(SEARCH_MATCH)', pattern, *range, backwards=True)
         
     def search_down(self, wid):
         """
@@ -83,9 +83,10 @@ class QuickSearch(object):
         data    = wid.get()
         pattern = build_regex(data)
         range   = self.range_down()
-        self.area.pick_next_down('(SEARCH_MATCH)', pattern, *range)
+        self.area.ipick('(SEARCH_MATCH)', pattern, *range)
 
 install = QuickSearch
+
 
 
 

@@ -93,17 +93,18 @@ class SeekSymbol(object):
 
     def jump_next(self, num):
         char = get_char(num)
-        self.area.iseek(char, regexp=False)
+        self.area.iseek(char, index='insert', stopindex='end', regexp=False)
     
     def jump_back(self, num):
         char = get_char(num)
-        self.area.iseek(char, regexp=False, backwards=True)
+        self.area.iseek(char, index='insert', stopindex='1.0',  regexp=False, backwards=True)
     
     def select_data(self):
         self.area.addsel('insert', '(RANGE_SEL_MARK)')
         self.area.chmode('NORMAL')
 
 install = SeekSymbol
+
 
 
 
