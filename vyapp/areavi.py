@@ -707,14 +707,14 @@ class AreaVi(Text, DataEvent, IdleEvent):
         Place the cursor at the next word.
         """
 
-        self.seek_next_down('\M')
+        self.iseek('\M', index='insert', stopindex='end')
 
     def go_prev_word(self):
         """
         Place the cursor at the previous word.
         """
 
-        self.seek_next_up('\M')
+        self.iseek('\M', backwards=True, index='insert', stopindex='1.0')
 
     def go_next_sym(self, chars):
         """
@@ -723,7 +723,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         chars = map(lambda ind: escape(ind), chars)
         REG   = '|'.join(chars)
-        self.seek_next_down(REG)
+        self.iseek(REG, index='insert', stopindex='end')
 
     def go_prev_sym(self, chars):
         """
@@ -732,7 +732,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         chars = map(lambda ind: escape(ind), chars)
         REG   = '|'.join(chars)
-        self.seek_next_up(REG)
+        self.iseek(REG,  backwards=True, stopindex='1.0')
     
     def del_line(self):
         """
@@ -1584,6 +1584,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
