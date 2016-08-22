@@ -29,8 +29,6 @@ class QuickSearch(object):
         Get(self.area, events = {
         '<Alt-p>':self.search_down, 
         '<Alt-o>': self.search_up, 
-        '<Control-j>': self.search_down,     
-        '<Control-k>': self.search_up, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
         '<Escape>':  self.done})
@@ -43,8 +41,6 @@ class QuickSearch(object):
         Get(self.area, events = {
         '<Alt-p>':self.search_down, 
         '<Alt-o>': self.search_up, 
-        '<Control-j>': self.search_down,     
-        '<Control-k>': self.search_up, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
         '<Escape>':  self.done})
@@ -84,6 +80,7 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 
 
 
