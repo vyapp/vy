@@ -21,8 +21,6 @@ class QuickSearch(object):
         ('NORMAL', '<Key-q>', self.start_backwards),
         ('NORMAL', '<Key-a>', self.start_forwards))
 
-
-
     def start_forwards(self, event):
         self.index     = self.area.index('insert')
         self.stopindex = 'end'
@@ -35,8 +33,7 @@ class QuickSearch(object):
         '<Control-k>': self.search_up, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
-        '<Return>':  self.done, 
-        '<Escape>':  self.cancel})
+        '<Escape>':  self.done})
 
     def start_backwards(self, event):
         self.index     = self.area.index('insert')
@@ -50,14 +47,7 @@ class QuickSearch(object):
         '<Control-k>': self.search_up, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
-        '<Return>':  self.done, 
-        '<Escape>':  self.cancel})
-
-    def cancel(self, wid):
-        self.area.tag_remove('(SEARCH_MATCH)', '1.0', 'end')
-        self.area.seecur(self.index)
-
-        return True
+        '<Escape>':  self.done})
 
     def done(self, wid):
         self.area.tag_remove('(SEARCH_MATCH)', '1.0', 'end')
@@ -94,6 +84,8 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
+
 
 
 
