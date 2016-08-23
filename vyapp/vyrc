@@ -6,25 +6,21 @@ from os.path import expanduser, join
 sys.path.append(join(expanduser('~'), '.vy'))
 ##############################################################################
 # Functions used to load the plugins.
-from vyapp.plugins import autoload, autocall
+from vyapp.plugins import autoload, autocall, rmap
 
 ##############################################################################
-# Setup area settings, like default background, foreground, font style etc.
+# Uncomment one of these lines to use vim/emacs keystrokes style.
 
-# Note: Plugins like syntax highlighting will define AreaVi instance settings 
-# like background and foreground. # It is possible to override these settings 
-# by uncommenting foreground and background arguments below. 
+# from vyapp.maps import vim
 
-# Handles like setup are the last ones
-# to be executed in the vyrc file regardless of where them appear in the file.
+# from vyapp.maps import emacs
 
-def setup(area):
-    area.config(blockcursor=True, insertbackground='red', 
-                # background='black', foreground='yellow', 
-                font=('Monospace', 8, 'bold'), undo=True)
-
-autocall(setup) 
 ##############################################################################
+# Remap your keystrokes here.
+# rmap({('IRC', '<Key-i>'): ('NORMAL', '<Key-minus>')})
+
+##############################################################################
+
 # The basic plugins/modes.
 
 import vyapp.plugins.delta_mode
@@ -426,17 +422,22 @@ def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nic
              irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
     IrcMode(addr, port, user, nick, irccmd, channels)
 
+##############################################################################
+# Setup area settings, like default background, foreground, font style etc.
 
+# Note: Plugins like syntax highlighting will define AreaVi instance settings 
+# like background and foreground. # It is possible to override these settings 
+# by uncommenting foreground and background arguments below. 
 
+# Handles like setup are the last ones
+# to be executed in the vyrc file regardless of where them appear in the file.
 
+def setup(area):
+    area.config(blockcursor=True, insertbackground='red', 
+                # background='black', foreground='yellow', 
+                font=('Monospace', 8, 'bold'), undo=True)
 
-
-
-
-
-
-
-
+autocall(setup) 
 
 
 

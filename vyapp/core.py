@@ -29,10 +29,7 @@ class PanedHorizontalWindow(PanedWindow):
         scrollbar.config(command=area.yview)
         scrollbar.pack(side='right', fill=Y)
 
-        from vyapp.plugins import INSTALL, HANDLE
-
-        for plugin, args, kwargs in INSTALL:
-            plugin.install(area, *args, **kwargs)
+        from vyapp.plugins import HANDLE
 
         for handle, args, kwargs in HANDLE:
             handle(area, *args, **kwargs)
@@ -159,6 +156,7 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
+
 
 
 

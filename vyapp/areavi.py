@@ -62,8 +62,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
         # def cave(event):
             # AreaVi.ACTIVE = event.widget
         # self.hook(-1, '<FocusIn>', cave)
-        AreaVi.ACTIVE        = self
-        self.charset         = 'utf-8'
+        AreaVi.ACTIVE = self
+        self.charset  = 'utf-8'
+        self.map      = {}
+
+    def update_map(self, keymap):
+        self.map.update(keymap)
 
     def active(self):
         """
@@ -92,11 +96,11 @@ class AreaVi(Text, DataEvent, IdleEvent):
         opt     = self.setup[id]
         self.id = id
 
-        MODE_X = 'mode%s-1' % self
-        MODE_Y = 'mode%s%s' % (self, id)
+        mode0 = 'mode%s-1' % self
+        mode1 = 'mode%s%s' % (self, id)
 
-        if opt: self.bindtags((MODE_X, MODE_Y, self, 'Text', '.'))
-        else: self.bindtags((MODE_X, MODE_Y, self, '.'))
+        if opt: self.bindtags((mode0, mode1, self, 'Text', '.'))
+        else: self.bindtags((mode0, mode1, self, '.'))
 
         self.event_generate('<<Chmode-%s>>' % id)
 
@@ -140,10 +144,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
         In the example above, whenever the event <Key-i> happens then
         the function named callback will be called with the event object.
         """
+        id, seq = self.map.get((id, seq), (id, seq))
+        mode    = 'mode%s%s' % (self, id)
 
-        MODE_Y = 'mode%s%s' % (self, id)
-
-        self.bind_class(MODE_Y, seq, callback, add)
+        self.bind_class(mode, seq, callback, add)
 
 
     def unhook(self, id, seq):
@@ -153,8 +157,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         area.unhook('mode' '<Event>')
         """
 
-        MODE_Y = 'mode%s%s' % (self, id)
-        self.unbind_class(MODE_Y, seq)
+        mode = 'mode%s%s' % (self, id)
+        self.unbind_class(mode, seq)
 
     def install(self, *args):
         """
@@ -1584,6 +1588,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
