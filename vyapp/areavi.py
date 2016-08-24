@@ -145,11 +145,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         In the example above, whenever the event <Key-i> happens then
         the function named callback will be called with the event object.
         """
-        id, seq = self.map.get((id, seq), (id, seq))
-        mode    = 'mode%s%s' % (self, id)
 
-        self.bind_class(mode, seq, callback, add)
-
+        for id, seq in self.map.get((id, seq), ((id, seq), )):
+            self.bind_class('mode%s%s' % (self, id), seq, callback, add)
 
     def unhook(self, id, seq):
         """
@@ -1589,6 +1587,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
