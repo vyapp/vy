@@ -10,10 +10,7 @@ def autoload(plugin, *args, **kwargs):
 def autocall(handle, *args, **kwargs):
     HANDLE.append((handle, args, kwargs))
             
-def rmap(map):
-    def shell(area):
-        area.update_map(map)
-    autocall(shell)
+
 
 
 
