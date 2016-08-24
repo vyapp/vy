@@ -27,6 +27,7 @@ from vyapp.areavi import AreaVi
 from vyapp.app import root
 
 ENV['s'] = lambda : AreaVi.ACTIVE.save_data()
+ENV['q'] = lambda : root.quit()
 ENV['ss'] = lambda filename: AreaVi.ACTIVE.save_data_as(filename)
 ENV['lo'] = lambda filename: AreaVi.ACTIVE.load_data(filename)
 ENV['to'] = lambda filename: root.note.load([ [filename] ])
@@ -35,6 +36,7 @@ ENV['hsplit'] = lambda : AreaVi.ACTIVE.master.master.create()
 
 
         
+
 
 
 
