@@ -43,6 +43,19 @@ autoload(vyapp.plugins.insert_mode)
 import vyapp.plugins.normal_mode
 autoload(vyapp.plugins.normal_mode)
 
+
+import vyapp.plugins.cursor_status
+autoload(vyapp.plugins.cursor_status)
+
+
+import vyapp.plugins.mode_status
+autoload(vyapp.plugins.mode_status)
+
+
+import vyapp.plugins.io_status
+autoload(vyapp.plugins.io_status)
+
+
 # Start untwisted reactor.
 import vyapp.plugins.startup
 
@@ -56,10 +69,6 @@ import vyapp.plugins.startup
 
 import vyapp.plugins.mode_shortcut
 autoload(vyapp.plugins.mode_shortcut)
-
-
-import vyapp.plugins.mode_switch
-autoload(vyapp.plugins.mode_switch)
 
 
 import vyapp.plugins.anchors
@@ -313,10 +322,6 @@ import vyapp.plugins.symbol_jumps
 autoload(vyapp.plugins.symbol_jumps, ('(', ')', '.', '[', ']', 
                                      '{', '}', ',', ':', ';', "'", '"'))
 
-# It is a built-in plugin that updates tab text and titles
-# with filenames.
-import vyapp.plugins.status
-autoload(vyapp.plugins.status)
 
 ##############################################################################
 # syntax plugin is used to highlight code.
@@ -435,6 +440,9 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
+
+
 
 
 

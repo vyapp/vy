@@ -9,19 +9,18 @@ class ModeShortcut(object):
 
     def __init__(self, area):
         self.area = area
-        area.install(('-1', '<Alt-n>',  lambda event: self.check_mode()))
+        area.install(('-1', '<Alt-Escape>',  lambda event: self.area.chmode(self.target_id)),
+        ('-1', '<Alt-n>',  lambda event: self.save_mode()))
                      
-    def check_mode(self):
-        if self.area.id == self.DEFAULT_ID:
-            self.area.chmode(self.target_id)
-        else:
-            self.save_mode()
-        return 'break'
-
     def save_mode(self):
         self.target_id = self.area.id
         self.area.chmode(self.DEFAULT_ID)
+        return 'break'
 
 install = ModeShortcut
+
+
+
+
 
 
