@@ -251,9 +251,10 @@ import vyapp.plugins.pdb.cross_platform
 autoload(vyapp.plugins.pdb.cross_platform, python='python2')
 
 
-# Implements vy output target scheme.
-import vyapp.plugins.output_scheme
-autoload(vyapp.plugins.output_scheme)
+# Implement keycommands to control where data written to sys.stdout is going
+# to be echoed.
+import vyapp.plugins.outputs
+autoload(vyapp.plugins.outputs)
 
 
 # Used to execute python code on the fly, things like python functions
@@ -439,6 +440,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
