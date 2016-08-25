@@ -8,7 +8,6 @@ from vyapp.plugins import autoload
 from vyapp.app import root
 
 def load(plugin, *args, **kwargs):
-    from vyapp.app import root
     autoload(plugin, *args, **kwargs)
 
     for ind in AreaVi.areavi_widgets(root):
@@ -17,6 +16,7 @@ def load(plugin, *args, **kwargs):
     root.status.set_msg('Plugin loaded!')
 
 ENV['load'] = load
+
 
 
 
