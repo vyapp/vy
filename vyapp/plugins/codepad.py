@@ -4,18 +4,6 @@ Overview
 
 This plugin is used to poste code onto codepad.
 
-Usage
-=====
-
-This plugin implements a python function named CPPaste() that is used to post code onto codepad.
-The contents that will be posted are those of the AreaVi instance that was set as target.
-
-In order to set an AreaVi as target type <Control-E> in NORMAL mode when it has focus. Once the target is set
-there will appear the msg 'Target set!' at the statusbar.
-
-Type <Key-semicolon> in order to open the vy command input box then type CPPaste() and press enter.
-The default browser will be opened with the AreaVi's contents posted on codepad.org.
-
 Commands
 ========
 
@@ -75,6 +63,7 @@ def CPPaste():
 
 from vyapp.plugins import ENV
 ENV['CPPaste'] = CPPaste
+
 
 
 

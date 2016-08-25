@@ -4,13 +4,6 @@ Overview
 
 This plugin implements the basic cursor movements.
 
-Usage
-=====
-
-The way to move the cursor up is by pressing <Key-k>, to move the cursor down <Key-j>,
-to move the cursor left <Key-h>, to move the cursor right <Key-l>. These events
-work in NORMAL mode.
-
 Key-Commands
 ============
 
@@ -42,6 +35,7 @@ def install(area):
                  ('NORMAL', '<Key-k>', lambda event: event.widget.up()),
                  ('NORMAL', '<Key-h>', lambda event: event.widget.left()),
                  ('NORMAL', '<Key-l>', lambda event: event.widget.right()))
+
 
 
 

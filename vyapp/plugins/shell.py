@@ -4,9 +4,6 @@ Overview
 
 Used to spawn processes and send/receive data. It is useful to talk with extern processes like interpreters.
 
-Usage
-=====
-
 Key-Commands
 ============
 
@@ -97,6 +94,7 @@ class Shell(object):
 ENV['Shell']  = Shell
 ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
+
 
 
 

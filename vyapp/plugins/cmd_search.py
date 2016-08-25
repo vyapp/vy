@@ -5,14 +5,6 @@ Overview
 This module implements command search tools. It is possible to execute python
 functions to highlight patterns of text and replace patterns.
 
-Usage
-=====
-
-Set an AreaVi instance as target for command with <Control-E>
-then execute the functions below with <Control-e>. In case of using
-<Control-semicolon> there is no need to set a target for command since
-that key-command automatically sets the AreaVi instance that has focus as target for commands.
-
 Commands
 ========
 
@@ -44,6 +36,7 @@ ENV['find']  = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.A
 ENV['sub']   = lambda *args, **kwargs: AreaVi.ACTIVE.replace_all(*args, **kwargs)
 ENV['get']   = lambda *args: AreaVi.ACTIVE.get(*args)
 ENV['split']  = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.split(*args, **kwargs))
+
 
 
 

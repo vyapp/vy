@@ -4,24 +4,6 @@ Overview
 
 This plugin implements basic Key-Commands to open/save files.
 
-Usage
-=====
-
-It is possible to pops a file window selection to load the contents of a file
-in a given AreaVi instance by pressing <Control-d>.
-
-After some changes to a opened file it is possible to save the contents of the file
-by pressing <Control-s> in NORMAL mode.
-
-The way to save the contents of an AreaVi instance as a different filename is by
-pressing <Shift-S> in NORMAL mode. It will open a file save dialog to pick up a name.
-
-Sometimes it is handy to just save and quit, for such just press <Control-Escape> in NORMAL mode.
-You can just quit without saving by pressing <Shift-Escape> in NORMAL mode as well.
-
-There is a Key-Command to clean all the text from a given active AreaVi instance. For such
-type <Key-D> in NORMAL mode.
-
 Key-Commands
 ============
 
@@ -132,6 +114,7 @@ def install(area):
                  ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
                  ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
                  ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
+
 
 
 

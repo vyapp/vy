@@ -4,12 +4,6 @@ Overview
 
 This module implements commands to save file and load files into AreaVi instances.
 
-Usage
-=====
-
-It is needed to set a target for command in order to use the functions that are
-implemented in this module.
-
 Commands
 ========
 
@@ -36,6 +30,7 @@ ENV['hsplit'] = lambda : AreaVi.ACTIVE.master.master.create()
 
 
         
+
 
 
 

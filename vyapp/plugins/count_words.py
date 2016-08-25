@@ -4,13 +4,6 @@ Overview
 
 This plugin implements word tools.
 
-Usage
-=====
-
-In order to use some functions it is needed to set an AreaVi widget as target for commands.
-It implements the cw function that is used to count the number of words
-that a given AreaVi widget has.
-
 Commands
 ========
 
@@ -31,6 +24,7 @@ def cw():
     root.status.set_msg('Count of words:%s' % len(findall('\W+', data)))
 
 ENV['cw'] = cw
+
 
 
 

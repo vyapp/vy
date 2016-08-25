@@ -5,23 +5,6 @@ Overview
 Tabs are a great feature when manipulating several files. This plugin implements Key-Commands to create, 
 open files, change the focus between opened tabs.
 
-Usage
-=====
-
-The way to create a blank tab is by pressing <Alt-period> in NORMAL mode.    
-It will open a new blank tab but keep the focus in the actual one.
-
-There is a handy Key-Command to create a tab and load the contents of a file into it.
-For such, just put in NORMAL mode then type <Alt-comma>. By pressig <Alt-comma> it pops a file
-selection window to pick up a file.
-
-Sometimes you will be done with a given tab, you can remove such a tab by pressing <Delete> in
-NORMAL mode.
-
-It is possible to change the focus left from a given tab by pressing <Alt-o>
-or changing the focus right by pressing <Alt-p> in NORMAL mode.
-
-
 Key-Commands
 ============
 
@@ -120,6 +103,7 @@ def install(area):
                  (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

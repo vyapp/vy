@@ -6,25 +6,6 @@ This plugin implements a handy functionality that is shading lines and being
 capable of making the cursor jump back/next to these shaded lines. It is basically a 
 mark system.
 
-Usage
-=====
-
-In order to shade a line it is neeeded to switch to ALPHA mode by pressing
-<Key-3> in NORMAL mode. Make sure the cursor is positioined over the line that 
-should be shaded/marked. 
-
-After being in ALPHA mode it is enough to type <Key-q> the line over the cursor 
-will be shaded according to the dictionary options passed to the install function.
-
-When it is needed to unshade a line, just put the cursor over the shaded line
-then switch to ALPHA mode then press <Key-q> it will toggle the selection.
-
-After having shaded/marked some lines it is possible to jump back/next to those
-lines by pressing <Key-a> or <Key-s> in ALPHA mode.
-
-Once the cursor is positioned on the right line , just press <Escape> to go
-back to NORMAL mode.
-
 Key-Commands
 ============
 
@@ -74,6 +55,7 @@ def install(area, setup={'background':'green', 'foreground':'black'}):
     area.install(('NORMAL', '<Control-b>', lambda event: toggle_status(event.widget)),
            ('NORMAL', '<Control-n>', lambda event: prev_spot(event.widget)),
            ('NORMAL', '<Control-m>', lambda event: next_spot(event.widget)))
+
 
 
 

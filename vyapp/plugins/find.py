@@ -5,24 +5,6 @@ Overview
 This module implements functionalities to find/replace patterns of text in an AreaVi instance
 that has focus.
 
-Usage
-=====
-
-In order to perform searches it is needed to press <Alt-slash> in NORMAL mode. It will show up
-an input field where to insert tcl regex patterns. 
-
-Once inserting the pattern then it is possible to find the next/previous occurrence
-of the pattern by pressing <Alt-p>, <Alt-o> in the input text field
-that is a Get widget.
-
-For replacements, it is needed to first set a text in NORMAL mode by pressing <Alt-bracketright>.
-Once the replacement is set then press <Alt-slash> to initiate the search process. Use <Alt-period>
-to replace the current picked pattern of text and <Alt-comma> to replace all matched patterns.
-
-It is possible to perform searches over selected regions of text, for such, select a region of text
-then press <Alt-slash> and <Alt-slash> again to highligh all matched patterns in the region of text. In order
-to replace all matched patterns inside a region of text, use <Alt-semicolon>.
-
 Key-Commands
 ============
 
@@ -156,5 +138,6 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 

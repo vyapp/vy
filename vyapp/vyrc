@@ -92,16 +92,12 @@ autoload(vyapp.plugins.clear_sel)
 # autoload(vyapp.plugins.quick_sel)
 
 
-import vyapp.plugins.quick_url
-autoload(vyapp.plugins.quick_url)
+import vyapp.plugins.urls
+autoload(vyapp.plugins.urls)
 
 
 import vyapp.plugins.tab_search
 autoload(vyapp.plugins.tab_search)
-
-
-import vyapp.plugins.url_source
-autoload(vyapp.plugins.url_source)
 
 
 # This plugin implements a keycommand to quickly load the user vyrc file
@@ -443,6 +439,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

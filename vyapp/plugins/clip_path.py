@@ -5,16 +5,6 @@ Overview
 It is handy to quickly get the absolute path of the file that is being edited. This plugin
 implements a Key-Command for that.
 
-Usage
-=====
-
-When a file is opened, vy holds a complete path for the file. It is possible
-to put such a complete path in the clipboard area for other purposes. For such
-switch to ALPHA mode by pressing <Key-3> in NORMAL mode then press <Key-u>.
-
-After pressing <Key-u> in ALPHA mode there will appear a msg on the status bar notifying that
-the complete path was copied to the clipboard.
-
 Key-Commands
 ============
 
@@ -34,6 +24,7 @@ def clip_ph(area):
 
 def install(area):
     area.install(('ALPHA', '<Key-u>', lambda event: clip_ph(event.widget)))
+
 
 
 

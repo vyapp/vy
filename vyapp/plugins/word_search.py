@@ -6,33 +6,6 @@ This plugin implements a mechanism of search based on an initial pattern. It tak
 words of the data input then calculates the permutations. The search processes happens
 regardless of the punctuation between the words.
 
-Usage
-=====
-
-Consider the following text below, suppose it is somewhere inside a big file.
-
-    She walks in beauty, like the night Of cloudless climes and starry skies;
-    And all thats best of dark and bright meet in her aspect and her eyes;
-    Thus mellowed to that tender light which heaven to gaudy day denies.
-
-What you wanted to place the cursor over a line that appears the words?
-
-    gaudy that mellow
-    
-
-You would open an input box dialog by pressing <Key-0> in NORMAL mode then insert that pattern in the 
-input box field and press <Return>. It would place the cursor
-on the first occurrence of that pattern that is.
-
-    mellowed to that tender light which heaven to gaudy
-    
-If there are more occurrences of the set of patterns you can navigate through them 
-using Key-Commands. 
-
-The Key-Command <Control-j> places the cursor on the next less possible match. The way
-to go back to the previous possible match is using the Key-Command <Control-k>
-
-
 Key-Commands
 ============
 
@@ -40,10 +13,10 @@ Mode: NORMAL
 Event: <Key-0>
 Description: Switch to ISEARCH mode.
 
-Event: <Control-j> 
+Event: <Alt-p> 
 Description: Put the cursor on the next less possible match.
 
-Event: <Control-k>
+Event: <Alt-o>
 Description: Put the cursor on the previous possible match.
 """
 
@@ -143,6 +116,7 @@ class WordSearch(object):
         self.index = self.index + 1
 
 install = WordSearch
+
 
 
 

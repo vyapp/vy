@@ -5,11 +5,6 @@ Overview
 This module implements one of the auxiliary modes that implements keycommands 
 that aren't very often used.
 
-Usage
-=====
-
-In order to get the focused AreaVi instance in BETA mode, press <Key-4> em NORMAL mode.
-
 Key-Commands
 ============
 
@@ -24,5 +19,6 @@ def beta(area):
 def install(area):
     area.add_mode('BETA')
     area.install(('NORMAL', '<Key-4>', lambda event: beta(event.widget)))
+
 
 

@@ -4,12 +4,6 @@ Overview
 
 This module implements keycommands that clear selection from text.
 
-Usage
-=====
-
-When <Escape> is pressed in NORMAL mode, selection tag will be removed, same when <Key-i>
-happens in NORMAL mode as well.
-
 Key-Commands
 ============
 
@@ -26,4 +20,5 @@ def install(area):
     clear = lambda event: event.widget.clear_selection()
     area.install(('NORMAL', '<Escape>', clear), 
                  ('NORMAL', '<Key-i>', clear))
+
 

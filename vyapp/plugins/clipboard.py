@@ -5,9 +5,6 @@ Overview
 This plugin implements a set of basic functionalities to deal with text. Like copying,
 cutting, deleting, pasting text to the clipboard.
 
-Usage
-=====
-
 
 Key-Commands
 ============
@@ -56,5 +53,6 @@ def install(area):
                  ('NORMAL', '<Key-e>', lambda event: event.widget.ptsel_before()),
                  ('NORMAL', '<Control-Y>', lambda event: event.widget.cpsel('\n')),
                  ('NORMAL', '<Control-U>', lambda event: event.widget.ctsel('\n')))
+
 
 

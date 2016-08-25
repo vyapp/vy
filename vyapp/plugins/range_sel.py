@@ -4,15 +4,6 @@ Overview
 
 This plugin implements range selection.
 
-Usage
-=====
-
-First of all it is needed to drop a selection mark to start range selection.
-Switch to NORMAL mode then type <Control-v>.
-
-Once the selection mark is dropped you can start selection by using the keys <Control-h>,
-<Control-j>, <Control-k>, <Control-l> in NORMAL mode.
-
 Key-Commands
 ============
 
@@ -53,6 +44,7 @@ def install(area):
                  ('NORMAL', '<Control-h>', lambda event: event.widget.sel_left()),
                  ('NORMAL', '<Control-l>', lambda event: event.widget.sel_right()),
                  ('NORMAL', '<Control-v>', lambda event: drop_selection_mark(event.widget)))
+
 
 
 

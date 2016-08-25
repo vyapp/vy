@@ -4,17 +4,6 @@ Overview
 
 This plugin implements python functions to get text in lower case and upper case.
 
-Usage
-=====
-
-Select the text that should be turned into lower or upper case then issue one of the functions below.
-
-    lower()
-
-or
-
-    upper()
-
 Commands
 ========
 
@@ -44,4 +33,5 @@ def upper():
 
 ENV['lower'] = lower
 ENV['upper'] = upper
+
 

@@ -5,49 +5,6 @@ Overview
 Panels are a cool way to perform some tasks. This plugin implements Key-Commands to create horizontal/vertical
 panes.
 
-Usage
-=====
-
-The idea consists of a single vertical paned window in which it is possible to create
-horizontal paned windows. Inside these horizontal paned windows it is possible to add vertical panes.
-
-Let us suppose there is one pane named A opened in a given tab. The cursor is active in the
-pane AreaVi named A.
-
-    -----
-    | A |
-    -----
-
-After pressing <Alt-less> in Global mode you will get.
-    
-------------
-| A  |  B  |
-------------
-
-Suppose now the cursor is over A or B. If you press <Alt-greater> in Global mode 
-then you will get.
-
-------------
-| A  |  B  |
-------------
-|    C     |
-------------
-
-Now, suppose the cursor is over C then you press again <Alt-less> in Global mode.
-Then you will get.
-
-------------
-| A  |  B  |
-------------
-| C  |  D  |
-------------
-
-
-Consider the case that you want to remove a given pane. For such
-you place the cursor over the pane then type <Alt-X>.
-
-For moving the focus between AreaVi instances, see the commands below.
-
 Key-Commands
 ============
 
@@ -185,6 +142,7 @@ def install(area):
                  (-1, '<Control-Alt-l>', lambda event: go_right_area(event.widget)),
                  (-1, '<Control-Alt-k>', lambda event: go_up_area(event.widget)),
                  (-1, '<Control-Alt-j>', lambda event: go_down_area(event.widget)))
+
 
 
 

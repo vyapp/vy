@@ -5,13 +5,6 @@ Overview
 This plugin does autocompletion using jedi library.
 
 
-Usage
-=====
-
-Whenever one presses <Control-Key-period> in INSERT mode
-it should popup a window with possible completions.
-
-
 Key-Commands
 ============
 
@@ -55,6 +48,7 @@ def active_python_completion():
                   lambda event: PythonCompleteWindow(event.widget), add=False)
 
 ENV['active_python_completion'] = active_python_completion
+
 
 
 

@@ -4,12 +4,6 @@ Overview
 
 Implement word completion.
 
-Usage
-=====
-
-When in INSERT mode and the keycommand <Control-q> is issued, this plugin will attempt
-to complete a word that matches the previous sequence of chars from the cursor position.
-
 Key-Commands
 ============
 
@@ -46,6 +40,7 @@ class QuickCompletion(object):
         self.seq = area.complete_word(root)
 
 install = QuickCompletion
+
 
 
 

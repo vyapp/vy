@@ -4,19 +4,6 @@ Overview
 
 This plugin implements Key-Commands to comment and uncomment blocks of code.
 
-Usage
-=====
-
-In order to comment/uncomment a block of code it is needed to first select the region.
-
-Open a programming file then select some lines with <Key-f> in NORMAL mode then
-switch to ALPHA mode with <Key-3>.
-
-Once it is in ALPHA mode then type <Key-e> to comment or <Key-r> to uncomment
-the selected block of text.
-
-The block of code will be commented based on the programming comment style of the language.
-
 Key-Commands
 ============
 
@@ -68,6 +55,7 @@ def install(area):
     area.install(
     ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
     ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 

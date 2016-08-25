@@ -4,18 +4,6 @@ Overview
 
 This module implements functions to adjust AreaVi widget encoding.
 
-Usage
-=====
-
-The function below defines the encoding to save files:
-
-    charset(name)
-
-The function:
-
-    decode(name)
-
-is used to adjust the encoding of the AreaVi widget text.
 
 Commands
 ========
@@ -45,6 +33,7 @@ def charset(name):
 
 ENV['decode']  = decode
 ENV['charset'] = charset
+
 
 
 

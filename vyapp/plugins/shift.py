@@ -4,12 +4,6 @@ Overview
 
 This plugin implements Key-Commands to shift blocks of text.
 
-Usage
-=====
-
-To shift a block of text, first select it then press <Key-greater> in NORMAL mode to shift to the right.
-In order to shift blocks of text to the left, select the block of text then press <Key-less> in NORMAL mode.
-
 Key-Commands
 ============
 
@@ -32,6 +26,7 @@ class Shift(object):
 
 
 install = Shift
+
 
 
 
