@@ -11,7 +11,6 @@ class StatusBar(Frame):
 
     def __init__(self, master):
         Frame.__init__(self, master)
-        self.is_on = False
         self.config(border=1)
 
         self.msg = Label(self, bd=1, relief=SUNKEN, anchor=W)
@@ -71,22 +70,6 @@ class StatusBar(Frame):
 
         self.mode.config(text='Mode: %s' % mode)
         self.mode.update_idletasks()
-
-    def pack(self, *args, **kwargs):
-        Frame.pack(self, *args, **kwargs)
-        self.args   = args
-        self.kwargs = kwargs
-        self.is_on  = True
-
-    def pack_forget(self):
-        Frame.pack_forget(self)
-        self.is_on = False
-
-    def switch(self):    
-        if self.is_on: self.pack_forget()
-        else: self.pack(*self.args, **self.kwargs)
-
-
 
 
 
