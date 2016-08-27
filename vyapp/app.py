@@ -57,16 +57,19 @@ class App(Tk):
         execfile(self.rc, ENV)
 
         self.note = NoteVi(master=self, takefocus=0)
-        self.note.pack(expand=True, fill=BOTH)
-        self.read_data = Frame()
+        self.note.grid(row=0, sticky='wens')
+        self.read_data = Frame(master=self)
 
-        self.status = StatusBar(self)
-        self.status.pack(side=BOTTOM, fill=X)
+        self.status = StatusBar(master=self)
+        self.status.grid(row=2, sticky='we')
+        Grid.rowconfigure(self, 0, weight=1)
+        Grid.columnconfigure(self, 0, weight=1)
 
 # Just stdout is set. stderr remains original.
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
 
 
 

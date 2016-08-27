@@ -21,12 +21,12 @@ class InputBox(object):
         self.entry.pack(side='left', expand=True, fill=BOTH)
         self.frame.pack(expand=True, fill=X)
 
-        root.read_data.pack(fill=X)
+        root.read_data.grid(row=1, sticky='we')
 
     def done(self):
         self.entry.destroy()
         self.frame.destroy()
-        root.read_data.pack_forget()
+        root.read_data.grid_forget()
         self.area.focus_set()
 
 class Get(InputBox, DataEvent, IdleEvent):
@@ -64,6 +64,7 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
+
 
 
 
