@@ -14,14 +14,12 @@ class PanedHorizontalWindow(PanedWindow):
     def __init__(self, *args, **kwargs):
         PanedWindow.__init__(self, orient=HORIZONTAL, *args, **kwargs)
 
-    def create_area(self, filename='none'):
+    def create(self, filename='none'):
         """
-        This method creates an AreaVi widget whose AreaVil.filename attribute is
-        the argument filename. It returns the AreaVi widget that was created.
-
-        The plugins that appear in the vyrc file will be installed in the AreaVi widget.
+        This method creates a horizontal AreaVi widget. It returns the
+        AreaVi widget that was created. It as well installs the plugins
+        that appear in the vyrc file in the AreaVi widget.
         """
-
         frame     = Frame(master=self)
         scrollbar = Scrollbar(master=frame)
         area      = AreaVi(filename, frame , border=3, relief=RAISED, 
@@ -40,17 +38,6 @@ class PanedHorizontalWindow(PanedWindow):
 
         return area
 
-    def create(self, filename='none'):
-        """
-        This method creates a horizontal AreaVi widget. It returns the
-        AreaVi widget that was created. It as well installs the plugins
-        that appear in the vyrc file in the AreaVi widget.
-        """
-
-        area = self.create_area(filename)
-        self.add(area.master)
-        return area
-
     def load(self, filename):
         """
         It creates a horizontal split and loads the content of filename
@@ -58,8 +45,7 @@ class PanedHorizontalWindow(PanedWindow):
         was created.
         """
 
-        area = self.create_area()
-        self.add(area.master)
+        area = self.create()
         area.load_data(filename)
         return area
 
@@ -156,6 +142,7 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
+
 
 
 
