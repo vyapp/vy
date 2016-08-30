@@ -30,9 +30,11 @@ class WordSearch(object):
         self.area = area
         area.tag_configure('(ISEARCH_MATCH)', **setup)
         area.install(('NORMAL', '<Key-0>', lambda event: 
-             Get(area, events={'<Return>' : self.start, '<Alt-p>': lambda wid: self.go_down(), 
-                        '<Control-j>': lambda wid: self.go_down(), '<Control-k>' : lambda wid: self.go_up(),
-                            '<Alt-o>': lambda wid: self.go_up(), '<Escape>': lambda wid: self.stop()})))
+        Get(area, events={
+        '<Return>' : self.start, 
+        '<Alt-p>'  : lambda wid: self.go_down(), 
+        '<Alt-o>'  : lambda wid: self.go_up(), 
+        '<Escape> ': lambda wid: self.stop()})))
 
         self.seq   = []
         self.index = -1
@@ -45,8 +47,11 @@ class WordSearch(object):
         self.seq   = []
         self.index = -1
         data       = wid.get().split(' ')
-        find       = lambda ind: self.area.find(escape(ind), '1.0', step='+1l linestart')
-        self.seq   = self.match_possible_regions(find, data)
+        find       = lambda ind: self.area.find(
+        escape(ind), '1.0', step='+1l linestart')
+
+        self.seq = self.match_possible_regions(find, data)
+
         if not self.seq:
             self.no_match()
         else:
@@ -83,7 +88,6 @@ class WordSearch(object):
         matches.sort(reverse=True)
         return matches
 
-
     def go_up(self):
         """
 
@@ -98,14 +102,12 @@ class WordSearch(object):
         self.area.tag_add('(ISEARCH_MATCH)', pos0, pos1)
         self.area.seecur(pos0)
         self.index = self.index - 1
-
     
     def go_down(self):
         """
 
         """
         if self.index + 1 >= len(self.seq): return
-
         line = self.seq[self.index + 1][1]
         pos0 = '%s.0' % line
         pos1 = '%s.0 lineend' % line
@@ -116,12 +118,6 @@ class WordSearch(object):
         self.index = self.index + 1
 
 install = WordSearch
-
-
-
-
-
-
 
 
 
