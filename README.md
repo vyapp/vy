@@ -84,13 +84,7 @@ your ~/.vy directory before a new installation in order to upgrade to a new vers
 Documentation
 =============
 
-**Official documentation in English**
-
-[Wiki](https://github.com/iogf/vy/wiki)
-
-**A Russian version**
-
-http://vy.branchable.com
+[Vy Book](https://github.com/iogf/vy/wiki)
 
 Support
 =======
@@ -100,6 +94,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
