@@ -7,43 +7,33 @@ This plugin implements a mechanism to highligh pairs of ( ) [ ] { }.
 
 """
 
-def install(area, setup={'background':'pink', 'foreground':'black'}, 
-            max=1500, timeout=500):
+class MatchSymPair(object):
+    def __init__(self, area, setup={'background':'pink', 
+            'foreground':'black'}, max=1500, timeout=500):
+        self.max     = max
+        self.timeout = timeout
+        self.area    = area
 
-    def cave(tag, args):
-        area.after(timeout, cave, tag, args)
-        index = area.case_pair('insert', max, *args)
+        area.tag_config('(paren)', **setup)
+        area.tag_config('(bracket)', **setup)
+        area.tag_config('(brace)', **setup)
 
-        if not index: 
-            area.tag_remove(tag, '1.0', 'end')
-        else:
-            area.tag_update(tag, '1.0', 'end', 
-                            ('insert', 'insert +1c'), (index, '%s +1c' % index))
+        self.blink('(paren)', ('(', ')'))
+        self.blink('(bracket)', ('[', ']'))
+        self.blink('(brace)', ('{', '}'))
+    
+    def blink(self, name, args):
+        self.area.after(self.timeout, self.blink, name, args)
+        index = self.area.case_pair('insert', self.max, *args)
 
-    area.tag_config('_paren_', **setup)
-    area.tag_config('_bracket_', **setup)
-    area.tag_config('_brace_', **setup)
-    cave('_paren_', ('(', ')'))
-    cave('_bracket_', ('[', ']'))
-    cave('_brace_', ('{', '}'))
-
-
-
-
-
-
+        self.area.tag_remove(name, '1.0', 'end')
+        if not index: return
+        self.area.tag_add(name, 'insert', 'insert +1c')
+        self.area.tag_add(name, index, '%s +1c' % index)
 
 
 
-
-
-
-
-
-
-
-
-
+install = MatchSymPair
 
 
 

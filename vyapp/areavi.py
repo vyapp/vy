@@ -199,7 +199,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
         return self.get('insert linestart', 'insert +1l linestart')
 
-    def tag_update(self, name, index0, index1, *args):
+    def tag_swap(self, name, index0, index1, *args):
         """
         It removes a given tag from index0 to index1 and re adds
         the tag to the ranges of text delimited in args.
@@ -1587,6 +1587,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield
 
         self.swap(pattern, index, 'insert')
+
 
 
 
