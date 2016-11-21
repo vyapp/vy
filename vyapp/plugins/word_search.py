@@ -34,7 +34,9 @@ class WordSearch(object):
         '<Return>' : self.start, 
         '<Alt-p>'  : lambda wid: self.go_down(), 
         '<Alt-o>'  : lambda wid: self.go_up(), 
-        '<Escape> ': lambda wid: self.stop()})))
+        '<Destroy>': lambda wid: self.area.tag_remove(
+        '(ISEARCH_MATCH)', '1.0', 'end'),
+        '<Escape> ': lambda wid: True})))
 
         self.seq   = []
         self.index = -1
@@ -57,10 +59,6 @@ class WordSearch(object):
         else:
             self.go_down()
     
-    def stop(self):
-        self.area.tag_remove('(ISEARCH_MATCH)', '1.0', 'end')
-        return True
-
     def no_match(self):
         root.status.set_msg('No pattern found!')
 
@@ -118,6 +116,7 @@ class WordSearch(object):
         self.index = self.index + 1
 
 install = WordSearch
+
 
 
 

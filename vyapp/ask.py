@@ -15,8 +15,7 @@ class InputBox(object):
         self.entry   = Entry(self.frame)
         self.entry.config(background='grey')
         self.entry.focus_set()
-        self.entry.grab_set()
-
+        self.entry.bind('<FocusOut>', lambda event: self.done())
         self.entry.insert('end', default_data)
         self.entry.pack(side='left', expand=True, fill=BOTH)
         self.frame.pack(expand=True, fill=X)
@@ -64,6 +63,7 @@ class Ask(InputBox):
         return self.data
 
     __repr__ = __str__
+
 
 
 

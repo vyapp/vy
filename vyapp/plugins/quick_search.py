@@ -31,7 +31,9 @@ class QuickSearch(object):
         '<Alt-o>': self.search_up, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
-        '<Escape>':  self.done})
+        '<Destroy>': lambda wid: self.area.tag_remove(
+        '(SEARCH_MATCH)', '1.0', 'end'),
+        '<Escape>':  lambda wid: True})
 
     def start_backwards(self, event):
         self.index     = self.area.index('insert')
@@ -43,11 +45,9 @@ class QuickSearch(object):
         '<Alt-o>': self.search_up, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
-        '<Escape>':  self.done})
-
-    def done(self, wid):
-        self.area.tag_remove('(SEARCH_MATCH)', '1.0', 'end')
-        return True
+        '<Destroy>': lambda wid: self.area.tag_remove(
+        '(SEARCH_MATCH)', '1.0', 'end'),
+        '<Escape>':  lambda wid: True})
 
     def update(self, wid):
         """
@@ -80,9 +80,4 @@ class QuickSearch(object):
 
 
 install = QuickSearch
-
-
-
-
-
 
