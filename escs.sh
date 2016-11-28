@@ -119,4 +119,22 @@ rm MANIFEST
 cd ~/projects/vy-code
 python setup.py sdist register upload
 rm -fr dist
+##############################################################################
+
+# install, tern-chrome-extesion, get, autocompletion, chrome, plugins, development, vy.
+
+# BROKEN!
+
+sudo npm -g install tern-chrome-extension
+
+# example tern-project, tern-config.
+
+# {
+  # "libs":["ecma5"],
+  # "plugins": {
+    # "chrome-extension": {}
+  # }
+# }
+
+vy ~/.tern-config
 
