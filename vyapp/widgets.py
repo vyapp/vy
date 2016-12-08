@@ -98,7 +98,6 @@ class CompleteBox(MatchBox):
         self.completions = completions
         self.area        = area
         self.focus_set()
-        # self.grab_set()
         self.feed()
 
         self.bind('<Key>', lambda event: area.echo_num(event.keysym_num), add=True)
@@ -107,6 +106,13 @@ class CompleteBox(MatchBox):
         self.bind('<Key>', self.update_selection, add=True)
         self.bind('<Return>', self.complete, add=True)
         self.bind('<Escape>', lambda event: self.master.destroy(), add=True)
+
+        # Shortcut.
+        self.bind('<Alt-p>', lambda event: event.widget.event_generate('<Key-Down>'))
+        self.bind('<Alt-o>', lambda event: event.widget.event_generate('<Key-Up>'))
+
+        self.bind('<Escape>', lambda event: self.master.destroy(), add=True)
+
         self.pattern_index = self.calc_pattern_index()
 
     def calc_pattern_index(self):
@@ -151,13 +157,14 @@ class CompleteBox(MatchBox):
         if x != m or (m == x and y < n):
             self.master.destroy()
 
-class CompleteWindow(FloatingWindow):
+class CompletionWindow(FloatingWindow):
     def __init__(self, area, completions, *args, **kwargs):
         FloatingWindow.__init__(self, area, *args, **kwargs)
         self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+
 
 
 

@@ -15,13 +15,13 @@ completion.
 
 """
 
-from vyapp.widgets import CompleteWindow
+from vyapp.widgets import CompletionWindow
 from jedi import Script
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 import sys
 
-class PythonCompleteWindow(CompleteWindow):
+class PythonCompletionWindow(CompletionWindow):
     """
     """
 
@@ -32,12 +32,12 @@ class PythonCompleteWindow(CompleteWindow):
         script      = Script(source, line, col, area.filename)
         completions = script.completions()
 
-        CompleteWindow.__init__(self, area, completions, *args, **kwargs)
+        CompletionWindow.__init__(self, area, completions, *args, **kwargs)
         self.bind('<F1>', lambda event: sys.stdout.write('%s\n%s\n' % ('#' * 80, self.box.elem_desc())))
 
 def install(area):
     trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
-                        lambda event: PythonCompleteWindow(event.widget), add=False)
+                        lambda event: PythonCompletionWindow(event.widget), add=False)
     remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
 
     area.install((-1, '<<Load-text/x-python>>', trigger), (-1, '<<Save-text/x-python>>', trigger),
@@ -45,7 +45,7 @@ def install(area):
 
 def active_python_completion():
     AreaVi.ACTIVE.hook('INSERT', '<Control-Key-period>', 
-                  lambda event: PythonCompleteWindow(event.widget), add=False)
+                  lambda event: PythonCompletionWindow(event.widget), add=False)
 
 ENV['active_python_completion'] = active_python_completion
 

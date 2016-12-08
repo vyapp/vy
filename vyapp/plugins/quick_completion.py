@@ -1,45 +1,34 @@
 """
-Overview
-========
 
-Implement word completion.
-
-Key-Commands
-============
-
-Mode: INSERT
-Event: <Control-q>
-Description: Complete word pattern based on all AreaVi instances.
 """
 
+from vyapp.widgets import CompletionWindow, Option
+from vyapp.plugins import ENV
+from vyapp.areavi import AreaVi
 from vyapp.app import root
+import sys
 
-
-class QuickCompletion(object):
+class WordCompletionWindow(CompletionWindow):
+    """
     """
 
-    """
-    def __init__(self, area):
-        """
-        """
+    def __init__(self, area, *args, **kwargs):
+        pattern     = area.get_seq()
+        completions = map(lambda ind: ind[1][0], 
+        area.find_all(root, '[^ ]*%s[^ ]*' % pattern 
+        if pattern else '[^ ]+'))
 
-        area.install(('INSERT', '<Control-q>', lambda event: self.complete(event.widget)))
-        area.install(('INSERT', '<Control_R>', lambda event: self.reset(event.widget)))
-        area.install(('INSERT', '<Control_L>', lambda event: self.reset(event.widget)))
+        completions = set(completions)
+        completions = map(lambda ind: 
+        Option(ind), completions)
 
-    def complete(self, area):
-        """
-        """
+        CompletionWindow.__init__(self, area, 
+        completions, *args, **kwargs)
 
-        try:    
-            self.seq.next()
-        except StopIteration:
-            pass
+def install(area):
+    area.install(('INSERT', '<Control-q>', 
+    lambda event: WordCompletionWindow(event.widget)))
 
-    def reset(self, area):
-        self.seq = area.complete_word(root)
-
-install = QuickCompletion
 
 
 

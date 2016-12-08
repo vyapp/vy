@@ -1562,54 +1562,5 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
-    def complete_word(self, wid):
-        """
-        It returns an iterator with possible word completions
-        for a word that is close to the cursor.
-        """
-
-        index    = self.search('\W', 'insert', 
-                                 stopindex='insert linestart',regexp=True, 
-                                 backwards=True)
-        index    = 'insert linestart' if not index else '%s +1c' % index
-        pattern  = self.get(index, 'insert')
-
-        if not pattern: return
-
-        table = []
-
-        for area, (data, _, _) in self.find_all(wid, '\w*%s\w*' % pattern):
-            if not data in table:
-                table.append(data)
-            else:
-                continue
-            self.swap(data, index, 'insert')
-            yield
-
-        self.swap(pattern, index, 'insert')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -137,4 +137,8 @@ sudo npm -g install tern-chrome-extension
 # }
 
 vy ~/.tern-config
+##############################################################################
+
+grep -rl  'CompletionWindow' . | xargs sed -i 's/CompletionWindow/CompletionWindow/g' 
+
 

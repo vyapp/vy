@@ -14,7 +14,7 @@ Description: Open the completion window with possible python words for
 completion.
 """
 
-from vyapp.widgets import CompleteWindow, Option
+from vyapp.widgets import CompletionWindow, Option
 from subprocess import Popen
 import json
 import requests
@@ -70,7 +70,7 @@ class Tern(object):
         data = json.loads(data)
         return map(lambda ind: Option(**ind), data['completions'])
 
-class JavascriptCompleteWindow(CompleteWindow):
+class JavascriptCompletionWindow(CompletionWindow):
     """
     """
 
@@ -79,14 +79,14 @@ class JavascriptCompleteWindow(CompleteWindow):
         line, col   = area.indcur()
         completions = tern.completions(source, line - 1, col, area.filename)
 
-        CompleteWindow.__init__(self, area, completions, *args, **kwargs)
+        CompletionWindow.__init__(self, area, completions, *args, **kwargs)
         self.bind('<F1>', lambda event: sys.stdout.write('/*%s*/\n%s\n' % ('*' * 80, self.box.elem_desc())))
 
 class JavascriptCompletion(object):
     def __init__(self, area, tern):
         self.tern = tern
         trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
-                  lambda event: JavascriptCompleteWindow(self.tern, event.widget), add=False)
+                  lambda event: JavascriptCompletionWindow(self.tern, event.widget), add=False)
         remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
         area.install((-1, '<<Load-application/x-javascript>>', trigger),
                      (-1, '<<Load-text/html>>', trigger), 
@@ -96,7 +96,7 @@ class JavascriptCompletion(object):
 
 def javascript_tools(tern):
     active_completion = lambda :AreaVi.ACTIVE.hook('INSERT', '<Control-Key-period>', 
-                  lambda event: JavascriptCompleteWindow(tern, event.widget), add=False)
+                  lambda event: JavascriptCompletionWindow(tern, event.widget), add=False)
     ENV['active_javascript_completion'] = active_completion
 
 install = JavascriptCompletion
