@@ -291,8 +291,8 @@ autoload(vyapp.plugins.match_sym_pair)
 
 
 # Used to complete words when Control-q is issued on insert mode.
-import vyapp.plugins.quick_completion
-autoload(vyapp.plugins.quick_completion)
+import vyapp.plugins.word_completion
+autoload(vyapp.plugins.word_completion)
 
 
 # This plugin highlights links when files are opened.
@@ -437,6 +437,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
