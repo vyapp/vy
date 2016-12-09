@@ -1,4 +1,4 @@
-from vyapp.widgets import FloatingWindow, MatchBox
+from vyapp.widgets import FloatingWindow, MatchBox, Echo
 from vyapp.tools import match_sub_pattern
 from Tkinter import LEFT, BOTH
 
@@ -11,16 +11,19 @@ class Option(object):
     def docstring(self):
         return '%s\n%s' % (self.type, self.doc)
 
-class CompleteBox(MatchBox):
+class CompleteBox(MatchBox, Echo):
+    """
+    """
+
     def __init__(self, area, completions, *args, **kwargs):
         MatchBox.__init__(self, *args, **kwargs)
+        Echo.__init__(self, area)
+
         self.completions = completions
         self.area        = area
         self.focus_set()
         self.feed()
 
-        self.bind('<BackSpace>', self.on_delete)
-        self.bind('<Key>', self.update_selection)
         self.bind('<Return>', self.complete)
         self.bind('<Escape>', lambda event: 
         self.master.destroy())
@@ -29,11 +32,11 @@ class CompleteBox(MatchBox):
         self.bind('<Alt-p>', lambda event: 
         event.widget.event_generate('<Key-Down>'))
         self.bind('<Alt-o>', lambda event: 
-
         event.widget.event_generate('<Key-Up>'))
-        self.pattern_index = self.calc_pattern_index()
 
-    def calc_pattern_index(self):
+        self.index = self.calc_index()
+
+    def calc_index(self):
         pattern = str(self.area.get(
         '%s linestart' % self.master.start_index, 
         '%s lineend' % self.master.start_index))
@@ -41,43 +44,35 @@ class CompleteBox(MatchBox):
         seq = match_sub_pattern(pattern, 
         self.get(0, 'end'))
 
-        try:
-            match, index = next(seq)
-        except StopIteration:
-            return self.master.start_index
-        line = self.area.indint(
-            self.master.start_index)[0]
+        line, col = self.area.indint(
+        self.master.start_index)
+
+        _, index = next(seq, (None, col))
         return '%s.%s' % (line, index)
 
-    def feed(self):
-        for ind in self.completions:
-            self.insert('end', ind.name)
-
-    def update_selection(self, event):
-        if not event.char: return
-        # Just insert the character on the areavi.
-        self.area.echo_num(event.keysym_num)
-        data = self.area.get(self.pattern_index, 'insert')
+    def on_insert(self, keysym_num):
+        data = self.area.get(self.index, 'insert')
         self.match_elem(data)
+
+    def complete(self, event):
+        self.area.swap(self.get(
+        self.curselection()), self.index, 'insert')
+        self.master.destroy()
 
     def selection_docs(self):
         item, = self.curselection()
         return self.completions[item].docstring()
 
-    def complete(self, event):
-        item = self.curselection()
-        word = self.get(item)
-        self.area.delete(self.pattern_index, 'insert')
-        self.area.insert(self.pattern_index, word)
-        self.master.destroy()
-
     def on_delete(self, event):
-        self.area.backspace()
-        # Check for cursor position.
+        m, n = self.area.indint(
+            self.master.start_index)
         x, y = self.area.indcur()
-        m, n = self.area.indint(self.master.start_index)
+        if x != m or (m == x and y < n): 
+            self.master.destroy()
 
-        if x != m or (m == x and y < n): self.master.destroy()
+    def feed(self):
+        for ind in self.completions:
+            self.insert('end', ind.name)
 
 class CompletionWindow(FloatingWindow):
     def __init__(self, area, completions, *args, **kwargs):
@@ -86,7 +81,5 @@ class CompletionWindow(FloatingWindow):
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
-
-
 
 

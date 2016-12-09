@@ -1,4 +1,17 @@
 """
+Overview
+========
+
+This plugin does word completion.
+
+
+Key-Commands
+============
+
+Mode: INSERT
+Event: <Control-q>
+Description: Open the completion window with possible words for
+completion.
 
 """
 
@@ -28,6 +41,7 @@ class WordCompletionWindow(CompletionWindow):
 def install(area):
     area.install(('INSERT', '<Control-q>', 
     lambda event: WordCompletionWindow(event.widget)))
+
 
 
 

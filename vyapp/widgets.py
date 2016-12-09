@@ -27,6 +27,31 @@ class MatchBox(Listbox):
         self.selection_set(index)
         self.see(index)
 
+class Echo(object):
+    """
+
+    """
+
+    def __init__(self, area):
+        self.area = area
+        self.bind('<BackSpace>', self.on_backspace)
+        self.bind('<Key>', self.dispatch)
+
+    def dispatch(self, event):
+        if not event.char: return
+        self.area.echo_num(event.keysym_num)
+        self.on_insert(event.keysym_num)
+
+    def on_insert(self, keysym_num):
+        pass
+
+    def on_backspace(self, event):
+        self.area.backspace()
+        self.on_delete()
+
+    def on_delete(self):
+        pass
+
 class FloatingWindow(Toplevel):
     """
     """
@@ -78,7 +103,5 @@ class FloatingWindow(Toplevel):
     def destroy(self):
         self.area.focus_set()
         Toplevel.destroy(self)
-
-
 
 
