@@ -80,7 +80,7 @@ class JavascriptCompletionWindow(CompletionWindow):
         completions = tern.completions(source, line - 1, col, area.filename)
 
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
-        self.bind('<F1>', lambda event: sys.stdout.write('/*%s*/\n%s\n' % ('*' * 80, self.box.elem_desc())))
+        self.bind('<F1>', lambda event: sys.stdout.write('/*%s*/\n%s\n' % ('*' * 80, self.box.selection_docs())))
 
 class JavascriptCompletion(object):
     def __init__(self, area, tern):
@@ -100,5 +100,6 @@ def javascript_tools(tern):
     ENV['active_javascript_completion'] = active_completion
 
 install = JavascriptCompletion
+
 
 
