@@ -10,7 +10,7 @@ Key-Commands
 
 Mode: INSERT
 Event: <Control-Key-period>
-Description: Open the completion window with possible python words for
+Description: Open the completion window with possible ruby words for
 completion.
 """
 
@@ -70,6 +70,7 @@ class RubyCompletion(object):
                      (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 install = RubyCompletion
+
 
 
 
