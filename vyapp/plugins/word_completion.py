@@ -2,7 +2,7 @@
 
 """
 
-from vyapp.widgets import CompletionWindow, Option
+from vyapp.completion import CompletionWindow, Option
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 from vyapp.app import root
@@ -28,6 +28,7 @@ class WordCompletionWindow(CompletionWindow):
 def install(area):
     area.install(('INSERT', '<Control-q>', 
     lambda event: WordCompletionWindow(event.widget)))
+
 
 
 
