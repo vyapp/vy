@@ -31,8 +31,6 @@ class CompleteBox(MatchBox):
         self.bind('<Alt-p>', lambda event: event.widget.event_generate('<Key-Down>'))
         self.bind('<Alt-o>', lambda event: event.widget.event_generate('<Key-Up>'))
 
-        self.bind('<Escape>', lambda event: self.master.destroy(), add=True)
-
         self.pattern_index = self.calc_pattern_index()
 
     def calc_pattern_index(self):
@@ -84,5 +82,6 @@ class CompletionWindow(FloatingWindow):
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+
 
 
