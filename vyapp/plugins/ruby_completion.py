@@ -25,6 +25,10 @@ from os import getcwd
 from shutil import copyfile
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
+from subprocess import call
+
+def rsense_daemon(port=47367):
+    call(['rsense', 'restart', '--port', str(port)])
 
 class RubyCompletionWindow(CompletionWindow):
     """
@@ -59,7 +63,7 @@ class RubyCompletionWindow(CompletionWindow):
         return dirname(filename)
 
 class RubyCompletion(object):
-    def __init__(self, area, port):
+    def __init__(self, area, port=47367):
         self.port = port
         trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
                   lambda event: RubyCompletionWindow(event.widget, self.port), add=False)
@@ -70,7 +74,4 @@ class RubyCompletion(object):
                      (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 install = RubyCompletion
-
-
-
 

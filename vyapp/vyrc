@@ -109,10 +109,12 @@ autoload(vyapp.plugins.editrc)
 import vyapp.plugins.python_completion
 autoload(vyapp.plugins.python_completion)
 
-
-# Ruby auto completion plugin using jedi.
+# Ruby auto completion using rsense.
+# It is needed to start rsense daemon first. 
+# from vyapp.plugins.ruby_completion import rsense_daemon
+# rsense_daemon(port=47367)
 # import vyapp.plugins.ruby_completion
-# autoload(vyapp.plugins.ruby_completion)
+# autoload(vyapp.plugins.ruby_completion, port=47367)
 
 
 # Initializes the tern daemon and installs javascript 
@@ -442,6 +444,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
