@@ -122,7 +122,7 @@ autoload(vyapp.plugins.python_completion)
 # autocomplete plugin. Notice 'tern' should stand for your tern plugin path.
 # It means where your tern script is in.
 
-# from vyapp.plugins.javasciprt_completion import javascript_tools
+# from vyapp.plugins.javascript_completion import javascript_tools
 # javascript_tools('tern', port=1234)
 # import vyapp.plugins.javascript_completion
 # autoload(vyapp.plugins.javascript_completion, 'tern', port=1234)
@@ -440,6 +440,9 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
+
+
 
 
 
