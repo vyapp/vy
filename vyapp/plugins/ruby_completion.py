@@ -26,20 +26,32 @@ from shutil import copyfile
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 from subprocess import call
-
-def rsense_daemon(port=47367):
-    call(['rsense', 'restart', '--port', str(port)])
+import psutil
 
 class RubyCompletionWindow(CompletionWindow):
     """
     """
 
-    def __init__(self, area, port, *args, **kwargs):
+    def __init__(self, area, path, port, *args, **kwargs):
+        self.path   = path
         self.port   = port
         source      = area.get('1.0', 'end')
         line, col   = area.indcur()
+
+        if not self.is_active(): self.run_server()
         completions = self.completions(source, line, col, area.filename)
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
+
+    def is_active(self):
+        filename = '/tmp/rsense.pid'
+        if exists(filename):
+            with open(filename, 'r') as fd:
+                return psutil.pid_exists(int(fd.read()))
+
+    def run_server(self):
+        # When vy is first instantiated it runs the
+        # server then leaves it running.
+        call([self.path, 'start', '--port', str(self.port)])
 
     def completions(self, data, line, col, filename):
         payload = {
@@ -60,13 +72,15 @@ class RubyCompletionWindow(CompletionWindow):
         return map(lambda ind: Option(ind['name']), data['completions'])
 
     def get_project_path(self, filename):
+        # It is broken. It should be fixed.
         return dirname(filename)
 
 class RubyCompletion(object):
-    def __init__(self, area, port=47367):
+    def __init__(self, area, path='rsense', port=47367):
+        self.path = path
         self.port = port
         trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
-                  lambda event: RubyCompletionWindow(event.widget, self.port), add=False)
+                  lambda event: RubyCompletionWindow(event.widget, self.path, self.port), add=False)
 
         remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
         area.install((-1, '<<Load-application/x-ruby>>', trigger),
@@ -74,4 +88,6 @@ class RubyCompletion(object):
                      (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 install = RubyCompletion
+
+
 
