@@ -343,6 +343,12 @@ import vyapp.plugins.syntax.spider
 # from pygments.styles.tango import TangoStyle
 # autoload(vyapp.plugins.syntax.spider, TangoStyle())
 
+# from pygments.styles.trac import TracStyle
+# autoload(vyapp.plugins.syntax.spider, TracStyle())
+
+# from pygments.styles.igor import IgorStyle
+# autoload(vyapp.plugins.syntax.spider, IgorStyle())
+
 # from pygments.styles.paraiso_dark import ParaisoDarkStyle
 # autoload(vyapp.plugins.syntax.spider, ParaisoDarkStyle())
 
@@ -438,6 +444,8 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
+
 
 
 
