@@ -5,6 +5,9 @@ class MatchBox(Listbox):
         Listbox.__init__(self, *args, **kwargs)
 
     def startswith(self, data):
+        """
+        """
+
         elems = self.get(0, 'end')
 
         for ind in xrange(0, self.size()):
@@ -13,17 +16,13 @@ class MatchBox(Listbox):
         else:
             raise ValueError
                 
-    def match_elem(self, data):
-        try:
-            index = self.startswith(data)
-        except ValueError:
-            self.selection_clear(0, 'end')
-        else:
-            self.single_selection_set(index)
+    def selection_item(self, data):
+        """
+        """
 
-    def single_selection_set(self, index):
-        self.activate(index)
         self.selection_clear(0, 'end')
+        index = self.startswith(data)
+        self.activate(index)
         self.selection_set(index)
         self.see(index)
 
@@ -38,18 +37,17 @@ class Echo(object):
         self.bind('<Key>', self.dispatch)
 
     def dispatch(self, event):
-        if not event.char: return
-        self.area.echo_num(event.keysym_num)
-        self.on_insert(event.keysym_num)
+        self.area.echo(chr(event.keysym_num))
+        self.on_char(event)
 
-    def on_insert(self, keysym_num):
+    def on_char(self, event):
         pass
 
     def on_backspace(self, event):
         self.area.backspace()
-        self.on_delete()
+        self.on_delete(event)
 
-    def on_delete(self):
+    def on_delete(self, event):
         pass
 
 class FloatingWindow(Toplevel):
@@ -103,5 +101,6 @@ class FloatingWindow(Toplevel):
     def destroy(self):
         self.area.focus_set()
         Toplevel.destroy(self)
+
 
 

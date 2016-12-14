@@ -603,12 +603,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
     def echo(self, data):
         self.insert('insert', data)
 
-    def echo_num(self, keysym_num):
-        try:
-            self.echo(chr(keysym_num))
-        except ValueError:
-            pass
-
     def backspace(self):
         """
         """
@@ -1562,5 +1556,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 

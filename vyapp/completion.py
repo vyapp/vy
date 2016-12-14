@@ -39,20 +39,20 @@ class CompleteBox(MatchBox, Echo):
     def calc_index(self):
         pattern = str(self.area.get(
         '%s linestart' % self.master.start_index, 
-        '%s lineend' % self.master.start_index))
+        '%s lineend' % self.master.start_index)).lower()
 
-        seq = match_sub_pattern(pattern, 
-        self.get(0, 'end'))
-
-        line, col = self.area.indint(
-        self.master.start_index)
+        seq = match_sub_pattern(pattern,
+        map(lambda ind: ind.lower(), self.get(0, 'end')))
+        line, col = self.area.indint(self.master.start_index)
 
         _, index = next(seq, (None, col))
         return '%s.%s' % (line, index)
 
-    def on_insert(self, keysym_num):
-        data = self.area.get(self.index, 'insert')
-        self.match_elem(data)
+    def on_delete(self, event):
+        m, n = self.area.indint(self.master.start_index)
+        x, y = self.area.indcur()
+        if x != m or (m == x and y < n): 
+            self.master.destroy()
 
     def complete(self, event):
         self.area.swap(self.get(
@@ -63,12 +63,9 @@ class CompleteBox(MatchBox, Echo):
         item, = self.curselection()
         return self.completions[item].docstring()
 
-    def on_delete(self, event):
-        m, n = self.area.indint(
-            self.master.start_index)
-        x, y = self.area.indcur()
-        if x != m or (m == x and y < n): 
-            self.master.destroy()
+    def on_char(self, event):
+        self.selection_item(self.area.get(
+        self.index, 'insert'))
 
     def feed(self):
         for ind in self.completions:
@@ -81,5 +78,7 @@ class CompletionWindow(FloatingWindow):
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+
+
 
 

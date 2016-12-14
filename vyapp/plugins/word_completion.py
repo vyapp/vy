@@ -29,7 +29,7 @@ class WordCompletionWindow(CompletionWindow):
         pattern     = area.get_seq()
         completions = map(lambda ind: ind[1][0], 
         area.find_all(root, '[^ ]*%s[^ ]*' % pattern 
-        if pattern else '[^ ]+'))
+        if pattern else '[^ ]+', nocase=True))
 
         completions = set(completions)
         completions = map(lambda ind: 
@@ -41,6 +41,7 @@ class WordCompletionWindow(CompletionWindow):
 def install(area):
     area.install(('INSERT', '<Control-q>', 
     lambda event: WordCompletionWindow(event.widget)))
+
 
 
 
