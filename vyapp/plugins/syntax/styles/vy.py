@@ -9,7 +9,7 @@ class VyStyle(Style):
 
     background_color = "#000000"
     highlight_color = "#222222"
-    default_style = "#999999"
+    default_style = "#F7A0A0"
 
     styles = {
         Token:                     "#cccccc",
@@ -40,7 +40,7 @@ class VyStyle(Style):
         # Name.Constant:             "",
         Name.Decorator:            "#cd00cd",
         # Name.Entity:               "",
-        # Name.Function:             "",
+        Name.Function:             "#998F8F",
         # Name.Label:                "",
         # Name.Namespace:            "",
         # Name.Other:                "",
@@ -70,6 +70,7 @@ class VyStyle(Style):
 
         Error:                     "#FF0000"
     }
+
 
 
 
