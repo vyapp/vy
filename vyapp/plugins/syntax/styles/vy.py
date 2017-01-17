@@ -1,6 +1,6 @@
 from pygments.style import Style
 from pygments.token import Keyword, Name, Comment, String, Error, \
-     Number, Operator, Generic, Whitespace, Token, Punctuation
+     Number, Operator, Generic, Whitespace, Token, Punctuation, Text
 
 
 class VyStyle(Style):
@@ -12,7 +12,10 @@ class VyStyle(Style):
 
     styles = {
         Token:                     "#cccccc",
-        # Whitespace:                "",
+        # Whitespace:                "#957C8B",
+        # Note: The Text tokens are set to default_style. So, when inserting chars.
+        # it gets highlighed afterwards.
+        Text:                      '#957C8B',
         Comment:                   "#ffbf00",
         Comment.Hashbang:          "#006680",
         Comment.Multiline:         "#807100",
@@ -57,7 +60,7 @@ class VyStyle(Style):
         String.Interpol:           "#397472",
         String.Symbol:             "#657439",
         Number:                    "#cd00cd",
-
+        
         Generic.Heading:           "#000080",
         Generic.Subheading:        "#800080",
         Generic.Deleted:           "#cd0000",
@@ -71,6 +74,7 @@ class VyStyle(Style):
 
         Error:                     "#FF0000"
     }
+
 
 
 

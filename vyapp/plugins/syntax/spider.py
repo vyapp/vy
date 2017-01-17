@@ -12,11 +12,11 @@ class Spider(object):
         self.area          = area
         self.max           = max
         self.styles        = theme.styles
-        self.default_style = getattr(theme, 'default_style', 'white')
+        self.default_style = getattr(theme, 'default_style', '#957C8B')
         self.background    = theme.background_color
         area.configure(background = self.background)
         area.configure(foreground = self.default_style)
-
+        print self.default_style
         for ind in self.styles.iterkeys():
             self.set_token_style(ind)
 
@@ -24,10 +24,24 @@ class Spider(object):
         (-1, '<Escape>', lambda event: self.update()))
 
     def update_all(self):
-        lexer = get_lexer_for_filename(self.area.filename, '')
+        """
+        """
+        lexer = None
+        try:
+            lexer = get_lexer_for_filename(self.area.filename, '')
+        except Exception:
+            return
         self.tag_tokens(lexer, '1.0', 'end')
 
     def update(self):
+        """
+        """
+        lexer = None
+        try:
+            lexer = get_lexer_for_filename(self.area.filename, '')
+        except Exception:
+            return
+
         lexer = get_lexer_for_filename(self.area.filename, '')
         TAG_KEYS_PRECEDENCE = PRECEDENCE_TABLE.get(
         tuple(lexer.aliases), DEFAULT)
@@ -51,6 +65,9 @@ class Spider(object):
         self.tag_tokens(lexer, index0, index2)
 
     def tag_tokens(self, lexer, index, stopindex):
+        """
+        """
+
         count, offset = self.area.indref(index)
         tokens        = get_tokens_unprocessed_matrix(count, offset, 
         self.area.get(index, stopindex), lexer)
@@ -73,6 +90,12 @@ class Spider(object):
 
     def set_token_style(self, token):
         """
+        Configure the tag which maps to the token in the
+        AreaVi. 
+        
+        If there is no such a definition of token
+        in styles dict then it defaults to self.background 
+        and self.default_style.
         """
 
         tag     = str(token)
@@ -80,6 +103,10 @@ class Spider(object):
         bg, fg  = style if style else (self.background, self.default_style)
         self.area.tag_configure(tag, 
         foreground=fg, background=bg)
+
+        # Note: It may be interesting to redefine
+        # tag_configure in AreaVi and implement it there.
+        self.area.tag_lower(tag, 'sel')
 
     def get_token_style(self, token):
         """
@@ -93,5 +120,8 @@ class Spider(object):
                 return self.split(style)
 
 install = Spider
+
+
+
 
 
