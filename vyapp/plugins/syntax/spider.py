@@ -1,3 +1,7 @@
+"""
+    :)
+"""
+
 from vyapp.plugins.syntax.tools import *
 from vyapp.plugins.syntax.keys import PRECEDENCE_TABLE, DEFAULT
 from pygments.lexers import get_lexer_for_filename 
@@ -10,7 +14,6 @@ class Spider(object):
         self.styles        = theme.styles
         self.default_style = getattr(theme, 'default_style', 'white')
         self.background    = theme.background_color
-
         area.configure(background = self.background)
         area.configure(foreground = self.default_style)
 
@@ -18,7 +21,7 @@ class Spider(object):
             self.set_token_style(ind)
 
         area.install((-1, '<<LoadData>>', lambda event: self.update_all()),
-                 (-1, '<Escape>', lambda event: self.update()))
+        (-1, '<Escape>', lambda event: self.update()))
 
     def update_all(self):
         lexer = get_lexer_for_filename(self.area.filename, '')
@@ -26,18 +29,25 @@ class Spider(object):
 
     def update(self):
         lexer = get_lexer_for_filename(self.area.filename, '')
-        TAG_KEYS_PRECEDENCE = PRECEDENCE_TABLE.get(tuple(lexer.aliases), DEFAULT)
+        TAG_KEYS_PRECEDENCE = PRECEDENCE_TABLE.get(
+        tuple(lexer.aliases), DEFAULT)
+
         index0 = self.area.index('@0,0')
         index0 = self.area.index('%s -%sl' % (index0, self.max))
-        index0 = self.area.tag_next_occur(TAG_KEYS_PRECEDENCE, index0, 'insert', '1.0')
-        index1 = '@%s,%s' % (self.area.winfo_height(), self.area.winfo_width())
+        index0 = self.area.tag_next_occur(TAG_KEYS_PRECEDENCE, 
+        index0, 'insert', '1.0')
+
+        index1 = '@%s,%s' % (self.area.winfo_height(), 
+        self.area.winfo_width())
+
         index2 = self.area.index(index1)
         index2 = self.area.index('%s +%sl' % (index1, self.max))
-        index2 = self.area.tag_prev_occur(TAG_KEYS_PRECEDENCE, index2, 'insert', 'end')
+
+        index2 = self.area.tag_prev_occur(TAG_KEYS_PRECEDENCE, 
+        index2, 'insert', 'end')
 
         for ind in self.styles.iterkeys():
             self.area.tag_remove(str(ind), index0, index2)
-
         self.tag_tokens(lexer, index0, index2)
 
     def tag_tokens(self, lexer, index, stopindex):
@@ -46,30 +56,42 @@ class Spider(object):
         self.area.get(index, stopindex), lexer)
 
         for ((srow, scol), (erow, ecol)), token, value in tokens:
-            self.area.tag_add(str(token), '%s.%s' % (srow, scol), 
-                         '%s.%s' % (erow, ecol))
+            self.area.tag_add(str(token), '%s.%s' % (srow, 
+                 scol), '%s.%s' % (erow, ecol))
 
-    def get_token_style(self, token):
-        for ind in reversed(token.split()):
-            try: style = self.styles[ind]
-            except KeyError: 
-                 pass
-            return self.parse_style(style)
-    
-    def parse_style(self, style):
+    def split(self, style):
+        """
+        Split the style into bg/fg values. Further compatibility 
+        will be implemented.
+        """
+
         sre = search('bg\:(?P<bg>.+) ?', style)
-        bg  = sre.groupdict().get('bg', self.background) if sre else self.background
-
+        bg  = sre.group('bg') if sre else self.background
         sre = search('(?P<fg>#.+) ?', style)
-        fg  = sre.groupdict().get('fg', self.default_style) if sre else self.default_style
+        fg  = sre.group('fg') if sre else self.default_style
         return bg, fg
 
     def set_token_style(self, token):
+        """
+        """
+
         tag     = str(token)
         style   = self.get_token_style(token)
         bg, fg  = style if style else (self.background, self.default_style)
         self.area.tag_configure(tag, 
         foreground=fg, background=bg)
 
+    def get_token_style(self, token):
+        """
+        Note: Styles dict is populated with all possible tokens. 
+        It has to be written like this(without try/except block).
+        """
+
+        for ind in reversed(token.split()):
+            style = self.styles.get(ind); 
+            if  style: 
+                return self.split(style)
+
 install = Spider
+
 

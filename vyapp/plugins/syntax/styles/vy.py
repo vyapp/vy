@@ -8,8 +8,7 @@ class VyStyle(Style):
     """
 
     background_color = "#000000"
-    highlight_color = "#222222"
-    default_style = "#F7A0A0"
+    default_style    = "#957C8B"
 
     styles = {
         Token:                     "#cccccc",
@@ -33,14 +32,14 @@ class VyStyle(Style):
         Operator.Word:             "#269900",
 
         Punctuation:               "#269900",
-        Name:                      "",
-        Name.Attribute:            "",
+        Name:                      "#957C8B",
+        Name.Attribute:            "#957C8B",
         Name.Builtin:              "#999999",
         Name.Class:                "#00cdcd",
         # Name.Constant:             "",
         Name.Decorator:            "#cd00cd",
         # Name.Entity:               "",
-        Name.Function:             "#998F8F",
+        Name.Function:             "#C20F75",
         # Name.Label:                "",
         # Name.Namespace:            "",
         # Name.Other:                "",
@@ -49,6 +48,8 @@ class VyStyle(Style):
         Name.Variable:             "#00cdcd",
 
         String:                    "#805E00",
+        # String.Single:             "#805E00",
+
         String.Backtick:           "#FF470A",
         String.Char:               "#FF470A",
         String.Doc:                "#f0d400",
@@ -70,6 +71,9 @@ class VyStyle(Style):
 
         Error:                     "#FF0000"
     }
+
+
+
 
 
 
