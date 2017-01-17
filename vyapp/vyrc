@@ -445,17 +445,3 @@ def setup(area):
 
 autocall(setup) 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-

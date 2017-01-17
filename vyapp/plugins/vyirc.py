@@ -62,7 +62,8 @@ H10 = '>>> Connection is down ! <<<\n'
 
 class IrcMode(object):
     def __init__(self, addr, port, user, nick, irccmd, channels=[]):
-        con = Spin()
+        con      = Spin()
+        self.con = con
         con.connect_ex((addr, int(port)))
         Client(con)
 
@@ -203,6 +204,8 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
+
+
 
 
 
