@@ -490,8 +490,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         It adds or removes block selection one line down.  
         """
 
-        a, b   = self.indref('(CURSOR_LAST_COL)')
-        c, d   = self.indcur()
+        a, b  = self.indref('(CURSOR_LAST_COL)')
+        c, d  = self.indcur()
 
         index = self.index('(BLOCK_SEL_MARK)')
         self.rmblock(index, '%s.%s' % (c, b))
@@ -1556,6 +1556,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

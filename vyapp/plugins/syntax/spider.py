@@ -16,16 +16,19 @@ class Spider(object):
         self.background    = theme.background_color
         area.configure(background = self.background)
         area.configure(foreground = self.default_style)
-        print self.default_style
+
         for ind in self.styles.iterkeys():
             self.set_token_style(ind)
 
-        area.install((-1, '<<LoadData>>', lambda event: self.update_all()),
+        area.install((-1, '<<LoadData>>', 
+        lambda event: self.update_all()),
         (-1, '<Escape>', lambda event: self.update()))
 
     def update_all(self):
         """
+        Colorize all text in the widget.
         """
+
         lexer = None
         try:
             lexer = get_lexer_for_filename(self.area.filename, '')
@@ -35,7 +38,10 @@ class Spider(object):
 
     def update(self):
         """
+        Update a small range of the text. It is mostly called 
+        when Escape is pressed.
         """
+
         lexer = None
         try:
             lexer = get_lexer_for_filename(self.area.filename, '')
@@ -66,6 +72,7 @@ class Spider(object):
 
     def tag_tokens(self, lexer, index, stopindex):
         """
+        Add the token'tag to each range of text.
         """
 
         count, offset = self.area.indref(index)
@@ -120,8 +127,5 @@ class Spider(object):
                 return self.split(style)
 
 install = Spider
-
-
-
 
 
