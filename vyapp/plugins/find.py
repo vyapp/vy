@@ -2,8 +2,8 @@
 Overview
 ========
 
-This module implements functionalities to find/replace patterns of text in an AreaVi instance
-that has focus.
+This module implements functionalities to find/replace patterns of text in 
+an AreaVi instance that has focus.
 
 Key-Commands
 ============
@@ -12,7 +12,7 @@ Mode: NORMAL
 Event: <Alt-slash>
 Description: Set a search pattern.
 
-Mode: NORMAL
+Mode: Get
 Event: <Alt-bracketright>
 Description: Set a replacement pattern.
 
@@ -30,17 +30,18 @@ Description: Pick the next pattern from the cursor position.
 
 Mode: Get
 Event: <Alt-period>
-Description: Replace the next matched pattern for the previously set replacement.
+Description: Replace the next matched pattern for the previously 
+set replacement.
 
 Mode: Get
 Event: <Alt-slash>
-Description: Highligh all matched patterns inside a selected region of text.
+Description: Highligh all matched patterns inside a selected 
+region of text.
 
 Mode: Get
 Event: <Alt-semicolon>
-Description: Replace all matched patterns inside a selected region of text for the
-previously set replacement.
-
+Description: Replace all matched patterns inside a selected region 
+of text for the previously set replacement.
 """
 
 from vyapp.ask import Get, Ask
@@ -58,18 +59,18 @@ class Find(object):
 
         area.tag_config('(CATCHED)', **setup)
 
-        area.install(
-        ('NORMAL', '<Alt-slash>', lambda event: self.start()), 
-        ('NORMAL', '<Alt-bracketright>', lambda event: self.set_data()))
-
+        area.install(('NORMAL', '<Alt-slash>', lambda event: self.start()))
         self.opts = {'nolinestop': nolinestop, 'regexp': regexp,
         'nocase': nocase, 'exact': exact,'elide': elide}
 
     def start(self):
         self.index = ('insert', 'insert')
+        root.status.set_msg('Set replacement: %s' % self.data)
+
         get = Get(self.area, events={
-        '<Alt-o>': self.up, '<Escape>': lambda wid: self.cancel(), 
-        '<Alt-p>': self.down, '<Return>': self.set_regex,
+        '<Alt-bracketright>': self.set_data,
+        '<Alt-o>': self.up, '<Escape>': self.cancel, 
+        '<Alt-p>': self.down, '<Return>': self.cancel,
         '<Alt-slash>':  self.pick_selection_matches,
         '<Alt-period>': self.replace_on_cur,
         '<Alt-semicolon>': self.replace_on_selection, 
@@ -96,17 +97,13 @@ class Find(object):
         self.opts['nolinestop'] = False if self.opts['nolinestop'] else True
         root.status.set_msg('nolinestop=%s' % self.opts['nolinestop'])
 
-    def set_data(self):
-        ask = Ask(self.area, default_data = self.data.encode('string_escape'))
-        self.data = ask.data.decode('string_escape')
+    def set_data(self, wid):
+        self.data = wid.get().decode('string_escape')
+        wid.delete(0, 'end')
+        root.status.set_msg('Set replacement: %s' % self.data)
 
-    def set_regex(self, wid):
+    def cancel(self, wid):
         self.regex = wid.get()
-        self.area.tag_remove('(CATCHED)', '1.0', 'end')
-        return True
-
-    def cancel(self):
-        self.regex = ''
         self.area.tag_remove('(CATCHED)', '1.0', 'end')
         return True
 
@@ -138,6 +135,7 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 
