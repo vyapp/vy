@@ -122,7 +122,7 @@ class Process(object):
         area.insert_line_down()
 
     def ask_data_and_dump(self, area):
-        ask  = Ask(area)
+        ask  = Ask()
         data = ask.data.encode('utf-8')
         self.stdin.dump('%s\n' %  data)
 
@@ -131,6 +131,7 @@ class Process(object):
     
 process = Process()
 install = process
+
 
 
 

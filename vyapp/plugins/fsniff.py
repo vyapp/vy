@@ -10,10 +10,10 @@ class Fsniff(object):
         self.area = area
         self.path = ''
         area.install((-1, '<Alt-minus>', lambda event: 
-        Get(area, events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
+        Get(events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
         '<Return>': self.view_on_current, '<Escape>': lambda wid: True})),
         (-1, '<Alt-equal>', lambda event: 
-        Get(area, events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
+        Get(events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
         '<Return>': self.view_on_new_tab, '<Escape>': lambda wid: True})))
 
     def run_cmd(self, data):
@@ -48,6 +48,7 @@ class Fsniff(object):
         root.status.set_msg('Locating...')
 
 install = Fsniff
+
 
 
 

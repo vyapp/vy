@@ -26,7 +26,7 @@ class QuickSearch(object):
         self.stopindex = 'end'
         self.backwards = False
 
-        Get(self.area, events = {
+        Get(events = {
         '<Alt-p>':self.search_down, 
         '<Alt-o>': self.search_up, 
         '<<Data>>': self.update, 
@@ -40,7 +40,7 @@ class QuickSearch(object):
         self.backwards = True
         self.stopindex = '1.0'
 
-        Get(self.area, events = {
+        Get(events = {
         '<Alt-p>':self.search_down, 
         '<Alt-o>': self.search_up, 
         '<<Data>>': self.update, 
@@ -80,4 +80,5 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 

@@ -18,7 +18,6 @@ Description: Send the cursor line to the process and insert a line down.
 
 from untwisted.expect import Expect, LOAD, CLOSE
 from untwisted.network import xmap
-from vyapp.ask import Ask
 from vyapp.exe import exec_quiet
 from Tkinter import TclError
 from vyapp.plugins import ENV
@@ -94,6 +93,7 @@ class Shell(object):
 ENV['Shell']  = Shell
 ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
+
 
 
 

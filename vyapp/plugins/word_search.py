@@ -30,7 +30,7 @@ class WordSearch(object):
         self.area = area
         area.tag_configure('(ISEARCH_MATCH)', **setup)
         area.install(('NORMAL', '<Key-0>', lambda event: 
-        Get(area, events={
+        Get(events={
         '<Return>' : self.start, 
         '<Alt-p>'  : lambda wid: self.go_down(), 
         '<Alt-o>'  : lambda wid: self.go_up(), 
@@ -116,6 +116,7 @@ class WordSearch(object):
         self.index = self.index + 1
 
 install = WordSearch
+
 
 
 

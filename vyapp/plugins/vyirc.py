@@ -78,7 +78,7 @@ class IrcMode(object):
         self.channels  = channels
 
     def send_cmd(self, area, con):
-        ask = Ask(area)
+        ask = Ask()
         send_cmd(con, ask.data)
 
     def on_connect(self, con):
@@ -120,7 +120,7 @@ class IrcMode(object):
         return area
 
     def start_user_chat(self, area, con):
-        ask = Ask(area)
+        ask = Ask()
         self.create_user_chat(con, ask.data)
 
     def create_user_chat(self, con, nick):
@@ -160,7 +160,7 @@ class IrcMode(object):
     def set_common_chan_commands(self, area, con, chan):
         e1 = lambda event: self.send_msg(event.widget, chan, con)
 
-        area.hook('IRC', '<Key-i>', lambda event: Get(area, 
+        area.hook('IRC', '<Key-i>', lambda event: Get(
         events={'<Escape>': lambda wid: True, 
                 '<Return>': lambda wid: self.send_msg(area, wid, chan, con)}))
 
@@ -204,14 +204,5 @@ class IrcMode(object):
 
     def on_connect_err(self, con, err):
         print 'not connected'
-
-
-
-
-
-
-
-
-
 
 

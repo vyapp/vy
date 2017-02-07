@@ -29,7 +29,7 @@ from vyapp.app import root
 import sys
 
 def exec_cmd(area, env):
-    ask    = Ask(area)
+    ask    = Ask()
     area.active()
     exc(ask.data, env)
     return 'break'
@@ -56,6 +56,8 @@ install = lambda area: area.install(
 (-1, '<Alt-colon>', lambda event: exec_all_data(event.widget, ENV)),
 ('NORMAL', '<Key-semicolon>', lambda event: exec_region(event.widget, ENV)),
 (-1, '<Control-Alt-semicolon>', lambda event: set_target(event.widget)))
+
+
 
 
 

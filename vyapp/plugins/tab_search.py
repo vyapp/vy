@@ -11,7 +11,7 @@ class TabSearch(object):
 
 
     def start_search(self):
-        get = Get(self.area, events={'<<Data>>': self.update_search, '<Alt-p>': lambda wid: self.next_tab(), 
+        get = Get(events={'<<Data>>': self.update_search, '<Alt-p>': lambda wid: self.next_tab(), 
                     '<Control-j>': lambda wid: self.next_tab(), '<Alt-o>': lambda wid: self.prev_tab(), 
                         '<Control-k>': lambda wid: self.prev_tab(), '<Escape>': lambda wid: self.stop_search(), 
                             '<Return>': lambda wid: self.stop_search()})
@@ -47,6 +47,7 @@ class TabSearch(object):
 
     
 install = TabSearch
+
 
 
 

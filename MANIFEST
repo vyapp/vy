@@ -12,6 +12,7 @@ vyapp/__init__.py
 vyapp/app.py
 vyapp/areavi.py
 vyapp/ask.py
+vyapp/completion.py
 vyapp/core.py
 vyapp/exe.py
 vyapp/lazy.py
@@ -68,11 +69,11 @@ vyapp/plugins/outputs.py
 vyapp/plugins/page_scroll.py
 vyapp/plugins/plugin_tools.py
 vyapp/plugins/python_completion.py
-vyapp/plugins/quick_completion.py
 vyapp/plugins/quick_jumps.py
 vyapp/plugins/quick_search.py
 vyapp/plugins/quick_sel.py
 vyapp/plugins/range_sel.py
+vyapp/plugins/ruby_completion.py
 vyapp/plugins/seek_symbol.py
 vyapp/plugins/shell.py
 vyapp/plugins/shift.py

@@ -58,7 +58,6 @@ class App(Tk):
 
         self.note = NoteVi(master=self, takefocus=0)
         self.note.grid(row=0, sticky='wens')
-        self.read_data = Frame(master=self)
 
         self.status = StatusBar(master=self)
         self.status.grid(row=2, sticky='we')
@@ -69,6 +68,7 @@ class App(Tk):
 # So, some exceptions that are natural and occur along
 # the application will not show up on text areas.
 sys.stdout = Transmitter(sys.__stdout__)
+
 
 
 
