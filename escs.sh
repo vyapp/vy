@@ -142,3 +142,4 @@ vy ~/.tern-config
 grep -rl  'CompletionWindow' . | xargs sed -i 's/CompletionWindow/CompletionWindow/g' 
 
 
+

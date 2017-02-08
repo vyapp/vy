@@ -67,7 +67,7 @@ class Find(object):
         self.index = ('insert', 'insert')
         root.status.set_msg('Set replacement: %s' % self.data)
 
-        get = Get(self.area, events={
+        get = Get(events={
         '<Alt-bracketright>': self.set_data,
         '<Alt-o>': self.up, '<Escape>': self.cancel, 
         '<Alt-p>': self.down, '<Return>': self.cancel,
@@ -135,6 +135,7 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 
