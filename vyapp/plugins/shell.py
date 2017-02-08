@@ -93,6 +93,8 @@ class Shell(object):
 ENV['Shell']  = Shell
 ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
+ENV['vbash']  = lambda : Shell('bash -i',AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
+ENV['hbash'] = lambda : Shell('bash -i', AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
 
 
 
