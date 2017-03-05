@@ -14,8 +14,8 @@ class HtmlChecker(object):
 
         self.area = area
         self.path = path
-        area.install((-1, '<<LoadData>>', self.check),
-        (-1, '<<SaveData>>', self.check))
+        area.install((-1, '<<Load-text/html>>', self.check),
+        (-1, '<<Save-text/html>>', self.check))
 
     def check(self, event):
         self.area.delete_ranges('(HTML_CHECKER_COMMENT)')
