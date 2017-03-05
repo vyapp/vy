@@ -1367,14 +1367,16 @@ class AreaVi(Text, DataEvent, IdleEvent):
         It saves the actual text content in the current file.
         """
 
+        type, _ = mimetypes.guess_type(self.filename)
+        self.event_generate('<<Pre-SaveData>>')
+        self.event_generate('<<Pre-Save-%s>>' % type)
+
         data = self.get('1.0', 'end')
         data = data.encode(self.charset)
         fd   = open(self.filename, 'w')
         fd.write(data)
         fd.close()
         self.event_generate('<<SaveData>>')
-
-        type, _ = mimetypes.guess_type(self.filename)
         self.event_generate('<<Save-%s>>' % type)
 
     def save_data_as(self, filename):
@@ -1483,12 +1485,20 @@ class AreaVi(Text, DataEvent, IdleEvent):
             yield(data)
 
     def tag_prev_occur(self, tag_names, index0, index1, default):
+        """
+        Should be renamed.
+        """
+
         for ind in tag_names:
             pos = self.tag_prevrange(ind, index0, index1)
             if pos: return pos[1]
         return default
     
     def tag_next_occur(self, tag_names, index0, index1, default):
+        """
+        Should be renamed.
+        """
+
         for ind in tag_names:
             pos = self.tag_nextrange(ind, index0, index1)
             if pos: return pos[0]
@@ -1556,7 +1566,5 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
-
-
 
 

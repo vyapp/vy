@@ -1,42 +1,49 @@
-from subprocess import Popen, STDOUT, PIPE, CalledProcessError
+"""
+Overview
+========
+
+Highlight html lines where errors/warnings were encountered by Html Tidy.
+
+Plugin dependencies: 
+
+vyapp.plugins.text_spots
+
+Extern dependencies:
+Html Tidy
+
+"""
+
+from subprocess import Popen, STDOUT, PIPE
+from vyapp.areavi import AreaVi
+from vyapp.plugins import ENV
 from vyapp.app import root
 from re import findall
+import sys
 
 class HtmlChecker(object):
-    def  __init__(self, area, path='tidy', 
-        setup={'foreground': '#D6917A'}):
-
+    def  __init__(self, area, path='tidy'):
+        self.area = area
         # The path that tidy stays, in some
         # systems it may not be available in the
         # PATH variable.
-        area.tag_config('(HTML_CHECKER_ERRORS)', **setup)
-        area.tag_config('(HTML_CHECKER_COMMENT)', background='blue')
-
-        self.area = area
         self.path = path
-        area.install((-1, '<<Load-text/html>>', self.check),
-        (-1, '<<Save-text/html>>', self.check))
+        area.install((-1, '<<Save-text/html>>', self.check))
 
     def check(self, event):
-        self.area.delete_ranges('(HTML_CHECKER_COMMENT)')
-        cmd  = [self.path, '-e', 
-        '-quiet', self.area.filename]
-
-        child = Popen(cmd, stdout=PIPE, stderr=STDOUT)
-        output, error = child.communicate()
-        
-        regex = 'line ([0-9]+) column ([0-9]+) - (.+)'
+        child  = Popen([self.path, '-e', '-quiet', 
+        self.area.filename], stdout=PIPE, stderr=STDOUT)
+        output = child.communicate()[0]
+        regex  = 'line ([0-9]+) column ([0-9]+) - (.+)'
         ranges = findall(regex, output)
-        print ranges
 
         for line, col, error in ranges:
-            self.area.tag_add('(HTML_CHECKER_ERRORS)', 
-             '%s.0' % line, '%s.0 lineend' % line)
-        
+            self.area.tag_add('(SPOT)', '%s.0' % line, 
+                '%s.0 lineend' % line)
+
         if child.returncode:
             root.status.set_msg('Errors were found!')
         else:
             root.status.set_msg('Errors were found!')
+        sys.stdout.write('Errors:\n%s\n' % output)
 
 install = HtmlChecker
-
