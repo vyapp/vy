@@ -52,14 +52,15 @@ class HtmlChecker(object):
         regex  = 'line ([0-9]+) column ([0-9]+) - (.+)'
         ranges = findall(regex, output)
 
-        for line, col, error in ranges:
-            self.area.tag_add('(SPOT)', '%s.0' % line, 
-                '%s.0 lineend' % line)
-
         if child.returncode:
             root.status.set_msg('Errors were found!')
         else:
             root.status.set_msg('Errors were found!')
         sys.stdout.write('Errors:\n%s\n' % output)
 
+        for line, col, error in ranges:
+            self.area.tag_add('(SPOT)', '%s.0' % line, 
+            '%s.0 lineend' % line)
+
 install = HtmlChecker
+
