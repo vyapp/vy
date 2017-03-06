@@ -60,7 +60,105 @@ H8 = '>>> %s has kicked %s from %s (%s) <<<\n'
 H9 = '>>> %s sets mode %s %s on %s <<<\n'
 H10 = '>>> Connection is down ! <<<\n'
 
+class ChannelController(object):
+    """
+    """
+    def __init__(self, irc, area, chan):
+        self.irc   = irc
+        self.area  = area
+        self.chan  = chan
+        self.peers = []
+
+        events = (('PRIVMSG->%s' % chan , self.e_privmsg), 
+        ('332->%s' % chan, self.e_332), 
+        ('PART->%s' % chan, self.e_part), 
+        ('JOIN->%s' % chan, self.e_join), 
+        ('*NICK', self.e_nick),
+        ('353->%s' % chan, self.e_353), 
+        ('KICK->%s' % chan, self.e_kick), 
+        ('MODE->%s' % chan, self.e_mode),
+        (CLOSE, self.e_close))
+
+        def unset(con, *args):
+            for key, value in events:
+                zmap(irc.con, key, value)
+
+        for key, value in events:
+            xmap(irc.con, key, value)
+
+        once(irc.con, '*PART->%s' % chan, unset)
+        xmap(irc.con, '*KICK->%s' % chan, unset)
+
+        area.bind('<Destroy>', lambda event: 
+        unset(irc.con), add=True)
+
+        # When area is destroyed, it sends a PART.
+        area.bind('<Destroy>', lambda event: 
+        send_cmd(irc.con, 'PART %s' % chan), add=True)
+
+        area.hook('IRC', '<Key-i>', lambda event: Get(
+        events={'<Escape>': lambda wid: True, 
+        '<Return>': self.msg_channel}))
+
+        # It unbinds the above callback.
+        # In case the part command as sent by text
+        # by the user. After part it should destroy the
+        # area.
+        once(irc.con, '*PART->%s' % chan, lambda con, *args: 
+        area.unbind('<Destroy>'))
+
+    def e_privmsg(self, con, nick, user, host, msg):
+        self.area.append(H1 % (nick, msg))
+
+    def e_join(self, con, nick, user, host):
+        self.area.append(H4 % (nick, self.chan))
+
+    def e_mode(self, con, nick, user, host, mode, target=''):
+        self.area.append(H9 % (nick, self.chan, mode, target))
+
+    def e_part(self, con, nick, user, host, msg):
+        self.area.append(H3 % (nick, self.chan, msg))
+
+    def e_kick(self, con, nick, user, host, target, msg):
+        self.area.append(H8 % (nick, target, self.chan, msg))
+
+    def e_nick(self, con, nicka, user, host, nickb):
+        self.area.append(H5 % (nicka, nickb))
+
+    def e_close(self, con, *args):
+        self.area.append(H7)
+
+    def e_332(self, con, addr, nick, msg):
+        self.area.append(H2 % msg)
+
+    def e_353(self, con, prefix, nick, mode, peers):
+        self.area.append(H6 % peers)
+
+    def msg_channel(self, wid):
+        data = wid.get()
+        self.area.append(H1 % (self.irc.misc.nick, data))
+        send_msg(self.con, self.chan, data.encode('utf-8'))
+        wid.delete(0, 'end')
+
+class UserController(object):
+    """
+    """
+    def __init__(self, irc, area):
+        self.irc = irc
+        area.hook('IRC', '<Key-i>', lambda event: Get(
+        events={'<Escape>': lambda wid: True, 
+        '<Return>': self.msg_user}))
+
+    def msg_user(self, wid):
+        data = wid.get()
+        self.area.append(H1 % (self.irc.misc.nick, data))
+        send_msg(self.con, self.chan, data.encode('utf-8'))
+        wid.delete(0, 'end')
+
 class IrcMode(object):
+    """
+    """
+
     def __init__(self, addr, port, user, nick, irccmd, channels=[]):
         con      = Spin()
         self.con = con
@@ -83,7 +181,9 @@ class IrcMode(object):
 
     def on_connect(self, con):
         area = root.note.create(self.addr)    
-        area.bind('<Destroy>', lambda event: send_cmd(con, 'QUIT :vy rules!'), add=True)
+
+        area.bind('<Destroy>', lambda event: 
+        send_cmd(con, 'QUIT :vy rules!'), add=True)
 
         Stdin(con)
         Stdout(con)
@@ -93,7 +193,10 @@ class IrcMode(object):
         xmap(con, CLOSE, lambda con, err: lose(con))
         self.set_common_irc_handles(area, con)
         self.set_common_irc_commands(area, con)
-        xmap(con, '376', lambda con, *args: send_cmd(con, self.irccmd))
+
+        xmap(con, '376', lambda con, *args: 
+        send_cmd(con, self.irccmd))
+
         xmap(con, '376', self.auto_join)
 
         send_cmd(con, 'NICK %s' % self.nick)
@@ -102,21 +205,17 @@ class IrcMode(object):
     def create_channel(self, area, con, chan):
         area_chan = self.create_area(chan)
         self.set_common_irc_commands(area_chan, con)
-        self.set_common_chan_commands(area_chan, con, chan)
-        self.set_common_chan_handles(area_chan, con, chan)
-
-        # area_chan.bind('<Destroy>', lambda event: send_cmd(con, 'PART %s' % chan), add=True)
-        # on_close = lambda con, err: area_chan.unbind('<Destroy>')
-        # xmap(con, CLOSE, on_close)
-        # area_chan.bind('<Destroy>', lambda event: zmap(con, CLOSE, on_close), add=True)
-        # xmap(con, '*PART->%s' % chan, lambda con, *args: exec_quiet(area_chan.unbind, '<Destroy>'))
-        # xmap(con, '*PART->%s' % chan, lambda con, *args: zmap(con, CLOSE, on_close))
-
-        area_chan.bind('<Destroy>', lambda event: send_cmd(con, 'PART %s' % chan), add=True)
-        once(con, '*PART->%s' % chan, lambda con, *args: area_chan.unbind('<Destroy>'))
+        ChannelController(con, area_chan, chan)
 
     def create_area(self, name):
         area = root.note.create(name)
+        area.add_mode('IRC')
+        area.chmode('IRC')
+        area.install(('GAMMA', '<Key-i>', lambda event: area.chmode('IRC')),
+        (-1, '<<Chmode-IRC>>', lambda event: area..mark_set('insert', 'end')),
+        ('IRC', '<Control-e>', lambda event: self.send_cmd(area, con)),
+        ('IRC', '<Control-c>', lambda event: self.start_user_chat(area, con)))
+
         return area
 
     def start_user_chat(self, area, con):
@@ -125,8 +224,6 @@ class IrcMode(object):
 
     def create_user_chat(self, con, nick):
         area_user = self.create_area(nick)
-        self.set_common_irc_commands(area_user, con)
-        self.set_common_chan_commands(area_user, con, nick)
         return area_user
 
     def deliver_user_msg(self, con, nick, user, host, target, msg):
@@ -137,14 +234,6 @@ class IrcMode(object):
             area_user = self.create_user_chat(con, nick)
         finally:
             area_user.append(H1 % (nick, msg))
-
-    def set_common_irc_commands(self, area, con):
-        area.add_mode('IRC')
-        area.chmode('IRC')
-        area.install(('GAMMA', '<Key-i>', lambda event: event.widget.chmode('IRC')),
-                     (-1, '<<Chmode-IRC>>', lambda event: event.widget.mark_set('insert', 'end')),
-                     ('IRC', '<Control-e>', lambda event: self.send_cmd(event.widget, con)),
-                     ('IRC', '<Control-c>', lambda event: self.start_user_chat(event.widget, con)))
 
     def set_common_irc_handles(self, area, con):
         l1 = lambda con, chan: self.create_channel(area, con, chan)
@@ -157,52 +246,13 @@ class IrcMode(object):
         xmap(con, Terminator.FOUND, l3)
         xmap(con, 'PMSG', self.deliver_user_msg)
 
-    def set_common_chan_commands(self, area, con, chan):
-        e1 = lambda event: self.send_msg(event.widget, chan, con)
-
-        area.hook('IRC', '<Key-i>', lambda event: Get(
-        events={'<Escape>': lambda wid: True, 
-                '<Return>': lambda wid: self.send_msg(area, wid, chan, con)}))
-
-    def set_common_chan_handles(self, area, con, chan):
-        l1 = lambda con, nick, user, host, msg: area.append(H1 % (nick, msg))
-        l2 = lambda con, addr, nick, msg: area.append(H2 % msg)
-        l3 = lambda con, nick, user, host, msg: area.append(H3 % (nick, chan, msg))
-
-        l4 = lambda con, nick, user, host: area.append(H4 % (nick, chan))
-        l5 = lambda con, nicka, user, host, nickb: area.append(H5 % (nicka, nickb))
-        l6 = lambda con, prefix, nick, mode, peers: area.append(H6 % peers)
-        l7 = lambda con, *args: area.append(H7)
-        l8 = lambda con, nick, user, host, target, msg: area.append(H8 % (nick, target, chan, msg))
-        l9 = lambda con, nick, user, host, mode, target='': area.append(H9 % (nick, chan, mode, target))
-
-        events = (('PRIVMSG->%s' % chan , l1), ('332->%s' % chan, l2),
-                  ('PART->%s' % chan, l3), ('JOIN->%s' % chan, l4), 
-                  ('*NICK', l5), ('353->%s' % chan, l6), (CLOSE, l7), 
-                  ('KICK->%s' % chan, l8), ('MODE->%s' % chan, l9))
-
-        for key, value in events:
-            xmap(con, key, value)
-
-        def unset(con, *args):
-            for key, value in events:
-                zmap(con, key, value)
-
-        once(con, '*PART->%s' % chan, unset)
-        xmap(con, '*KICK->%s' % chan, unset)
-        area.bind('<Destroy>', lambda event: unset(con), add=True)
-
     def auto_join(self, con, *args):
         for ind in self.channels:
             send_cmd(con, 'JOIN %s' % ind)
 
-    def send_msg(self, area, wid, chan, con):
-        data = wid.get()
-        area.append(H1 % (self.misc.nick, data))
-        send_msg(con, chan, data.encode('utf-8'))
-        wid.delete(0, 'end')
-
     def on_connect_err(self, con, err):
         print 'not connected'
+
+
 
 
