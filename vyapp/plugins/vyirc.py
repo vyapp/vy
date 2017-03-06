@@ -222,17 +222,6 @@ class IrcMode(object):
         Create private messages channels.
         """
 
-        # Attempt to retrieve the areavi which corresponds
-        # to the target/user.
-        base    = lambda (key, value): (key.lower(), value)
-        files   = AreaVi.get_opened_files(root).iteritems()
-        targets = dict(map(base, files))
-
-        try:
-            return targets[nick.lower()]
-        except KeyError:
-            pass
-
         # In case there is no areavi for the user then creates
         # a private channel.
         area = self.create_area(nick)
@@ -246,9 +235,18 @@ class IrcMode(object):
         """
         Private messages sent to the user are handled here.
         """
+        # Attempt to retrieve the areavi which corresponds
+        # to the target/user.
+        base    = lambda (key, value): (key.lower(), value)
+        files   = AreaVi.get_opened_files(root).iteritems()
+        targets = dict(map(base, files))
 
-        area = self.create_pm(nick)
-        area.append(H1 % (nick, msg))
+        try:
+            area = targets[nick.lower()]
+        except KeyError:
+            area = self.create_private_channel(nick)
+        else:
+            area.append(H1 % (nick, msg))
 
     def auto_join(self, con, *args):
         for ind in self.channels:
