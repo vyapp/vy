@@ -1368,8 +1368,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         type, _ = mimetypes.guess_type(self.filename)
-        self.event_generate('<<Pre-SaveData>>')
-        self.event_generate('<<Pre-Save-%s>>' % type)
+        # self.event_generate('<<Pre-SaveData>>')
+        # self.event_generate('<<Pre-Save-%s>>' % type)
 
         data = self.get('1.0', 'end')
         data = data.encode(self.charset)
@@ -1566,5 +1566,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
