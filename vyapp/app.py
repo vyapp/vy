@@ -6,7 +6,6 @@ This module exposes the vyapp.app.root attribute that is a variable pointing
 to the App class instance. The App class instance holds all vy editor's widgets.
 """
 
-from vyapp.stdout import Transmitter
 from Tkinter import *
 from vyapp.core import NoteVi
 from vyapp.statusbar import *
@@ -64,10 +63,7 @@ class App(Tk):
         Grid.rowconfigure(self, 0, weight=1)
         Grid.columnconfigure(self, 0, weight=1)
 
-# Just stdout is set. stderr remains original.
-# So, some exceptions that are natural and occur along
-# the application will not show up on text areas.
-sys.stdout = Transmitter(sys.__stdout__)
+
 
 
 
