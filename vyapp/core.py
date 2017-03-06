@@ -73,6 +73,7 @@ class PanedVerticalWindow(PanedWindow):
         """
         This method adds a new horizontal window and loads
         the content of the files passed as args in the new AreaVi
+
         widgets.
         """
 
@@ -142,10 +143,5 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
-
-
-
-
-
 
 

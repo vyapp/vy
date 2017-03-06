@@ -1,72 +1,44 @@
 """
-This module implements the App class widget widget which is one of the most important vy
-editor's widgets.
-
 This module exposes the vyapp.app.root attribute that is a variable pointing
 to the App class instance. The App class instance holds all vy editor's widgets.
 """
 
-from Tkinter import *
-from vyapp.core import NoteVi
-from vyapp.statusbar import *
-from vyapp.plugins import ENV
+from base import App, Debug
 import sys
-from os.path import expanduser, join, exists, dirname
-from os import mkdir
-from shutil import copyfile
 
-# It points to the root toplevel window of vy. It is the one whose AreaVi instances
-# are placed on. 
-root = None
+if __name__ != '__main__':
+    from optparse import OptionParser
 
-class App(Tk):
-    """
-    This class implements the most basic vy editor widget. It holds a NoteVi
-    widget instance and a StatusBar widget instance. Plugins that demand
-    accessing the NoteVi instance could use:
+    parser = OptionParser()
+    parser.add_option("-l", "--lst", dest="lst",
+    help='''This option takes a string of the form:
+    "[[['file0', 'file1']], [['file2', 'file3']], ...]"
+    It displays files in different tabs and paned windows.''', 
+    metavar="string", default=[])
 
-    from vyapp.app import root
-    area = root.note.create('filename')
+    parser.add_option("-v", "--debug", action="store_true", 
+    default=False, dest="debug")
+    (opt, args) = parser.parse_args()
 
-    Plugins that demand accessing the StatusBar instance could use.
+    # It points to the root toplevel window of vy. 
+    # It is the one whose AreaVi instances
+    # are placed on. 
+    root = App()
+    lst  = eval(str(opt.lst))
+    lst  = lst + map(lambda ind: [[ind]], args)
+    
+    # It has to be called from here.
+    # otherwise the plugins will not
+    # be able to import vyapp.app.root
+    # variable.
+    root.create_vyrc()
 
-    from vyapp.app import root
-    root.status.set_msg('Message!')
-    """
+    if not lst: root.note.create('None')
+    else: root.note.load(*lst)
 
-    def __init__(self, *args, **kwargs):
-        """
-        App class constructor. The arguments are passed to Tk class widget.
-        """
-
-        Tk.__init__(self, *args, **kwargs)
-        self.title('Vy')
-
-        global root
-        root     = self
-        self.dir = join(expanduser('~'), '.vy')
-        self.rc  = join(self.dir, 'vyrc')
-        
-        if not exists(self.dir):
-            mkdir(self.dir)
-        
-        if not exists(self.rc):
-            copyfile(join(dirname(__file__), 'vyrc'), self.rc)
-        
-        execfile(self.rc, ENV)
-
-        self.note = NoteVi(master=self, takefocus=0)
-        self.note.grid(row=0, sticky='wens')
-
-        self.status = StatusBar(master=self)
-        self.status.grid(row=2, sticky='we')
-        Grid.rowconfigure(self, 0, weight=1)
-        Grid.columnconfigure(self, 0, weight=1)
-
-
-
-
-
-
+    # It first waits vyrc file to be loaded in order to set sys.stderr.
+    # Otherwise errors when loading the vyrc file will be missed as well as when
+    # attempting to load a non existing file.
+    if not opt.debug: sys.stderr = Debug()
 
 
