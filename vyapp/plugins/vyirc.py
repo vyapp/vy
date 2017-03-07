@@ -59,6 +59,7 @@ H7 = '>>> Connection is down ! <<<\n'
 H8 = '>>> %s has kicked %s from %s (%s) <<<\n'
 H9 = '>>> %s sets mode %s %s on %s <<<\n'
 H10 = '>>> Connection is down ! <<<\n'
+H11 = '>>> %s [%s@%s] has quit :%s <<<\n' 
 
 class ChannelController(object):
     """
@@ -68,13 +69,14 @@ class ChannelController(object):
         self.irc   = irc
         self.area  = area
         self.chan  = chan
-        self.peers = []
+        self.peers = set()
 
         events = (('PRIVMSG->%s' % chan , self.e_privmsg), 
         ('332->%s' % chan, self.e_332), 
         ('PART->%s' % chan, self.e_part), 
         ('JOIN->%s' % chan, self.e_join), 
         ('*NICK', self.e_nick),
+        ('QUIT', self.e_quit),
         ('353->%s' % chan, self.e_353), 
         ('KICK->%s' % chan, self.e_kick), 
         ('MODE->%s' % chan, self.e_mode),
@@ -114,12 +116,14 @@ class ChannelController(object):
         self.area.append(H1 % (nick, msg))
 
     def e_join(self, con, nick, user, host):
+        self.peers.add(nick.lower())
         self.area.append(H4 % (nick, self.chan))
 
     def e_mode(self, con, nick, user, host, mode, target=''):
         self.area.append(H9 % (nick, self.chan, mode, target))
 
     def e_part(self, con, nick, user, host, msg):
+        self.peers.remove(nick.lower())
         self.area.append(H3 % (nick, self.chan, msg))
 
     def e_kick(self, con, nick, user, host, target, msg):
@@ -135,7 +139,13 @@ class ChannelController(object):
         self.area.append(H2 % msg)
 
     def e_353(self, con, prefix, nick, mode, peers):
+        self.peers.update(peers.lower().split(' '))
         self.area.append(H6 % peers)
+
+    def e_quit(self, con, nick, user, host, msg=''):
+        if nick.lower() in self.peers: 
+            self.area.append(H11 % (nick, 
+                user, host, msg))
 
 class IrcMode(object):
     """
@@ -264,5 +274,6 @@ class IrcMode(object):
         area.append(H1 % (self.misc.nick, data))
         send_msg(self.con, target, data.encode('utf-8'))
         wid.delete(0, 'end')
+
 
 
