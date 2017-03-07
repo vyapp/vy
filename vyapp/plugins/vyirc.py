@@ -61,16 +61,6 @@ H9 = '>>> %s sets mode %s %s on %s <<<\n'
 H10 = '>>> Connection is down ! <<<\n'
 H11 = '>>> %s [%s@%s] has quit :%s <<<\n' 
 
-SETUP = {'(VYIRC-PRIVMSG)': {'foreground': '#9EB596'},
-'(VYIRC-JOIN)': {'foreground': '#F06EF0'},
-'(VYIRC-PART)': {'foreground': '#F0BDAD'},
-'(VYIRC-QUIT)': {'foreground': '#4EDB1F'},
-'(VYIRC-NICK)': {'foreground': '#E9F0AD'},
-'(VYIRC-KICK)': {'foreground': '#FC8D9A'},
-'(VYIRC-353)': {'foreground': '#BF9163'},
-'(VYIRC-332)': {'foreground': '#81BFFC'},
-'(VYIRC-CLOSE)': {'foreground': '#A7F2E9'}}
-
 class ChannelController(object):
     """
     Controls channel events and installs basic commands.
@@ -179,7 +169,18 @@ class IrcMode(object):
     Controls basic irc events and installs basic commands.
     """
 
-    def __init__(self, addr, port, user, nick, irccmd, channels=[], setup=SETUP):
+    COLOR_SCHEME = {
+    '(VYIRC-PRIVMSG)': {'foreground': '#688B96'},
+    '(VYIRC-JOIN)': {'foreground': '#F06EF0'},
+    '(VYIRC-PART)': {'foreground': '#F0BDAD'},
+    '(VYIRC-QUIT)': {'foreground': '#4EDB1F'},
+    '(VYIRC-NICK)': {'foreground': '#E9F0AD'},
+    '(VYIRC-KICK)': {'foreground': '#FC8D9A'},
+    '(VYIRC-353)': {'foreground': '#BF9163'},
+    '(VYIRC-332)': {'foreground': '#81BFFC'},
+    '(VYIRC-CLOSE)': {'foreground': '#A7F2E9'}}
+    
+    def __init__(self, addr, port, user, nick, irccmd, channels=[]):
         con      = Spin()
         self.con = con
         con.connect_ex((addr, int(port)))
@@ -194,7 +195,6 @@ class IrcMode(object):
         self.nick     = nick
         self.irccmd   = irccmd
         self.channels = channels
-        self.setup    = setup
 
     def send_cmd(self, event):
         """
@@ -250,7 +250,7 @@ class IrcMode(object):
         ('IRC', '<Control-e>', self.send_cmd),
         ('IRC', '<Control-c>',  self.open_private_channel))
 
-        for indi, indj in self.setup.iteritems():
+        for indi, indj in self.COLOR_SCHEME.iteritems():
             area.tag_config(indi, **indj)
         return area
 
@@ -307,6 +307,7 @@ class IrcMode(object):
         area.tag_add('(VYIRC-PRIVMSG)', 
         'insert -1l linestart', 'insert -1l lineend')
         wid.delete(0, 'end')
+
 
 
 
