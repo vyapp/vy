@@ -126,28 +126,29 @@ class OutputController(object):
     
     def add_output(self, event):
         try:
-            sys.stdout.remove(event.widget)
+            sys.stdout.remove(self.area)
         except ValueError:
             pass
     
-        sys.stdout.append(Stdout(event.widget))
+        sys.stdout.append(Stdout(self.area))
         root.status.set_msg('Output set on: %s' % \
-        area.index('insert'))
+        self.area.index('insert'))
         return 'break'
     
     def rm_output(self, event):
         try:
-            sys.stdout.remove(event.widget)
+            sys.stdout.remove(self.area)
         except Exception:
             root.status.set_msg('Output removed!')
         else:
             root.status.set_msg('Output removed!')
         return 'break'
     
-    def restore_output(event):
+    def restore_output(self, event):
         sys.stdout.restore()
         root.status.set_msg('Stdout restored!')
         return 'break'
     
 install = OutputController
+
 

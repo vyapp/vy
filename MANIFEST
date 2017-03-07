@@ -12,13 +12,13 @@ vyapp/__init__.py
 vyapp/app.py
 vyapp/areavi.py
 vyapp/ask.py
+vyapp/base.py
 vyapp/completion.py
 vyapp/core.py
 vyapp/exe.py
 vyapp/lazy.py
 vyapp/regutils.py
 vyapp/statusbar.py
-vyapp/stdout.py
 vyapp/tools.py
 vyapp/vyrc
 vyapp/widgets.py
@@ -47,6 +47,7 @@ vyapp/plugins/find.py
 vyapp/plugins/fsniff.py
 vyapp/plugins/gamma_mode.py
 vyapp/plugins/hlink.py
+vyapp/plugins/html_checker.py
 vyapp/plugins/ibash.py
 vyapp/plugins/inline_comment.py
 vyapp/plugins/insert_mode.py
@@ -59,6 +60,7 @@ vyapp/plugins/line_index.py
 vyapp/plugins/line_jumps.py
 vyapp/plugins/line_scroll.py
 vyapp/plugins/line_sel.py
+vyapp/plugins/line_strips.py
 vyapp/plugins/log_opened_file.py
 vyapp/plugins/main_jumps.py
 vyapp/plugins/match_sym_pair.py
