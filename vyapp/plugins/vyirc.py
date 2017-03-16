@@ -75,7 +75,8 @@ class ChannelController(object):
         ('332->%s' % chan, self.e_332), 
         ('PART->%s' % chan, self.e_part), 
         ('JOIN->%s' % chan, self.e_join), 
-        ('*NICK', self.e_nick),
+        # ('*NICK', self.e_nick),
+        ('NICK', self.e_nick),
         ('QUIT', self.e_quit),
         ('353->%s' % chan, self.e_353), 
         ('KICK->%s' % chan, self.e_kick), 
@@ -140,7 +141,11 @@ class ChannelController(object):
         'insert -1l linestart', 'insert -1l lineend')
 
     def e_nick(self, con, nicka, user, host, nickb):
+        try: self.peers.remove(nicka.lower())
+        except ValueError: return
+
         self.area.append(H5 % (nicka, nickb))
+        self.peers.add(nickb.lower())
 
     def e_close(self, con, *args):
         self.area.append(H7)
@@ -286,8 +291,7 @@ class IrcMode(object):
             area = targets[nick.lower()]
         except KeyError:
             area = self.create_private_channel(nick)
-        else:
-            area.append(H1 % (nick, msg))
+        area.append(H1 % (nick, msg))
 
     def auto_join(self, con, *args):
         for ind in self.channels:
@@ -307,6 +311,7 @@ class IrcMode(object):
         area.tag_add('(VYIRC-PRIVMSG)', 
         'insert -1l linestart', 'insert -1l lineend')
         wid.delete(0, 'end')
+
 
 
 
