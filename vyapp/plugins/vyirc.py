@@ -114,60 +114,45 @@ class ChannelController(object):
         area.unbind('<Destroy>'))
 
     def e_privmsg(self, con, nick, user, host, msg):
-        self.area.append(H1 % (nick, msg))
-        self.area.tag_add('(VYIRC-PRIVMSG)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H1 % (nick, msg), '(VYIRC-PRIVMSG)')
 
     def e_join(self, con, nick, user, host):
         self.peers.add(nick.lower())
-        self.area.append(H4 % (nick, self.chan))
-        self.area.tag_add('(VYIRC-JOIN)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H4 % (nick, self.chan), '(VYIRC-JOIN)')
 
     def e_mode(self, con, nick, user, host, mode, target=''):
-        self.area.append(H9 % (nick, self.chan, mode, target))
-        self.area.tag_add('(VYIRC-MODE)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H9 % (nick, self.chan, 
+        mode, target), '(VYIRC-MODE)')
 
     def e_part(self, con, nick, user, host, msg):
         self.peers.remove(nick.lower())
-        self.area.append(H3 % (nick, self.chan, msg))
-        self.area.tag_add('(VYIRC-PART)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H3 % (nick, self.chan, msg), '(VYIRC-PART)')
 
     def e_kick(self, con, nick, user, host, target, msg):
-        self.area.append(H8 % (nick, target, self.chan, msg))
-        self.area.tag_add('(VYIRC-KICK)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H8 % (nick, target, 
+        self.chan, msg), '(VYIRC-KICK)')
 
     def e_nick(self, con, nicka, user, host, nickb):
         try: self.peers.remove(nicka.lower())
         except ValueError: return
 
-        self.area.append(H5 % (nicka, nickb))
+        self.area.append(H5 % (nicka, nickb), '(VYIRC-NICK)')
         self.peers.add(nickb.lower())
 
     def e_close(self, con, *args):
-        self.area.append(H7)
-        self.area.tag_add('(VYIRC-CLOSE)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H7, '(VYIRC-CLOSE)')
 
     def e_332(self, con, addr, nick, msg):
-        self.area.append(H2 % msg)
-        self.area.tag_add('(VYIRC-332)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H2 % msg, '(VYIRC-332)')
 
     def e_353(self, con, prefix, nick, mode, peers):
         self.peers.update(peers.lower().split(' '))
-        self.area.append(H6 % peers)
-        self.area.tag_add('(VYIRC-353)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H6 % peers, '(VYIRC-353)')
 
     def e_quit(self, con, nick, user, host, msg=''):
         if not nick.lower() in self.peers: return
-        self.area.append(H11 % (nick, user, host, msg))
-        self.area.tag_add('(VYIRC-QUIT)', 
-        'insert -1l linestart', 'insert -1l lineend')
+        self.area.append(H11 % (nick, user, 
+        host, msg), '(VYIRC-QUIT)')
 
 class IrcMode(object):
     """
@@ -311,6 +296,7 @@ class IrcMode(object):
         area.tag_add('(VYIRC-PRIVMSG)', 
         'insert -1l linestart', 'insert -1l lineend')
         wid.delete(0, 'end')
+
 
 
 

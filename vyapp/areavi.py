@@ -182,14 +182,23 @@ class AreaVi(Text, DataEvent, IdleEvent):
         for id, seq, callback in args:
             self.unhook(id, seq, callback)
 
-    def append(self, data):
+    def append(self, data, *args):
         """
         This method is used to insert data to the end of the AreaVi instance widget
         and place the cursor at the end of the data that was appended. It makes the cursor
         visible.
         """
 
+        # This is sort of odd, it seems that
+        # i have to add -1l for it to work.
+        # It shouldn't be necessary.
+        index0 = self.index('end -1l')
         self.insert('end', data)
+
+        for ind in args:
+            self.tag_add(ind, index0, 
+                '%s +%sc' % (index0, len(data)))
+
         # self.mark_set('insert', 'end')
         self.see('insert')
 
@@ -1566,6 +1575,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
