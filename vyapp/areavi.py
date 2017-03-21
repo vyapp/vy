@@ -890,7 +890,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return index1, index2
 
     def get_seq(self, index='insert'):
+
         return self.get(*self.get_seq_range(index))
+
+    def get_line(self, index='insert'):
+        return self.get('%s linestart' % index, 
+        '%s lineend' % index)
 
     def scroll_line_up(self):
         """
@@ -1575,6 +1580,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

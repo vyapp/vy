@@ -64,6 +64,7 @@ vyapp/plugins/line_strips.py
 vyapp/plugins/log_opened_file.py
 vyapp/plugins/main_jumps.py
 vyapp/plugins/match_sym_pair.py
+vyapp/plugins/mc.py
 vyapp/plugins/mode_shortcut.py
 vyapp/plugins/mode_status.py
 vyapp/plugins/normal_mode.py

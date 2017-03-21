@@ -32,12 +32,12 @@ class Mc(object):
         root.status.set_msg('Cleared mc clipboard!')
 
     def select(self):
-        filename = self.area.get_seq()
-        Mc.clipboard.append(filename)
+        filename = self.area.get_line()
+        Mc.clipboard.append('"%s"' % filename)
         root.status.set_msg('Appended %s!' % filename)
 
     def down(self):
-        self.ph = self.area.get_seq()
+        self.ph = self.area.get_line()
         self.ls()
 
     def up(self):
@@ -45,39 +45,46 @@ class Mc(object):
         self.ls()
 
     def ls(self):
-        data = check_output('find %s -maxdepth 1' % self.ph, shell=1)
+        data = check_output('find "%s" -maxdepth 1' % 
+        self.ph, shell=1)
+
         self.area.delete('1.0', 'end')
         self.area.insert('1.0', data)
 
     def cp(self):
-        destin = self.area.get_seq()
-        code = call('cp %s %s' % (' '.join(Mc.clipboard), destin), shell=1)
+        destin = self.area.get_line()
+        code = call('cp -R %s "%s"' % (' '.join(Mc.clipboard), 
+        destin), shell=1)
+
         root.status.set_msg('Files copied!')
         del Mc.clipboard[:]
         self.ls()
 
     def mv(self):
-        destin = self.area.get_seq()
-        code = call('mv %s %s' % (' '.join(Mc.clipboard), destin), shell=1)
+        destin = self.area.get_line()
+        code = call('mv %s "%s"' % (' '.join(Mc.clipboard), 
+        destin), shell=1)
+
         root.status.set_msg('Files moved!')
         del Mc.clipboard[:]
         self.ls()
 
     def rm(self):
-        code = call('rm %s' % ' '.join(Mc.clipboard), shell=1)
+        code = call('rm -fr %s' % ' '.join(Mc.clipboard), shell=1)
         del Mc.clipboard[:]
         root.status.set_msg('Deleted files!')
         self.ls()
 
     def load(self):
-        filename = self.area.get_seq()
+        filename = self.area.get_line()
         root.note.load([[filename]])
 
     def open(self):
-        filename = self.area.get_seq()
+        filename = self.area.get_line()
         Popen(['xdg-open', filename])
 
 install = Mc
+
 
 
 
