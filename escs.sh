@@ -142,4 +142,8 @@ vy ~/.tern-config
 grep -rl  'CompletionWindow' . | xargs sed -i 's/CompletionWindow/CompletionWindow/g' 
 
 
+ls -dla -1 $PWD/*
+ls -d --all  /home/tau/*
+ls -d --all  /home/tau/*.*
+
 

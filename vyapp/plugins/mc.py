@@ -23,7 +23,6 @@ class Mc(object):
 
     def up(self):
         self.ph = dirname(self.ph)
-        print 'fuck', self.ph
         self.ls()
 
     def ls(self):
@@ -48,5 +47,6 @@ class Mc(object):
         root.note.load([[self.area.get_seq()]])
 
 install = Mc
+
 
 
