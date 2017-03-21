@@ -1,4 +1,4 @@
-from subprocess import check_output, call
+from subprocess import check_output, call, Popen
 from os.path import expanduser, dirname, join
 from vyapp.app import root
 
@@ -17,8 +17,9 @@ class Mc(object):
         ('NORMAL', '<Key-K>', lambda e: self.select()),
         ('NORMAL', '<Control-g>', lambda e: self.clear_clipboard()),
         ('NORMAL', '<Key-G>', lambda e: self.list_clipboard()),
+        ('NORMAL', '<Key-I>', lambda e: self.load()),
+        ('NORMAL', '<Key-U>', lambda e: self.open()),
 
-        ('NORMAL', '<Key-I>', self.open),
         ('NORMAL', '<Key-J>', lambda e:self.ls()))
 
     def list_clipboard(self):
@@ -68,10 +69,16 @@ class Mc(object):
         root.status.set_msg('Deleted files!')
         self.ls()
 
-    def open(self, event):
-        root.note.load([[self.area.get_seq()]])
+    def load(self):
+        filename = self.area.get_seq()
+        root.note.load([[filename]])
+
+    def open(self):
+        filename = self.area.get_seq()
+        Popen(['xdg-open', filename])
 
 install = Mc
+
 
 
 
