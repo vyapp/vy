@@ -81,7 +81,9 @@ class Mc(object):
 
     def open(self):
         filename = self.area.get_line()
-        Popen(['xdg-open', filename])
+        # No need for "" because it is passing the entire filename
+        # as parameter.
+        Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
 
