@@ -32,16 +32,16 @@ class Mc(object):
         self.area.delete('1.0', 'end')
         self.area.insert('1.0', data)
 
-    def cp(self, event):
+    def cp(self):
         pass
 
-    def cut(self, event):
+    def cut(self):
         pass
 
-    def rm(self, event):
+    def rm(self):
         pass
 
-    def paste(self, event):
+    def paste(self):
         pass
 
     def open(self, event):
