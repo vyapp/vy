@@ -3,6 +3,9 @@ from os.path import expanduser, dirname, join
 from vyapp.app import root
 
 class Mc(object):
+    COLOR_SCHEME = {'(MC-DIRECTORY)': {'foreground': 'red'},
+    '(MC-FILE)': {'foreground': 'blue'}}
+
     clipboard = []
 
     def __init__(self, area):
@@ -21,6 +24,9 @@ class Mc(object):
         ('NORMAL', '<Key-U>', lambda e: self.open()),
 
         ('NORMAL', '<Key-J>', lambda e:self.ls()))
+
+        for indi, indj in self.COLOR_SCHEME.iteritems():
+            area.tag_config(indi, **indj)
 
     def list_clipboard(self):
         self.area.delete('1.0', 'end')
@@ -45,11 +51,15 @@ class Mc(object):
         self.ls()
 
     def ls(self):
-        data = check_output('find "%s" -maxdepth 1' % 
-        self.ph, shell=1)
-
         self.area.delete('1.0', 'end')
-        self.area.insert('1.0', data)
+
+        data = check_output('find "%s" -maxdepth 1 -type d' % 
+        self.ph, shell=1)
+        self.area.append(data, '(MC-DIRECTORY)')
+
+        data = check_output('find "%s" -maxdepth 1 -type f' % 
+        self.ph, shell=1)
+        self.area.append(data, '(MC-FILE)')
 
     def cp(self):
         destin = self.area.get_line()
@@ -86,6 +96,7 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
 
