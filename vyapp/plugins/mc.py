@@ -22,6 +22,7 @@ class Mc(object):
         ('NORMAL', '<Key-G>', lambda e: self.list_clipboard()),
         ('NORMAL', '<Key-I>', lambda e: self.load()),
         ('NORMAL', '<Key-U>', lambda e: self.open()),
+        ('NORMAL', '<Key-F>', lambda e: self.info()),
 
         ('NORMAL', '<Key-J>', lambda e:self.ls()))
 
@@ -49,6 +50,13 @@ class Mc(object):
     def up(self):
         self.ph = dirname(self.ph)
         self.ls()
+
+    def info(self):
+        filename = self.area.get_line()
+
+        data = check_output('stat "%s"' % filename, shell=1)
+        self.area.delete('1.0', 'end')
+        self.area.append(data, '(MC-FILE)')
 
     def ls(self):
         self.area.delete('1.0', 'end')
@@ -96,6 +104,7 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
 
