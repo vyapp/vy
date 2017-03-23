@@ -293,9 +293,8 @@ class IrcMode(object):
         data = wid.get()
         area.append(H1 % (self.misc.nick, data))
         send_msg(self.con, target, data.encode('utf-8'))
-        area.tag_add('(VYIRC-PRIVMSG)', 
-        'insert -1l linestart', 'insert -1l lineend')
         wid.delete(0, 'end')
+
 
 
 
