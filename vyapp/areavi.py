@@ -196,8 +196,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.insert('end', data)
 
         for ind in args:
-            self.tag_add(ind, index0, 
-                '%s +%sc' % (index0, len(data)))
+            self.tag_add(ind, index0, 'end -1c')
 
         # self.mark_set('insert', 'end')
         self.see('insert')
@@ -1580,6 +1579,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
