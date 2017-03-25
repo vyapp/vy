@@ -25,10 +25,11 @@ Description: Delete a char from the cursor position.
 """
 
 def install(area):
-    area.install(('NORMAL', '<Key-d>', lambda event: event.widget.del_sel()),
+    area.install('data-del', ('NORMAL', '<Key-d>', lambda event: event.widget.del_sel()),
                  ('NORMAL', '<Key-x>', lambda event: event.widget.del_line()),
                  ('NORMAL', '<Key-z>', lambda event: event.widget.del_char()))
         
+
 
 
 

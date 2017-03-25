@@ -19,7 +19,6 @@ from subprocess import Popen
 import json
 import requests
 import sys
-import atexit
 from os.path import expanduser, join, exists, dirname
 from os import getcwd
 from shutil import copyfile
@@ -79,15 +78,18 @@ class RubyCompletion(object):
     def __init__(self, area, path='rsense', port=47367):
         self.path = path
         self.port = port
-        trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
+        trigger = lambda event: area.hook('ruby-completion', 'INSERT', '<Control-Key-period>', 
                   lambda event: RubyCompletionWindow(event.widget, self.path, self.port), add=False)
 
         remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
-        area.install((-1, '<<Load-application/x-ruby>>', trigger),
+        area.install('ruby-completion', (-1, '<<Load-application/x-ruby>>', trigger),
                      (-1, '<<Save-application/x-ruby>>', trigger), 
                      (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 install = RubyCompletion
+
+
+
 
 
 

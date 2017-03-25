@@ -18,7 +18,8 @@ Description: Remove selection from text.
 
 def install(area):
     clear = lambda event: event.widget.clear_selection()
-    area.install(('NORMAL', '<Escape>', clear), 
+    area.install('clear-sel', ('NORMAL', '<Escape>', clear), 
                  ('NORMAL', '<Key-i>', clear))
+
 
 

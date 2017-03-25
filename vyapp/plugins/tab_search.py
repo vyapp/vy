@@ -7,7 +7,7 @@ from vyapp.app import root
 class TabSearch(object):
     def __init__(self, area):
         self.area = area
-        area.install((-1, '<Alt-i>', lambda event: self.start_search()))
+        area.install('tab-search', (-1, '<Alt-i>', lambda event: self.start_search()))
 
 
     def start_search(self):
@@ -47,6 +47,7 @@ class TabSearch(object):
 
     
 install = TabSearch
+
 
 
 

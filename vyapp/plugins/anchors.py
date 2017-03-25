@@ -6,7 +6,7 @@ class Anchors(object):
     def __init__(self, area):
         area.add_mode('ANCHORS')
         self.area  = area
-        area.install(('NORMAL', '<Alt-b>', lambda event: area.chmode('ANCHORS')),
+        area.install('anchors', ('NORMAL', '<Alt-b>', lambda event: area.chmode('ANCHORS')),
                      ('ANCHORS', '<Control-Key>', self.drop),
                      ('ANCHORS', '<Key>', self.jump))
 
@@ -19,6 +19,7 @@ class Anchors(object):
         self.area.chmode('NORMAL')
 
 install = Anchors
+
 
 
 

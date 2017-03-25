@@ -12,7 +12,7 @@ class Mc(object):
         self.area = area
         self.ph   = expanduser('~')
 
-        area.install(('NORMAL', '<Key-H>', lambda e: self.up()),
+        area.install('mc', ('NORMAL', '<Key-H>', lambda e: self.up()),
         ('NORMAL', '<Key-L>', lambda e: self.down()),
         ('NORMAL', '<Key-Y>', lambda e: self.cp()),
         ('NORMAL', '<Key-T>', lambda e: self.mv()),
@@ -104,6 +104,7 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
 

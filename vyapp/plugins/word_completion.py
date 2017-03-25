@@ -39,8 +39,9 @@ class WordCompletionWindow(CompletionWindow):
         completions, *args, **kwargs)
 
 def install(area):
-    area.install(('INSERT', '<Control-q>', 
+    area.install('word-completion', ('INSERT', '<Control-q>', 
     lambda event: WordCompletionWindow(event.widget)))
+
 
 
 

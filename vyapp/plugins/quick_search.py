@@ -17,7 +17,7 @@ class QuickSearch(object):
         self.nocase = nocase
         area.tag_configure('(SEARCH_MATCH)', **setup)
 
-        area.install(
+        area.install('quick-search',
         ('NORMAL', '<Key-q>', self.start_backwards),
         ('NORMAL', '<Key-a>', self.start_forwards))
 
@@ -80,5 +80,6 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 
 

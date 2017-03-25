@@ -19,7 +19,8 @@ the cursor.
 """
 
 def install(area):
-    area.install(('NORMAL', '<Control-bracketleft>', lambda event: event.widget.select_seq()),
+    area.install('data-sel', ('NORMAL', '<Control-bracketleft>', lambda event: event.widget.select_seq()),
                  ('NORMAL', '<Key-bracketleft>', lambda event: event.widget.select_word()))
+
 
 

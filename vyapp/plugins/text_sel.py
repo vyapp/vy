@@ -25,9 +25,10 @@ Description: Add selection from the beginning to the end of the file.
 
 
 def install(area):
-    area.install(('NORMAL', '<Control-Key-1>', lambda event: event.widget.sel_text_start()),
+    area.install('text-sel', ('NORMAL', '<Control-Key-1>', lambda event: event.widget.sel_text_start()),
                  ('NORMAL', '<Control-Key-2>', lambda event: event.widget.sel_text_end()),
                  ('NORMAL', '<Control-a>', lambda event: event.widget.select_all()))
+
 
 
 

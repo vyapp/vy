@@ -24,8 +24,8 @@ class Tab(object):
             ph, ext                  = splitext(area.filename.lower())
             self.TAB_SIZE, self.CHAR = tab_scheme.get(ext, (default_tab_size, default_char))
 
-        area.hook(-1, '<FocusIn>', set_tab_scheme)
-        area.hook('INSERT', '<Tab>', lambda event: self.insert_tab(event.widget))
+        area.install('spacing', (-1, '<FocusIn>', set_tab_scheme),
+        ('INSERT', '<Tab>', lambda event: self.insert_tab(event.widget)))
     
     def insert_tab(self, area):
         area.edit_separator()
@@ -35,6 +35,7 @@ class Tab(object):
     
 
 install = Tab
+
 
 
 

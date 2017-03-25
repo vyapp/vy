@@ -57,7 +57,7 @@ import sys
 
 class Process(object):
     def __call__(self, area):
-        area.install(('NORMAL', '<Control-Return>', lambda event: self.dump_region(event.widget)),
+        area.install('ibash', ('NORMAL', '<Control-Return>', lambda event: self.dump_region(event.widget)),
                    ('NORMAL', '<Return>', lambda event: self.dump_line(event.widget)), 
                    ('INSERT', '<F1>', lambda event: self.dump_line_and_insert_line(event.widget)),
                    ('INSERT', '<Shift-F1>', lambda event: self.dump_line_and_tab(event.widget)),
@@ -131,6 +131,7 @@ class Process(object):
     
 process = Process()
 install = process
+
 
 
 

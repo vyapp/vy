@@ -54,9 +54,10 @@ def rm_inline_comment(area):
     area.chmode('NORMAL')
 
 def install(area):
-    area.install(
+    area.install('inline-comment',
     ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
     ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 

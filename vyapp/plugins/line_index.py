@@ -28,7 +28,9 @@ def go_to_pos(area):
     except TclError:
         pass
 
-install = lambda area: area.install(('NORMAL', '<Control-q>', lambda event: go_to_pos(event.widget)))
+install = lambda area: area.install('line-index', 
+('NORMAL', '<Control-q>', lambda event: go_to_pos(event.widget)))
+
 
 
 

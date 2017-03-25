@@ -28,8 +28,9 @@ def insert_up(area):
         area.chmode('INSERT')
 
 def install(area):
-    area.install(('NORMAL', '<Key-m>', lambda event: insert_down(event.widget)),
+    area.install('line-feed', ('NORMAL', '<Key-m>', lambda event: insert_down(event.widget)),
                  ('NORMAL', '<Key-n>', lambda event: insert_up(event.widget)))
+
 
 
 

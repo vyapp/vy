@@ -31,10 +31,11 @@ Description: Move the cursor one character right.
 
 
 def install(area):
-    area.install(('NORMAL', '<Key-j>', lambda event: event.widget.down()),
+    area.install('main-jumps', ('NORMAL', '<Key-j>', lambda event: event.widget.down()),
                  ('NORMAL', '<Key-k>', lambda event: event.widget.up()),
                  ('NORMAL', '<Key-h>', lambda event: event.widget.left()),
                  ('NORMAL', '<Key-l>', lambda event: event.widget.right()))
+
 
 
 

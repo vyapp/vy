@@ -5,7 +5,7 @@ class CursorStatus(object):
         self.area    = area
         self.timeout = timeout
         self.funcid  = None
-        area.install((-1, '<FocusIn>', lambda event: self.update()),
+        area.install('cursor-status', (-1, '<FocusIn>', lambda event: self.update()),
         (-1, '<FocusOut>', lambda event: self.area.after_cancel(self.funcid)))
 
     def update(self):
@@ -20,3 +20,4 @@ class CursorStatus(object):
         self.funcid = self.area.after(self.timeout, self.update)
 
 install = CursorStatus
+

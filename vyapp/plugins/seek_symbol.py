@@ -53,7 +53,7 @@ class SeekSymbol(object):
         area.add_mode('JUMP_BACK')
         area.add_mode('JUMP_NEXT')
 
-        area.install(
+        area.install('seek-symbol', 
         ('NORMAL', '<Key-v>', lambda event: self.start_next_mode()), 
         ('NORMAL', '<Key-c>', lambda event: self.start_back_mode()),
         ('JUMP_BACK', '<Tab>', lambda event: self.select_data()),
@@ -90,6 +90,7 @@ class SeekSymbol(object):
         self.area.chmode('NORMAL')
 
 install = SeekSymbol
+
 
 
 

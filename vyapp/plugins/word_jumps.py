@@ -19,8 +19,9 @@ Description: Place the cursor at the beginning of the previous word.
 """
 
 def install(area):
-    area.install(('NORMAL', '<Key-bracketright>', lambda event: event.widget.go_next_word()),
+    area.install('word-jumps', ('NORMAL', '<Key-bracketright>', lambda event: event.widget.go_next_word()),
                  ('NORMAL', '<Key-braceright>', lambda event: event.widget.go_prev_word()))
+
 
 
 

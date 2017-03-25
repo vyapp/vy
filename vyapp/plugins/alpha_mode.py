@@ -17,7 +17,8 @@ def alpha(area):
 
 def install(area):
     area.add_mode('ALPHA')
-    area.install(('NORMAL', '<Key-3>', lambda event: alpha(event.widget)))
+    area.install('alpha-mode', ('NORMAL', '<Key-3>', lambda event: alpha(event.widget)))
+
 
 
 

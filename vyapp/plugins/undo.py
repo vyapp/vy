@@ -18,8 +18,9 @@ Description: Do redo.
 
 
 def install(area):
-    area.install(('NORMAL', '<Key-comma>', lambda event: event.widget.do_undo()),
+    area.install('undo', ('NORMAL', '<Key-comma>', lambda event: event.widget.do_undo()),
                  ('NORMAL', '<Key-period>', lambda event: event.widget.do_redo()))
+
 
 
 

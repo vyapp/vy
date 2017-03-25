@@ -44,7 +44,7 @@ class HtmlChecker(object):
         # PATH variable.
         self.path = path
 
-        area.install((-1, '<<Load-text/html>>', lambda event: 
+        area.install('html-checker', (-1, '<<Load-text/html>>', lambda event: 
         self.area.hook('BETA', '<Key-h>', self.check)),
         (-1, '<<LoadData>>', lambda event: 
         self.area.unhook('BETA', '<Key-h>')),
@@ -72,5 +72,6 @@ class HtmlChecker(object):
         self.area.chmode('NORMAL')
 
 install = HtmlChecker
+
 
 

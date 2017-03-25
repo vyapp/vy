@@ -45,12 +45,12 @@ class Shell(object):
 
         # When one of the AreaVi instances are destroyed then
         # the process is killed.
-        self.output.hook(-1, '<Destroy>', lambda event: 
+        self.output.hook('shell', -1, '<Destroy>', lambda event: 
         self.terminate_process())
-        self.area.hook(-1, '<Destroy>', lambda event: 
+        self.area.hook('shell', -1, '<Destroy>', lambda event: 
         self.terminate_process())
 
-        self.output.hook('NORMAL', '<Control-F2>', lambda event: 
+        self.output.hook('shell', 'NORMAL', '<Control-F2>', lambda event: 
         self.map_process_input())
 
         self.map_process_input()
@@ -63,10 +63,10 @@ class Shell(object):
         xmap(self.expect, CLOSE, self.handle_close)
 
     def map_process_input(self):
-        self.area.hook('NORMAL', '<F2>', lambda event: 
+        self.area.hook('shell', 'NORMAL', '<F2>', lambda event: 
         self.dump_line_and_down(), add=False)
 
-        self.area.hook('INSERT', '<F2>', lambda event: 
+        self.area.hook('shell', 'INSERT', '<F2>', lambda event: 
         self.dump_line_and_insert_line(), add=False)
         root.status.set_msg('%s -> %s' % (self.area.filename, self.output.filename))
 
@@ -95,6 +95,7 @@ ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.mas
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['vbash']  = lambda : Shell('bash -i',AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['hbash'] = lambda : Shell('bash -i', AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
+
 
 
 

@@ -46,13 +46,14 @@ Description: Cut selection and add to the clipboard with a separator \n.
 """
 
 def install(area):
-    area.install(('NORMAL', '<Key-y>', lambda event: event.widget.cpsel()),
+    area.install('clipboard', ('NORMAL', '<Key-y>', lambda event: event.widget.cpsel()),
                  ('NORMAL', '<Key-u>', lambda event: event.widget.ctsel()),
                  ('NORMAL', '<Key-t>', lambda event: event.widget.ptsel()),
                  ('NORMAL', '<Key-r>', lambda event: event.widget.ptsel_after()),
                  ('NORMAL', '<Key-e>', lambda event: event.widget.ptsel_before()),
                  ('NORMAL', '<Control-Y>', lambda event: event.widget.cpsel('\n')),
                  ('NORMAL', '<Control-U>', lambda event: event.widget.ctsel('\n')))
+
 
 
 

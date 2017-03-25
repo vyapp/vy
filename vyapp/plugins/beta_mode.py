@@ -18,7 +18,8 @@ def beta(area):
 
 def install(area):
     area.add_mode('BETA')
-    area.install(('NORMAL', '<Key-4>', lambda event: beta(event.widget)))
+    area.install('beta-mode', ('NORMAL', '<Key-4>', lambda event: beta(event.widget)))
+
 
 
 

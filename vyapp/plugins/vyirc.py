@@ -101,7 +101,7 @@ class ChannelController(object):
         send_cmd(irc.con, 'PART %s' % chan), add=True)
     
         # Hook to send msgs.
-        area.hook('IRC', '<Key-i>', lambda event: Get(
+        area.hook('vyirc', 'IRC', '<Key-i>', lambda event: Get(
         events={'<Escape>': lambda wid: True, 
         '<Return>': lambda wid: 
         self.irc.drop_msg(area, wid, chan)}))
@@ -235,7 +235,7 @@ class IrcMode(object):
         area = root.note.create(name)
         area.add_mode('IRC')
         area.chmode('IRC')
-        area.install(('GAMMA', '<Key-i>', lambda event: area.chmode('IRC')),
+        area.install('vyirc', ('GAMMA', '<Key-i>', lambda event: area.chmode('IRC')),
         (-1, '<<Chmode-IRC>>', lambda event: area.mark_set('insert', 'end')),
         ('IRC', '<Control-e>', self.send_cmd),
         ('IRC', '<Control-c>',  self.open_private_channel))
@@ -256,7 +256,7 @@ class IrcMode(object):
         # In case there is no areavi for the user then creates
         # a private channel.
         area = self.create_area(nick)
-        area.hook('IRC', '<Key-i>', lambda event: Get(
+        area.hook('vyirc', 'IRC', '<Key-i>', lambda event: Get(
         events={'<Escape>': lambda wid: True, 
         '<Return>': lambda wid: 
         self.drop_msg(area, wid, nick)}))
@@ -294,6 +294,7 @@ class IrcMode(object):
         area.append(H1 % (self.misc.nick, data))
         send_msg(self.con, target, data.encode('utf-8'))
         wid.delete(0, 'end')
+
 
 
 

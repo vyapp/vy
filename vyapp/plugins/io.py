@@ -108,12 +108,13 @@ def save(area):
 
 
 def install(area):
-    area.install(('NORMAL', '<Control-s>', lambda event: save(event.widget)),
+    area.install('io', ('NORMAL', '<Control-s>', lambda event: save(event.widget)),
                  ('NORMAL', '<Shift-S>', lambda event: save_as(event.widget)),
                  ('NORMAL', '<Control-d>', lambda event: load(event.widget)),
                  ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
                  ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
                  ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
+
 
 
 

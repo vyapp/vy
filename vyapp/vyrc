@@ -6,20 +6,26 @@ from os.path import expanduser, join
 sys.path.append(join(expanduser('~'), '.vy'))
 ##############################################################################
 # Functions used to load the plugins.
-from vyapp.plugins import autoload, autocall
+from vyapp.plugins import autoload, autocall, mapset
 
 ##############################################################################
-# Remap your keystrokes here.
-# Note: Remapping keystrokes should be implemented here 
-# otherwise it will be overriden by the plugins.
+# Example remaping keys.
 
-# keymap = {
-    # ('NORMAL', '<Key-0>'): (('NORMAL', '<Key-b>'), ), 
-    # ('NORMAL', '<Key-w>'): (('NORMAL', '<Key-w>'), ('IRC', '<Key-w>'), ), 
-    # ('NORMAL', '<Key-s>'): (('NORMAL', '<Key-s>'), ('IRC', '<Key-s>'), ), 
-# }
-# 
-# autocall(lambda area: area.update_map(keymap))
+# Use the function mapset to remap your keys. 
+# The 'line-index' stands for the plugin namespace.
+# The code below permits the code binded to <Control-q> in NORMAL mode
+# to work in NORMAL mode when <Key-g> event happens.
+# It may be interesting to call mapset close to the plugin
+# imports It is not necessary to be here but it has to be set
+# before the plugin is installed with autoload.
+
+# mapset('line-index', {
+# ('NORMAL', '<Control-q>'): (('NORMAL', '<Control-q>'), 
+# ('NORMAL', '<Key-g>'))})
+
+# Note: Plugin namepaces should follow the pattern
+# plugin-name it means any '_' is replaced for '-'.
+
 ##############################################################################
 # Basic core modes.
 
@@ -309,6 +315,8 @@ autoload(vyapp.plugins.python_completion)
 
 # Ruby auto completion using rsense.
 # It is needed to start rsense daemon first. 
+# Note: When first starting the daemon, it may take
+# some time for rsense to set up working.
 # import vyapp.plugins.ruby_completion
 # autoload(vyapp.plugins.ruby_completion, path='rsense', port=47367)
 
@@ -317,6 +325,7 @@ autoload(vyapp.plugins.python_completion)
 # Initializes the tern daemon and installs javascript 
 # autocomplete plugin. Notice 'tern' should stand for your tern plugin path.
 # It means where your tern script is in.
+
 
 # from vyapp.plugins.javascript_completion import javascript_tools
 # javascript_tools('tern', port=1234)
@@ -490,6 +499,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

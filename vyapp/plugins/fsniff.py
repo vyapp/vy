@@ -9,7 +9,7 @@ class Fsniff(object):
 
         self.area = area
         self.path = ''
-        area.install((-1, '<Alt-minus>', lambda event: 
+        area.install('fsniff', (-1, '<Alt-minus>', lambda event: 
         Get(events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
         '<Return>': self.view_on_current, '<Escape>': lambda wid: True})),
         (-1, '<Alt-equal>', lambda event: 
@@ -48,6 +48,7 @@ class Fsniff(object):
         root.status.set_msg('Locating...')
 
 install = Fsniff
+
 
 
 

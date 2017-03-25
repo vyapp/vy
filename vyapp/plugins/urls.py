@@ -42,9 +42,10 @@ def get_url_source(event):
     event.widget.chmode('NORMAL')
 
 def install(area):
-    area.install(('ALPHA', '<Key-l>', open_cursor_url),
+    area.install('urls', ('ALPHA', '<Key-l>', open_cursor_url),
                  ('ALPHA', '<Key-o>', open_current_file),
                  ('ALPHA', '<Key-s>', get_url_source))
+
 
 
 

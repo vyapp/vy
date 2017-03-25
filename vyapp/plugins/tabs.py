@@ -98,11 +98,12 @@ def select_right():
     return 'break'
 
 def install(area):
-    area.install((-1, '<Alt-comma>', lambda event: load_tab()),
+    area.install('tabs', (-1, '<Alt-comma>', lambda event: load_tab()),
                  (-1, '<Alt-period>', lambda event: create_tab()),
                  (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

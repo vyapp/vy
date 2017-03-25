@@ -120,7 +120,7 @@ class OutputController(object):
 
     def __init__(self, area):
         self.area = area
-        area.install((-1, '<Alt-bracketleft>', self.add_output),
+        area.install('outputs', (-1, '<Alt-bracketleft>', self.add_output),
         (-1, '<Alt-braceleft>', self.rm_output),
         (-1, '<Control-Alt-bracketleft>',  self.restore_output))
     
@@ -150,5 +150,6 @@ class OutputController(object):
         return 'break'
     
 install = OutputController
+
 
 

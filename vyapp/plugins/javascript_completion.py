@@ -86,20 +86,21 @@ class JavascriptCompletion(object):
     def __init__(self, area, path='tern', port=1234):
         self.path = path
         self.port = port
-        trigger = lambda event: area.hook('INSERT', '<Control-Key-period>', 
+        trigger = lambda event: area.hook('javascript-completion', 'INSERT', '<Control-Key-period>', 
                   lambda event: JavascriptCompletionWindow(self.path, self.port, event.widget), add=False)
         remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
-        area.install((-1, '<<Load-application/x-javascript>>', trigger),
+        area.install('javascript-completion', (-1, '<<Load-application/x-javascript>>', trigger),
                      (-1, '<<Load-text/html>>', trigger), 
                      (-1, '<<Save-application/x-javascript>>', trigger), 
                      (-1, '<<Save-text/html>>', trigger), 
                      (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 def javascript_tools(path='tern', port=1234):
-    active_completion = lambda :AreaVi.ACTIVE.hook('INSERT', '<Control-Key-period>', 
+    active_completion = lambda :AreaVi.ACTIVE.hook('javascript-completion', 'INSERT', '<Control-Key-period>', 
                   lambda event: JavascriptCompletionWindow(path, port, event.widget), add=False)
     ENV['active_javascript_completion'] = active_completion
 
 install = JavascriptCompletion
+
 
 

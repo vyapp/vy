@@ -29,7 +29,7 @@ Description: Remove all (SPOT) tags from the text.
 
 def install(area, setup={'background':'green', 'foreground':'black'}):
     area.tag_configure('(SPOT)', **setup)
-    area.install(('NORMAL', '<Control-b>', lambda event: 
+    area.install('text-spots', ('NORMAL', '<Control-b>', lambda event: 
     area.toggle_range('(SPOT)', 'insert linestart', 'insert lineend')),
     ('NORMAL', '<Control-n>', lambda event: 
     area.seecur(area.tag_prevrange('(SPOT)', 'insert linestart')[0])),
@@ -37,5 +37,6 @@ def install(area, setup={'background':'green', 'foreground':'black'}):
     area.tag_remove('(SPOT)', '1.0', 'end')),
     ('NORMAL', '<Control-m>', lambda event: 
     area.seecur(area.tag_nextrange('(SPOT)', 'insert lineend')[0])))
+
 
 

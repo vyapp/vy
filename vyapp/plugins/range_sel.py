@@ -39,11 +39,12 @@ def drop_selection_mark(area):
     root.status.set_msg('Dropped selection mark.')
 
 def install(area):
-    area.install(('NORMAL', '<Control-k>', lambda event: event.widget.sel_up()),
+    area.install('range-sel', ('NORMAL', '<Control-k>', lambda event: event.widget.sel_up()),
                  ('NORMAL', '<Control-j>', lambda event: event.widget.sel_down()),
                  ('NORMAL', '<Control-h>', lambda event: event.widget.sel_left()),
                  ('NORMAL', '<Control-l>', lambda event: event.widget.sel_right()),
                  ('NORMAL', '<Control-v>', lambda event: drop_selection_mark(event.widget)))
+
 
 
 

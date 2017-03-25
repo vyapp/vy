@@ -59,7 +59,7 @@ class Find(object):
 
         area.tag_config('(CATCHED)', **setup)
 
-        area.install(('NORMAL', '<Alt-slash>', lambda event: self.start()))
+        area.install('find', ('NORMAL', '<Alt-slash>', lambda event: self.start()))
         self.opts = {'nolinestop': nolinestop, 'regexp': regexp,
         'nocase': nocase, 'exact': exact,'elide': elide}
 
@@ -135,6 +135,7 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 

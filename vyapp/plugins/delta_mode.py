@@ -17,7 +17,8 @@ def delta(area):
 
 def install(area):
     area.add_mode('DELTA')
-    area.install(('NORMAL', '<Key-6>', lambda event: delta(event.widget)))
+    area.install('delta-mode', ('NORMAL', '<Key-6>', lambda event: delta(event.widget)))
+
 
 
 

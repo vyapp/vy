@@ -19,7 +19,8 @@ def insert(area):
 def install(area):
     # The two basic modes, insert and selection.
     area.add_mode('INSERT', opt=True)
-    area.install(('NORMAL', '<Key-i>', lambda event: insert(event.widget)))
+    area.install('insert-mode', ('NORMAL', '<Key-i>', lambda event: insert(event.widget)))
+
 
 
 

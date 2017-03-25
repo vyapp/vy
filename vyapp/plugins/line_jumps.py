@@ -18,8 +18,9 @@ Description: Place the cursor at the end of the line.
 """
 
 def install(area):
-    area.install(('NORMAL', '<Key-o>', lambda event: event.widget.go_line_start()),
+    area.install('line-jumps', ('NORMAL', '<Key-o>', lambda event: event.widget.go_line_start()),
                  ('NORMAL', '<Key-p>', lambda event: event.widget.go_line_end()))
+
 
 
 

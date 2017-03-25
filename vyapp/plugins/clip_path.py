@@ -23,7 +23,8 @@ def clip_ph(area):
     root.status.set_msg('File path copied to the clipboard.')
 
 def install(area):
-    area.install(('ALPHA', '<Key-u>', lambda event: clip_ph(event.widget)))
+    area.install('clip-path', ('ALPHA', '<Key-u>', lambda event: clip_ph(event.widget)))
+
 
 
 

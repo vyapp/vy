@@ -66,8 +66,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.charset  = 'utf-8'
         self.map      = {}
 
-    def update_map(self, keymap):
-        self.map.update(keymap)
+    def update_map(self, namespace, map):
+        scheme = self.map.setdefault(namespace, {})
+        scheme.update(map)
 
     def active(self):
         """
@@ -131,7 +132,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         pass
 
-    def hook(self, id, seq, callback, add=True):
+    def hook(self, namespace, id, seq, callback, add=True):
         """
         This method is used to hook a callback to a sequence
         specified with its mode:
@@ -146,7 +147,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         the function named callback will be called with the event object.
         """
 
-        for id, seq in self.map.get((id, seq), ((id, seq), )):
+        scheme = self.map.get(namespace, {})
+        for id, seq in scheme.get((id, seq), ((id, seq), )):
             self.bind_class('mode%s%s' % (self, id), seq, callback, add)
 
     def unhook(self, id, seq):
@@ -159,7 +161,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         mode = 'mode%s%s' % (self, id)
         self.unbind_class(mode, seq)
 
-    def install(self, *args):
+    def install(self, namespace, *args):
         """
         It is a shorthand for AreaVi.hook. It is used as follows:
 
@@ -170,7 +172,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         for ind in args:
-            self.hook(*ind)
+            self.hook(namespace, *ind)
 
     def uninstall(self, *args):
         """
@@ -1579,6 +1581,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
