@@ -20,7 +20,7 @@ class Spider(object):
         for ind in self.styles.iterkeys():
             self.set_token_style(ind)
 
-        area.install((-1, '<<LoadData>>', 
+        area.install('syntax', (-1, '<<LoadData>>', 
         lambda event: self.update_all()),
         (-1, '<Escape>', lambda event: self.update()))
 
@@ -127,5 +127,6 @@ class Spider(object):
                 return self.split(style)
 
 install = Spider
+
 
 
