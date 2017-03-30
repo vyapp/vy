@@ -24,10 +24,11 @@ class AskPass(Tk):
 
     def _return(self, event):
         self.data = self.entry.get()
-        self.quit()
+        event.widget.quit()
 
 
 if __name__ == '__main__':
     askpass = AskPass('Word Pass')
     askpass.mainloop()
     print askpass.data
+
