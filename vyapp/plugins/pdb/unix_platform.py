@@ -122,7 +122,7 @@ class Pdb(object):
     def __call__(self, area, python='python2', setup={'background':'blue', 'foreground':'yellow'}):
         area.add_mode('PDB')
 
-        area.install(('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
+        area.install('pdb', ('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
                     ('PDB', '<Key-p>', lambda event: self.send('print %s' % event.widget.join_ranges('sel', sep='\r\n'))), 
                     ('PDB', '<Key-x>', lambda event: self.evaluate_expression(event.widget)), 
                     ('PDB', '<Key-r>', lambda event: self.execute_statement(event.widget)), 
@@ -289,6 +289,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
