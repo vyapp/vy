@@ -7,6 +7,8 @@ This plugin implements block selection of text.
 Key-Commands
 ============
 
+Namespace: block-sel
+
 Mode: NORMAL
 Event: <Control-K> 
 Description: Add block selection one line up.
@@ -37,6 +39,7 @@ def install(area):
                  ('NORMAL', '<Control-H>', lambda event: event.widget.block_left()),
                  ('NORMAL', '<Control-L>', lambda event: event.widget.block_right()),
                  ('NORMAL', '<Control-V>', lambda event: drop_start_mark(event.widget)))
+
 
 
 

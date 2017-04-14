@@ -8,6 +8,8 @@ This plugin implements a way to place the cursor at a given row.col.
 Key-Commands
 ============
 
+Namespace: line-index
+
 Mode: NORMAL
 Event: <Control-q>
 Description: Shows an input text field to insert a Line.Col value to place the cursor at that position.
@@ -30,6 +32,7 @@ def go_to_pos(area):
 
 install = lambda area: area.install('line-index', 
 ('NORMAL', '<Control-q>', lambda event: go_to_pos(event.widget)))
+
 
 
 

@@ -7,6 +7,8 @@ Used to insert tabs based on the type of file being edited.
 Key-Commands
 ============
 
+Namespace: spacing
+
 Mode: INSERT
 Event: <Tab>
 Description: Insert a tab/space based on the programming file type.
@@ -35,6 +37,7 @@ class Tab(object):
     
 
 install = Tab
+
 
 
 

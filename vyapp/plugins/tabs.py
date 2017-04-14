@@ -8,6 +8,8 @@ open files, change the focus between opened tabs.
 Key-Commands
 ============
 
+Namespace: tabs
+
 Mode: Global
 Event: <Alt-comma>
 Description: It pops a file selection window to load the contents of a file in a new tab.
@@ -103,6 +105,7 @@ def install(area):
                  (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

@@ -7,6 +7,8 @@ This plugin implements Key-Commands to comment and uncomment blocks of code.
 Key-Commands
 ============
 
+Namespace: inline-comment
+
 Mode: ALPHA
 Event: <Key-e>
 Description: Add inline comments to a selected block of text.
@@ -57,6 +59,7 @@ def install(area):
     area.install('inline-comment',
     ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
     ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 

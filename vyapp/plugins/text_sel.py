@@ -8,6 +8,8 @@ cursor position.
 Key-Commands
 ============
 
+Namespace: text-sel
+
 Mode: NORMAL
 Event: <Control-Key-1> 
 Description: Add selection from the cursor positon to the beginning of the file.
@@ -28,6 +30,7 @@ def install(area):
     area.install('text-sel', ('NORMAL', '<Control-Key-1>', lambda event: event.widget.sel_text_start()),
                  ('NORMAL', '<Control-Key-2>', lambda event: event.widget.sel_text_end()),
                  ('NORMAL', '<Control-a>', lambda event: event.widget.select_all()))
+
 
 
 

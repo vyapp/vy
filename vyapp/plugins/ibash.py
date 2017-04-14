@@ -8,6 +8,8 @@ and start processes through bash and send some unix signals to the child process
 Key-Commands
 ============
 
+Namespace: ibash
+
 Mode: NORMAL
 Event: <F1>
 Description: Send the cursor line to the bash interpreter and place the cursor one line down.
@@ -131,6 +133,7 @@ class Process(object):
     
 process = Process()
 install = process
+
 
 
 

@@ -8,6 +8,8 @@ This plugin implements keycommands to delete text selection, delete line, delete
 Key-Commands
 ============
 
+Namespace: data-del
+
 Mode: NORMAL
 Event: <Key-d> 
 Description: Delete selection of text.
@@ -29,6 +31,7 @@ def install(area):
                  ('NORMAL', '<Key-x>', lambda event: event.widget.del_line()),
                  ('NORMAL', '<Key-z>', lambda event: event.widget.del_char()))
         
+
 
 
 

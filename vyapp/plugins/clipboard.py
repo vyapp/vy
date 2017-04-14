@@ -9,6 +9,8 @@ cutting, deleting, pasting text to the clipboard.
 Key-Commands
 ============
 
+Namespace: clipboard
+
 Mode: NORMAL
 Event: <Key-y> 
 Description: Copy selection to the clipboard.
@@ -53,6 +55,7 @@ def install(area):
                  ('NORMAL', '<Key-e>', lambda event: event.widget.ptsel_before()),
                  ('NORMAL', '<Control-Y>', lambda event: event.widget.cpsel('\n')),
                  ('NORMAL', '<Control-U>', lambda event: event.widget.ctsel('\n')))
+
 
 
 

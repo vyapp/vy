@@ -1,5 +1,10 @@
 """
 
+Key-Commands
+============
+
+Namespace: anchors
+
 """
 
 class Anchors(object):
@@ -19,6 +24,7 @@ class Anchors(object):
         self.area.chmode('NORMAL')
 
 install = Anchors
+
 
 
 

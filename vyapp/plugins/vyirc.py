@@ -8,6 +8,8 @@ tabs, IRC network channels turn into tabs as well.
 Key-Commands
 ============
 
+Namespace: vyirc
+
 Mode: GAMMA
 Event: <Key-i>
 Description: Get in IRC mode, only possible for areavi instances that are tied to IRC connecitons.
@@ -294,6 +296,7 @@ class IrcMode(object):
         area.append(H1 % (self.misc.nick, data))
         send_msg(self.con, target, data.encode('utf-8'))
         wid.delete(0, 'end')
+
 
 
 

@@ -13,6 +13,8 @@ Line.Col inside an AreaVi instance.
 Key-Commands
 ============
 
+Namespace: outputs
+
 Mode: Global
 Event: <Control-Alt-bracketleft>
 Description: it restores sys.stdout.
@@ -150,6 +152,7 @@ class OutputController(object):
         return 'break'
     
 install = OutputController
+
 
 
 

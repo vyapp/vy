@@ -27,6 +27,11 @@ Plugin dependencies:
 Extern dependencies:
     Html Tidy
 
+Key-Commands
+============
+
+Namespace: html-checker
+
 """
 
 from subprocess import Popen, STDOUT, PIPE
@@ -72,6 +77,7 @@ class HtmlChecker(object):
         self.area.chmode('NORMAL')
 
 install = HtmlChecker
+
 
 
 

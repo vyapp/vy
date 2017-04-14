@@ -39,6 +39,7 @@ then when setting break points over multiple files would make vy set the focus t
 Key-Commands
 ============
 
+Namespace: pdb
 
 Mode: BETA
 Event: <Key-p>
@@ -289,6 +290,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 

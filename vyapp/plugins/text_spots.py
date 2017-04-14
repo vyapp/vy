@@ -9,6 +9,8 @@ mark system.
 Key-Commands
 ============
 
+Namespace: text-spots
+
 Mode: NORMAL
 Event <Control-b>
 Description: Shade/unshade a line.
@@ -37,6 +39,7 @@ def install(area, setup={'background':'green', 'foreground':'black'}):
     area.tag_remove('(SPOT)', '1.0', 'end')),
     ('NORMAL', '<Control-m>', lambda event: 
     area.seecur(area.tag_nextrange('(SPOT)', 'insert lineend')[0])))
+
 
 
 

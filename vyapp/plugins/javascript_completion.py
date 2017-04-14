@@ -8,6 +8,8 @@ This module implements javascript autocompletion using the tern javascript libra
 Key-Commands
 ============
 
+Namespace: javascript-completion
+
 Mode: INSERT
 Event: <Control-Key-period>
 Description: Open the completion window with possible python words for
@@ -101,6 +103,7 @@ def javascript_tools(path='tern', port=1234):
     ENV['active_javascript_completion'] = active_completion
 
 install = JavascriptCompletion
+
 
 
 

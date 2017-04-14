@@ -7,6 +7,8 @@ This plugin implements basic Key-Commands to open/save files.
 Key-Commands
 ============
 
+Namespace: io
+
 Mode: NORMAL
 Event: <Control-d>
 Description: It pops a file selection window to load the contents of a file.
@@ -114,6 +116,7 @@ def install(area):
                  ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
                  ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
                  ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
+
 
 
 

@@ -8,6 +8,8 @@ This plugin does autocompletion using jedi library.
 Key-Commands
 ============
 
+Namespace: python-completion
+
 Mode: INSERT
 Event: <Control-Key-period>
 Description: Open the completion window with possible python words for
@@ -48,6 +50,7 @@ def active_python_completion():
                   lambda event: PythonCompletionWindow(event.widget), add=False)
 
 ENV['active_python_completion'] = active_python_completion
+
 
 
 

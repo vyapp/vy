@@ -7,6 +7,8 @@ Used to spawn processes and send/receive data. It is useful to talk with extern 
 Key-Commands
 ============
 
+Namespace: shell
+
 Mode: NORMAL
 Event: <F2>
 Description: Send the cursor line to the process.
@@ -50,8 +52,8 @@ class Shell(object):
         self.area.hook('shell', -1, '<Destroy>', lambda event: 
         self.terminate_process())
 
-        self.output.hook('shell', 'NORMAL', '<Control-F2>', lambda event: 
-        self.map_process_input())
+        # self.output.hook('shell', 'NORMAL', '<Control-F2>', lambda event: 
+        # self.map_process_input())
 
         self.map_process_input()
         # When call.terminnate is called it may happen of having still data to be
@@ -95,6 +97,7 @@ ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.mas
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['vbash']  = lambda : Shell('bash -i',AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['hbash'] = lambda : Shell('bash -i', AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
+
 
 
 

@@ -8,6 +8,8 @@ panes.
 Key-Commands
 ============
 
+Namespace: splits
+
 Mode: Global
 Event: <Alt-less>
 Description: Add a vertical pane.
@@ -142,6 +144,7 @@ def install(area):
                  (-1, '<Control-Alt-l>', lambda event: go_right_area(event.widget)),
                  (-1, '<Control-Alt-k>', lambda event: go_up_area(event.widget)),
                  (-1, '<Control-Alt-j>', lambda event: go_down_area(event.widget)))
+
 
 
 

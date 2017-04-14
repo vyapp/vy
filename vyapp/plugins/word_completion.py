@@ -8,6 +8,8 @@ This plugin does word completion.
 Key-Commands
 ============
 
+Namespace: word-completion
+
 Mode: INSERT
 Event: <Control-q>
 Description: Open the completion window with possible words for
@@ -41,6 +43,7 @@ class WordCompletionWindow(CompletionWindow):
 def install(area):
     area.install('word-completion', ('INSERT', '<Control-q>', 
     lambda event: WordCompletionWindow(event.widget)))
+
 
 
 

@@ -9,6 +9,8 @@ regardless of the punctuation between the words.
 Key-Commands
 ============
 
+Namespace: word-search
+
 Mode: NORMAL
 Event: <Key-0>
 Description: Switch to ISEARCH mode.
@@ -116,6 +118,7 @@ class WordSearch(object):
         self.index = self.index + 1
 
 install = WordSearch
+
 
 
 

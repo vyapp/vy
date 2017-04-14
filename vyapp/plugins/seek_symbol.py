@@ -7,6 +7,8 @@ This plugin implements a mechanism to quickly make the cursor jump back/next to 
 Key-Commands
 ============
 
+Namespace: seek-symbol
+
 Mode: NORMAL
 Event: <Key-v> 
 Description: Switch to JUMP_NEXT mode.
@@ -90,6 +92,7 @@ class SeekSymbol(object):
         self.area.chmode('NORMAL')
 
 install = SeekSymbol
+
 
 
 

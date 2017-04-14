@@ -7,6 +7,8 @@ This plugin implements the basic cursor movements.
 Key-Commands
 ============
 
+Namespace: main-jumps
+
 Mode: NORMAL
 Event: <Key-j> 
 Description: Move the cursor one line down.
@@ -35,6 +37,7 @@ def install(area):
                  ('NORMAL', '<Key-k>', lambda event: event.widget.up()),
                  ('NORMAL', '<Key-h>', lambda event: event.widget.left()),
                  ('NORMAL', '<Key-l>', lambda event: event.widget.right()))
+
 
 
 

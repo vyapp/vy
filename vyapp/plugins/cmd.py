@@ -7,6 +7,8 @@ It implements functionalities to execute python code that affects vy state.
 Key-Commands
 ============
 
+Namespace: cmd
+
 Mode: Global
 Event: <Control-Alt-semicolon>
 Description: Set an AreaVi instance as target for commands.
@@ -56,6 +58,7 @@ install = lambda area: area.install('cmd',
 (-1, '<Alt-colon>', lambda event: exec_all_data(event.widget, ENV)),
 ('NORMAL', '<Key-semicolon>', lambda event: exec_region(event.widget, ENV)),
 (-1, '<Control-Alt-semicolon>', lambda event: set_target(event.widget)))
+
 
 
 

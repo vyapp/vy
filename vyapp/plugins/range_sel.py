@@ -7,6 +7,8 @@ This plugin implements range selection.
 Key-Commands
 ============
 
+Namespace: range-sel
+
 Mode: NORMAL
 Event: <Control-k> 
 Description: Add/remove selection one line up from the initial selection mark.
@@ -44,6 +46,7 @@ def install(area):
                  ('NORMAL', '<Control-h>', lambda event: event.widget.sel_left()),
                  ('NORMAL', '<Control-l>', lambda event: event.widget.sel_right()),
                  ('NORMAL', '<Control-v>', lambda event: drop_selection_mark(event.widget)))
+
 
 
 

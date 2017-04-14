@@ -7,6 +7,8 @@ This plugin implements Key-Commands to shift blocks of text.
 Key-Commands
 ============
 
+Namespace: shift
+
 Mode: NORMAL
 Event: <Key-greater>
 Description: Shift to the right.
@@ -26,6 +28,7 @@ class Shift(object):
 
 
 install = Shift
+
 
 
 

@@ -1,5 +1,9 @@
 """
 
+Key-Commands
+============
+
+Namespace: quick-search
 """
 
 from vyapp.ask import Get
@@ -80,6 +84,7 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 
 
 

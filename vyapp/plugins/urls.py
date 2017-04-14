@@ -7,6 +7,8 @@ Implement keycommands to deal with urls.
 Key-Commands
 ===========
 
+Namespace: urls
+
 Mode: ALPHA
 Event: <Key-l>
 Description: Open the url over the cursor in the browser, a new tab is opened.
@@ -45,6 +47,7 @@ def install(area):
     area.install('urls', ('ALPHA', '<Key-l>', open_cursor_url),
                  ('ALPHA', '<Key-o>', open_current_file),
                  ('ALPHA', '<Key-s>', get_url_source))
+
 
 
 

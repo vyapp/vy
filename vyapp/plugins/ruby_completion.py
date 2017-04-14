@@ -8,6 +8,8 @@ This module implements ruby autocompletion using the ruby library.
 Key-Commands
 ============
 
+Namespace: ruby-completion
+
 Mode: INSERT
 Event: <Control-Key-period>
 Description: Open the completion window with possible ruby words for
@@ -87,6 +89,7 @@ class RubyCompletion(object):
                      (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 install = RubyCompletion
+
 
 
 

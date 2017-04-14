@@ -8,6 +8,8 @@ an AreaVi instance that has focus.
 Key-Commands
 ============
 
+Namespace: find
+
 Mode: NORMAL
 Event: <Alt-slash>
 Description: Set a search pattern.
@@ -135,6 +137,7 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 

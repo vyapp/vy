@@ -1,5 +1,10 @@
 """
 
+Key-Commands
+============
+
+Namespace: mode-shortcut
+
 """
 
 
@@ -18,6 +23,7 @@ class ModeShortcut(object):
         return 'break'
 
 install = ModeShortcut
+
 
 
 

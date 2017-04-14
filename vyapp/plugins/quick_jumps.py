@@ -8,6 +8,8 @@ It is used to remember an important position of the text and quickly switch to i
 Key-Commands
 ============
 
+Namespace: quick-jumps
+
 Mode: NORMAL
 Event: 
 Description: 
@@ -25,6 +27,7 @@ class QuickJumps(object):
                      ('NORMAL', '<BackSpace>', lambda event: self.area.seecur('(PREV_POSITION)')))
 
 install = QuickJumps
+
 
 
 
