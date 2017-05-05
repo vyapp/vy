@@ -1,6 +1,7 @@
 from subprocess import check_output, call, Popen
 from os.path import expanduser, dirname, join
 from vyapp.app import root
+from vyapp.ask import Ask
 
 class Mc(object):
     COLOR_SCHEME = {'(MC-DIRECTORY)': {'foreground': 'red'},
@@ -23,6 +24,7 @@ class Mc(object):
         ('NORMAL', '<Key-I>', lambda e: self.load()),
         ('NORMAL', '<Key-U>', lambda e: self.open()),
         ('NORMAL', '<Key-F>', lambda e: self.info()),
+        ('NORMAL', '<Key-E>', lambda e: self.rename()),
 
         ('NORMAL', '<Key-J>', lambda e:self.ls()))
 
@@ -87,6 +89,17 @@ class Mc(object):
         del Mc.clipboard[:]
         self.ls()
 
+    def rename(self):
+        path     = self.area.get_line()
+        ask      = Ask()
+        filename = ask.data.encode('utf-8')
+        destin   = join(dirname(path), filename)
+        code     = call('mv "%s" %s' % (path, 
+        destin), shell=1)
+
+        root.status.set_msg('File renamed!')
+        self.ls()
+
     def rm(self):
         code = call('rm -fr %s' % ' '.join(Mc.clipboard), shell=1)
         del Mc.clipboard[:]
@@ -104,11 +117,5 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
-
-
-
-
-
-
 
 
