@@ -2,6 +2,12 @@
 
 from distutils.core import setup
 
+
+install_requires = []
+for line in open('requirements.txt', 'r'):
+    install_requires.append(line.strip())
+
+
 setup(name="vy",
       version="2.2.0",
       description="A vim-like in python made from scratch.",
@@ -18,67 +24,5 @@ setup(name="vy",
       url='https://github.com/iogf/vy',
       download_url='https://github.com/iogf/vy/releases',
       keywords=['vy', 'vi', 'vim', 'emacs', 'sublime', 'atom', 'nano', 'vim-like'],
-      classifiers=[])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      classifiers=[],
+      install_requires=install_requires)
