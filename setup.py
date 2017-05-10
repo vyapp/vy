@@ -1,6 +1,6 @@
 #! /usr/bin/env python2
 
-from distutils.core import setup
+from setuptools import setup
 
 
 install_requires = []
