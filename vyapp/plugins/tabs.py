@@ -60,7 +60,7 @@ def load_tab():
     return 'break'
 
 def create_tab():
-    root.note.create('None')
+    root.note.create('none')
     return 'break'
 
 def remove_tab():
@@ -105,6 +105,7 @@ def install(area):
                  (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
+
 
 
 

@@ -33,12 +33,13 @@ if __name__ != '__main__':
     # variable.
     root.create_vyrc()
 
-    if not lst: root.note.create('None')
+    if not lst: root.note.create('none')
     else: root.note.load(*lst)
 
     # It first waits vyrc file to be loaded in order to set sys.stderr.
     # Otherwise errors when loading the vyrc file will be missed as well as when
     # attempting to load a non existing file.
     if not opt.debug: sys.stderr = Debug()
+
 
 

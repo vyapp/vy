@@ -34,11 +34,22 @@ git push
 cd /home/tau/projects/vy-code/
 git checkout -b avamsi-patch-1 master
 git pull https://github.com/avamsi/vy.git patch-1
-##############################################################################
+
 # merge, patch, pull, into, development, vy, avamsi, contribution.
 git checkout development
 git merge --no-ff avamsi-patch-1
 git push origin development
+##############################################################################
+# check, pull, request, vy, yetone.
+cd /home/tau/projects/vy-code/
+git checkout -b yetone-patch-1 master
+git pull https://github.com/yetone/vy.git patch-1
+
+# merge, patch, pull, into, development, vy, avamsi, contribution.
+git checkout development
+git merge --no-ff avamsi-patch-1
+git push origin development
+
 ##############################################################################
 # vy, checkout, all, *.
 cd /home/tau/projects/vy-code/
@@ -145,5 +156,6 @@ grep -rl  'CompletionWindow' . | xargs sed -i 's/CompletionWindow/CompletionWind
 ls -dla -1 $PWD/*
 ls -d --all  /home/tau/*
 ls -d --all  /home/tau/*.*
+
 
 
