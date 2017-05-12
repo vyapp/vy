@@ -1,3 +1,59 @@
+""""
+Overview
+========
+
+Implement functionalities to manage files. It is a filemanager-like plugin.
+
+Key-Commands
+============
+
+Mode: NORMAL
+Event: <Key-J> 
+Description: List files in the actual AreaVi instance that has focus.
+
+Mode: NORMAL
+Event: <Key-L> 
+Description: If the path under the cursor is a path for a folder then it
+lists the folder files.
+
+Mode: NORMAL
+Event: <Key-K> 
+Description: Add the path under the cursor to the clipboard for
+removing, copying, moving.
+
+Mode: NORMAL
+Event: <Key-H> 
+Description: List files in the parent folder of the path under
+the cursor.
+
+Mode: NORMAL
+Event: <Key-R> 
+Description: Delete all files whose paths are in the clipboard.
+
+Mode: NORMAL
+Event: <Key-E> 
+Description: Rename the file/folder whose path is under the cursor.
+
+Mode: NORMAL
+Event: <Key-Y> 
+Description: Copy all the clipboard files/folders recursively
+to the destin which is the path under the cursor.
+
+Mode: NORMAL
+Event: <Key-T> 
+Description: Move all the clipboard files/folders to the
+path under the cursor.
+
+Mode: NORMAL
+Event: <Key-G> 
+Description: List the paths in the clipboard.
+
+Mode: NORMAL
+Event: <Control-g> 
+Description: Clear the clipboard.
+
+"""
+
 from subprocess import check_output, call, Popen
 from os.path import expanduser, dirname, join
 from vyapp.app import root
@@ -117,5 +173,6 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
