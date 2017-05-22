@@ -16,31 +16,45 @@ Description: Insert a tab/space based on the programming file type.
 """
 
 from os.path import splitext
+from vyapp.plugins import ENV
+from vyapp.areavi import AreaVi
 
 class Tab(object):
-    def __init__(self, area, tab_scheme, default_tab_size, default_char=' '):
-        self.TAB_SIZE = None
-        self.CHAR     = None
+    DEFAULT_SIZE, DEFAULT_CHAR = 4, ' '
+    SCHEME, SIZE, CHAR         = {}, 4, ' '
 
-        def set_tab_scheme(event):
-            ph, ext                  = splitext(area.filename.lower())
-            self.TAB_SIZE, self.CHAR = tab_scheme.get(ext, (default_tab_size, default_char))
-
-        area.install('spacing', (-1, '<FocusIn>', set_tab_scheme),
-        ('INSERT', '<Tab>', lambda event: self.insert_tab(event.widget)))
+    def __init__(self, area):
+        self.area = area
+        area.install('spacing', 
+        (-1, '<FocusIn>', self.set_tab_scheme),
+        ('INSERT', '<Tab>', lambda event: 
+        self.insert_tab(event.widget)))
     
+    def set_tab_scheme(self, event):
+        ph, ext = splitext(self.area.filename.lower())
+        opt     = self.SCHEME.get(
+        ext, (self.DEFAULT_SIZE, self.DEFAULT_CHAR))
+
+        Tab.SIZE, Tab.CHAR = opt
+
     def insert_tab(self, area):
         area.edit_separator()
-        area.insert('insert', self.CHAR * self.TAB_SIZE)
-    
+        data = self.CHAR * self.SIZE
+
+        area.insert('insert', data)
         return 'break'
-    
 
+def tabset(size, char=Tab.CHAR):
+    """
+    Change tab size/char globally based
+    on the actual areavi filename extension.
+    """
+
+    ph, ext = splitext(
+    AreaVi.ACTIVE.filename.lower())
+    Tab.SCHEME[ext]    = size, char
+    Tab.SIZE, Tab.CHAR = size, char
+
+ENV['tabset'] = tabset
 install = Tab
-
-
-
-
-
-
 
