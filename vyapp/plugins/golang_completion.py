@@ -28,9 +28,8 @@ class GolangCompletionWindow(CompletionWindow):
     """
     """
 
-    def __init__(self, area, path, *args, **kwargs):
+    def __init__(self, area,  *args, **kwargs):
         self.area = area
-        self.path = path
         tmp0      = area.get('1.0', 'insert')
         tmp1      = area.get('insert', 'end')
         source    = tmp0 + tmp1
@@ -43,7 +42,7 @@ class GolangCompletionWindow(CompletionWindow):
         '#' * 80, self.box.selection_docs())))
 
     def completions(self, data, offset, filename):
-        daemon = Popen('%s -f=json autocomplete %s %s' % (self.path,
+        daemon = Popen('%s -f=json autocomplete %s %s' % (GolangCompletion.PATH,
         self.area.filename, offset), shell=1, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         stdout, stderr = daemon.communicate(data)
 
@@ -57,10 +56,9 @@ class GolangCompletionWindow(CompletionWindow):
 class GolangCompletion(object):
     PATH = 'gocode'
 
-    def __init__(self, area, path):
-        self.path = path
+    def __init__(self, area):
         trigger = lambda event: area.hook('golang-completion', 'INSERT', '<Control-Key-period>', 
-                  lambda event: GolangCompletionWindow(event.widget, self.path), add=False)
+                  lambda event: GolangCompletionWindow(event.widget), add=False)
 
         remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
         area.install('golang-completion', (-1, '<<Load-application/x-golang>>', trigger),
@@ -69,6 +67,7 @@ class GolangCompletion(object):
 
 mimetypes.add_type('application/x-golang', '.go')
 install = GolangCompletion
+
 
 
 
