@@ -19,16 +19,8 @@ completion.
 """
 
 from vyapp.completion import CompletionWindow, Option
-from os.path import expanduser, join, exists, dirname
-from subprocess import call, check_output
-from vyapp.areavi import AreaVi
 from subprocess import Popen, PIPE
-from os import getcwd
-from shutil import copyfile
-from vyapp.plugins import ENV
 import mimetypes
-import psutil
-import sys
 import json
 
 class GolangCompletionWindow(CompletionWindow):
