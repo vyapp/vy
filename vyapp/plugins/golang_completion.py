@@ -39,22 +39,21 @@ class GolangCompletionWindow(CompletionWindow):
         tmp0      = area.get('1.0', 'insert')
         tmp1      = area.get('insert', 'end')
         source    = tmp0 + tmp1
-        offset    = len(tmp0)
-        print 'testt'
+        print tmp0, tmp1
+        offset    = len(tmp0) 
 
         completions = self.completions(source, offset, area.filename)
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
 
     def completions(self, data, offset, filename):
-        daemon = Popen('%s -f=json --in=%s autocomplete %s' % (self.path,
+        daemon = Popen('%s -f=json autocomplete %s %s' % (self.path,
         self.area.filename, offset), shell=1, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-
         stdout, stderr = daemon.communicate(data)
         return self.build(stdout)
 
     def build(self, data):
         data = json.loads(data)
-        return map(lambda ind: Option(ind['name']), data['type'], data[1])
+        return map(lambda ind: Option(ind['name'], ind['type']), data[1])
 
 class GolangCompletion(object):
     PATH = 'gocode'
@@ -71,6 +70,7 @@ class GolangCompletion(object):
 
 mimetypes.add_type('application/x-golang', '.go')
 install = GolangCompletion
+
 
 
 
