@@ -49,11 +49,7 @@ Features
 
 - **Terminal**
 
-- **Auto Completion**
-    - Golang
-    - Ruby
-    - Javascript
-    - Python
+- **Auto Completion for (Golang, Javascript, Python, Ruby)**
 
 - **Fuzzy Search**
 
