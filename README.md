@@ -50,6 +50,10 @@ Features
 - **Terminal**
 
 - **Auto Completion**
+    - Golang
+    - Ruby
+    - Javascript
+    - Python
 
 - **Fuzzy Search**
 
@@ -74,8 +78,14 @@ Basic Install
 **Note:** 
 vy requires Python 2.7 to run.
 
-    pip install -r requirements.txt
-    pip install vy
+~~~
+cd /tmp/
+pip2 download vy
+tar -zxvf vy-*
+cd vy-*/
+pip2 install -r requirements.txt
+python2 setup.py install 
+~~~
 
 **Note:**
 As vy is in development there may occur some changes to the vyrc file format, it is important to remove
@@ -94,6 +104,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
