@@ -22,6 +22,7 @@ from vyapp.completion import CompletionWindow, Option
 from subprocess import Popen, PIPE
 import mimetypes
 import json
+import sys
 
 class GolangCompletionWindow(CompletionWindow):
     """
@@ -38,15 +39,20 @@ class GolangCompletionWindow(CompletionWindow):
         completions = self.completions(source, offset, area.filename)
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
 
+        self.bind('<F1>', lambda event: sys.stdout.write('%s\n%s\n' % (
+        '#' * 80, self.box.selection_docs())))
+
     def completions(self, data, offset, filename):
         daemon = Popen('%s -f=json autocomplete %s %s' % (self.path,
         self.area.filename, offset), shell=1, stdin=PIPE, stdout=PIPE, stderr=PIPE)
         stdout, stderr = daemon.communicate(data)
+
         return self.build(stdout)
 
     def build(self, data):
         data = json.loads(data)
-        return map(lambda ind: Option(ind['name'], ind['type']), data[1])
+        return map(lambda ind: Option(ind['name'], 'Type:%s' % ind['type'], 
+        'Class:%s' % ind['class']), data[1])
 
 class GolangCompletion(object):
     PATH = 'gocode'
