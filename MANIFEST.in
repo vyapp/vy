@@ -1,4 +1,5 @@
 include *.md
 include vy.png
 include *.jpg
+include requirements.txt
 
