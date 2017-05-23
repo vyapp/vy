@@ -39,7 +39,6 @@ class GolangCompletionWindow(CompletionWindow):
         tmp0      = area.get('1.0', 'insert')
         tmp1      = area.get('insert', 'end')
         source    = tmp0 + tmp1
-        print tmp0, tmp1
         offset    = len(tmp0) 
 
         completions = self.completions(source, offset, area.filename)
