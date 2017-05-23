@@ -5,6 +5,8 @@ Overview
 This module implements golang autocompletion using the gocode
 daemon.
 
+Github: https://github.com/nsf/gocode
+
 Key-Commands
 ============
 
