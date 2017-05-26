@@ -317,8 +317,10 @@ autoload(vyapp.plugins.python_completion)
 # It is needed to start rsense daemon first. 
 # Note: When first starting the daemon, it may take
 # some time for rsense to set up working.
-# import vyapp.plugins.ruby_completion
-# autoload(vyapp.plugins.ruby_completion, path='rsense', port=47367)
+# from vyapp.plugins import ruby_completion
+# ruby_completion.RubyCompletion.PATH = 'rsense'
+# ruby_completion.RubyCompletion.PORT = 47367
+# autoload(ruby_completion)
 
 
 # Golang autocompletion using: https://github.com/nsf/gocode
@@ -334,12 +336,10 @@ autoload(vyapp.plugins.python_completion)
 # Initializes the tern daemon and installs javascript 
 # autocomplete plugin. Notice 'tern' should stand for your tern plugin path.
 # It means where your tern script is in.
-
-
-# from vyapp.plugins.javascript_completion import javascript_tools
-# javascript_tools('tern', port=1234)
-# import vyapp.plugins.javascript_completion
-# autoload(vyapp.plugins.javascript_completion, 'tern', port=1234)
+# from vyapp.plugins import javascript_completion
+# javascript_completion.JavascriptCompletion.PATH = 'tern'
+# javascript_completion.JavascriptCompletion.PORT = 1234
+# autoload(vyapp.plugins.javascript_completion)
 
 
 # Used to insert tab, spaces.
@@ -511,6 +511,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

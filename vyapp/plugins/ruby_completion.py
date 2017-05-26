@@ -33,9 +33,7 @@ class RubyCompletionWindow(CompletionWindow):
     """
     """
 
-    def __init__(self, area, path, port, *args, **kwargs):
-        self.path   = path
-        self.port   = port
+    def __init__(self, area, *args, **kwargs):
         source      = area.get('1.0', 'end')
         line, col   = area.indcur()
 
@@ -52,19 +50,19 @@ class RubyCompletionWindow(CompletionWindow):
     def run_server(self):
         # When vy is first instantiated it runs the
         # server then leaves it running.
-        call([self.path, 'start', '--port', str(self.port)])
+        call([RubyCompletion.PATH, 'start', 
+        '--port', str(RubyCompletion.PORT)])
 
     def completions(self, data, line, col, filename):
         payload = {
-                    "command": "code_completion",
-                    "project": self.get_project_path(filename),
-                    "file":filename,
-                    "code": data,
-                    "location": {"row": line, "column":col + 1},
-                  }
+        "command" : "code_completion",
+        "project" : self.get_project_path(filename),
+        "file"    : filename, 
+        "code"    : data,
+        "location": {"row": line, "column":col + 1},}
 
         payload = json.dumps(payload)
-        addr = 'http://localhost:%s' % self.port
+        addr = 'http://localhost:%s' % RubyCompletion.PORT
         req  = requests.post(addr, data=payload)
         return self.build(req.text)
 
@@ -77,22 +75,23 @@ class RubyCompletionWindow(CompletionWindow):
         return dirname(filename)
 
 class RubyCompletion(object):
-    def __init__(self, area, path='rsense', port=47367):
-        self.path = path
-        self.port = port
-        trigger = lambda event: area.hook('ruby-completion', 'INSERT', '<Control-Key-period>', 
-                  lambda event: RubyCompletionWindow(event.widget, self.path, self.port), add=False)
+    PATH = 'rsense'
+    PORT = 47367
 
-        remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
-        area.install('ruby-completion', (-1, '<<Load-application/x-ruby>>', trigger),
-                     (-1, '<<Save-application/x-ruby>>', trigger), 
-                     (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
+    def __init__(self, area):
+        trigger = lambda event: area.hook('ruby-completion', 'INSERT', 
+        '<Control-Key-period>', lambda event: RubyCompletionWindow(
+        event.widget), add=False)
+
+        remove_trigger = lambda event: area.unhook(
+        'INSERT', '<Control-Key-period>')
+
+        area.install('ruby-completion', 
+        (-1, '<<Load-application/x-ruby>>', trigger),
+        (-1, '<<Save-application/x-ruby>>', trigger), 
+        (-1, '<<LoadData>>', remove_trigger), 
+        (-1, '<<SaveData>>', remove_trigger))
 
 install = RubyCompletion
-
-
-
-
-
 
 
