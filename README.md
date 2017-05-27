@@ -56,6 +56,8 @@ Features
 
 - **Irc Client** 
 
+- **File Manager**
+
 - **Self documenting**
 
 - **Extensible with Python**
