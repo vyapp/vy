@@ -37,9 +37,6 @@ like vimscript or emacs LISP; since vy is written in Python, you use Python to d
 All built-in functions are well documented, which simplifies the process of plugin development as well as personalizing stuff.
 The plugins are documented: the documentation can be accessed from vy by dropping Python code to the interpreter.
 
-The vy plugins are documented, the complete reference for a set of key commands that a plugin implements 
-can be accessed easily from vy.
-    
 ![screenshot-1](screenshot-1.jpg)
 
 Features
@@ -100,6 +97,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
