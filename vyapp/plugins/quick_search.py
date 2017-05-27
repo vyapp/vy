@@ -11,15 +11,17 @@ from vyapp.regutils import build_regex
 from vyapp.app import root
 
 class QuickSearch(object):
-    def __init__(self, area, nocase=True, 
-        setup={'background':'yellow', 'foreground':'black'}):
+    TAGCONF = {'(SEARCH_MATCH)' : {
+    'background':'yellow', 'foreground':'black'}}
+
+    def __init__(self, area, nocase=True):
 
         """
 
         """
         self.area   = area
         self.nocase = nocase
-        area.tag_configure('(SEARCH_MATCH)', **setup)
+        area.tags_config(self.TAGCONF)
 
         area.install('quick-search',
         ('NORMAL', '<Key-q>', self.start_backwards),
@@ -84,7 +86,5 @@ class QuickSearch(object):
 
 
 install = QuickSearch
-
-
 
 

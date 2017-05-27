@@ -148,8 +148,10 @@ autoload(vyapp.plugins.main_jumps)
 
 
 # The quick_search plugin implements incremental search.
-import vyapp.plugins.quick_search
-autoload(vyapp.plugins.quick_search)
+from vyapp.plugins import quick_search
+# quick_search.QuickSearch.TAGCONF = {'(SEARCH_MATCH)' : {
+# 'background':'yellow', 'foreground':'black'}}
+autoload(quick_search)
 
 
 # It implements keycommands to select/unselect a char on the cursor.
