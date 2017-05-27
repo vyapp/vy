@@ -60,7 +60,7 @@ from vyapp.app import root
 from vyapp.ask import Ask
 
 class Mc(object):
-    COLOR_SCHEME = {'(MC-DIRECTORY)': {'foreground': 'red'},
+    TAGCONF = {'(MC-DIRECTORY)': {'foreground': 'red'},
     '(MC-FILE)': {'foreground': 'blue'}}
 
     clipboard = []
@@ -84,8 +84,7 @@ class Mc(object):
 
         ('NORMAL', '<Key-J>', lambda e:self.ls()))
 
-        for indi, indj in self.COLOR_SCHEME.iteritems():
-            area.tag_config(indi, **indj)
+        area.tags_config(self.TAGCONF)
 
     def list_clipboard(self):
         self.area.delete('1.0', 'end')
@@ -173,6 +172,7 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
 

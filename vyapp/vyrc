@@ -103,7 +103,7 @@ autoload(vyapp.plugins.word_search)
 
 # Shifting blocks of code.
 import vyapp.plugins.shift
-autoload(vyapp.plugins.shift, width=4, char=' ')
+autoload(vyapp.plugins.shift, width=2, char=' ')
 
 
 # Used to quickly jump to the end/start of the cursor line.
@@ -212,7 +212,7 @@ autoload(vyapp.plugins.cmd)
 
 
 # Used to search for text/format text with regex.
-# The class attribute COLOR_SCHEME holds default styling 
+# The class attribute TAGCONF holds default styling 
 # for the tag '(CATCHED)' That's added on matching patterns.
 from vyapp.plugins import find
 # find.Find.TAGCONF = { '(CATCHED)': {
@@ -281,7 +281,7 @@ autoload(vyapp.plugins.block_sel)
 # The mc filenamanager.
 # import vyapp.plugins.mc
 # Configure your color scheme here.
-# vyapp.plugins.mc.COLOR_SCHEME = {'(MC-DIRECTORY)': {'foreground': 'red'},
+# vyapp.plugins.mc.TAGCONF = {'(MC-DIRECTORY)': {'foreground': 'red'},
 # '(MC-FILE)': {'foreground': 'blue'}}
 # autoload(vyapp.plugins.mc)
 
