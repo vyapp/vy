@@ -22,6 +22,7 @@ class Spider(object):
 
         area.install('syntax', (-1, '<<LoadData>>', 
         lambda event: self.update_all()),
+        (-1, '<<SaveData>>', lambda event: self.update_all()),
         (-1, '<Escape>', lambda event: self.update()))
 
     def update_all(self):
@@ -127,6 +128,7 @@ class Spider(object):
                 return self.split(style)
 
 install = Spider
+
 
 
 
