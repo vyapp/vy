@@ -87,11 +87,12 @@ class RubyCompletion(object):
         'INSERT', '<Control-Key-period>')
 
         area.install('ruby-completion', 
-        (-1, '<<Load-application/x-ruby>>', trigger),
-        (-1, '<<Save-application/x-ruby>>', trigger), 
+        (-1, '<<Load/*.rb>>', trigger),
+        (-1, '<<Save/*.rb>>', trigger), 
         (-1, '<<LoadData>>', remove_trigger), 
         (-1, '<<SaveData>>', remove_trigger))
 
 install = RubyCompletion
+
 
 

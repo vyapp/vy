@@ -23,7 +23,6 @@ from vyapp.areavi import AreaVi
 from vyapp.plugins import ENV
 from shutil import copyfile
 from os import getcwd
-import mimetypes
 import json
 import requests
 import sys
@@ -98,21 +97,19 @@ class JavascriptCompletion(object):
         'INSERT', '<Control-Key-period>')
 
         area.install('javascript-completion', 
-        (-1, '<<Load-application/javascript>>', trigger),
-        (-1, '<<Load-text/html>>', trigger), 
-        (-1, '<<Save-application/javascript>>', trigger), 
-        (-1, '<<Save-text/html>>', trigger), 
-        (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
+        (-1, '<<Load/*.js>>', trigger),
+        (-1, '<<Load/*.html>>', trigger), 
+        (-1, '<<Save/*.js>>', trigger), 
+        (-1, '<<Save/*.html>>', trigger), 
+        (-1, '<<LoadData>>', remove_trigger), 
+        (-1, '<<SaveData>>', remove_trigger))
 
 active_completion = lambda :AreaVi.ACTIVE.hook('javascript-completion', 
 'INSERT', '<Control-Key-period>', lambda event: JavascriptCompletionWindow(
 event.widget), add=False)
 ENV['active_javascript_completion'] = active_completion
 
-# Tell the extension .js and html have that mimetype.
-mimetypes.add_type('application/javascript', '.js')
-mimetypes.add_type('application/html', '.html')
-
 install = JavascriptCompletion
+
 
 

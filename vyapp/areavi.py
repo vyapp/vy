@@ -5,7 +5,7 @@
 from Tkinter import *
 from re import escape
 import string
-import mimetypes
+import os
 
 class DataEvent(object):
     def __init__(self, widget):
@@ -1354,7 +1354,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         
         filename - Name of the file.
         """
-        import os
         filename      = os.path.abspath(filename)        
         self.filename = filename
         fd            = open(filename, 'r')
@@ -1370,8 +1369,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.delete('1.0', 'end')
         self.insert('1.0', data)
         self.event_generate('<<LoadData>>')
-        type, _ = mimetypes.guess_type(self.filename)
-        self.event_generate('<<Load-%s>>' % type)
+        _, extension = os.path.splitext(self.filename)
+        self.event_generate('<<Load/*%s>>' % extension)
 
     def decode(self, name):
         self.charset = name
@@ -1381,10 +1380,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
         It saves the actual text content in the current file.
         """
-
-        type, _ = mimetypes.guess_type(self.filename)
+        _, extension = os.path.splitext(self.filename)
         self.event_generate('<<Pre-SaveData>>')
-        self.event_generate('<<Pre-Save-%s>>' % type)
+        self.event_generate('<<Pre-Save/*%s>>' % extension)
 
         data = self.get('1.0', 'end')
         data = data.encode(self.charset)
@@ -1392,7 +1390,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         fd.write(data)
         fd.close()
         self.event_generate('<<SaveData>>')
-        self.event_generate('<<Save-%s>>' % type)
+        self.event_generate('<<Save/*%s>>' % extension)
 
     def save_data_as(self, filename):
         """
@@ -1581,6 +1579,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

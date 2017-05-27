@@ -20,7 +20,6 @@ completion.
 
 from vyapp.completion import CompletionWindow, Option
 from subprocess import Popen, PIPE
-import mimetypes
 import json
 import sys
 
@@ -61,12 +60,12 @@ class GolangCompletion(object):
                   lambda event: GolangCompletionWindow(event.widget), add=False)
 
         remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
-        area.install('golang-completion', (-1, '<<Load-application/x-golang>>', trigger),
-                     (-1, '<<Save-application/x-golang>>', trigger), 
-                     (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
+        area.install('golang-completion', (-1, '<<Load/*.go>>', trigger),
+        (-1, '<<Save/*.go>>', trigger),  (-1, '<<LoadData>>', remove_trigger), 
+        (-1, '<<SaveData>>', remove_trigger))
 
-mimetypes.add_type('application/x-golang', '.go')
 install = GolangCompletion
+
 
 
 

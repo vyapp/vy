@@ -33,7 +33,6 @@ class PythonCompletionWindow(CompletionWindow):
         line, col   = area.indcur()
         script      = Script(source, line, col, area.filename)
         completions = script.completions()
-
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
         self.bind('<F1>', lambda event: sys.stdout.write('%s\n%s\n' % ('#' * 80, self.box.selection_docs())))
 
@@ -42,7 +41,7 @@ def install(area):
                         lambda event: PythonCompletionWindow(event.widget), add=False)
     remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
 
-    area.install('python-completion', (-1, '<<Load-text/x-python>>', trigger), (-1, '<<Save-text/x-python>>', trigger),
+    area.install('python-completion', (-1, '<<Load/*.py>>', trigger), (-1, '<<Save/*.py>>', trigger),
                  (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
 
 def active_python_completion():
@@ -50,15 +49,5 @@ def active_python_completion():
                   lambda event: PythonCompletionWindow(event.widget), add=False)
 
 ENV['active_python_completion'] = active_python_completion
-
-
-
-
-
-
-
-
-
-
 
 
