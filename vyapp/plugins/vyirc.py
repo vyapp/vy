@@ -161,7 +161,7 @@ class IrcMode(object):
     Controls basic irc events and installs basic commands.
     """
 
-    COLOR_SCHEME = {
+    TAGCONF = {
     '(VYIRC-PRIVMSG)': {'foreground': '#688B96'},
     '(VYIRC-JOIN)': {'foreground': '#F06EF0'},
     '(VYIRC-PART)': {'foreground': '#F0BDAD'},
@@ -242,8 +242,7 @@ class IrcMode(object):
         ('IRC', '<Control-e>', self.send_cmd),
         ('IRC', '<Control-c>',  self.open_private_channel))
 
-        for indi, indj in self.COLOR_SCHEME.iteritems():
-            area.tag_config(indi, **indj)
+        area.tags_config(self.TAGCONF)
         return area
 
     def open_private_channel(self, event):
@@ -296,6 +295,7 @@ class IrcMode(object):
         area.append(H1 % (self.misc.nick, data))
         send_msg(self.con, target, data.encode('utf-8'))
         wid.delete(0, 'end')
+
 
 
 

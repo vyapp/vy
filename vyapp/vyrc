@@ -480,7 +480,7 @@ from vyapp.plugins.vyirc import IrcMode
 
 # Uncomment these lines to set up your custom color scheme.
 # It accepts all available config options for Tkinter Text widget.
-# IrcMode.COLOR_SCHEME = {'(VYIRC-PRIVMSG)': {'foreground': '#688B96'},
+# IrcMode.TAGCONF = {'(VYIRC-PRIVMSG)': {'foreground': '#688B96'},
 # '(VYIRC-JOIN)': {'foreground': '#F06EF0'},
 # '(VYIRC-PART)': {'foreground': '#F0BDAD'},
 # '(VYIRC-QUIT)': {'foreground': '#4EDB1F'},
