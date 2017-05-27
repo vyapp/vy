@@ -50,16 +50,18 @@ from vyapp.ask import Get, Ask
 from vyapp.app import root
 
 class Find(object):
+    COLOR_SCHEME = {
+    'background':'green', 'foreground':'white'}
+
     def __init__(self, area, nolinestop=False, 
-        regexp=True, nocase=True, exact=False, elide=False, 
-        setup={'background':'green', 'foreground':'white'}):
+        regexp=True, nocase=True, exact=False, elide=False):
 
         self.area  = area
         self.data  = ''
         self.index = None
         self.regex = ''
 
-        area.tag_config('(CATCHED)', **setup)
+        area.tag_config('(CATCHED)', **self.COLOR_SCHEME)
 
         area.install('find', ('NORMAL', '<Alt-slash>', lambda event: self.start()))
         self.opts = {'nolinestop': nolinestop, 'regexp': regexp,
@@ -137,6 +139,8 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
+
 
 
 

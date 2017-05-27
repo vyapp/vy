@@ -212,8 +212,12 @@ autoload(vyapp.plugins.cmd)
 
 
 # Used to search for text/format text with regex.
-import vyapp.plugins.find
-autoload(vyapp.plugins.find)
+# The class attribute COLOR_SCHEME holds default styling 
+# for the tag '(CATCHED)' That's added on matching patterns.
+from vyapp.plugins import find
+# find.Find.COLOR_SCHEME = {
+# 'background':'green', 'foreground':'white'}
+autoload(find)
 
 
 # It implements ways of opening/saving files.
@@ -511,17 +515,6 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
-
-
-
-
-
-
-
-
-
-
-
 
 
 
