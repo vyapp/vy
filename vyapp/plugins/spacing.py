@@ -26,7 +26,9 @@ class Tab(object):
     def __init__(self, area):
         self.area = area
         area.install('spacing', 
-        (-1, '<FocusIn>', self.set_tab_scheme),
+        (-1, '<<LoadData>>', self.set_tab_scheme),
+        (-1, '<<SaveData>>', self.set_tab_scheme),
+        (-1, '<<ClearData>>', self.set_tab_scheme),
         ('INSERT', '<Tab>', lambda event: 
         self.insert_tab(event.widget)))
     
@@ -57,4 +59,5 @@ def tabset(size, char=Tab.CHAR):
 
 ENV['tabset'] = tabset
 install = Tab
+
 
