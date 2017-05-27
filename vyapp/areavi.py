@@ -209,6 +209,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
         return self.get('insert linestart', 'insert +1l linestart')
 
+    def tags_config(self, config):
+        for indi, indj in config.iteritems():
+            self.tag_config(indi, **indj)
+
     def tag_swap(self, name, index0, index1, *args):
         """
         It removes a given tag from index0 to index1 and re adds
@@ -1579,6 +1583,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
