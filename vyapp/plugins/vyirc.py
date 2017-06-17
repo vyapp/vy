@@ -41,7 +41,7 @@ channels = A list of channels to join in.
 
 """
 
-from untwisted.plugins.irc import Irc, Misc, send_cmd, send_msg
+from quickirc import Irc, Misc, send_cmd, send_msg
 from untwisted.network import Spin, xmap, spawn, zmap, once
 from untwisted.iostd import Client, Stdin, Stdout, CONNECT, CONNECT_ERR, LOAD, CLOSE, lose
 from untwisted.splits import Terminator
@@ -295,6 +295,7 @@ class IrcMode(object):
         area.append(H1 % (self.misc.nick, data))
         send_msg(self.con, target, data.encode('utf-8'))
         wid.delete(0, 'end')
+
 
 
 
