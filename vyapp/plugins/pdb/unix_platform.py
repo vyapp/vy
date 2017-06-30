@@ -191,7 +191,7 @@ class Pdb(object):
         root.status.set_msg('Debug started !')
 
     def start_debug_args(self, area):
-        ask  = Ask(area)
+        ask  = Ask()
         ARGS = '%s -u -m pdb %s %s' % (self.python, area.filename, ask.data)
         ARGS = shlex.split(ARGS)
 
@@ -204,11 +204,11 @@ class Pdb(object):
         root.status.set_msg('Debug started ! Args: %s' % ask.data)
 
     def evaluate_expression(self, area):
-        ask  = Ask(area)
+        ask  = Ask()
         self.send('print %s\r\n' % ask.data)
 
     def execute_statement(self, area):
-        ask  = Ask(area)
+        ask  = Ask()
         self.send('!%s\r\n' % ask.data)
 
     def clear_breakpoint_map(self):
@@ -290,28 +290,5 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
