@@ -38,6 +38,7 @@ Description: Quit.
 from tkinter.messagebox import *
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from vyapp.app import root
+import sys
 
 def save_as(area):
     """
@@ -70,7 +71,8 @@ def save_quit(area):
     except Exception:
         root.status.set_msg('It failed to save data.')
     else:
-        area.quit()
+        sys.exit(0)
+        # area.quit()
 
 def load(area):
     """
@@ -116,6 +118,7 @@ def install(area):
                  ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
                  ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
                  ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
+
 
 
 

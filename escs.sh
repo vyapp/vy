@@ -29,6 +29,7 @@ git status
 git add *
 git commit -a 
 git push
+git commit -m 'Fixing setup.py version.'
 ##############################################################################
 # check, pull, request, vy, avamsi.
 cd /home/tau/projects/vy-code/
@@ -171,6 +172,7 @@ find . -name "*.bak" -exec rm -f {} \;
 
 ##############################################################################
 git rm --cached -r build
+
 
 
 
