@@ -8,8 +8,6 @@ import argparse
 import itertools
 import sys
 
-from optparse import OptionParser
-
 parser = argparse.ArgumentParser()
 
 parser.add_argument('files', nargs='*', help='Files')
@@ -53,6 +51,7 @@ else: root.note.load(*lst)
 # Otherwise errors when loading the vyrc file will be missed as well as when
 # attempting to load a non existing file.
 if not args.verbose: sys.stderr = Debug()
+
 
 
 
