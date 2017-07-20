@@ -8,7 +8,7 @@ from vyapp.statusbar import *
 from vyapp.core import NoteVi
 from vyapp.plugins import ENV
 from shutil import copyfile
-from Tkinter import Tk
+from tkinter import Tk
 from os import mkdir
 
 class App(Tk):
@@ -45,7 +45,7 @@ class App(Tk):
         
         if not exists(self.rc):
             copyfile(join(dirname(__file__), 'vyrc'), self.rc)
-        execfile(self.rc, ENV)
+        exec(compile(open(self.rc).read(), self.rc, 'exec'), ENV)
 
     def create_widgets(self):
         self.note = NoteVi(master=self, takefocus=0)

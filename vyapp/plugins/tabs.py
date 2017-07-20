@@ -33,8 +33,8 @@ Description: It changes the focus right from a tab.
 """
 
 from vyapp.app import root
-from tkMessageBox import *
-from tkFileDialog import askopenfilename, asksaveasfilename
+from tkinter.messagebox import *
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 from vyapp.areavi import AreaVi
 
 def load_tab():

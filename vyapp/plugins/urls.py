@@ -25,7 +25,7 @@ and writes it to sys.stdout.
 
 import webbrowser
 import sys
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 def open_cursor_url(event):
     webbrowser.open_new_tab(event.widget.get_seq('insert'))
@@ -36,7 +36,7 @@ def open_current_file(event):
     event.widget.chmode('NORMAL')
 
 def get_url_source(event):
-    opener            = urllib2.build_opener()
+    opener            = urllib.request.build_opener()
     opener.addheaders = [('User-agent', 'Mozilla/5.0')]
     req               = opener.open(event.widget.clipboard_get()) 
     event.widget.delete('1.0', 'end')

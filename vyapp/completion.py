@@ -1,6 +1,6 @@
 from vyapp.widgets import FloatingWindow, MatchBox, Echo
 from vyapp.tools import match_sub_pattern
-from Tkinter import LEFT, BOTH
+from tkinter import LEFT, BOTH
 
 class Option(object):
     def __init__(self, name, type='', doc=''):
@@ -42,7 +42,7 @@ class CompleteBox(MatchBox, Echo):
         '%s lineend' % self.master.start_index)).lower()
 
         seq = match_sub_pattern(pattern,
-        map(lambda ind: ind.lower(), self.get(0, 'end')))
+        [ind.lower() for ind in self.get(0, 'end')])
         line, col = self.area.indint(self.master.start_index)
 
         _, index = next(seq, (None, col))

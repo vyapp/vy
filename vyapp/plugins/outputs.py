@@ -73,6 +73,9 @@ class Transmitter(object):
         self.base    = [default]
         self.default = default
 
+    def flush(self):
+        pass
+
     def restore(self):
         """
         It clears all children and restores the default
@@ -152,6 +155,7 @@ class OutputController(object):
         return 'break'
     
 install = OutputController
+
 
 
 

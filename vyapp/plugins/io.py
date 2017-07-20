@@ -35,8 +35,8 @@ Event: <Shift-Escape>
 Description: Quit.
 """
 
-from tkMessageBox import *
-from tkFileDialog import askopenfilename, asksaveasfilename
+from tkinter.messagebox import *
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 from vyapp.app import root
 
 def save_as(area):

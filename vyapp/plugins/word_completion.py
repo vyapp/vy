@@ -29,13 +29,11 @@ class WordCompletionWindow(CompletionWindow):
 
     def __init__(self, area, *args, **kwargs):
         pattern     = area.get_seq()
-        completions = map(lambda ind: ind[1][0], 
-        area.find_all(root, '[^ ]*%s[^ ]*' % pattern 
-        if pattern else '[^ ]+', nocase=True))
+        completions = [ind[1][0] for ind in area.find_all(root, '[^ ]*%s[^ ]*' % pattern 
+        if pattern else '[^ ]+', nocase=True)]
 
         completions = set(completions)
-        completions = map(lambda ind: 
-        Option(ind), completions)
+        completions = [Option(ind) for ind in completions]
 
         CompletionWindow.__init__(self, area, 
         completions, *args, **kwargs)

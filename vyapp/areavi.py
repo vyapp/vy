@@ -2,7 +2,7 @@
 
 """
 
-from Tkinter import *
+from tkinter import *
 from re import escape
 import string
 import os
@@ -210,7 +210,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return self.get('insert linestart', 'insert +1l linestart')
 
     def tags_config(self, config):
-        for indi, indj in config.iteritems():
+        for indi, indj in config.items():
             self.tag_config(indi, **indj)
 
     def tag_swap(self, name, index0, index1, *args):
@@ -482,7 +482,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         a, b   = self.indint(index2)
         c, d   = self.indint(index3)
 
-        for ind in xrange(a, c + 1):
+        for ind in range(a, c + 1):
             self.addsel('%s.%s' % (ind, min(b, d)), '%s.%s' % (ind, max(b, d)))
 
     def rmblock(self, index0, index1):
@@ -496,7 +496,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         a, b   = self.indint(index2)
         c, d   = self.indint(index3)
 
-        for ind in xrange(a, c + 1):
+        for ind in range(a, c + 1):
             self.rmsel('%s.%s' % (ind, min(b, d)),  '%s.%s' % (ind, max(b, d)))
 
     def block_down(self):
@@ -732,7 +732,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         Place the cursor at the next occurrence of one of the chars.
         """
 
-        chars = map(lambda ind: escape(ind), chars)
+        chars = [escape(ind) for ind in chars]
         REG   = '|'.join(chars)
         self.iseek(REG, index='insert', stopindex='end')
 
@@ -741,7 +741,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         Place the cursor at the previous occurrence of one of the chars.
         """
 
-        chars = map(lambda ind: escape(ind), chars)
+        chars = [escape(ind) for ind in chars]
         REG   = '|'.join(chars)
         self.iseek(REG,  backwards=True, stopindex='1.0')
     
@@ -997,7 +997,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         self.edit_separator()
-        for ind in xrange(srow, erow + 1):
+        for ind in range(srow, erow + 1):
             self.insert('%s.0' % ind, width * char) 
     
 
@@ -1012,7 +1012,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         self.edit_separator()
-        for ind in xrange(srow, erow + 1):
+        for ind in range(srow, erow + 1):
             self.delete('%s.0' % ind, '%s.%s' % (ind, width)) 
     
 
@@ -1360,7 +1360,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
         filename      = os.path.abspath(filename)        
         self.filename = filename
-        fd            = open(filename, 'r')
+        fd            = open(filename, 'rb')
         data          = fd.read()
         fd.close()
 
@@ -1390,7 +1390,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         data = self.get('1.0', 'end')
         data = data.encode(self.charset)
-        fd   = open(self.filename, 'w')
+        fd   = open(self.filename, 'wb')
         fd.write(data)
         fd.close()
         self.event_generate('<<SaveData>>')
@@ -1423,7 +1423,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """ 
 
         ranges = self.tag_ranges(name)
-        for ind in xrange(0, len(ranges) - 1, 2):
+        for ind in range(0, len(ranges) - 1, 2):
             if self.is_subrange(index0, index1, ranges[ind].string, 
                                 ranges[ind + 1].string):
                 return ranges[ind].string, ranges[ind + 1].string
@@ -1497,7 +1497,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         ranges = self.tag_ranges(name)
-        for ind in xrange(0, len(ranges) - 1, 2):
+        for ind in range(0, len(ranges) - 1, 2):
             data = self.get(ranges[ind], ranges[ind + 1])
             yield(data)
 
@@ -1583,6 +1583,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

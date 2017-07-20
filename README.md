@@ -71,15 +71,15 @@ Basic Install
 =============
 
 **Note:** 
-vy requires Python 2.7 to run.
+vy requires Python3 to run, python2 support is no longer available.
 
 ~~~
 cd /tmp/
-pip2 download vy
+pip download vy
 tar -zxvf vy-*
 cd vy-*/
-pip2 install -r requirements.txt
-python2 setup.py install 
+pip install -r requirements.txt
+python setup.py install 
 ~~~
 
 **Note:**
@@ -99,6 +99,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 

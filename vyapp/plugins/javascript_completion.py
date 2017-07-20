@@ -82,7 +82,7 @@ class JavascriptCompletionWindow(CompletionWindow):
 
     def build(self, data):
         data = json.loads(data)
-        return map(lambda ind: Option(**ind), data['completions'])
+        return [Option(**ind) for ind in data['completions']]
 
 class JavascriptCompletion(object):
     PATH = 'tern'

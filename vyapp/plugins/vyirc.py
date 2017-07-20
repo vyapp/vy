@@ -269,9 +269,9 @@ class IrcMode(object):
         """
         # Attempt to retrieve the areavi which corresponds
         # to the target/user.
-        base    = lambda (key, value): (key.lower(), value)
-        files   = AreaVi.get_opened_files(root).iteritems()
-        targets = dict(map(base, files))
+        base    = lambda key_value: (key_value[0].lower(), key_value[1])
+        files   = iter(AreaVi.get_opened_files(root).items())
+        targets = dict(list(map(base, files)))
 
         try:
             area = targets[nick.lower()]
@@ -284,7 +284,7 @@ class IrcMode(object):
             send_cmd(con, 'JOIN %s' % ind)
 
     def e_connect_err(self, con, err):
-        print 'not connected'
+        print('not connected')
 
     def drop_msg(self, area, wid, target):
         """
@@ -293,8 +293,9 @@ class IrcMode(object):
 
         data = wid.get()
         area.append(H1 % (self.misc.nick, data))
-        send_msg(self.con, target, data.encode('utf-8'))
+        send_msg(self.con, target, data)
         wid.delete(0, 'end')
+
 
 
 

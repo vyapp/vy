@@ -3,7 +3,7 @@ This module exposes the vyapp.app.root attribute that is a variable pointing
 to the App class instance. The App class instance holds all vy editor's widgets.
 """
 
-from base import App, Debug
+from .base import App, Debug
 import argparse
 import itertools
 import sys
@@ -38,7 +38,7 @@ lambda x: not x) if not k]
 # It is the one whose AreaVi instances
 # are placed on. 
 root = App()
-lst  = lst + map(lambda ind: [[ind]], args.files)
+lst  = lst + [[[ind]] for ind in args.files]
 
 # It has to be called from here.
 # otherwise the plugins will not

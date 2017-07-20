@@ -68,7 +68,7 @@ class RubyCompletionWindow(CompletionWindow):
 
     def build(self, data):
         data = json.loads(data)
-        return map(lambda ind: Option(ind['name']), data['completions'])
+        return [Option(ind['name']) for ind in data['completions']]
 
     def get_project_path(self, filename):
         # It is broken. It should be fixed.

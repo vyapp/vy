@@ -156,6 +156,23 @@ grep -rl  'CompletionWindow' . | xargs sed -i 's/CompletionWindow/CompletionWind
 ls -dla -1 $PWD/*
 ls -d --all  /home/tau/*
 ls -d --all  /home/tau/*.*
+grep -rl  '<Key-g>' .
+grep -rl  '<Control-g>' .
+
+##############################################################################
+# futurize code.
+
+cd ~/projects/vy-code
+
+# Apply them.
+2to3  -w .
+
+find . -name "*.bak" -exec rm -f {} \;
+
+##############################################################################
+git rm --cached -r build
+
+
 
 
 

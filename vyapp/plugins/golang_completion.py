@@ -49,8 +49,8 @@ class GolangCompletionWindow(CompletionWindow):
 
     def build(self, data):
         data = json.loads(data)
-        return map(lambda ind: Option(ind['name'], 'Type:%s' % ind['type'], 
-        'Class:%s' % ind['class']), data[1])
+        return [Option(ind['name'], 'Type:%s' % ind['type'], 
+        'Class:%s' % ind['class']) for ind in data[1]]
 
 class GolangCompletion(object):
     PATH = 'gocode'

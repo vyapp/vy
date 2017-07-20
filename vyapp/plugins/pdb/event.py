@@ -9,7 +9,7 @@ def handle_found(device, data):
                 '\(Pdb\) Breakpoint (?P<index>[0-9]+) at (?P<filename>.+)\:(?P<line>[0-9]+)':('BREAKPOINT', ('index', 'filename', 'line'))
             }
     
-    for regex, (event, groups) in TABLE.iteritems():
+    for regex, (event, groups) in TABLE.items():
         sch = search(regex, data)
         if not sch: continue
         spawn(device, event, *sch.group(*groups))

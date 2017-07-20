@@ -19,7 +19,7 @@ from vyapp.plugins import ENV
 
 def transform(func):
     map  = AreaVi.ACTIVE.tag_ranges('sel')
-    for index in xrange(0, len(map) - 1, 2):
+    for index in range(0, len(map) - 1, 2):
         data = AreaVi.ACTIVE.get(map[index], map[index + 1])
         AreaVi.ACTIVE.delete(map[index], map[index + 1])
         AreaVi.ACTIVE.insert(map[index], func(data))

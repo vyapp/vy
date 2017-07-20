@@ -1,4 +1,4 @@
-from Tkinter import Listbox, Toplevel
+from tkinter import Listbox, Toplevel
 
 class MatchBox(Listbox):
     def __init__(self, *args, **kwargs):
@@ -10,7 +10,7 @@ class MatchBox(Listbox):
 
         elems = self.get(0, 'end')
 
-        for ind in xrange(0, self.size()):
+        for ind in range(0, self.size()):
             if elems[ind].startswith(data): 
                 return ind
         else:

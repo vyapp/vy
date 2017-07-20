@@ -2,9 +2,9 @@
 This module implements widgets that permit managing tabs, panes in vy.
 """
 
-from Tkinter import *
-from areavi import AreaVi
-from ttk import Notebook
+from tkinter import *
+from .areavi import AreaVi
+from tkinter.ttk import Notebook
 
 class PanedHorizontalWindow(PanedWindow):
     """
@@ -130,7 +130,7 @@ class NoteVi(Notebook):
     def set_area_focus(self):
         wid  = self.nametowidget(self.select())
         seq  = AreaVi.areavi_widgets(wid)
-        area = seq.next()
+        area = next(seq)
         area.focus_set()
 
     def on(self, *args):

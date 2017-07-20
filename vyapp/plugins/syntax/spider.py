@@ -17,7 +17,7 @@ class Spider(object):
         area.configure(background = self.background)
         area.configure(foreground = self.default_style)
 
-        for ind in self.styles.iterkeys():
+        for ind in self.styles.keys():
             self.set_token_style(ind)
 
         area.install('syntax', (-1, '<<LoadData>>', 
@@ -67,7 +67,7 @@ class Spider(object):
         index2 = self.area.tag_prev_occur(TAG_KEYS_PRECEDENCE, 
         index2, 'insert', 'end')
 
-        for ind in self.styles.iterkeys():
+        for ind in self.styles.keys():
             self.area.tag_remove(str(ind), index0, index2)
         self.tag_tokens(lexer, index0, index2)
 

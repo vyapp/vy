@@ -30,7 +30,7 @@ def set_line(area, line):
 def match_sub_pattern(pattern, lst):
     pattern = buffer(pattern)
     for indi in lst:
-        for indj in xrange(0, len(pattern)):
+        for indj in range(0, len(pattern)):
                 if indi.startswith(pattern[indj:]):
                     yield indi, indj
                     

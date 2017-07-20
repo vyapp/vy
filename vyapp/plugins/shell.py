@@ -21,11 +21,11 @@ Description: Send the cursor line to the process and insert a line down.
 from untwisted.expect import Expect, LOAD, CLOSE
 from untwisted.network import xmap
 from vyapp.exe import exec_quiet
-from Tkinter import TclError
+from tkinter import TclError
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 from vyapp.app import root
-
+import signal
 import shlex
 
 class Shell(object):
@@ -65,12 +65,22 @@ class Shell(object):
         xmap(self.expect, CLOSE, self.handle_close)
 
     def map_process_input(self):
-        self.area.hook('shell', 'NORMAL', '<F2>', lambda event: 
-        self.dump_line_and_down(), add=False)
+        self.area.hook('shell', 'NORMAL', '<F1>', lambda event: 
+        self.dump_line(), add=False)
 
-        self.area.hook('shell', 'INSERT', '<F2>', lambda event: 
-        self.dump_line_and_insert_line(), add=False)
+        self.area.hook('shell', 'INSERT', '<F1>', lambda event: 
+        self.dump_line(), add=False)
+
+        self.area.hook('shell', 'NORMAL', '<Control-c>', lambda event: 
+        self.dump_signal(signal.SIGINT), add=False)
+
+        self.area.hook('shell', 'NORMAL', '<Control-backslash>', lambda event: 
+        self.dump_signal(signal.SIGQUIT), add=False)
+
         root.status.set_msg('%s -> %s' % (self.area.filename, self.output.filename))
+
+    def dump_signal(self, num):
+        self.expect.child.send_signal(num)
 
     def terminate_process(self):
         try:
@@ -79,12 +89,9 @@ class Shell(object):
             pass
         root.status.set_msg('Killed process!')
 
-    def dump_line_and_down(self):
-        self.expect.send(self.area.curline())
-        self.area.down()
-
-    def dump_line_and_insert_line(self):
-        self.expect.send(self.area.curline())
+    def dump_line(self):
+        data = self.area.curline().encode(self.area.charset)
+        self.expect.send(data)
         self.area.down()
 
     def handle_close(self, expect):
@@ -97,12 +104,6 @@ ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.mas
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['vbash']  = lambda : Shell('bash -i',AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['hbash'] = lambda : Shell('bash -i', AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
-
-
-
-
-
-
 
 
 

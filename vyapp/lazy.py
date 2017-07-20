@@ -17,7 +17,7 @@ def consume_iter(iterator, time=1):
     def cave():
         from vyapp.app import root
         try:
-            iterator.next()
+            next(iterator)
         except Exception:
             pass
         else:    

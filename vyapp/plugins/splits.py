@@ -75,11 +75,11 @@ def remove_area(area):
 
 def go_left_area(area):
     wids  = area.master.master.panes()
-    wids  = map(lambda item: str(item), wids)
+    wids  = [str(item) for item in wids]
     count = wids.index(str(area.master))
     count = count - 1
     wid   = area.nametowidget(wids[count])
-    wid   = filter(lambda ind: isinstance(ind, AreaVi), wid.winfo_children())
+    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
     
     # as there is only one.
     wid[0].focus_set()
@@ -87,11 +87,11 @@ def go_left_area(area):
 
 def go_right_area(area):
     wids   = area.master.master.panes()
-    wids  = map(lambda item: str(item), wids)
+    wids  = [str(item) for item in wids]
     count = wids.index(str(area.master))
     count = (count + 1) % len(wids)
     wid   = area.nametowidget(wids[count])
-    wid   = filter(lambda ind: isinstance(ind, AreaVi), wid.winfo_children())
+    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
     
     # as there is only one.
     wid[0].focus_set()
@@ -99,11 +99,11 @@ def go_right_area(area):
 
 def go_down_area(area):
     wids   = area.master.master.panes()
-    wids  = map(lambda item: str(item), wids)
+    wids  = [str(item) for item in wids]
     index = wids.index(str(area.master))
 
     wids   = area.master.master.master.panes()
-    wids  = map(lambda item: str(item), wids)
+    wids  = [str(item) for item in wids]
     count = wids.index(str(area.master.master))
     count = (count + 1) % len(wids)
 
@@ -111,7 +111,7 @@ def go_down_area(area):
     size  = len(wid.panes())
     wid   = area.nametowidget(wid.panes()[index if index < size else (size - 1)])
 
-    wid   = filter(lambda ind: isinstance(ind, AreaVi), wid.winfo_children())
+    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
 
     # as there is only one.
     wid[0].focus_set()
@@ -119,18 +119,18 @@ def go_down_area(area):
 
 def go_up_area(area):
     wids   = area.master.master.panes()
-    wids  = map(lambda item: str(item), wids)
+    wids  = [str(item) for item in wids]
     index = wids.index(str(area.master))
 
     wids   = area.master.master.master.panes()
-    wids  = map(lambda item: str(item), wids)
+    wids  = [str(item) for item in wids]
     count = wids.index(str(area.master.master))
     count = count - 1
 
     wid   = area.nametowidget(wids[count])
     size  = len(wid.panes())
     wid   = area.nametowidget(wid.panes()[index if index < size else (size - 1)])
-    wid   = filter(lambda ind: isinstance(ind, AreaVi), wid.winfo_children())
+    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
 
     # as there is only one.
     wid[0].focus_set()

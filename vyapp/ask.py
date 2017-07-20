@@ -2,7 +2,7 @@
 This module implements basic input data scheme.
 """
 
-from Tkinter import *
+from tkinter import *
 from vyapp.app import root
 from vyapp.areavi import DataEvent, IdleEvent
 import string
@@ -35,7 +35,7 @@ class Get(InputBox, DataEvent, IdleEvent):
         IdleEvent.__init__(self, self.entry)
 
         self.entry.bindtags(('Entry', self.entry, '.', 'all'))
-        for indi, indj in events.iteritems():
+        for indi, indj in events.items():
             self.entry.bind(indi, lambda event, handle=indj: 
                         self.dispatch(handle) , add=True)
 

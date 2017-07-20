@@ -226,7 +226,7 @@ class Pdb(object):
         It is useful when restarting pdb as a different process.
         """
     
-        for index, (filename, line) in self.map_index.iteritems():
+        for index, (filename, line) in self.map_index.items():
             try:
                 area = AreaVi.get_opened_files(root)[filename]
             except KeyError:
