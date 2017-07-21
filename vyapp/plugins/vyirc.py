@@ -172,7 +172,7 @@ class IrcMode(object):
     '(VYIRC-332)': {'foreground': '#81BFFC'},
     '(VYIRC-CLOSE)': {'foreground': '#A7F2E9'}}
     
-    def __init__(self, addr, port, user, nick, irccmd, channels=[]):
+    def __init__(self, addr, port, user, nick, irccmd, channels=[], encoding='utf8'):
         con      = Spin()
         self.con = con
         con.connect_ex((addr, int(port)))
@@ -187,6 +187,7 @@ class IrcMode(object):
         self.nick     = nick
         self.irccmd   = irccmd
         self.channels = channels
+        self.encoding = encoding
 
     def send_cmd(self, event):
         """
@@ -209,8 +210,9 @@ class IrcMode(object):
 
         xmap(con, CLOSE, lambda con, err: lose(con))
         xmap(con, '*JOIN', self.create_channel)
+
         xmap(con, Terminator.FOUND, 
-        lambda con, data: area.append('%s\n' % data))
+        lambda con, data: area.append('%s\n' % data.decode(self.encoding)))
 
         xmap(con, 'PMSG', self.e_pmsg)
         xmap(con, '376', lambda con, *args: 
@@ -295,6 +297,7 @@ class IrcMode(object):
         area.append(H1 % (self.misc.nick, data))
         send_msg(self.con, target, data)
         wid.delete(0, 'end')
+
 
 
 
