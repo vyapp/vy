@@ -18,7 +18,7 @@ class Fsniff(object):
 
     def run_cmd(self, data):
         path = check_output(['locate', '--limit', '1', 
-        '--regexp', build_regex(data, '.*')])
+        '--regexp', build_regex(data, '.*')], encoding='utf8')
         path = path.strip('\n').rstrip('\n')
         return path
 
@@ -48,6 +48,7 @@ class Fsniff(object):
         root.status.set_msg('Locating...')
 
 install = Fsniff
+
 
 
 
