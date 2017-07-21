@@ -42,7 +42,7 @@ class GolangCompletionWindow(CompletionWindow):
 
     def completions(self, data, offset, filename):
         daemon = Popen('%s -f=json autocomplete %s %s' % (GolangCompletion.PATH,
-        self.area.filename, offset), shell=1, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        self.area.filename, offset), shell=1, stdin=PIPE, stdout=PIPE, stderr=PIPE, encoding=self.area.charset)
         stdout, stderr = daemon.communicate(data)
 
         return self.build(stdout)
@@ -65,6 +65,7 @@ class GolangCompletion(object):
         (-1, '<<SaveData>>', remove_trigger))
 
 install = GolangCompletion
+
 
 
 
