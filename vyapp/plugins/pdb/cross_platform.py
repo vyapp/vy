@@ -7,14 +7,19 @@ import sys
 
 __doc__ = vyapp.plugins.pdb.unix_platform.__doc__
 
+class PdbEvents(event.PdbEvents):
+    def __init__(self, dev, encoding='utf8'):
+        xmap(dev, LOAD, self.handle_found)
+        self.encoding = encoding
+
 class Pdb(vyapp.plugins.pdb.unix_platform.Pdb):
     def __init__(self):
         vyapp.plugins.pdb.unix_platform.Pdb.__init__(self)
 
     def create_process(self, args):
         self.expect = Expect(*args)
+        PdbEvents(self.expect, self.encoding)
         xmap(self.expect, LOAD, lambda con, data: sys.stdout.write(data))
-        xmap(self.expect, LOAD, event.handle_found)
 
         xmap(self.expect, 'LINE', self.handle_line)
         xmap(self.expect, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
@@ -34,10 +39,11 @@ class Pdb(vyapp.plugins.pdb.unix_platform.Pdb):
             return
 
     def send(self, data):
-        self.expect.send(data)
+        self.expect.send(data.encode(self.encoding))
 
 pdb = Pdb()
 install = pdb
+
 
 
 

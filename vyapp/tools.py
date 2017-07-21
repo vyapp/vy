@@ -25,8 +25,6 @@ def set_line(area, line):
     area.focus()
     area.setcur(line)
 
-    root.status.set_msg(msg)
-
 def match_sub_pattern(pattern, lst):
     pattern = buffer(pattern)
     for indi in lst:
@@ -34,6 +32,7 @@ def match_sub_pattern(pattern, lst):
                 if indi.startswith(pattern[indj:]):
                     yield indi, indj
                     
+
 
 
 

@@ -110,8 +110,9 @@ from untwisted.network import core, READ, Device
 from untwisted.tkinter import extern
 from subprocess import Popen, PIPE, STDOUT
 from untwisted.iofile import *
+from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
-from vyapp.plugins.pdb import event
+from vyapp.plugins.pdb.event import PdbEvents
 from vyapp.tools import set_line
 from vyapp.ask import Ask
 from vyapp.areavi import AreaVi
@@ -120,7 +121,10 @@ import shlex
 import sys
 
 class Pdb(object):
-    def __call__(self, area, python='python2', setup={'background':'blue', 'foreground':'yellow'}):
+    setup={'background':'blue', 'foreground':'yellow'}
+    encoding='utf8'
+
+    def __call__(self, area, python='python2'):
         area.add_mode('PDB')
 
         area.install('pdb', ('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
@@ -140,8 +144,7 @@ class Pdb(object):
                     ('PDB', '<Key-B>', lambda event: self.send('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
                     ('PDB', '<Key-b>', lambda event: self.send('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
 
-        self.python = python
-        self.setup  = setup
+        self.python   = python
 
     def __init__(self):
         self.child = None
@@ -157,9 +160,9 @@ class Pdb(object):
         self.stdin  = Device(self.child.stdin)
     
         Stdout(self.stdout)
-        Terminator(self.stdout, delim='\n')
+        Terminator(self.stdout, delim=b'\n')
         Stdin(self.stdin)
-        event.install(self.stdout)
+        PdbEvents(self.stdout, self.encoding)
 
         xmap(self.stdout, LOAD, lambda con, data: sys.stdout.write(data))
 
@@ -194,7 +197,6 @@ class Pdb(object):
         ask  = Ask()
         ARGS = '%s -u -m pdb %s %s' % (self.python, area.filename, ask.data)
         ARGS = shlex.split(ARGS)
-
         self.kill_debug_process()
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
@@ -286,9 +288,10 @@ class Pdb(object):
 
 
     def send(self, data):
-        self.stdin.dump(data)
+        self.stdin.dump(data.encode(self.encoding))
 
 pdb     = Pdb()
 install = pdb
+
 
 
