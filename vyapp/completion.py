@@ -63,7 +63,9 @@ class CompleteBox(MatchBox, Echo):
         item, = self.curselection()
         return self.completions[item].docstring()
 
-    def on_char(self, event):
+    def on_char(self, char):
+        super(CompleteBox, self).on_char(char)
+
         self.selection_item(self.area.get(
         self.index, 'insert'))
 
@@ -78,6 +80,7 @@ class CompletionWindow(FloatingWindow):
 
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+
 
 
 

@@ -26,12 +26,13 @@ def set_line(area, line):
     area.setcur(line)
 
 def match_sub_pattern(pattern, lst):
-    pattern = buffer(pattern)
+    # pattern = buffer(pattern)
     for indi in lst:
         for indj in range(0, len(pattern)):
                 if indi.startswith(pattern[indj:]):
                     yield indi, indj
                     
+
 
 
 

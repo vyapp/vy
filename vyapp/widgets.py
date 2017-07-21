@@ -1,4 +1,5 @@
 from tkinter import Listbox, Toplevel
+from string import printable
 
 class MatchBox(Listbox):
     def __init__(self, *args, **kwargs):
@@ -37,11 +38,11 @@ class Echo(object):
         self.bind('<Key>', self.dispatch)
 
     def dispatch(self, event):
-        self.area.echo(chr(event.keysym_num))
-        self.on_char(event)
+        char = chr(event.keysym_num)
+        if char in printable:  self.on_char(char)
 
-    def on_char(self, event):
-        pass
+    def on_char(self, char):
+        self.area.echo(char)
 
     def on_backspace(self, event):
         self.area.backspace()
@@ -101,6 +102,7 @@ class FloatingWindow(Toplevel):
     def destroy(self):
         self.area.focus_set()
         Toplevel.destroy(self)
+
 
 
 
