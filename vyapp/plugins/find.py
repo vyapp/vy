@@ -102,7 +102,7 @@ class Find(object):
         root.status.set_msg('nolinestop=%s' % self.opts['nolinestop'])
 
     def set_data(self, wid):
-        self.data = wid.get().decode('string_escape')
+        self.data = wid.get()
         wid.delete(0, 'end')
         root.status.set_msg('Set replacement: %s' % self.data)
 
@@ -139,6 +139,7 @@ class Find(object):
         self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 
