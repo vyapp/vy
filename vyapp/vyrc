@@ -402,31 +402,40 @@ autoload(vyapp.plugins.clip_path)
 import vyapp.plugins.syntax.spider
 
 # from pygments.styles.emacs import EmacsStyle
-# autoload(vyapp.plugins.syntax.spider, EmacsStyle())
+# autoload(vyapp.plugins.syntax.spider, EmacsStyle)
 
 # from pygments.styles.murphy import MurphyStyle
-# autoload(vyapp.plugins.syntax.spider, MurphyStyle())
+# autoload(vyapp.plugins.syntax.spider, MurphyStyle)
+
+# from pygments.styles.abap import AbapStyle
+# autoload(vyapp.plugins.syntax.spider, AbapStyle)
+
+# from pygments.styles.borland import BorlandStyle
+# autoload(vyapp.plugins.syntax.spider, BorlandStyle)
+
+# from pygments.styles.fruity import FruityStyle
+# autoload(vyapp.plugins.syntax.spider, FruityStyle)
 
 # from pygments.styles.colorful import ColorfulStyle
-# autoload(vyapp.plugins.syntax.spider, ColorfulStyle())
+# autoload(vyapp.plugins.syntax.spider, ColorfulStyle)
 
 # from pygments.styles.tango import TangoStyle
-# autoload(vyapp.plugins.syntax.spider, TangoStyle())
+# autoload(vyapp.plugins.syntax.spider, TangoStyle)
 
 # from pygments.styles.trac import TracStyle
-# autoload(vyapp.plugins.syntax.spider, TracStyle())
+# autoload(vyapp.plugins.syntax.spider, TracStyle)
 
 # from pygments.styles.igor import IgorStyle
-# autoload(vyapp.plugins.syntax.spider, IgorStyle())
+# autoload(vyapp.plugins.syntax.spider, IgorStyle)
 
 # from pygments.styles.paraiso_dark import ParaisoDarkStyle
-# autoload(vyapp.plugins.syntax.spider, ParaisoDarkStyle())
+# autoload(vyapp.plugins.syntax.spider, ParaisoDarkStyle)
 
 # from pygments.styles.vim import VimStyle
-# autoload(vyapp.plugins.syntax.spider, VimStyle())
+# autoload(vyapp.plugins.syntax.spider, VimStyle)
 
 from vyapp.plugins.syntax.styles.vy import VyStyle
-autoload(vyapp.plugins.syntax.spider, VyStyle())
+autoload(vyapp.plugins.syntax.spider, VyStyle)
 
 ##############################################################################
 
@@ -517,6 +526,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

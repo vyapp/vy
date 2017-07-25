@@ -11,10 +11,15 @@ class Spider(object):
     def  __init__(self, area, theme, max=10):
         self.area          = area
         self.max           = max
+        self.theme         = theme
         self.styles        = theme.styles
         self.default_style = getattr(theme, 'default_style', '#957C8B')
-        self.background    = theme.background_color
-        area.configure(background = self.background)
+        self.default_style = self.default_style if self.default_style else '#957C8B'
+
+        self.default_background = theme.background_color \
+        if theme.background_color else 'black'
+
+        area.configure(background = self.default_background)
         area.configure(foreground = self.default_style)
 
         for ind in self.styles.keys():
@@ -84,18 +89,6 @@ class Spider(object):
             self.area.tag_add(str(token), '%s.%s' % (srow, 
                  scol), '%s.%s' % (erow, ecol))
 
-    def split(self, style):
-        """
-        Split the style into bg/fg values. Further compatibility 
-        will be implemented.
-        """
-
-        sre = search('bg\:(?P<bg>.+) ?', style)
-        bg  = sre.group('bg') if sre else self.background
-        sre = search('(?P<fg>#.+) ?', style)
-        fg  = sre.group('fg') if sre else self.default_style
-        return bg, fg
-
     def set_token_style(self, token):
         """
         Configure the tag which maps to the token in the
@@ -106,28 +99,22 @@ class Spider(object):
         and self.default_style.
         """
 
-        tag     = str(token)
-        style   = self.get_token_style(token)
-        bg, fg  = style if style else (self.background, self.default_style)
+        tag  = str(token)
+        conf = self.theme.style_for_token(token)
+
         self.area.tag_configure(tag, 
-        foreground=fg, background=bg)
+        foreground='#%s' % conf['color'] if conf['color'] \
+        else self.default_style, 
+        background='#%s' % conf['bgcolor'] if conf['bgcolor'] else \
+        self.default_background, 
+        underline=conf['underline'])
 
         # Note: It may be interesting to redefine
         # tag_configure in AreaVi and implement it there.
         self.area.tag_lower(tag, 'sel')
 
-    def get_token_style(self, token):
-        """
-        Note: Styles dict is populated with all possible tokens. 
-        It has to be written like this(without try/except block).
-        """
-
-        for ind in reversed(token.split()):
-            style = self.styles.get(ind); 
-            if  style: 
-                return self.split(style)
-
 install = Spider
+
 
 
 

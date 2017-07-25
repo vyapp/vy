@@ -97,7 +97,7 @@ pip2 install -r requirements.txt
 # install, vy. 
 cd ~/projects/vy-code
 sudo bash -i
-python2 setup.py install
+python setup.py install
 rm -fr build
 exit
 ##############################################################################
@@ -172,6 +172,7 @@ find . -name "*.bak" -exec rm -f {} \;
 
 ##############################################################################
 git rm --cached -r build
+
 
 
 
