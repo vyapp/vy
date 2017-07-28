@@ -483,7 +483,10 @@ import vyapp.plugins.codec
 
 
 # Spawning processes.
-import vyapp.plugins.shell
+# import vyapp.plugins.spawn.unix_platform
+
+# Spawning processes cross_platform.
+import vyapp.plugins.spawn.cross_platform
 
 ##############################################################################
 # The vy irc mode.
@@ -526,6 +529,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
