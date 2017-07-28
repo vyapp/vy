@@ -25,6 +25,8 @@ from tkinter import TclError
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 from vyapp.app import root
+from os import environ 
+
 import signal
 import shlex
 
@@ -34,7 +36,7 @@ class Shell(object):
         self.output = output
 
         try:
-            self.expect = Expect(*shlex.split(data))
+            self.expect = Expect(*shlex.split(data), env=environ)
         except Exception as e:
             root.status.set_msg(e)
         else:
@@ -104,6 +106,7 @@ ENV['hshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.mas
 ENV['vshell'] = lambda data: Shell(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['vbash']  = lambda : Shell('bash -i',AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
 ENV['hbash'] = lambda : Shell('bash -i', AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
+
 
 
 
