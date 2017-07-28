@@ -1,7 +1,8 @@
 jedi
 pygments
-untwisted==1.4.1
+untwisted==1.4.2
 quickirc==1.1.1
+
 
 
 
