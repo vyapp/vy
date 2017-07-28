@@ -147,7 +147,7 @@ class Mc(object):
     def rename(self):
         path     = self.area.get_line()
         ask      = Ask()
-        filename = ask.data.encode('utf-8')
+        filename = ask.data
         destin   = join(dirname(path), filename)
         code     = call('mv "%s" %s' % (path, 
         destin), shell=1)
@@ -172,6 +172,7 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
 
