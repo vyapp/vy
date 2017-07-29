@@ -8,6 +8,7 @@ class BaseSpawn(object):
         self.cmd    = cmd
         self.input  = input
         self.output = output
+        self.install_events()
 
     def install_events(self):
         """

@@ -15,11 +15,10 @@ from os import environ
 import shlex
 
 class Spawn(BaseSpawn):
-    def __init__(self, cmd, input, output):
-        super(Spawn, self).__init__(cmd, input, output)
-
-        self.child   = Popen(shlex.split(self.cmd), shell=0, stdout=PIPE, stdin=PIPE, 
-                             preexec_fn=setsid, stderr=STDOUT,  env=environ)
+    def __init__(self, cmd):
+        self.child   = Popen(shlex.split(cmd), 
+        shell=0, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
+        stderr=STDOUT,  env=environ)
         
 
         self.stdout  = Device(self.child.stdout)
@@ -31,7 +30,9 @@ class Spawn(BaseSpawn):
         Stdout(self.stdout)
         Stdin(self.stdin)
 
-        self.stdout.add_map(LOAD, lambda con, data: self.output.append(data))
+        self.stdout.add_map(LOAD, lambda con, data: \
+        self.output.append(data))
+
         self.stdin.add_map(CLOSE, self.handle_close)
         self.stdout.add_map(CLOSE, self.handle_close)
 
@@ -52,12 +53,23 @@ class Spawn(BaseSpawn):
         self.stdout.destroy()
         self.stdin.destroy()
 
-ENV['spawn']  = spawn
-ENV['hspawn'] = lambda data: Spawn(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
-ENV['vspawn'] = lambda data: Spawn(data, AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
+class HSpawn(Spawn):
+    def __init__(self, cmd):
+        Spawn.__init__(self, cmd)
+        BaseSpawn.__init__(self, cmd, AreaVi.ACTIVE, 
+        AreaVi.ACTIVE.master.master.create())
 
-ENV['vbash']  = lambda : Spawn('bash -i',AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.master.create())
-ENV['hbash'] = lambda : Spawn('bash -i', AreaVi.ACTIVE, AreaVi.ACTIVE.master.master.create())
+class VSpawn(Spawn):
+    def __init__(self, cmd):
+        Spawn.__init__(self, cmd)
+        BaseSpawn.__init__(self, cmd, AreaVi.ACTIVE, 
+        AreaVi.ACTIVE.master.master.master.create())
+
+ENV['hspawn'] = HSpawn
+ENV['vspawn'] = VSpawn
+
+ENV['vbash']  = lambda : HSpawn('bash -i')
+ENV['hbash'] = lambda : VSpawn('bash -i')
 
 
 
