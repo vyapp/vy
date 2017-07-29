@@ -13,8 +13,8 @@ class DataEvent(object):
         self.widget.bind('<Key>', self.dispatch_data, add=True)
 
     def dispatch_data(self, event):
-        keysym = chr(event.keysym_num)
-        self.widget.event_generate('<<Data>>', data=keysym)
+        if event.char:
+            self.widget.event_generate('<<Data>>')
 
 class IdleEvent(object):
     def __init__(self, widget):
@@ -1583,6 +1583,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

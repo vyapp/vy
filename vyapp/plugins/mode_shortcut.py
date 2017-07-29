@@ -11,7 +11,7 @@ Key-Commands
 Namespace: mode-shortcut
 
 Mode: GLOBAL
-Event: <Alt-n>
+Event: <Alt-g>
 Description: Pin the current mode.
 
 Mode: NORMAL
@@ -29,7 +29,7 @@ class ModeShortcut(object):
         self.area = area
         area.install('mode-shortcut', ('NORMAL', '<Key-g>',  
         lambda event: self.area.chmode(self.target_id)),
-        ('-1', '<Alt-n>',  lambda event: self.save_mode()))
+        ('-1', '<Alt-g>',  lambda event: self.save_mode()))
                      
     def save_mode(self):
         self.target_id = self.area.id
@@ -38,6 +38,7 @@ class ModeShortcut(object):
         return 'break'
 
 install = ModeShortcut
+
 
 
 
