@@ -486,7 +486,7 @@ import vyapp.plugins.codec
 # import vyapp.plugins.spawn.unix_platform
 
 # Spawning processes cross_platform.
-import vyapp.plugins.spawn.cross_platform
+# import vyapp.plugins.spawn.cross_platform
 
 ##############################################################################
 # The vy irc mode.
