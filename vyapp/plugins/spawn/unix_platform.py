@@ -68,8 +68,9 @@ class VSpawn(Spawn):
 ENV['hspawn'] = HSpawn
 ENV['vspawn'] = VSpawn
 
-ENV['vbash']  = lambda : HSpawn('bash -i')
-ENV['hbash'] = lambda : VSpawn('bash -i')
+ENV['vbash']  = lambda : VSpawn('bash -i')
+ENV['hbash'] = lambda : HSpawn('bash -i')
+
 
 
 
