@@ -27,12 +27,13 @@ class AskPass(Tk):
         print(askpass.data)
 
         # Sort of a hack to avoid i3 bug with events.
-        self.after(0, lambda: event.widget.quit())
+        self.after(1, lambda: event.widget.quit())
 
 
 if __name__ == '__main__':
     askpass = AskPass('Word Pass')
     askpass.mainloop()
+
 
 
 
