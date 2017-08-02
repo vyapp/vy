@@ -36,6 +36,11 @@ class PanedHorizontalWindow(PanedWindow):
         area.pack(expand=True, side='left', fill=BOTH)
         self.add(frame)
 
+        def save_focus(event):
+            self.master.last_focused_area = area
+
+        self.master.last_focused_area = area
+        area.bind('<FocusIn>', save_focus)
         return area
 
     def load(self, filename):
@@ -56,6 +61,7 @@ class PanedVerticalWindow(PanedWindow):
 
     def __init__(self, *args, **kwargs):
         PanedWindow.__init__(self, orient=VERTICAL, *args, **kwargs)
+        self.last_focused_area = None
 
     def create(self, filename='none'):
         """
@@ -129,9 +135,10 @@ class NoteVi(Notebook):
 
     def set_area_focus(self):
         wid  = self.nametowidget(self.select())
-        seq  = AreaVi.areavi_widgets(wid)
-        area = next(seq)
-        area.focus_set()
+        wid.last_focused_area.focus_set()
+        # seq  = AreaVi.areavi_widgets(wid)
+        # area = next(seq)
+        # area.focus_set()
 
     def on(self, *args):
         """
@@ -143,5 +150,6 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
+
 
 

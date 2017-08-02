@@ -2,7 +2,6 @@
 CONTRIBUTORS.md
 LICENSE.md
 README.md
-askpass
 requirements.txt
 screenshot-1.jpg
 setup.cfg
@@ -80,7 +79,6 @@ vyapp/plugins/quick_sel.py
 vyapp/plugins/range_sel.py
 vyapp/plugins/ruby_completion.py
 vyapp/plugins/seek_symbol.py
-vyapp/plugins/shell.py
 vyapp/plugins/shift.py
 vyapp/plugins/skewer.py
 vyapp/plugins/spacing.py
@@ -105,6 +103,10 @@ vyapp/plugins/pdb/__init__.py
 vyapp/plugins/pdb/cross_platform.py
 vyapp/plugins/pdb/event.py
 vyapp/plugins/pdb/unix_platform.py
+vyapp/plugins/spawn/__init__.py
+vyapp/plugins/spawn/base_spawn.py
+vyapp/plugins/spawn/cross_platform.py
+vyapp/plugins/spawn/unix_platform.py
 vyapp/plugins/syntax/__init__.py
 vyapp/plugins/syntax/keys.py
 vyapp/plugins/syntax/spider.py
