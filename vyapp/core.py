@@ -136,9 +136,18 @@ class NoteVi(Notebook):
     def set_area_focus(self):
         wid  = self.nametowidget(self.select())
         wid.last_focused_area.focus_set()
-        # seq  = AreaVi.areavi_widgets(wid)
-        # area = next(seq)
-        # area.focus_set()
+
+    def restore_area_focus(self):
+        """
+        When an AreaVvi is destroyed, the last_focused_area
+        is a dead widget, so it gives focus to the first AreaVi
+        in the active tab.
+        """
+
+        wid  = self.nametowidget(self.select())
+        seq  = AreaVi.areavi_widgets(wid)
+        area = next(seq)
+        area.focus_set()
 
     def on(self, *args):
         """
@@ -150,6 +159,7 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
+
 
 
 

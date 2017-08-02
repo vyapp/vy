@@ -70,7 +70,7 @@ def remove_area(area):
     area.master.destroy()
 
     if not area.master.master.panes(): area.master.master.destroy()
-    root.note.set_area_focus()
+    root.note.restore_area_focus()
     return 'break'
 
 def go_left_area(area):
@@ -144,6 +144,7 @@ def install(area):
                  (-1, '<Control-Alt-l>', lambda event: go_right_area(event.widget)),
                  (-1, '<Control-Alt-k>', lambda event: go_up_area(event.widget)),
                  (-1, '<Control-Alt-j>', lambda event: go_down_area(event.widget)))
+
 
 
 
