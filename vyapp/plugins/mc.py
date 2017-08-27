@@ -61,7 +61,7 @@ from vyapp.ask import Ask
 
 class Mc(object):
     TAGCONF = {'(MC-DIRECTORY)': {'foreground': 'red'},
-    '(MC-FILE)': {'foreground': 'blue'}}
+    '(MC-FILE)': {'foreground': 'yellow'}}
 
     clipboard = []
 
@@ -172,6 +172,7 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
 
