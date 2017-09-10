@@ -48,6 +48,7 @@ def active_python_completion():
     AreaVi.ACTIVE.hook('INSERT', '<Control-Key-period>', 
                   lambda event: PythonCompletionWindow(event.widget), add=False)
 
-ENV['active_python_completion'] = active_python_completion
+ENV['pcw'] = active_python_completion
+
 
 
