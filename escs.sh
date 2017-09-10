@@ -10,7 +10,7 @@ git clone git@github.com:iogf/vy.wiki.git vy.wiki-code
 cd /home/tau/projects/vy.wiki-code/
 git pull
 ##############################################################################
-# push, vy, vyapp, github, code, wiki.
+# push vy wiki docs.
 cd /home/tau/projects/vy.wiki-code/
 git status
 git add *
@@ -18,12 +18,11 @@ git commit -a
 git push
 
 ##############################################################################
-
 # delete, remove, clean, *.pyc files, vy, vyapp.
 cd /home/tau/projects/vy-code/
 find . -name "*.pyc" -exec rm -f {} \;
 ##############################################################################
-# push, vy, vyapp, github, code.
+# push vy code.
 cd /home/tau/projects/vy-code/
 git status
 git add *
@@ -172,6 +171,7 @@ find . -name "*.bak" -exec rm -f {} \;
 
 ##############################################################################
 git rm --cached -r build
+
 
 
 
