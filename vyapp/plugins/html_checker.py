@@ -42,25 +42,16 @@ from re import findall
 import sys
 
 class HtmlChecker(object):
-    def  __init__(self, area, path='tidy'):
+    PATH = 'tidy'
+
+    def  __init__(self, area):
         self.area = area
-        # The path that tidy stays, in some
-        # systems it may not be available in the
-        # PATH variable.
-        self.path = path
 
-        area.install('html-checker', (-1, '<<Load/*.html>>', lambda event: 
-        self.area.hook('html-checker', 'BETA', '<Key-h>', self.check)),
-        (-1, '<<LoadData>>', lambda event: 
-        self.area.unhook('BETA', '<Key-h>')),
-        (-1, '<<Save/*.html>>', lambda event: 
-        self.area.hook('html-checker', 'BETA', '<Key-h>', self.check)),
-        (-1, '<<SaveData>>', lambda event: 
-        self.area.unhook('BETA', '<Key-h>')))
+    def check(self):
+        child  = Popen([self.PATH, '-e', '-quiet', 
+        self.area.filename], stdout=PIPE, stderr=STDOUT, 
+        encoding=self.area.charset)
 
-    def check(self, event):
-        child  = Popen([self.path, '-e', '-quiet', 
-        self.area.filename], stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
         regex  = 'line ([0-9]+) column ([0-9]+) - (.+)'
         ranges = findall(regex, output)
@@ -76,10 +67,23 @@ class HtmlChecker(object):
             root.status.set_msg('No errors!')
         self.area.chmode('NORMAL')
 
-install = HtmlChecker
+def install(area):
+    html_checker = HtmlChecker(area)
+    picker = lambda event: html_checker.check()
 
+    area.install('html-checker', (-1, '<<Load/*.html>>', lambda event: 
+    area.hook('html-checker', 'BETA', '<Key-h>', picker)),
+    (-1, '<<LoadData>>', lambda event: 
+    area.unhook('BETA', '<Key-h>')),
+    (-1, '<<Save/*.html>>', lambda event: 
+    area.hook('html-checker', 'BETA', '<Key-h>', picker)),
+    (-1, '<<SaveData>>', lambda event: 
+    area.unhook('BETA', '<Key-h>')))
 
+def html_errors():
+    html_checker = HtmlChecker(AreaVi.ACTIVE)
+    html_checker.check()
 
-
+ENV['html_errors'] = html_errors
 
 
