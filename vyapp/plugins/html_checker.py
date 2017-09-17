@@ -32,6 +32,12 @@ Key-Commands
 
 Namespace: html-checker
 
+Mode: HTML
+Event: <Key-h>
+Description: Highlight all lines
+with syntax errors/bad html. It is possible to jump upwards/downwards
+using the same keys as defined in text_spots plugin.
+
 """
 
 from subprocess import Popen, STDOUT, PIPE
@@ -55,11 +61,11 @@ class HtmlChecker(object):
         output = child.communicate()[0]
         regex  = 'line ([0-9]+) column ([0-9]+) - (.+)'
         ranges = findall(regex, output)
-
         sys.stdout.write('Errors:\n%s\n' % output)
+        self.area.reset_assoc_data()
+
         for line, col, error in ranges:
-            self.area.tag_add('(SPOT)', '%s.0' % line, 
-            '%s.0 lineend' % line)
+            self.assoc_msg(line, error)
 
         if child.returncode:
             root.status.set_msg('Errors were found!')
@@ -67,23 +73,25 @@ class HtmlChecker(object):
             root.status.set_msg('No errors!')
         self.area.chmode('NORMAL')
 
+    def assoc_msg(self, line, error):
+        index0 = '%s.0' % line, 
+        index1 = '%s.0 lineend' % line
+
+        self.area.tag_add('(SPOT)', index0, index1)
+        self.area.set_assoc_data(index0, index1, error)
+
 def install(area):
     html_checker = HtmlChecker(area)
     picker = lambda event: html_checker.check()
 
-    area.install('html-checker', (-1, '<<Load/*.html>>', lambda event: 
-    area.hook('html-checker', 'BETA', '<Key-h>', picker)),
-    (-1, '<<LoadData>>', lambda event: 
-    area.unhook('BETA', '<Key-h>')),
-    (-1, '<<Save/*.html>>', lambda event: 
-    area.hook('html-checker', 'BETA', '<Key-h>', picker)),
-    (-1, '<<SaveData>>', lambda event: 
-    area.unhook('BETA', '<Key-h>')))
+    area.install('html-checker', 
+    ('HTML', '<Key-h>', picker))
 
 def html_errors():
     html_checker = HtmlChecker(AreaVi.ACTIVE)
     html_checker.check()
 
 ENV['html_errors'] = html_errors
+
 
 

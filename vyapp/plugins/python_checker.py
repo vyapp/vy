@@ -25,8 +25,9 @@ Commands
 ========
 
 Command: py_errors()
-Description: When the file has no extension, this command can be
-used to highligh the errors.
+Description: Run pyflakes over the current file and highlighs
+all lines with errors. It is possible to jump upwards/downwards
+using the same keys as defined in text_spots plugin.
 
 """
 
@@ -81,5 +82,6 @@ def py_errors():
     python_checker.check()
 
 ENV['py_errors'] = py_errors
+
 
 
