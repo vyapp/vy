@@ -12,8 +12,8 @@ First of all, it is needed to have a python program currently opened and having 
 then create a horizontal/vertical areavi by pressing <F5> or <F4> in NORMAL mode. After having opened a horizontal/vertical areavi
 instance then make it an output target by switching the focus to the horizontal/vertical areavi instance and press <Tab> in NORMAL mode.
 
-Once having set an output target on an areavi instance then it is time to switch to BETA mode
-by pressing <Key-4> in NORMAL mode. Once in BETA mode, press <Key-p> to get in PDB mode. 
+Once having set an output target on an areavi instance then it is time to switch to PYTHON mode
+by pressing <Key-4> in NORMAL mode. Once in PYTHON mode, press <Key-p> to get in PDB mode. 
 
 There are two ways to execute the program that was opened, the first one is without command line arguments, the second one
 is with command line arguments. When in PDB mode and having one or more python files currently opened it is possible to start the debug process by
@@ -41,7 +41,7 @@ Key-Commands
 
 Namespace: pdb
 
-Mode: BETA
+Mode: PYTHON
 Event: <Key-p>
 Description: It turns PDB mode on.
 
@@ -127,7 +127,7 @@ class Pdb(object):
     def __call__(self, area, python='python2'):
         area.add_mode('PDB')
 
-        area.install('pdb', ('BETA', '<Key-p>', lambda event: event.widget.chmode('PDB')),
+        area.install('pdb', ('PYTHON', '<Key-p>', lambda event: event.widget.chmode('PDB')),
                     ('PDB', '<Key-p>', lambda event: self.send('print %s' % event.widget.join_ranges('sel', sep='\r\n'))), 
                     ('PDB', '<Key-x>', lambda event: self.evaluate_expression(event.widget)), 
                     ('PDB', '<Key-r>', lambda event: self.execute_statement(event.widget)), 
@@ -292,6 +292,7 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
 
