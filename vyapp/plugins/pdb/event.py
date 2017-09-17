@@ -9,19 +9,17 @@ class PdbEvents:
 
     def handle_found(self, dev, data):
         TABLE = {
-                    '\> (?P<filename>.+)\((?P<line>[0-9]+)\)(?P<args>.+)':('LINE', ('filename', 'line', 'args')),
-                    '\(Pdb\) Deleted breakpoint (?P<index>[0-9]+)':('DELETED_BREAKPOINT', ('index',)),
-                    '\(Pdb\) Breakpoint (?P<index>[0-9]+) at (?P<filename>.+)\:(?P<line>[0-9]+)':('BREAKPOINT', ('index', 'filename', 'line'))
-                }
+        '\> (.+)\(([0-9]+)\)(.+)':'LINE',
+        '\(Pdb\) Deleted breakpoint ([0-9]+)':'DELETED_BREAKPOINT',
+        '\(Pdb\) Breakpoint ([0-9]+) at (.+)\:([0-9]+)':'BREAKPOINT'}
 
         data = data.decode(self.encoding)    
-        for regex, (event, groups) in TABLE.items():
-            sch = search(regex, data)
-            if not sch: continue
-            spawn(dev, event, *sch.group(*groups))
-            break
-    
-
+        for regstr, event in TABLE.items():
+            regex = search(regstr, data)
+            if regex: spawn(dev, event, 
+                *regex.groups())
+  
+  
 
 
 

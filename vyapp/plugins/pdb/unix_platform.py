@@ -2,7 +2,7 @@
 Overview
 ========
 
-This module implements PDB mode that is a mode where it is possible to easily debug python applications.
+This module implements a wrapper around python debugger it is possible to easily debug python applications.
 It is possible to set breakpoints, run code step by step, remove break points, check variable values etc.
 
 Usage
@@ -13,10 +13,10 @@ then create a horizontal/vertical areavi by pressing <F5> or <F4> in NORMAL mode
 instance then make it an output target by switching the focus to the horizontal/vertical areavi instance and press <Tab> in NORMAL mode.
 
 Once having set an output target on an areavi instance then it is time to switch to PYTHON mode
-by pressing <Key-4> in NORMAL mode. Once in PYTHON mode, press <Key-p> to get in PDB mode. 
+by pressing <Key-exclam> in NORMAL mode. 
 
 There are two ways to execute the program that was opened, the first one is without command line arguments, the second one
-is with command line arguments. When in PDB mode and having one or more python files currently opened it is possible to start the debug process by
+is with command line arguments. When in PYTHON mode and having one or more python files currently opened it is possible to start the debug process by
 pressing <Key-1> with no command line arguments. When it is needed to pass arguments to the python application then it is used
 the key-command <Key-2>. Once the debug process was started then output will go to the areavi instance that was set as target.
 
@@ -42,65 +42,61 @@ Key-Commands
 Namespace: pdb
 
 Mode: PYTHON
-Event: <Key-p>
-Description: It turns PDB mode on.
-
-Mode: PDB
 Event? <Key-1>
 Description: It starts debugging the opened python application with no command line arguments.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-2>
 Description: It starts the python application with command line arguments that use shlex module to split the arguments.
 
-Mode: PDB
+Mode: PYTHON
 Event? <Key-c>
 Description: Send a (c)ontinue to the debug process.
 Continue execution, only stop when a breakpoint is encountered.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-e>
 Description: Send selected text to the debug to be executed.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-w>
 Description: Send a (w)here to the debug.
 Print a stack trace, with the most recent frame at the bottom. An arrow indicates the current frame, which determines the context of most commands.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-a>
 Description: Send a (a)rgs to the debug to show the list of arguments passed to the current function.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-b>
 Description: Set a break point at the cursor line.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-B>
 Description: Set a temporary break point at the cursor line.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Control-C>
 Description: Clear all break points.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Control-c>
 Description: Remove break point that is set at the cursor line.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Control-s>
 Description: Send a (s)tep to the debug it means execute the current line, stop at the first possible
 occasion (either in a function that is called or on the next line in the current function).
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-x>
 Description: Inject python code to be evaluated in the current context.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-r>
 Description: Inject python code to be executed in the current context.
 
-Mode: PDB
+Mode: PYTHON
 Event: <Key-q>
 Description: Terminate the process.
 
@@ -125,26 +121,33 @@ class Pdb(object):
     encoding='utf8'
 
     def __call__(self, area, python='python2'):
-        area.add_mode('PDB')
+        self.area = area
+        area.add_mode('PYTHON')
+        
+        area.install('pdb', ('PYTHON', '<Key-p>', 
+        lambda event: self.send('print %s' % event.widget.join_ranges(
+        'sel', sep='\r\n'))), 
+        ('PYTHON', '<Key-x>', lambda event: self.evaluate_expression()), 
+        ('PYTHON', '<Key-r>', lambda event: self.execute_statement()), 
+        ('PYTHON', '<Key-1>', lambda event: self.start_debug(event.widget)), 
+        ('PYTHON', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
+        ('PYTHON', '<Key-q>', lambda event: self.terminate_process()), 
+        ('PYTHON', '<Key-c>', lambda event: self.send('continue\r\n')), 
+        ('PYTHON', '<Key-e>', lambda event: self.send(
+        '!%s' % event.widget.join_ranges('sel', sep='\r\n'))), 
+        ('PYTHON', '<Key-w>', lambda event: self.send('where\r\n')), 
+        ('PYTHON', '<Key-a>', lambda event: self.send('args\r\n')), 
+        ('PYTHON', '<Key-s>', lambda event: self.send('step\r\n')), 
+        ('PYTHON', '<Control-C>', lambda event: self.dump_clear_all()), 
+        ('PYTHON', '<Control-c>', self.remove_breakpoint),
+        ('PYTHON', '<Key-B>', lambda event: self.send(
+        'tbreak %s:%s\r\n' % (event.widget.filename, 
+        event.widget.indref('insert')[0]))),
+        ('PYTHON', '<Key-b>', lambda event: self.send(
+        'break %s:%s\r\n' % (event.widget.filename, 
+        event.widget.indref('insert')[0]))))
 
-        area.install('pdb', ('PYTHON', '<Key-p>', lambda event: event.widget.chmode('PDB')),
-                    ('PDB', '<Key-p>', lambda event: self.send('print %s' % event.widget.join_ranges('sel', sep='\r\n'))), 
-                    ('PDB', '<Key-x>', lambda event: self.evaluate_expression(event.widget)), 
-                    ('PDB', '<Key-r>', lambda event: self.execute_statement(event.widget)), 
-                    ('PDB', '<Key-1>', lambda event: self.start_debug(event.widget)), 
-                    ('PDB', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
-                    ('PDB', '<Key-q>', lambda event: self.terminate_process()), 
-                    ('PDB', '<Key-c>', lambda event: self.send('continue\r\n')), 
-                    ('PDB', '<Key-e>', lambda event: self.send('!%s' % event.widget.join_ranges('sel', sep='\r\n'))), 
-                    ('PDB', '<Key-w>', lambda event: self.send('where\r\n')), 
-                    ('PDB', '<Key-a>', lambda event: self.send('args\r\n')), 
-                    ('PDB', '<Key-s>', lambda event: self.send('step\r\n')), 
-                    ('PDB', '<Control-C>', lambda event: self.dump_clear_all()), 
-                    ('PDB', '<Control-c>', lambda event: self.send('clear %s\r\n' % self.map_line[(event.widget.filename, str(event.widget.indref('insert')[0]))])),
-                    ('PDB', '<Key-B>', lambda event: self.send('tbreak %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))),
-                    ('PDB', '<Key-b>', lambda event: self.send('break %s:%s\r\n' % (event.widget.filename, event.widget.indref('insert')[0]))))
-
-        self.python   = python
+        self.python = python
 
     def __init__(self):
         self.child = None
@@ -189,13 +192,16 @@ class Pdb(object):
         self.kill_debug_process()
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
-        self.create_process([self.python, '-u', '-m', 'pdb', area.filename])
+        self.create_process([self.python, '-u', 
+        '-m', 'pdb', area.filename])
 
         root.status.set_msg('Debug started !')
 
     def start_debug_args(self, area):
         ask  = Ask()
-        ARGS = '%s -u -m pdb %s %s' % (self.python, area.filename, ask.data)
+        ARGS = '%s -u -m pdb %s %s' % (self.python, 
+        area.filename, ask.data)
+
         ARGS = shlex.split(ARGS)
         self.kill_debug_process()
         self.delete_all_breakpoints()
@@ -205,11 +211,11 @@ class Pdb(object):
         
         root.status.set_msg('Debug started ! Args: %s' % ask.data)
 
-    def evaluate_expression(self, area):
+    def evaluate_expression(self):
         ask  = Ask()
         self.send('print %s\r\n' % ask.data)
 
-    def execute_statement(self, area):
+    def execute_statement(self):
         ask  = Ask()
         self.send('!%s\r\n' % ask.data)
 
@@ -222,28 +228,34 @@ class Pdb(object):
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
 
+    def remove_breakpoint(self, event):
+        self.send('clear %s\r\n' % self.map_line[(
+        event.widget.filename, str(event.widget.indref('insert')[0]))])
+
     def delete_all_breakpoints(self):
         """
         It deletes all added breakpoint tags.
         It is useful when restarting pdb as a different process.
         """
     
+        wids = AreaVi.get_opened_files(root)
         for index, (filename, line) in self.map_index.items():
             try:
-                area = AreaVi.get_opened_files(root)[filename]
+                area = wids[filename]
             except KeyError:
                 pass
             else:
-                NAME = '_breakpoint_%s' % index
-                area.tag_delete(NAME)        
+                area.tag_delete(
+                  '_breakpoint_%s' % index)        
 
     def handle_line(self, device, filename, line, args):
-    
         """
     
         """
+
+        wids = AreaVi.get_opened_files(root)
         try:
-            area = AreaVi.get_opened_files(root)[filename]
+            area = wids[filename]
         except  KeyError:
             pass
         else:
@@ -292,7 +304,5 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
-
-
 
 
