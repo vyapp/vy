@@ -15,7 +15,7 @@ Key-Commands
 
 Namespace: python-checker
 
-Mode: BETA
+Mode: PYTHON
 Event: <Key-h>
 Description: Highlight all lines
 with syntax errors. The checking functionality gets
@@ -73,21 +73,13 @@ def install(area):
     python_checker = PythonChecker(area)
     picker = lambda event: python_checker.check()
 
-    area.install('python-checker', (-1, '<<Load/*.py>>', lambda event: 
-    area.hook('python-checker', 'BETA', '<Key-h>', picker)),
-    (-1, '<<LoadData>>', lambda event: 
-    area.unhook('BETA', '<Key-h>')),
-    (-1, '<<Save/*.py>>', lambda event: 
-    area.hook('python-checker', 'BETA', '<Key-h>', picker)),
-    (-1, '<<SaveData>>', lambda event: 
-    area.unhook('BETA', '<Key-h>')))
-    
+    area.install('python-checker', 
+    ('PYTHON', '<Key-h>', picker))
+
 def py_errors():
     python_checker = PythonChecker(AreaVi.ACTIVE)
     python_checker.check()
 
 ENV['py_errors'] = py_errors
-
-
 
 
