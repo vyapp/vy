@@ -313,9 +313,9 @@ autoload(vyapp.plugins.block_sel)
 # package installed.
 # The path argument corresponds to where your tidy
 # executable stays.
-# import vyapp.plugins.html_checker
+# from vyapp.plugins import html_checker
 # html_checker.HtmlChecker.PATH = 'tidy'
-# autoload(vyapp.plugins.html_checker)
+# autoload(html_checker)
 
 
 # Python syntax checker through pyflakes.
