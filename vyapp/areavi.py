@@ -65,6 +65,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         AreaVi.ACTIVE = self
         self.charset  = 'utf-8'
         self.map      = {}
+        self.db       = {}
+        self.assoc_c  = 0
 
     def update_map(self, namespace, map):
         scheme = self.map.setdefault(namespace, {})
@@ -202,6 +204,23 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         # self.mark_set('insert', 'end')
         self.see('insert')
+
+    def get_assoc_data(self, index='insert'):
+        lst = (self.db[ind] for ind in self.tag_names(index)
+        if 'ASSOC_DATA' in ind)
+        return lst
+
+    def set_assoc_data(self, index0, index1, data):
+        id = '(ASSOC_DATA-%s)' % self.assoc_c
+        self.tag_add(id, index0, index1)
+        self.assoc_c = self.assoc_c + 1
+        self.db[id]  = data
+        return id
+
+    def reset_assoc_data(self):
+        for ind in self.db.keys():
+            self.tag_remove(ind, '1.0', 'end')
+        self.db.clear()
 
     def curline(self):
         """
@@ -1583,6 +1602,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

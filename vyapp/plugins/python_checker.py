@@ -51,15 +51,23 @@ class PythonChecker(object):
         regex  = '(.+?):([0-9]+):?([0-9]*):(.+)'
         ranges = findall(regex, output)
         sys.stdout.write('Errors:\n%s\n' % output)
+        self.area.reset_assoc_data()
+
         for filename, line, col, error in ranges:
-            self.area.tag_add('(SPOT)', '%s.0' % line, 
-            '%s.0 lineend' % line)
+            self.assoc_msg(line, error)
 
         if child.returncode:
             root.status.set_msg('Errors were found!')
         else:
             root.status.set_msg('No errors!')
         self.area.chmode('NORMAL')
+        
+    def assoc_msg(self, line, error):
+        index0 = '%s.0' % line, 
+        index1 = '%s.0 lineend' % line
+
+        self.area.tag_add('(SPOT)', index0, index1)
+        self.area.set_assoc_data(index0, index1, error)
 
 def install(area):
     python_checker = PythonChecker(area)
@@ -79,6 +87,7 @@ def py_errors():
     python_checker.check()
 
 ENV['py_errors'] = py_errors
+
 
 
 
