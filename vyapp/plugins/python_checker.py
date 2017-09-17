@@ -18,8 +18,7 @@ Namespace: python-checker
 Mode: PYTHON
 Event: <Key-h>
 Description: Highlight all lines
-with syntax errors. The checking functionality gets
-available for files ending in ".py" extension.
+with syntax errors. 
 
 Commands
 ========
@@ -82,6 +81,7 @@ def py_errors():
     python_checker.check()
 
 ENV['py_errors'] = py_errors
+
 
 
 

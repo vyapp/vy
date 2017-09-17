@@ -318,11 +318,18 @@ autoload(vyapp.plugins.block_sel)
 # autoload(vyapp.plugins.html_checker)
 
 
-# Python syntax checker.
-# import vyapp.plugins.python_checker
+# Python syntax checker through pyflakes.
+# from vyapp.plugins import python_checker
 # The path to pyflakes executable.
 # python_checker.PythonChecker.PATH = 'pyflakes'
 # autoload(vyapp.plugins.python_checker)
+
+
+# Python analysis through vulture.
+# from vyapp.plugins import python_analysis
+# The path to vulture executable.
+# python_analysis.PythonAnalysis.PATH = 'vulture'
+# autoload(python_analysis)
 
 
 # Download html from the clipboard url in the active AreaVi
@@ -552,6 +559,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
