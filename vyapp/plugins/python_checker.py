@@ -31,11 +31,28 @@ using the same keys as defined in text_spots plugin.
 """
 
 from subprocess import Popen, STDOUT, PIPE
+from os.path import exists, dirname, join, relpath
 from vyapp.areavi import AreaVi
 from vyapp.plugins import ENV
 from vyapp.app import root
 from re import findall
 import sys
+
+def get_project_root(path):
+    """
+    Return the project root or the file path.
+    """
+
+    # In case it receives '/file'
+    # and there is '/__init__.py' file.
+    if path == dirname(path):
+        return path
+
+    while True:
+        tmp = dirname(path)
+        if not exists(join(tmp, '__init__.py')):
+            return path
+        path = tmp
 
 class PythonChecker(object):
     PATH = 'pyflakes'
@@ -44,20 +61,21 @@ class PythonChecker(object):
         self.area = area
 
     def check(self):
-        child  = Popen([self.PATH,  self.area.filename], 
+        path  = get_project_root(self.area.filename)
+        child = Popen([self.PATH,  path], 
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 
-        regex  = '(.+?):([0-9]+):?([0-9]*):(.+)'
+        regex  = '%s:([0-9]+):?([0-9]*):(.+)' % relpath(self.area.filename)
         ranges = findall(regex, output)
         sys.stdout.write('Errors:\n%s\n' % output)
         self.area.reset_assoc_data()
 
-        for filename, line, col, error in ranges:
+        for line, col, error in ranges:
             self.assoc_msg(line, error)
 
-        if child.returncode:
-            root.status.set_msg('Errors were found!')
+        if ranges:
+            root.status.set_msg('Errors were found!' )
         else:
             root.status.set_msg('No errors!')
         self.area.chmode('NORMAL')
@@ -81,6 +99,7 @@ def py_errors():
     python_checker.check()
 
 ENV['py_errors'] = py_errors
+
 
 
 
