@@ -913,6 +913,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         index2=  '%s lineend' % index if not index2 else index2
         return index1, index2
 
+    def get_word(self, index='insert'):
+        return self.get(*self.get_word_range(index))
+
     def get_seq(self, index='insert'):
 
         return self.get(*self.get_seq_range(index))
@@ -1602,6 +1605,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

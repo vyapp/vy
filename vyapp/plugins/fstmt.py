@@ -101,26 +101,44 @@ class OptionWindow(Toplevel):
 
 
 class Fstmt(object):
+    pattern = ''
+    dir     = ''
+
     def  __init__(self, area):
+        self.area    = area
         area.install('fstmt', 
-        ('NORMAL', '<Key-backslash>', lambda event: self.picker()),
-        ('NORMAL', '<Key-bar>', lambda event: self.set_search_path()))
-        self.area = area
-        self.search_path = ''
+        ('NORMAL', '<Key-backslash>', 
+        lambda event: self.find()),
+        ('NORMAL', '<Key-bar>', 
+        lambda event: self.set_dir()),
+        ('NORMAL', '<Control-backslash>', 
+        lambda event: self.catch_pattern()))
 
-    def set_search_path(self):
-        ask              = Ask()
-        self.search_path = ask.data
+    def set_dir(self):
+        ask       = Ask()
+        Fstmt.dir = ask.data
    
-    def picker(self):
+    def catch_pattern(self):
         pattern = self.area.join_ranges('sel')
+        pattern = pattern if pattern else self.area.get_word()
+        Fstmt.pattern = pattern
 
-        if not pattern: return
+        if not Fstmt.pattern:
+            root.status.set_msg('No pattern found!')
+        else:
+            self.find()
 
-        search_path = self.search_path if self.search_path else \
+    def find(self):
+        dir = self.dir if Fstmt.dir else \
         get_sentinel_file(self.area.filename, '.git')
 
-        child = Popen(['ack', '--nogroup', pattern, search_path],
+        if Fstmt.pattern:
+            self.picker(Fstmt.pattern, dir)
+        else:
+            root.status.set_msg('No pattern set!')
+
+    def picker(self, pattern, dir):
+        child = Popen(['ack', '--nogroup', pattern, dir],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
         regex  = '(.+):([0-9]+):(.+)' 
