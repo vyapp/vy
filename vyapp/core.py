@@ -118,8 +118,8 @@ class NoteVi(Notebook):
 
     def open(self, filename):
         base = PanedVerticalWindow(master=self)
-        area = base.open(filename)
         self.add(base)
+        area = base.open(filename)
         return area
 
     def load(self, *args):
