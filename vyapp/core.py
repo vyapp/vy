@@ -75,6 +75,12 @@ class PanedVerticalWindow(PanedWindow):
         area = base.create(filename)
         return area
 
+    def open(self, filename):
+        base = PanedHorizontalWindow(master=self)
+        self.add(base)
+        area = base.load(filename)
+        return area
+
     def load(self, *args):
         """
         This method adds a new horizontal window and loads
@@ -108,6 +114,12 @@ class NoteVi(Notebook):
         base = PanedVerticalWindow(master=self)
         area = base.create(filename)
         self.add(base, text=filename)
+        return area
+
+    def open(self, filename):
+        base = PanedVerticalWindow(master=self)
+        area = base.open(filename)
+        self.add(base)
         return area
 
     def load(self, *args):
@@ -159,6 +171,7 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
+
 
 
 
