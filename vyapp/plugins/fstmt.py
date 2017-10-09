@@ -38,17 +38,24 @@ def get_sentinel_file(path, filename):
         path = tmp
 
 class OptionWindow(Toplevel):
-    def  __init__(self, area, options):
+    def  __call__(self, options=[]):
+        self.options = options
+
+        self.listbox.delete(0, END)
+        for filename, line, msg in options:
+            self.listbox.insert(END, '%s - %s %s' % (
+                relpath(filename), line, msg))
+
+        self.deiconify()
+        self.grab_set()
+        self.wait_window(self)
+
+    def  __init__(self, options=[]):
         Toplevel.__init__(self, master=root)
-        self.area    = area
         self.options = options
         self.title('Matches')
 
         self.listbox = Listbox(master=self)
-
-        for filename, line, msg in options:
-            self.listbox.insert(END, '%s - %s %s' % (
-                relpath(filename), line, msg))
 
         self.listbox.pack(expand=True, fill=BOTH, side=TOP)
         self.listbox.focus_set()
@@ -73,13 +80,12 @@ class OptionWindow(Toplevel):
         self.listbox.bind('<Return>', lambda event: self.match())
 
         self.transient(root)
-        self.grab_set()
-        self.wait_window(self)
+        self.withdraw()
 
     def match(self):
         index = self.listbox.index(ACTIVE)
         item  = self.options[index]
-        files = self.area.get_opened_files(root)
+        files = AreaVi.get_opened_files(root)
 
         try:
             area = files[item[0]]
@@ -91,21 +97,28 @@ class OptionWindow(Toplevel):
             set_line(area, item[1])
         self.close()
 
+    def show(self):
+        self.deiconify()
+        self.grab_set()
+
     def close(self):
-        self.grab_release()
-        # When calling destroy without 
+        # When calling destroy or withdraw without 
         # self.deoiconify it doesnt give back 
         # the focus to the parent window.
+
         self.deiconify()
-        self.destroy()
+        self.grab_release()
+        self.withdraw()
 
 
 class Fstmt(object):
     pattern = ''
     dir     = ''
+    options = OptionWindow()
 
     def  __init__(self, area):
         self.area    = area
+
         area.install('fstmt', 
         ('NORMAL', '<Key-backslash>', 
         lambda event: self.find()),
@@ -126,28 +139,29 @@ class Fstmt(object):
         if not Fstmt.pattern:
             root.status.set_msg('No pattern found!')
         else:
-            self.find()
+            self.picker()
 
     def find(self):
-        dir = self.dir if Fstmt.dir else \
-        get_sentinel_file(self.area.filename, '.git')
-
         if Fstmt.pattern:
-            self.picker(Fstmt.pattern, dir)
+            self.options.show()
         else:
             root.status.set_msg('No pattern set!')
 
-    def picker(self, pattern, dir):
-        child = Popen(['ack', '--nogroup', pattern, dir],
+    def picker(self):
+        dir = self.dir if Fstmt.dir else \
+        get_sentinel_file(self.area.filename, '.git')
+
+        child = Popen(['ack', '--nogroup', self.pattern, dir],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
         regex  = '(.+):([0-9]+):(.+)' 
         ranges = findall(regex, output)
-
+    
         if ranges:
-            OptionWindow(self.area, ranges)
+            self.options(ranges)
 
 install = Fstmt
+
 
 
 
