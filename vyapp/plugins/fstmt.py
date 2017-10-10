@@ -2,13 +2,25 @@
 Overview
 ========
 
+Find where patterns are found, this plugin uses ack to search
+for word patterns. It is useful to find where functions/methods
+are used over multiple files.
+
 Key-Commands
 ============
 
 Namespace: fstmt
 
 Mode: NORMAL
-Event: 
+Event: <Control-backslash>
+Description: 
+
+Mode: NORMAL
+Event: <Key-backslash>
+Description: 
+
+Mode: NORMAL
+Event: <Key-bar>
 Description: 
 
 """
@@ -46,9 +58,7 @@ class OptionWindow(Toplevel):
             self.listbox.insert(END, '%s - %s %s' % (
                 relpath(filename), line, msg))
 
-        self.deiconify()
-        self.grab_set()
-        self.wait_window(self)
+        self.show()
 
     def  __init__(self, options=[]):
         Toplevel.__init__(self, master=root)
@@ -78,7 +88,7 @@ class OptionWindow(Toplevel):
 
         self.listbox.bind('<Escape>', lambda event: self.close())
         self.listbox.bind('<Return>', lambda event: self.match())
-
+        self.protocol("WM_DELETE_WINDOW", self.close)
         self.transient(root)
         self.withdraw()
 
@@ -98,8 +108,11 @@ class OptionWindow(Toplevel):
         self.close()
 
     def show(self):
-        self.deiconify()
         self.grab_set()
+        self.deiconify()
+        root.wait_window(self)
+        # Could return the option here,
+        # for reusability futurely.
 
     def close(self):
         # When calling destroy or withdraw without 
@@ -161,6 +174,7 @@ class Fstmt(object):
             self.options(ranges)
 
 install = Fstmt
+
 
 
 
