@@ -3,6 +3,7 @@ This module implements a set of functions that are commonly used by plugins.
 """
 
 from vyapp.app import root
+from vyapp.areavi import AreaVi
 import sys
 
 
@@ -14,7 +15,7 @@ def get_area_tab_index(area):
 
     return area.master.master.master
 
-def set_line(area, line):
+def set_line(area, line, col=0):
     """
     This function receives an AreaVi widget instance and a line number
     then sets the focus to the AreaVi widget and the cursor at line.
@@ -23,7 +24,19 @@ def set_line(area, line):
     sys.stderr.write(area.filename + '\n')
     root.note.select(get_area_tab_index(area))
     area.focus()
-    area.setcur(line)
+    area.setcur(line, col)
+
+def findline(filename, line, col=0):
+    files = AreaVi.get_opened_files(root)
+
+    try:
+        area = files[filename]
+    except KeyError:
+        area = root.note.open(filename)
+    else:
+        pass
+    finally:
+        set_line(area, line)
 
 def match_sub_pattern(pattern, lst):
     # pattern = buffer(pattern)
@@ -32,6 +45,7 @@ def match_sub_pattern(pattern, lst):
                 if indi.startswith(pattern[indj:]):
                     yield indi, indj
                     
+
 
 
 
