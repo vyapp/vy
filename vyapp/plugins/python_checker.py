@@ -32,6 +32,7 @@ using the same keys as defined in text_spots plugin.
 
 from subprocess import Popen, STDOUT, PIPE
 from os.path import exists, dirname, join, relpath
+from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from vyapp.plugins import ENV
 from vyapp.app import root
@@ -66,26 +67,20 @@ class PythonChecker(object):
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 
-        regex  = '%s:([0-9]+):?([0-9]*):(.+)' % relpath(self.area.filename)
+        regex  = '(%s):([0-9]+):?[0-9]*:(.+)' % relpath(self.area.filename)
         ranges = findall(regex, output)
         sys.stdout.write('Errors:\n%s\n' % output)
-        self.area.reset_assoc_data()
-
-        for line, col, error in ranges:
-            self.assoc_msg(line, error)
+        self.area.chmode('NORMAL')
 
         if ranges:
-            root.status.set_msg('Errors were found!' )
+            self.display(ranges)
         else:
             root.status.set_msg('No errors!')
-        self.area.chmode('NORMAL')
         
-    def assoc_msg(self, line, error):
-        index0 = '%s.0' % line, 
-        index1 = '%s.0 lineend' % line
-
-        self.area.tag_add('(SPOT)', index0, index1)
-        self.area.set_assoc_data(index0, index1, error)
+    def display(self, ranges):
+        root.status.set_msg('Errors were found!' )
+        options = LinePicker()
+        options(ranges)
 
 def install(area):
     python_checker = PythonChecker(area)
@@ -99,8 +94,5 @@ def py_errors():
     python_checker.check()
 
 ENV['py_errors'] = py_errors
-
-
-
 
 

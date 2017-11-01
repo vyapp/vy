@@ -4,6 +4,7 @@ This module implements a set of functions that are commonly used by plugins.
 
 from vyapp.app import root
 from vyapp.areavi import AreaVi
+from os.path import abspath
 import sys
 
 
@@ -27,7 +28,8 @@ def set_line(area, line, col=0):
     area.setcur(line, col)
 
 def findline(filename, line, col=0):
-    files = AreaVi.get_opened_files(root)
+    files    = AreaVi.get_opened_files(root)
+    filename = abspath(filename)
 
     try:
         area = files[filename]
@@ -45,6 +47,7 @@ def match_sub_pattern(pattern, lst):
                 if indi.startswith(pattern[indj:]):
                     yield indi, indj
                     
+
 
 
 
