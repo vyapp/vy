@@ -39,4 +39,18 @@ def func(a, b):
 
 s = '12'
 func(*s)
+##############################################################################
+
+def get_sentinel_file(path, filename):
+    """
+    """
+
+    tmp = path
+    while True:
+        tmp = dirname(tmp)
+        if exists(join(tmp, filename)):
+            return tmp
+        elif tmp == dirname(tmp):
+            return path
+        path = tmp
 

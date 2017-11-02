@@ -46,7 +46,6 @@ def get_sentinel_file(path, filename):
             return tmp
         elif tmp == dirname(tmp):
             return path
-        path = tmp
 
 class Fstmt(object):
     pattern = ''
@@ -75,7 +74,7 @@ class Fstmt(object):
         Fstmt.pattern = pattern
 
         if not Fstmt.pattern:
-            root.status.set_msg('No pattern found!')
+            root.status.set_msg('No pattern set!')
         else:
             self.picker()
 
@@ -89,7 +88,7 @@ class Fstmt(object):
         dir = self.dir if Fstmt.dir else \
         get_sentinel_file(self.area.filename, '.git')
 
-        child = Popen(['ack', '--nogroup', self.pattern, dir],
+        child = Popen(['ack', '--nocolor', '-H', '--nogroup', self.pattern, dir],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
         regex  = '(.+):([0-9]+):(.+)' 
@@ -97,7 +96,10 @@ class Fstmt(object):
     
         if ranges:
             self.options(ranges)
+        else:
+            root.status.set_msg('No pattern found!')
 
 install = Fstmt
+
 
 

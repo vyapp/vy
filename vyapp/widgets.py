@@ -153,7 +153,7 @@ class OptionWindow(Toplevel):
     def display(self):
         self.grab_set()
         self.deiconify()
-        root.wait_window(self)
+        # self.wait_window(self)
 
     def close(self):
         # When calling destroy or withdraw without 
@@ -174,4 +174,5 @@ class LinePicker(OptionWindow):
         index = self.listbox.index(ACTIVE)
         findline(*self.options[index][1])
         self.close()
+
 
