@@ -13,15 +13,20 @@ Namespace: fstmt
 
 Mode: NORMAL
 Event: <Control-backslash>
-Description: 
+Description: Set a root directory for searching pattern occurrences.
 
 Mode: NORMAL
 Event: <Key-backslash>
-Description: 
+Description: Open the previous found pattern occurrences.
 
 Mode: NORMAL
 Event: <Key-bar>
-Description: 
+Description: Perform a search pattern in a root directory
+that can be defined manually.  If it is not defined manually then 
+it searches for the project root that contains a .git or .svn or .hg folder. 
+The search pattern is defined either by the word under the cursor or by 
+a range of selected text. If there is any selected text then it is used for the search
+otherwise it gets the word under the cursor then perform the search.
 
 """
 
