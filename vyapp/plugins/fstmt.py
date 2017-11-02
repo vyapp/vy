@@ -28,29 +28,28 @@ Description:
 from subprocess import Popen, STDOUT, PIPE
 from os.path import exists, dirname, join
 from vyapp.widgets import LinePicker
-from vyapp.areavi import AreaVi
-from vyapp.plugins import ENV
 from vyapp.app import root
 from vyapp.ask import Ask
 from re import findall
-import sys
 
-def get_sentinel_file(path, filename):
+def get_sentinel_file(path, *args):
     """
     """
 
     tmp = path
     while True:
         tmp = dirname(tmp)
-        if exists(join(tmp, filename)):
-            return tmp
-        elif tmp == dirname(tmp):
-            return path
-
+        for ind in args:
+            if exists(join(tmp, ind)):
+                return tmp
+            elif tmp == dirname(tmp):
+                return path
+            
 class Fstmt(object):
     pattern = ''
     dir     = ''
     options = LinePicker()
+    sentinels = ['.git', '.svn', '.hg']
 
     def  __init__(self, area):
         self.area    = area
@@ -86,7 +85,7 @@ class Fstmt(object):
 
     def picker(self):
         dir = self.dir if Fstmt.dir else \
-        get_sentinel_file(self.area.filename, '.git')
+        get_sentinel_file(self.area.filename, *Fstmt.sentinels)
 
         child = Popen(['ack', '--nocolor', '-H', '--nogroup', self.pattern, dir],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
@@ -100,6 +99,5 @@ class Fstmt(object):
             root.status.set_msg('No pattern found!')
 
 install = Fstmt
-
 
 
