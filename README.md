@@ -47,7 +47,7 @@ Features
 - **Terminal**
 
 - **Auto Completion**
-
+  
 - **Fuzzy Search**
 
 - **Incremental Search**
@@ -60,12 +60,17 @@ Features
 
 - **Self documenting**
 
-- **Extensible with Python**
+- **Powerful plugin API**
 
 - **Syntax highlighting for 300+ languages**
 
 - **Handy Shortcuts**
 
+- **Integration with Pyflakes/Vulture**
+
+- **Easily customizable (vyrc in python)**
+
+- **Smart ack search**
 
 Basic Install
 =============
@@ -99,6 +104,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
