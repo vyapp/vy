@@ -327,8 +327,10 @@ autoload(vyapp.plugins.block_sel)
 
 # Find where patterns occurs from a git repository
 # or a folder.
-# import vyapp.plugins.fstmt 
-# autoload(vyapp.plugins.fstmt)
+# from vyapp.plugins import fstmt
+# Your ack path.
+# fstmt.Fstmt.PATH = 'ack'
+# autoload(fstmt)
 
 
 # Python analysis through vulture.
@@ -565,6 +567,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

@@ -51,10 +51,11 @@ def get_sentinel_file(path, *args):
                 return path
             
 class Fstmt(object):
-    pattern = ''
-    dir     = ''
-    options = LinePicker()
-    sentinels = ['.git', '.svn', '.hg']
+    pattern   = ''
+    dir       = ''
+    options   = LinePicker()
+    SENTINELS = ['.git', '.svn', '.hg']
+    PATH      = 'ack'
 
     def  __init__(self, area):
         self.area    = area
@@ -90,9 +91,9 @@ class Fstmt(object):
 
     def picker(self):
         dir = self.dir if Fstmt.dir else \
-        get_sentinel_file(self.area.filename, *Fstmt.sentinels)
+        get_sentinel_file(self.area.filename, *Fstmt.SENTINELS)
 
-        child = Popen(['ack', '--nocolor', '-H', '--nogroup', self.pattern, dir],
+        child = Popen([Fstmt.PATH, '--nocolor', '-H', '--nogroup', self.pattern, dir],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
         regex  = '(.+):([0-9]+):(.+)' 
@@ -104,5 +105,6 @@ class Fstmt(object):
             root.status.set_msg('No pattern found!')
 
 install = Fstmt
+
 
 
