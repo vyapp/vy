@@ -8,7 +8,7 @@ functions to highlight patterns of text and replace patterns.
 Commands
 ========
 
-Command: find(regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
+Command: sel(regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
              elide=None, nolinestop=None):
 Description: Highlight patterns in the AreaVi instance that has focus.
 regex     = The pattern to be searched.
@@ -32,10 +32,23 @@ stopindex = The stopindex.
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 
-ENV['find']  = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.find(*args, **kwargs))
+def find(regex, handle, *args, **kwargs):
+    seq = AreaVi.ACTIVE.find(regex, *args, **kwargs)    
+    for ind in seq:
+        handle(*ind)
+
+def sniff(regex, handle, *args, **kwargs):
+    seq = AreaVi.ACTIVE.collect('sel', regex, *args, **kwargs) 
+    for ind in seq:
+        handle(*ind)
+
+ENV['find']  = find
+ENV['sniff'] = sniff
+ENV['sel']   = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.find(*args, **kwargs))
 ENV['sub']   = lambda *args, **kwargs: AreaVi.ACTIVE.replace_all(*args, **kwargs)
 ENV['get']   = lambda *args: AreaVi.ACTIVE.get(*args)
-ENV['split']  = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.split(*args, **kwargs))
+ENV['split'] = lambda *args, **kwargs: AreaVi.ACTIVE.map_matches('sel', AreaVi.ACTIVE.split(*args, **kwargs))
+
 
 
 
