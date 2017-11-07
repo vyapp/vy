@@ -90,6 +90,14 @@ import vyapp.plugins.assoc
 autoload(vyapp.plugins.assoc)
 
 
+# Used to set your AreaVi project attribute
+# automatically based on .git, .svn, .hg dirs.
+# Where ._ is used by vy to identify a root project.
+from vyapp.plugins.project import Project
+Project.SENTINELS = ['.git', '.svn', '.hg', '._']
+autocall(Project)
+
+
 # Provide anchors for text.
 import vyapp.plugins.anchors
 autoload(vyapp.plugins.anchors)

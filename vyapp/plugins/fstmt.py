@@ -13,7 +13,7 @@ Namespace: fstmt
 
 Mode: NORMAL
 Event: <Control-backslash>
-Description: Set a root directory for searching pattern occurrences.
+Description: Get a text pattern and perform a search.
 
 Mode: NORMAL
 Event: <Key-backslash>
@@ -31,30 +31,15 @@ otherwise it gets the word under the cursor then perform the search.
 """
 
 from subprocess import Popen, STDOUT, PIPE
-from os.path import exists, dirname, join
 from vyapp.widgets import LinePicker
 from vyapp.app import root
 from vyapp.ask import Ask
+from os.path import join
 from re import findall
+from re import escape
 
-def get_sentinel_file(path, *args):
-    """
-    """
-
-    tmp = path
-    while True:
-        tmp = dirname(tmp)
-        for ind in args:
-            if exists(join(tmp, ind)):
-                return tmp
-            elif tmp == dirname(tmp):
-                return path
-            
 class Fstmt(object):
-    pattern   = ''
-    dir       = ''
     options   = LinePicker()
-    SENTINELS = ['.git', '.svn', '.hg']
     PATH      = 'ack'
 
     def  __init__(self, area):
@@ -62,47 +47,38 @@ class Fstmt(object):
 
         area.install('fstmt', 
         ('NORMAL', '<Key-backslash>', 
-        lambda event: self.find()),
+        lambda event: self.options.display()),
         ('NORMAL', '<Control-bar>', 
-        lambda event: self.set_dir()),
+        lambda event: self.set_pattern()),
         ('NORMAL', '<Key-bar>', 
         lambda event: self.catch_pattern()))
 
-    def set_dir(self):
-        root.status.set_msg('Set fstmt search path!')
-        ask       = Ask()
-        Fstmt.dir = ask.data
-   
+    def set_pattern(self):
+        root.status.set_msg('Set fstmt pattern!')
+        ask = Ask()
+        self.picker(escape(ask.data))
+        
     def catch_pattern(self):
         pattern = self.area.join_ranges('sel')
         pattern = pattern if pattern else self.area.get_word()
-        Fstmt.pattern = pattern
+        pattern = escape(pattern)
 
-        if not Fstmt.pattern:
+        if not pattern:
             root.status.set_msg('No pattern set!')
         else:
-            self.picker()
+            self.picker(pattern)
 
-    def find(self):
-        if Fstmt.pattern:
-            self.options.display()
-        else:
-            root.status.set_msg('No pattern set!')
-    
-    def make_cmd(self, dir):
+    def make_cmd(self, pattern, dir):
         return [Fstmt.PATH, '--nocolor', '-H', 
-        '--nogroup', self.pattern, dir]
+        '--nogroup', pattern, dir]
 
-    def run_cmd(self, dir):
-        child = Popen(self.make_cmd(dir), stdout=PIPE, 
+    def run_cmd(self, pattern, dir):
+        child = Popen(self.make_cmd(pattern, dir), stdout=PIPE, 
         stderr=STDOUT, encoding=self.area.charset)
         return child.communicate()[0]
 
-    def picker(self):
-        dir = self.dir if Fstmt.dir else \
-        get_sentinel_file(self.area.filename, *Fstmt.SENTINELS)
-        output = self.run_cmd(dir)
-
+    def picker(self, pattern):
+        output = self.run_cmd(pattern, self.area.project)
         regex  = '(.+):([0-9]+):(.+)' 
         ranges = findall(regex, output)
     
@@ -113,7 +89,9 @@ class Fstmt(object):
 
 class FstmtSilver(Fstmt):
     PATH = 'ag'
-    def make_cmd(self, dir):
+    def make_cmd(self, pattern, dir):
         return [FstmtSilver.PATH, '--nocolor', '--nogroup', 
-            '--noheading', self.pattern, dir]
+            '--noheading', pattern, dir]
+
+
 

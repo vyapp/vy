@@ -66,6 +66,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.charset  = 'utf-8'
         self.map      = {}
         self.db       = {}
+        self.project  = ''
         self.assoc_c  = 0
 
     def update_map(self, namespace, map):
@@ -1605,6 +1606,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

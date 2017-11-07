@@ -153,6 +153,7 @@ class OptionWindow(Toplevel):
     def display(self):
         self.grab_set()
         self.deiconify()
+        self.listbox.focus_set()
         # self.wait_window(self)
 
     def close(self):
@@ -174,5 +175,6 @@ class LinePicker(OptionWindow):
         index = self.listbox.index(ACTIVE)
         findline(*self.options[index][1])
         self.close()
+
 
 
