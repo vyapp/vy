@@ -70,7 +70,7 @@ class Fstmt(object):
             self.picker(pattern)
 
     def make_cmd(self, pattern, dir):
-        return [Fstmt.PATH, '--nocolor', '-H', 
+        return [Fstmt.PATH, '--nocolor', '-H', '--column',
         '--nogroup', pattern, dir]
 
     def run_cmd(self, pattern, dir):
@@ -83,9 +83,8 @@ class Fstmt(object):
         dir    = dir if dir else AreaVi.HOME
         dir    = dir if dir else self.area.filename
         output = self.run_cmd(pattern, dir)
-        regex  = '(.+):([0-9]+):(.+)' 
+        regex  = '(.+):([0-9]+):[0-9]+:(.+)' 
         ranges = findall(regex, output)
-    
         if ranges:
             self.options(ranges)
         else:
@@ -94,8 +93,9 @@ class Fstmt(object):
 class FstmtSilver(Fstmt):
     PATH = 'ag'
     def make_cmd(self, pattern, dir):
-        return [FstmtSilver.PATH, '--nocolor', '--nogroup', 
+        return [FstmtSilver.PATH, '--nocolor', '--nogroup', '--vimgrep', 
             '--noheading', pattern, dir]
+
 
 
 
