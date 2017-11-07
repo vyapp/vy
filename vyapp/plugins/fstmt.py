@@ -32,6 +32,7 @@ otherwise it gets the word under the cursor then perform the search.
 
 from subprocess import Popen, STDOUT, PIPE
 from vyapp.widgets import LinePicker
+from vyapp.areavi import AreaVi
 from vyapp.app import root
 from vyapp.ask import Ask
 from os.path import join
@@ -78,7 +79,10 @@ class Fstmt(object):
         return child.communicate()[0]
 
     def picker(self, pattern):
-        output = self.run_cmd(pattern, self.area.project)
+        dir    = self.area.project
+        dir    = dir if dir else AreaVi.HOME
+        dir    = dir if dir else self.area.filename
+        output = self.run_cmd(pattern, dir)
         regex  = '(.+):([0-9]+):(.+)' 
         ranges = findall(regex, output)
     
@@ -92,6 +96,7 @@ class FstmtSilver(Fstmt):
     def make_cmd(self, pattern, dir):
         return [FstmtSilver.PATH, '--nocolor', '--nogroup', 
             '--noheading', pattern, dir]
+
 
 
 

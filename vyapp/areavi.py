@@ -30,6 +30,9 @@ class IdleEvent(object):
 
 class AreaVi(Text, DataEvent, IdleEvent):
     ACTIVE = None
+    # Plugins should commonly use self.project
+    # if it fails then use HOME.
+    HOME   = ''
 
     def __init__(self, default_filename, *args, **kwargs):
         """
@@ -1606,6 +1609,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
