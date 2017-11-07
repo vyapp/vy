@@ -26,8 +26,8 @@ class Fsnip:
     def  __init__(self, area):
         self.area = area
         area.install('fsnip', 
-        (-1, '<Key-b>', lambda event: self.options.display()),
-        (-1, '<Key-B>', lambda event: Get(events = {
+        ('NORMAL', '<Key-b>', lambda event: self.options.display()),
+        ('NORMAL', '<Key-B>', lambda event: Get(events = {
         '<Return>':self.find, 
         '<Control-g>':self.set_file_pattern, 
         '<Escape>':  lambda wid: True})))
@@ -58,4 +58,5 @@ class Fsnip:
         return True
 
 install = Fsnip
+
 
