@@ -42,7 +42,7 @@ def install(area):
     python_analysis = PythonAnalysis(area)
     picker = lambda event: python_analysis.check()
 
-    area.install('python-checker', 
+    area.install('python-analysis', 
     ('PYTHON', '<Key-o>', picker))
 
 def py_analysis():
@@ -50,6 +50,7 @@ def py_analysis():
     python_analysis.check()
 
 ENV['py_analysis'] = py_analysis
+
 
 
 
