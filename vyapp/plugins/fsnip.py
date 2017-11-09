@@ -42,7 +42,12 @@ class Fsnip:
         '<Control-r>':self.set_type_regex, 
         '<Control-l>':self.set_type_literal, 
         '<Control-g>':self.set_file_regex, 
+        '<Control-s>':self.set_nocase, 
         '<Escape>':  lambda wid: True})))
+
+    def set_nocase(self, wid):
+        Fsnip.nocase = False if Fsnip.nocase else True
+        root.status.set_msg('Set search nocase: %s' % Fsnip.nocase)
 
     def set_ignore_regex(self, wid):
         Fsnip.ignore = build_regex(wid.get())
@@ -77,7 +82,7 @@ class Fsnip:
         if self.file_regex:
             cmd.extend(['-G', self.file_regex])
         if self.nocase:
-            cmd.append('-i')
+            cmd.append('-s')
 
         if self.type == 'LAX':
             cmd.append(build_regex(pattern))
@@ -100,7 +105,7 @@ class Fsnip:
         """
         """
 
-        root.status.set_msg('Set fsnip pattern!')
+        root.status.set_msg('Set pattern!')
         output  = self.run_cmd(wid.get())
         regex   = '(.+):([0-9]+):[0-9]+:(.+)' 
         ranges  = findall(regex, output)
