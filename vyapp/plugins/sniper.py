@@ -7,6 +7,39 @@ A wrapper around silver search.
 Key-Commands
 ============
 
+Namespace: sniper
+
+Mode: NORMAL
+Event: <Key-B>
+Description: Get a text pattern and perform a search.
+
+Mode: NORMAL
+Event: <Key-b>
+Description: Open the previous found occurrences of the pattern.
+
+Mode: INPUT
+Event: <Key-i>
+Description: .
+
+Mode: INPUT
+Event: <Key-x>
+Description: .
+
+Mode: INPUT
+Event: <Key-r>
+Description: .
+
+Mode: INPUT
+Event: <Key-l>
+Description: .
+
+Mode: INPUT
+Event: <Key-w>
+Description: .
+
+Mode: INPUT
+Event: <Key-m>
+Description: .
 
 """
 
@@ -29,7 +62,6 @@ class Sniper:
 
     # Sniper search options.
     file_regex = ''
-    hidden     = False
     ignore     = ''
     multiline  = True
 
@@ -40,7 +72,7 @@ class Sniper:
 
     def  __init__(self, area):
         self.area = area
-        area.install('fsnip', 
+        area.install('sniper', 
         ('NORMAL', '<Key-b>', lambda event: self.options.display()),
         ('NORMAL', '<Key-B>', lambda event: Get(events = {
         '<Return>':self.find, 
@@ -92,8 +124,6 @@ class Sniper:
         cmd = [self.PATH, '--nocolor', '--nogroup',
         '--vimgrep', '--noheading']
 
-        if self.hidden:
-            cmd.append('--hidden')
         if self.ignore:
             cmd.extend(['--ignore', self.ignore])
         if self.file_regex:
