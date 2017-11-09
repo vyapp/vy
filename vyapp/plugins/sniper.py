@@ -2,7 +2,7 @@
 Overview
 ========
 
-Used to find snippets accross folders.
+A wrapper around silver search.
 
 Key-Commands
 ============
@@ -18,18 +18,25 @@ from vyapp.app import root
 from vyapp.ask import Get
 from re import findall
 
-class Fsnip:
+class Sniper:
     options = LinePicker()
-    PATH    = 'ag'
-    # Fsnip search options.
+    # Path to ag program.
+    PATH = 'ag'
+
+    # Dirs where ag will search when in 
+    # wide mode.
+    DIRS = []
+
+    # Sniper search options.
     file_regex = ''
     hidden     = False
     ignore     = ''
     multiline  = True
+
     # Either lax, literal, regex.
-    type       = 'LAX'
-    nocase     = False
-    folder     = ''
+    type   = 'LAX'
+    nocase = False
+    wide   = True
 
     def  __init__(self, area):
         self.area = area
@@ -43,28 +50,38 @@ class Fsnip:
         '<Control-l>':self.set_type_literal, 
         '<Control-g>':self.set_file_regex, 
         '<Control-s>':self.set_nocase, 
+        '<Control-w>':self.set_wide, 
+        '<Control-m>':self.set_multiline, 
         '<Escape>':  lambda wid: True})))
 
+    def set_wide(self, wid):
+        Sniper.wide = False if Sniper.wide else True
+        root.status.set_msg('Set wide search: %s' % Sniper.wide)
+
+    def set_multiline(self, wid):
+        Sniper.multiline = False if Sniper.multiline else True
+        root.status.set_msg('Set search multiline: %s' % Sniper.multiline)
+
     def set_nocase(self, wid):
-        Fsnip.nocase = False if Fsnip.nocase else True
-        root.status.set_msg('Set search nocase: %s' % Fsnip.nocase)
+        Sniper.nocase = False if Sniper.nocase else True
+        root.status.set_msg('Set search nocase: %s' % Sniper.nocase)
 
     def set_ignore_regex(self, wid):
-        Fsnip.ignore = build_regex(wid.get())
-        root.status.set_msg('Set ignore file regex:%s' % Fsnip.ignore)
+        Sniper.ignore = build_regex(wid.get())
+        root.status.set_msg('Set ignore file regex:%s' % Sniper.ignore)
         wid.delete(0, 'end')
 
     def set_type_literal(self, wid):
         root.status.set_msg('Set search type: LITERAL')
-        Fsnip.type = 'LITERAL'
+        Sniper.type = 'LITERAL'
 
     def set_type_lax(self, wid):
         root.status.set_msg('Set search type: LAX')
-        Fsnip.type = 'LAX'
+        Sniper.type = 'LAX'
 
     def set_type_regex(self, wid):
         root.status.set_msg('Set search type: REGEX')
-        Fsnip.type = 'REGEX'
+        Sniper.type = 'REGEX'
 
     def set_file_regex(self, wid):
         self.file_regex = build_regex(wid.get())
@@ -83,6 +100,10 @@ class Fsnip:
             cmd.extend(['-G', self.file_regex])
         if self.nocase:
             cmd.append('-s')
+        if not self.multiline:
+            cmd.append('--nomultiline')
+        else:
+            cmd.append('--multiline')
 
         if self.type == 'LAX':
             cmd.append(build_regex(pattern))
@@ -90,8 +111,10 @@ class Fsnip:
             cmd.append(pattern)
         else:
             cmd.extend(['-Q', pattern])
-        cmd.append(self.area.project)
-
+        if not Sniper.wide:
+            cmd.extend([self.area.project, AreaVi.HOME])
+        else:
+            cmd.extend(Sniper.DIRS)
         print(cmd)
         return cmd
 
@@ -106,7 +129,8 @@ class Fsnip:
         """
 
         root.status.set_msg('Set pattern!')
-        output  = self.run_cmd(wid.get())
+        pattern = wid.get()
+        output  = self.run_cmd(pattern)
         regex   = '(.+):([0-9]+):[0-9]+:(.+)' 
         ranges  = findall(regex, output)
 
@@ -116,5 +140,5 @@ class Fsnip:
             root.status.set_msg('No results:%s!' % pattern)
         return True
 
-install = Fsnip
+install = Sniper
 
