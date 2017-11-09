@@ -33,8 +33,8 @@ class Sniper:
     ignore     = ''
     multiline  = True
 
-    # Either lax, literal, regex.
-    type   = 'LAX'
+    # Either lax(1), literal(0), regex(2).
+    type   = 1
     nocase = False
     wide   = True
 
@@ -60,11 +60,11 @@ class Sniper:
 
     def set_multiline(self, wid):
         Sniper.multiline = False if Sniper.multiline else True
-        root.status.set_msg('Set search multiline: %s' % Sniper.multiline)
+        root.status.set_msg('Set multiline search: %s' % Sniper.multiline)
 
     def set_nocase(self, wid):
         Sniper.nocase = False if Sniper.nocase else True
-        root.status.set_msg('Set search nocase: %s' % Sniper.nocase)
+        root.status.set_msg('Set nocase search: %s' % Sniper.nocase)
 
     def set_ignore_regex(self, wid):
         Sniper.ignore = build_regex(wid.get())
@@ -73,15 +73,15 @@ class Sniper:
 
     def set_type_literal(self, wid):
         root.status.set_msg('Set search type: LITERAL')
-        Sniper.type = 'LITERAL'
+        Sniper.type = 0
 
     def set_type_lax(self, wid):
         root.status.set_msg('Set search type: LAX')
-        Sniper.type = 'LAX'
+        Sniper.type = 1
 
     def set_type_regex(self, wid):
         root.status.set_msg('Set search type: REGEX')
-        Sniper.type = 'REGEX'
+        Sniper.type = 2
 
     def set_file_regex(self, wid):
         self.file_regex = build_regex(wid.get())
@@ -105,12 +105,13 @@ class Sniper:
         else:
             cmd.append('--multiline')
 
-        if self.type == 'LAX':
+        if self.type == 1:
             cmd.append(build_regex(pattern))
-        elif self.type == 'REGEX':
+        elif self.type == 2:
             cmd.append(pattern)
         else:
             cmd.extend(['-Q', pattern])
+
         if not Sniper.wide:
             cmd.extend([self.area.project, AreaVi.HOME])
         else:
@@ -141,4 +142,5 @@ class Sniper:
         return True
 
 install = Sniper
+
 
