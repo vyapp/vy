@@ -97,6 +97,3 @@ class FstmtSilver(Fstmt):
             '--noheading', pattern, dir]
 
 
-
-
-

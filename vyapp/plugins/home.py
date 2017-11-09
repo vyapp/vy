@@ -14,7 +14,7 @@ class Home(object):
     def  __init__(self, area):
         self.area = area
         area.install('fstmt', 
-        (-1, '<Key-X>', self.set_home))
+        ('NORMAL', '<Key-X>', self.set_home))
 
     def set_home(self, event):
         """    
@@ -26,3 +26,4 @@ class Home(object):
         AreaVi.HOME = ask.data
 
 install = Home
+
