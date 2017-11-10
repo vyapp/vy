@@ -33,11 +33,10 @@ otherwise it gets the word under the cursor then perform the search.
 from subprocess import Popen, STDOUT, PIPE
 from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
+from re import findall, escape
 from vyapp.app import root
 from vyapp.ask import Ask
 from os.path import join
-from re import findall
-from re import escape
 
 class Fstmt(object):
     options   = LinePicker()
@@ -95,5 +94,6 @@ class FstmtSilver(Fstmt):
     def make_cmd(self, pattern, dir):
         return [FstmtSilver.PATH, '--nocolor', '--nogroup', '--vimgrep', 
             '--noheading', pattern, dir]
+
 
 
