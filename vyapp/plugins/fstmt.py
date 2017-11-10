@@ -2,7 +2,7 @@
 Overview
 ========
 
-Find where patterns are found, this plugin uses ack to search
+Find where patterns are found, this plugin uses silver searcher to search
 for word patterns. It is useful to find where functions/methods
 are used over multiple files.
 
@@ -13,7 +13,7 @@ Namespace: fstmt
 
 Mode: NORMAL
 Event: <Control-backslash>
-Description: Get a text pattern and perform a search.
+Description: Same as <Key-bar> but matches sensitively.
 
 Mode: NORMAL
 Event: <Key-backslash>
@@ -40,7 +40,7 @@ from os.path import join
 
 class Fstmt(object):
     options   = LinePicker()
-    PATH      = 'ack'
+    PATH      = 'ag'
 
     def  __init__(self, area):
         self.area    = area
@@ -49,51 +49,42 @@ class Fstmt(object):
         ('NORMAL', '<Key-backslash>', 
         lambda event: self.options.display()),
         ('NORMAL', '<Control-bar>', 
-        lambda event: self.set_pattern()),
+        lambda event: self.picker('-s')),
         ('NORMAL', '<Key-bar>', 
-        lambda event: self.catch_pattern()))
+        lambda event: self.picker('-i')))
 
-    def set_pattern(self):
-        root.status.set_msg('Set fstmt pattern!')
-        ask = Ask()
-        self.picker(escape(ask.data))
-        
     def catch_pattern(self):
         pattern = self.area.join_ranges('sel')
         pattern = pattern if pattern else self.area.get_word()
         pattern = escape(pattern)
+        return pattern
 
-        if not pattern:
-            root.status.set_msg('No pattern set!')
-        else:
-            self.picker(pattern)
+    def make_cmd(self, pattern, dir, *args):
+        cmd =  [Fstmt.PATH, '--nocolor', '--nogroup', 
+        '--vimgrep', '--noheading']
+        cmd.extend(args)
+        cmd.extend([pattern, dir])
+        return cmd
 
-    def make_cmd(self, pattern, dir):
-        return [Fstmt.PATH, '--nocolor', '-H', '--column',
-        '--nogroup', pattern, dir]
-
-    def run_cmd(self, pattern, dir):
-        child = Popen(self.make_cmd(pattern, dir), stdout=PIPE, 
-        stderr=STDOUT, encoding=self.area.charset)
-        return child.communicate()[0]
-
-    def picker(self, pattern):
+    def run_cmd(self, pattern, *args):
         dir    = self.area.project
         dir    = dir if dir else AreaVi.HOME
         dir    = dir if dir else self.area.filename
-        output = self.run_cmd(pattern, dir)
+        child  = Popen(self.make_cmd(pattern, dir, *args), stdout=PIPE, 
+        stderr=STDOUT, encoding=self.area.charset)
         regex  = '(.+):([0-9]+):[0-9]+:(.+)' 
-        ranges = findall(regex, output)
+        ranges = findall(regex, child.communicate()[0])
+
         if ranges:
             self.options(ranges)
         else:
             root.status.set_msg('No pattern found!')
 
-class FstmtSilver(Fstmt):
-    PATH = 'ag'
-    def make_cmd(self, pattern, dir):
-        return [FstmtSilver.PATH, '--nocolor', '--nogroup', '--vimgrep', 
-            '--noheading', pattern, dir]
-
+    def picker(self, *args):
+        pattern = self.catch_pattern()
+        if not pattern:
+            root.status.set_msg('No pattern set!')
+        else:
+            self.run_cmd(pattern, *args)
 
 
