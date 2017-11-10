@@ -48,12 +48,10 @@ def match_sub_pattern(pattern, lst):
                     yield indi, indj
                     
 
-
-
-
-
-
-
-
-
-
+def error(handle):
+    def shell(*args, **kwargs):
+        try:
+            return handle(*args, **kwargs)
+        except Exception as e:
+            root.status.set_msg('Error :%s' % e)
+    return shell

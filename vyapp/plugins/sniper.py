@@ -50,6 +50,7 @@ from subprocess import Popen, STDOUT, PIPE
 from vyapp.regutils import build_regex
 from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
+from vyapp.tools import error
 from vyapp.app import root
 from vyapp.ask import Get
 from re import findall
@@ -149,7 +150,6 @@ class Sniper:
             cmd.extend([self.area.project, AreaVi.HOME])
         else:
             cmd.extend(Sniper.DIRS)
-        print(cmd)
         return cmd
 
     def run_cmd(self, pattern):
@@ -158,6 +158,7 @@ class Sniper:
         encoding=self.area.charset)
         return child.communicate()[0]
 
+    @error
     def find(self, wid):
         """
         """
