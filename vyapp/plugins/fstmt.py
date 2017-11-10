@@ -39,8 +39,8 @@ from vyapp.ask import Ask
 from os.path import join
 
 class Fstmt(object):
-    options   = LinePicker()
-    PATH      = 'ag'
+    options = LinePicker()
+    PATH    = 'ag'
 
     def  __init__(self, area):
         self.area    = area
