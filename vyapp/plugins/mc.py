@@ -54,10 +54,16 @@ Description: Clear the clipboard.
 
 """
 
-from subprocess import check_output, call, Popen
+from subprocess import check_output, check_call, Popen
 from os.path import expanduser, dirname, join
+from vyapp.tools import error
 from vyapp.app import root
 from vyapp.ask import Ask
+
+# Wrapper around these functions to get the
+# error shown on the statusbar.
+check_output = error(check_output)
+check_call  = error(check_call)
 
 class Mc(object):
     TAGCONF = {'(MC-DIRECTORY)': {'foreground': 'red'},
@@ -82,7 +88,7 @@ class Mc(object):
         ('NORMAL', '<Key-F>', lambda e: self.info()),
         ('NORMAL', '<Key-E>', lambda e: self.rename()),
 
-        ('NORMAL', '<Key-J>', lambda e:self.ls()))
+        ('NORMAL', '<Key-J>', lambda e:self.ls(self.ph)))
 
         area.tags_config(self.TAGCONF)
 
@@ -101,12 +107,12 @@ class Mc(object):
         root.status.set_msg('Appended %s!' % filename)
 
     def down(self):
-        self.ph = self.area.get_line()
-        self.ls()
+        ph = self.area.get_line()
+        self.ls(ph)
 
     def up(self):
-        self.ph = dirname(self.ph)
-        self.ls()
+        ph = dirname(self.ph)
+        self.ls(ph)
 
     def info(self):
         filename = self.area.get_line()
@@ -115,51 +121,58 @@ class Mc(object):
         self.area.delete('1.0', 'end')
         self.area.append(data, '(MC-FILE)')
 
-    def ls(self):
+    def ls(self, ph):
+        """
+        """
+
         self.area.delete('1.0', 'end')
 
         data = check_output('find "%s" -maxdepth 1 -type d' % 
-        self.ph, shell=1)
+        ph, shell=1)
         self.area.append(data, '(MC-DIRECTORY)')
 
         data = check_output('find "%s" -maxdepth 1 -type f' % 
-        self.ph, shell=1)
+        ph, shell=1)
         self.area.append(data, '(MC-FILE)')
+
+        # If the previous commands ran succesfully
+        # then set the path.
+        self.ph = ph
 
     def cp(self):
         destin = self.area.get_line()
-        code = call('cp -R %s "%s"' % (' '.join(Mc.clipboard), 
+        code = check_call('cp -R %s "%s"' % (' '.join(Mc.clipboard), 
         destin), shell=1)
 
         root.status.set_msg('Files copied!')
         del Mc.clipboard[:]
-        self.ls()
+        self.ls(self.ph)
 
     def mv(self):
         destin = self.area.get_line()
-        code = call('mv %s "%s"' % (' '.join(Mc.clipboard), 
+        code = check_call('mv %s "%s"' % (' '.join(Mc.clipboard), 
         destin), shell=1)
 
         root.status.set_msg('Files moved!')
         del Mc.clipboard[:]
-        self.ls()
+        self.ls(self.ph)
 
     def rename(self):
         path     = self.area.get_line()
         ask      = Ask()
         filename = ask.data
         destin   = join(dirname(path), filename)
-        code     = call('mv "%s" %s' % (path, 
+        code     = check_call('mv "%s" %s' % (path, 
         destin), shell=1)
 
         root.status.set_msg('File renamed!')
-        self.ls()
+        self.ls(self.ph)
 
     def rm(self):
-        code = call('rm -fr %s' % ' '.join(Mc.clipboard), shell=1)
+        code = check_call('rm -fr %s' % ' '.join(Mc.clipboard), shell=1)
         del Mc.clipboard[:]
         root.status.set_msg('Deleted files!')
-        self.ls()
+        self.ls(self.ph)
 
     def load(self):
         filename = self.area.get_line()
@@ -172,10 +185,5 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
-
-
-
-
-
 
 

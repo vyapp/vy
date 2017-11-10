@@ -54,4 +54,6 @@ def error(handle):
             return handle(*args, **kwargs)
         except Exception as e:
             root.status.set_msg('Error :%s' % e)
+            raise
     return shell
+
