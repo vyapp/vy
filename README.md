@@ -70,7 +70,7 @@ Features
 
 - **Easily customizable (vyrc in python)**
 
-- **Smart ack/silver search**
+- **Smart silver search**
 
 Basic Install
 =============
@@ -104,6 +104,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
