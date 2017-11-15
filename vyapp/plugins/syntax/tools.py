@@ -1,8 +1,3 @@
-from pygments.lexers import PythonLexer
-from pygments.lexers import guess_lexer, guess_lexer_for_filename
-from pygments.token import Token
-
-
 def thread_colorize(area, lexer, theme, index, stopindex):
     for pos, token, value in lexer.get_tokens_unprocessed(area.get(index, stopindex)):
         area.tag_add(str(token), '%s +%sc' % (index, pos), 
@@ -40,6 +35,7 @@ def get_tokens_unprocessed_matrix(count, offset, data, lexer):
     for ((srow, scol), (erow, ecol)), token, value in map:
         yield(((srow + count, scol), (erow + count, ecol)), 
                token, value)
+
 
 
 

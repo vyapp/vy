@@ -4,7 +4,7 @@
 
 from vyapp.plugins.syntax.tools import *
 from vyapp.plugins.syntax.keys import PRECEDENCE_TABLE, DEFAULT
-from pygments.lexers import get_lexer_for_filename 
+from pygments.lexers import get_lexer_for_filename, guess_lexer
 from re import search
 
 class Spider(object):
@@ -18,7 +18,7 @@ class Spider(object):
 
         self.default_background = theme.background_color \
         if theme.background_color else 'black'
-
+        self.lexer = None
         area.configure(background = self.default_background)
         area.configure(foreground = self.default_style)
 
@@ -30,17 +30,29 @@ class Spider(object):
         (-1, '<<SaveData>>', lambda event: self.update_all()),
         (-1, '<Escape>', lambda event: self.update()))
 
+    def set_lexer(self):
+        """
+        Try to detect the lexer by filename if it fails
+        then try to guess the lex by shebang statement.
+        
+        The shebang statement should be placed in the first
+        20 lines of the file.
+        """
+
+        try:
+            self.lexer = get_lexer_for_filename(self.area.filename, '')
+        except Exception as e:
+            self.lexer = guess_lexer(self.area.get('1.0', '20.0'))
+
     def update_all(self):
         """
         Colorize all text in the widget.
         """
 
-        lexer = None
-        try:
-            lexer = get_lexer_for_filename(self.area.filename, '')
-        except Exception:
-            return
-        self.tag_tokens(lexer, '1.0', 'end')
+        # When it need to update all the text
+        # just save the lexer for later usage.
+        self.set_lexer()
+        self.tag_tokens('1.0', 'end')
 
     def update(self):
         """
@@ -48,15 +60,8 @@ class Spider(object):
         when Escape is pressed.
         """
 
-        lexer = None
-        try:
-            lexer = get_lexer_for_filename(self.area.filename, '')
-        except Exception:
-            return
-
-        lexer = get_lexer_for_filename(self.area.filename, '')
         TAG_KEYS_PRECEDENCE = PRECEDENCE_TABLE.get(
-        tuple(lexer.aliases), DEFAULT)
+        tuple(self.lexer.aliases), DEFAULT)
 
         index0 = self.area.index('@0,0')
         index0 = self.area.index('%s -%sl' % (index0, self.max))
@@ -74,16 +79,16 @@ class Spider(object):
 
         for ind in self.styles.keys():
             self.area.tag_remove(str(ind), index0, index2)
-        self.tag_tokens(lexer, index0, index2)
+        self.tag_tokens(index0, index2)
 
-    def tag_tokens(self, lexer, index, stopindex):
+    def tag_tokens(self, index, stopindex):
         """
         Add the token'tag to each range of text.
         """
 
         count, offset = self.area.indref(index)
         tokens        = get_tokens_unprocessed_matrix(count, offset, 
-        self.area.get(index, stopindex), lexer)
+        self.area.get(index, stopindex), self.lexer)
 
         for ((srow, scol), (erow, ecol)), token, value in tokens:
             self.area.tag_add(str(token), '%s.%s' % (srow, 
@@ -114,8 +119,6 @@ class Spider(object):
         self.area.tag_lower(tag, 'sel')
 
 install = Spider
-
-
 
 
 
