@@ -30,6 +30,7 @@ class IdleEvent(object):
 
 class AreaVi(Text, DataEvent, IdleEvent):
     ACTIVE = None
+    INPUT  = None
     # Plugins should commonly use self.project
     # if it fails then use HOME.
     HOME   = ''
@@ -71,6 +72,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.db       = {}
         self.project  = ''
         self.assoc_c  = 0
+
+        def set_input(e):
+            AreaVi.INPUT = e.widget
+        self.hook('AreaVi', '-1', '<FocusIn>', set_input)
 
     def update_map(self, namespace, map):
         scheme = self.map.setdefault(namespace, {})
@@ -1609,6 +1614,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

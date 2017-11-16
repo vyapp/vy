@@ -166,6 +166,15 @@ class OptionWindow(Toplevel):
         self.withdraw()
 
 class LinePicker(OptionWindow):
+    def __init__(self):
+        OptionWindow.__init__(self)
+        # super(OptionWindow, self).__init__()
+        self.listbox.bind('<Control-d>', lambda event: \
+        self.on_ctrl_selection(), add=True)
+        self.listbox.bind('<Alt-comma>', lambda event: \
+        self.on_selection(), add=True)
+        self.area = None
+
     def  __call__(self, options=[]):
         options = zip(('%s - %s %s' % (relpath(filename), line, msg)
         for filename, line, msg in options), options)
@@ -174,6 +183,17 @@ class LinePicker(OptionWindow):
     def on_selection(self):
         index = self.listbox.index(ACTIVE)
         findline(*self.options[index][1])
+        self.close()
+
+    def on_ctrl_selection(self):
+        index    = self.listbox.index(ACTIVE)
+        filename = self.options[index][1][0]
+        line     = self.options[index][1][1]
+
+        # If the file is already loaded then just set the line.
+        if not AreaVi.INPUT.filename in filename:
+            AreaVi.INPUT.load_data(filename)
+        AreaVi.INPUT.setcur(line, 0)
         self.close()
 
 
