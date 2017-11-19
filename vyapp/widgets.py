@@ -142,13 +142,9 @@ class OptionWindow(Toplevel):
         self.listbox.event_generate('<Down>'))
 
         self.listbox.bind('<Escape>', lambda event: self.close())
-        self.listbox.bind('<Return>', lambda event: self.on_selection())
         self.protocol("WM_DELETE_WINDOW", self.close)
         self.transient(root)
         self.withdraw()
-
-    def on_selection(self):
-        pass
 
     def display(self):
         self.grab_set()
@@ -169,10 +165,14 @@ class LinePicker(OptionWindow):
     def __init__(self):
         OptionWindow.__init__(self)
         # super(OptionWindow, self).__init__()
-        self.listbox.bind('<Control-d>', lambda event: \
-        self.on_ctrl_selection(), add=True)
-        self.listbox.bind('<Alt-comma>', lambda event: \
-        self.on_selection(), add=True)
+        self.listbox.bind('<Control-d>', 
+        lambda event: self.on_current(), add=True)
+
+        self.listbox.bind('<Alt-comma>', 
+        lambda event: self.on_tab(), add=True)
+
+        self.listbox.bind('<Return>', 
+        lambda event: self.on_tab())
         self.area = None
 
     def  __call__(self, options=[]):
@@ -180,12 +180,12 @@ class LinePicker(OptionWindow):
         for filename, line, msg in options), options)
         super(LinePicker, self).__call__(list(options))
 
-    def on_selection(self):
+    def on_tab(self):
         index = self.listbox.index(ACTIVE)
         findline(*self.options[index][1])
         self.close()
 
-    def on_ctrl_selection(self):
+    def on_current(self):
         index    = self.listbox.index(ACTIVE)
         filename = self.options[index][1][0]
         line     = self.options[index][1][1]
@@ -195,6 +195,7 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
+
 
 
 
