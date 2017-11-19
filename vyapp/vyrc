@@ -73,6 +73,11 @@ import vyapp.plugins.startup
 import vyapp.plugins.python_mode
 autoload(vyapp.plugins.python_mode)
 
+
+import vyapp.plugins.golang_mode
+autoload(vyapp.plugins.golang_mode)
+
+
 import vyapp.plugins.html_mode
 autoload(vyapp.plugins.html_mode)
 
@@ -588,6 +593,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
