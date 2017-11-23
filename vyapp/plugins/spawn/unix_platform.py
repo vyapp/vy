@@ -12,12 +12,11 @@ from vyapp.plugins.spawn.base_spawn import BaseSpawn
 from vyapp.areavi import AreaVi
 from vyapp.app import root
 from os import environ 
-import shlex
 
 class Spawn(BaseSpawn):
     def __init__(self, cmd):
-        self.child   = Popen(shlex.split(cmd), 
-        shell=0, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
+        self.child   = Popen(cmd, 
+        shell=True, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
         stderr=STDOUT,  env=environ)
         
 
@@ -65,11 +64,16 @@ class VSpawn(Spawn):
         BaseSpawn.__init__(self, cmd, AreaVi.ACTIVE, 
         AreaVi.ACTIVE.master.master.master.create())
 
-ENV['hspawn'] = HSpawn
-ENV['vspawn'] = VSpawn
+ENV['hspawn']  = HSpawn
+ENV['vspawn']  = VSpawn
+ENV['vbash']   = lambda : VSpawn('bash -i')
+ENV['hbash']   = lambda : HSpawn('bash -i')
+ENV['hpy'] = lambda : HSpawn('bash -c "tee -i >(stdbuf -o 0 python -i -u)"')
+ENV['vpy'] = lambda : VSpawn('bash -c "tee -i >(stdbuf -o 0 python -i -u)"')
 
-ENV['vbash']  = lambda : VSpawn('bash -i')
-ENV['hbash'] = lambda : HSpawn('bash -i')
+ENV['hrb'] = lambda : HSpawn('bash -c "stdbuf -o 0 irb --inf-ruby-mode"')
+ENV['vrb'] = lambda : VSpawn('bash -c "stdbuf -o 0 irb --inf-ruby-mode"')
+
 
 
 
