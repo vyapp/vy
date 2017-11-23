@@ -103,7 +103,7 @@ class Sniper:
         root.status.set_msg('Set nocase search: %s' % Sniper.nocase)
 
     def set_ignore_regex(self, wid):
-        Sniper.ignore = build_regex(wid.get())
+        Sniper.ignore = wid.get()
         root.status.set_msg('Set ignore file regex:%s' % Sniper.ignore)
         wid.delete(0, 'end')
 
@@ -120,7 +120,7 @@ class Sniper:
         Sniper.type = 2
 
     def set_file_regex(self, wid):
-        self.file_regex = build_regex(wid.get())
+        self.file_regex = wid.get()
         root.status.set_msg('Set file regex:%s' % self.file_regex)
         wid.delete(0, 'end')
 
@@ -176,5 +176,6 @@ class Sniper:
         return True
 
 install = Sniper
+
 
 
