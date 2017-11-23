@@ -1,4 +1,51 @@
 """
+Overview
+========
+
+Used to spawn new processes, this module works only on unix-like
+platforms.
+
+Commands
+========
+
+Command: hbash
+Description: Start a new bash process whose output
+is directed to a horizontal pane.
+
+Command: vbash
+Description: Start a new bash process whose output
+is directed to a vertical pane.
+
+Command: vpy
+Description: Start a python interpreter process
+in a vertical pane.
+
+Command: hpy
+Description: Start a python interpreter process
+in a horizontal pane.
+
+Command: vrb
+Description: Start a ruby interpreter process
+in a vertical pane.
+
+Command: hrb
+Description: Start a ruby interpreter process
+in a horizontal pane.
+
+Notes
+=====
+
+**Run python from your bash process**
+
+tee -i >(stdbuf -o 0 python -i -u)
+
+**Run ruby from your bash process**
+
+stdbuf -o 0 irb --inf-ruby-mode
+
+The above commands could be slightly modified
+to work with other interpreters. 
+
 """
 
 from untwisted.iofile import Stdout, Stdin, LOAD, CLOSE
@@ -73,8 +120,6 @@ ENV['vpy'] = lambda : VSpawn('bash -c "tee -i >(stdbuf -o 0 python -i -u)"')
 
 ENV['hrb'] = lambda : HSpawn('bash -c "stdbuf -o 0 irb --inf-ruby-mode"')
 ENV['vrb'] = lambda : VSpawn('bash -c "stdbuf -o 0 irb --inf-ruby-mode"')
-
-
 
 
 
