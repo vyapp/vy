@@ -28,6 +28,7 @@ git status
 git add *
 git commit -a 
 git push
+##############################################################################
 git commit -m 'Fixing setup.py version.'
 ##############################################################################
 # check, pull, request, vy, avamsi.
@@ -174,6 +175,7 @@ git rm --cached -r build
 
 l Control-bar
 l Key-bar
+
 
 
 
