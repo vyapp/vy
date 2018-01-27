@@ -140,6 +140,22 @@ class NoteVi(Notebook):
             for indj in indi:
                 base.load(*indj)
 
+    def next(self, func):
+        tabs  = self.tabs()
+        index = self.index(self.select())
+        for ind in tabs[index + 1:]:
+            if func(self.tab(ind, 'text')): 
+                self.on(ind)
+                break
+
+    def back(self, func):
+        tabs  = self.tabs()
+        index = self.index(self.select())
+        for ind in reversed(tabs[:index]):
+            if func(self.tab(ind, 'text')): 
+                self.on(ind)
+                break
+
     def find(self, func):
         for ind in self.tabs():
             if func(self.tab(ind, 'text')):
@@ -171,6 +187,7 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
+
 
 
 

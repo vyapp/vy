@@ -7,50 +7,45 @@ from vyapp.app import root
 class TabSearch(object):
     def __init__(self, area):
         self.area = area
-        area.install('tab-search', (-1, '<Alt-i>', lambda event: self.start_search()))
+        area.install('tab-search', 
+        (-1, '<Alt-i>', lambda event: self.search_next()),
+        (-1, '<Alt-u>', lambda event: self.search_back()))
 
-
-    def start_search(self):
-        get = Get(events={'<<Data>>': self.update_search, '<Alt-p>': lambda wid: self.next_tab(), 
-                    '<Control-j>': lambda wid: self.next_tab(), '<Alt-o>': lambda wid: self.prev_tab(), 
-                        '<Control-k>': lambda wid: self.prev_tab(), '<Escape>': lambda wid: self.stop_search(), 
-                            '<Return>': lambda wid: self.stop_search()})
+    def search_next(self):
+        get = Get(events={'<<Data>>': self.next_tab, 
+        '<Alt-p>': self.next_tab, 
+        '<Alt-o>': self.prev_tab, 
+        '<Escape>': self.stop, 
+        '<Return>': self.stop})
         return 'break'
 
-    def stop_search(self):
+    def search_back(self):
+        get = Get(events={'<<Data>>': self.prev_tab, 
+        '<Alt-p>': self.next_tab, 
+        '<Alt-o>': self.prev_tab, 
+        '<Escape>': self.stop, 
+        '<Return>': self.stop})
+        return 'break'
+
+    def stop(self, wid):
         root.note.set_area_focus()
         return True
 
-    def update_search(self, wid):
+    def next_tab(self, wid):
         """
 
         """
-        data       = wid.get()
-        self.seq   = tuple(root.note.find(lambda text: data in text))
-        self.index = 0
+        data = wid.get()
+        root.note.next(lambda text: data in text)
 
-        root.note.on(self.seq[self.index])
-        
-    def next_tab(self):
+    def prev_tab(self, wid):
         """
 
         """
-        self.index = self.index + 1 if self.index < len(self.seq) - 1 else self.index
-        root.note.on(self.seq[self.index])
-
-    def prev_tab(self):
-        """
-
-        """
-        self.index = self.index - 1 if self.index > 0 else self.index
-        root.note.on(self.seq[self.index])
+        data = wid.get()
+        root.note.back(lambda text: data in text)
 
     
 install = TabSearch
-
-
-
-
-
 
 
