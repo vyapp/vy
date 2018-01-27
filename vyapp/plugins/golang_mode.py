@@ -19,8 +19,9 @@ def golang_mode(area):
 
 def install(area):
     area.add_mode('GOLANG')
-    area.install('golang-mode', ('DELTA', '<Key-g>', 
+    area.install('golang-mode', ('NORMAL', '<Key-numbersign>', 
     lambda event: golang_mode(area)))
+
 
 
 
