@@ -38,6 +38,8 @@ Description: Quit.
 from tkinter.messagebox import *
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from vyapp.app import root
+from vyapp.ask import Ask
+import os
 
 def save_as(area):
     """
@@ -107,22 +109,30 @@ def save(area):
     else:
         root.status.set_msg('Data saved.')
 
+def rename(area):
+    # self.area.filename
+    root.status.set_msg('New filename:')
 
+    ask = Ask()
+    dir = os.path.dirname(ask.data)
+    dst = os.path.join(dir, ask.data)
+
+    try:
+        os.rename(area.filename, dst)
+    except OSError:
+        root.status.set_msg('Failed to rename!')
+    else:
+        area.filename = dst
+        root.status.set_msg('File renamed')
 
 def install(area):
     area.install('io', ('NORMAL', '<Control-s>', lambda event: save(event.widget)),
-                 ('NORMAL', '<Shift-S>', lambda event: save_as(event.widget)),
-                 ('NORMAL', '<Control-d>', lambda event: load(event.widget)),
-                 ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
-                 ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
-                 ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
-
-
-
-
-
-
-
+   ('NORMAL', '<Shift-S>', lambda event: save_as(event.widget)),
+   ('NORMAL', '<Control-d>', lambda event: load(event.widget)),
+   ('NORMAL', '<Key-D>', lambda event: event.widget.clear_data()),
+   ('NORMAL', '<Key-N>', lambda event: rename(event.widget)),
+   ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
+   ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
 
 
 

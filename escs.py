@@ -346,6 +346,14 @@ except IndexError:
     raise KeyError
 except KeyError:
     print('cool')
+##############################################################################
+import os
+
+try:
+    os.rename('oo', 'uu')
+except OSError:
+    print('caught')
+
 
 
 

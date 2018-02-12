@@ -93,7 +93,6 @@ cd ~/projects/vy-code
 sudo bash -i
 pip2 install -r requirements.txt
 ##############################################################################
-
 # install, vy. 
 cd ~/projects/vy-code
 sudo bash -i
@@ -175,6 +174,7 @@ git rm --cached -r build
 
 l Control-bar
 l Key-bar
+
 
 
 
