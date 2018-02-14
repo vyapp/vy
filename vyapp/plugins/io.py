@@ -114,7 +114,7 @@ def rename(area):
     root.status.set_msg('New filename:')
 
     ask = Ask()
-    dir = os.path.dirname(ask.data)
+    dir = os.path.dirname(area.filename)
     dst = os.path.join(dir, ask.data)
 
     try:
@@ -133,6 +133,7 @@ def install(area):
    ('NORMAL', '<Key-N>', lambda event: rename(event.widget)),
    ('NORMAL', '<Control-Escape>', lambda event: save_quit(event.widget)),
    ('NORMAL', '<Shift-Escape>', lambda event: event.widget.quit()))
+
 
 
 
