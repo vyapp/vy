@@ -176,9 +176,13 @@ class LinePicker(OptionWindow):
         self.area = None
 
     def  __call__(self, options=[]):
-        options = zip(('%s - %s %s' % (relpath(filename), line, msg)
+        # Make sure it is a list otherwise it may receive
+        # an iterator and display no results even when there are
+        # errors.
+        options = list(options)
+        ranges = zip(('%s - %s %s' % (relpath(filename), line, msg)
         for filename, line, msg in options), options)
-        super(LinePicker, self).__call__(list(options))
+        super(LinePicker, self).__call__(list(ranges))
 
     def on_tab(self):
         index = self.listbox.index(ACTIVE)
@@ -195,6 +199,7 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
+
 
 
 

@@ -55,7 +55,7 @@ class HtmlChecker(object):
         self.area = area
 
     def check(self):
-        child  = Popen([self.PATH, '-e', '-quiet', 
+        child  = Popen([self.PATH, '--show-body-only', '1', '-e', '-quiet',
         self.area.filename], stdout=PIPE, stderr=STDOUT, 
         encoding=self.area.charset)
 
@@ -73,6 +73,8 @@ class HtmlChecker(object):
             root.status.set_msg('No errors!')
 
     def display(self, ranges):
+        # print(repr(list(ranges)))
+
         root.status.set_msg('Errors were found!' )
         options = LinePicker()
         options(ranges)
