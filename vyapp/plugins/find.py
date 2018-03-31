@@ -53,19 +53,19 @@ class Find(object):
     TAGCONF = { '(CATCHED)': {
     'background':'green', 'foreground':'white'}}
 
-    def __init__(self, area, nolinestop=False, 
-        regexp=True, nocase=True, exact=False, elide=False):
+    opts  = {'nolinestop': False, 'regexp': True,
+    'nocase': True, 'exact': False,'elide': False}
 
+    data  = ''
+    regex = ''
+
+    def __init__(self, area):
         self.area  = area
-        self.data  = ''
         self.index = None
-        self.regex = ''
 
         area.tags_config(self.TAGCONF)
 
         area.install('find', ('NORMAL', '<Alt-slash>', lambda event: self.start()))
-        self.opts = {'nolinestop': nolinestop, 'regexp': regexp,
-        'nocase': nocase, 'exact': exact,'elide': elide}
 
     def start(self):
         self.index = ('insert', 'insert')
@@ -83,7 +83,7 @@ class Find(object):
         '<Control-e>': self.toggle_exact_option,
         '<Control-i>': self.toggle_elide_option,
         '<Control-l>': self.toggle_nolinestop_option},
-        default_data=self.regex)
+        default_data=Find.regex)
 
     def toggle_nocase_option(self, wid):
         self.opts['nocase'] = False if self.opts['nocase'] else True
@@ -102,12 +102,12 @@ class Find(object):
         root.status.set_msg('nolinestop=%s' % self.opts['nolinestop'])
 
     def set_data(self, wid):
-        self.data = wid.get()
+        Find.data = wid.get()
         wid.delete(0, 'end')
-        root.status.set_msg('Set replacement: %s' % self.data)
+        root.status.set_msg('Set replacement: %s' % Find.data)
 
     def cancel(self, wid):
-        self.regex = wid.get()
+        Find.regex = wid.get()
         self.area.tag_remove('(CATCHED)', '1.0', 'end')
         return True
 
@@ -128,25 +128,17 @@ class Find(object):
 
     def replace_on_cur(self, wid):
         regex = wid.get()
-        self.area.replace(regex, self.data, self.index[0], **self.opts)
+        self.area.replace(regex, Find.data, self.index[0], **self.opts)
 
     def replace_on_selection(self, wid):
         regex = wid.get()
-        self.area.replace_ranges('sel', regex, self.data, **self.opts)
+        self.area.replace_ranges('sel', regex, Find.data, **self.opts)
 
     def replace_all_matches(self, wid):
         regex = wid.get()
-        self.area.replace_all(regex, self.data, '1.0', 'end', **self.opts)
+        self.area.replace_all(regex, Find.data, '1.0', 'end', **self.opts)
 
 install = Find
-
-
-
-
-
-
-
-
 
 
 

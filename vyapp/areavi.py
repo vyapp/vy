@@ -1213,30 +1213,39 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.tag_add(name, *index)
         return index
 
-    def replace(self, regex, data, index=None, stopindex=None, forwards=None,
-                backwards=None, exact=None, regexp=True, nocase=None, elide=None, nolinestop=None):
+    def replace(self, regex, data, index=None, stopindex=None,  
+        forwards=None, backwards=None, exact=None, regexp=True, 
+        nocase=None, elide=None, nolinestop=None):
 
         """
         It is used to replace occurrences of a given match.
 
         It is possible to use a callback function to return what is replaced 
         as well.
-        """
 
+        Obs: If the replacement cant be performed anymore it just returns None.
+        """
+        tmp = index
         count = IntVar()
-        index = self.search(regex, index, stopindex, forwards=forwards, backwards=backwards, exact=exact, nocase=nocase, 
-                            nolinestop=nolinestop, regexp=regexp, elide=elide, count=count)
+
+        index = self.search(regex, index, stopindex, forwards=forwards, 
+        backwards=backwards, exact=exact, nocase=nocase,  nolinestop=nolinestop, 
+        regexp=regexp, elide=elide, count=count)
             
-        if not index: 
-            return
+        if not index:  return
 
         index0 = self.index('%s +%sc' % (index, count.get()))
+
+        if self.compare(index, '>=', index0): return
 
         if callable(data): 
             data = data(self.get(index, index0), index, index0)
 
         self.delete(index, index0)
         self.insert(index, data)
+        
+        # Does the replacement then if it cant be done anymore it returns None.
+        if self.compare(index0, '>=', 'end'): return
 
         return index, len(data)
 
@@ -1260,8 +1269,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
                 return self.index('(REP_STOPINDEX)')
 
             index, size = map
+
             index = self.index('%s +%sc' % (index, size))
 
+            # It is necessary to avoid an endless loop.
 
     def get_paren_search_dir(self, index, start, end):
         """
@@ -1614,6 +1625,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
