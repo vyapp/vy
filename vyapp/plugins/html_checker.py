@@ -41,6 +41,7 @@ using the same keys as defined in text_spots plugin.
 """
 
 from subprocess import Popen, STDOUT, PIPE
+from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from vyapp.plugins import ENV
 from vyapp.app import root
@@ -61,24 +62,20 @@ class HtmlChecker(object):
         output = child.communicate()[0]
         regex  = 'line ([0-9]+) column ([0-9]+) - (.+)'
         ranges = findall(regex, output)
+        ranges = map(lambda ind: (self.area.filename, ind[0], ind[2]), ranges)
+
         sys.stdout.write('Errors:\n%s\n' % output)
-        self.area.reset_assoc_data()
-
-        for line, col, error in ranges:
-            self.assoc_msg(line, error)
-
-        if child.returncode:
-            root.status.set_msg('Errors were found!')
-        else:
-            root.status.set_msg('No errors!')
         self.area.chmode('NORMAL')
 
-    def assoc_msg(self, line, error):
-        index0 = '%s.0' % line, 
-        index1 = '%s.0 lineend' % line
+        if child.returncode:
+            self.display(ranges)
+        else:
+            root.status.set_msg('No errors!')
 
-        self.area.tag_add('(SPOT)', index0, index1)
-        self.area.set_assoc_data(index0, index1, error)
+    def display(self, ranges):
+        root.status.set_msg('Errors were found!' )
+        options = LinePicker()
+        options(ranges)
 
 def install(area):
     html_checker = HtmlChecker(area)
@@ -92,6 +89,7 @@ def html_errors():
     html_checker.check()
 
 ENV['html_errors'] = html_errors
+
 
 
 
