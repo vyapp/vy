@@ -354,6 +354,36 @@ try:
 except OSError:
     print('caught')
 
+##############################################################################
+import sqlite3
+conn = sqlite3.connect('example.db')
+cur = conn.cursor()
+cur.execute('CREATE TABLE if not exists snippet (data text)')
+cur.execute("INSERT INTO snippet VALUES ('nice')")
+cur.execute("INSERT INTO snippet VALUES ('cool')")
+
+data=('oooo', )
+cur.execute("INSERT INTO snippet VALUES (?)", data)
+
+conn.commit()
+cur.execute("SELECT * FROM snippet ")
+cur.fetchone()
+data = ('nice',)
+cur.execute("SELECT * FROM snippet WHERE data=?", data)
+cur.fetchone()
+
+data = ('%nic%',)
+cur.execute("SELECT * FROM snippet WHERE data LIKE ?", data)
+cur.fetchall()
+
+elems = cur.execute("SELECT * FROM snippet WHERE data LIKE ?", data)
+cur.fetchall()
+elems
+
+data = ('2',)
+cur.execute("SELECT * FROM snippet WHERE data LIKE ?", data)
+cur.fetchone()
+
 
 
 
