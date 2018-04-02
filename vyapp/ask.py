@@ -46,12 +46,23 @@ class Get(InputBox, DataEvent, IdleEvent):
 
 class Ask(InputBox):
     """
+    Used to grab user input from the user.
+
+    Usage:
+
+    ask = Ask('Default value')
+
+    # The data inputed by the user.
+    ask.data 
+
+    Contains the inputed user value otherwise
+    it is None, it means the user has pressed <Escape>.
     """
 
     def __init__(self, default_data =''):
         InputBox.__init__(self, default_data)
         self.entry.bind('<Return>', lambda event: self.on_success())
-        self.entry.bind('<Escape>', lambda event: self.done())
+        self.entry.bind('<Escape>', lambda event: self.cancel())
         self.data = ''
         self.area.wait_window(self.frame)
 
@@ -59,10 +70,21 @@ class Ask(InputBox):
         self.data = self.entry.get()
         InputBox.done(self)
 
+    def cancel(self):
+        """
+        Called on <Escape>, the self.data attribute
+        is set to None which means the user just canceled
+        the action.
+        """
+
+        self.data = None
+        InputBox.done(self)
+
     def __str__(self):
         return self.data
 
     __repr__ = __str__
+
 
 
 
