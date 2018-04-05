@@ -1148,13 +1148,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
                 break
 
             index = '%s%s' % (match[2], step)
-            index = self.index(index)
 
             # If the two positions are equal it means
             # regex is like $ or ^. It has increase
             # one char in order to find the next match.
             # Otherwise we get endless loop.
-            if index == match[1]:
+            if self.compare(index, '<=', match[1]): 
                 index = '%s+1c' % match[2]
             yield(match)
 
@@ -1179,9 +1178,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         pos1  = self.index('%s +%sc' % (index, len))
         return chunk, pos0, pos1
 
-    def search(self, pattern, index, stopindex=None, forwards=None,
-                backwards=None, exact=None, regexp=None, nocase=None,
-                count=None, elide=None, nolinestop=None):
+    def search(self, pattern, index, stopindex='end', forwards=None,
+        backwards=None, exact=None, regexp=None, nocase=None,
+        count=None, elide=None, nolinestop=None):
             
         """
         Standard search method, but with support for the nolinestop

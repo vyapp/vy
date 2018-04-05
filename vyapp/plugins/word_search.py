@@ -66,7 +66,7 @@ class WordSearch(object):
 
     def match_possible_regions(self, find, data):
         regions = []
-
+    
         for ind in data:
             for ch, index0, index1 in find(ind):
                 regions.append((int(index0.split('.')[0]),  ch))
@@ -118,6 +118,7 @@ class WordSearch(object):
         self.index = self.index + 1
 
 install = WordSearch
+
 
 
 
