@@ -42,7 +42,7 @@ def add_inline_comment(area):
     """
 
     comment = TABLE.get(os.path.splitext(area.filename)[1], DEFAULT)
-    area.replace_ranges('sel', '^ +|^|^\t+|^', 
+    area.replace_ranges('sel', '^ *|^\t*', 
     lambda data, index0, index1: '%s%s ' % (data, comment))
     area.clear_selection()
     area.chmode('NORMAL')
@@ -63,6 +63,7 @@ def install(area):
     area.install('inline-comment',
     ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
     ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
+
 
 
 

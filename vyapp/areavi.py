@@ -1058,13 +1058,15 @@ class AreaVi(Text, DataEvent, IdleEvent):
         
         # It should be built on top of nextrange.
         map = self.tag_ranges(name)
+
         for indi in range(0, len(map) - 1, 2):
-            seq = self.find(regex, map[indi], map[indi + 1], *args, **kwargs)
+            seq = self.find(regex, map[indi], 
+                map[indi + 1], *args, **kwargs)
+
             for indj in seq: 
                 yield indj
 
-    def replace_ranges(self, name, regex, data, index='1.0', stopindex='end', 
-                           *args, **kwargs):
+    def replace_ranges(self, name, regex, data, *args, **kwargs):
         """
         It replaces all occurrences of regex in the ranges that are mapped to tag name.
 
@@ -1075,12 +1077,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
         **kwargs - A dictionary of arguments given to AreaVi.find.
         """
 
-        while True:
-            map = self.tag_nextrange(name, index, stopindex)
-            if not map: break
-
-            index3, index4 = map
-            index = self.replace_all(regex, data, index3, index4, *args, **kwargs)
+        ranges = self.tag_ranges(name)
+        for ind in range(0, len(ranges) - 1, 2):
+            self.replace_all(regex, data, 
+                ranges[ind], ranges[ind + 1], *args, **kwargs)
 
     def map_matches(self, name, matches):
         """"
@@ -1236,7 +1236,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         index0 = self.index('%s +%sc' % (index, count.get()))
 
-        if self.compare(index, '>=', index0): return
+        # if self.compare(index, '>=', index0): return
 
         if callable(data): 
             data = data(self.get(index, index0), index, index0)
@@ -1267,12 +1267,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
             if not map: 
                 return self.index('(REP_STOPINDEX)')
-
             index, size = map
 
             index = self.index('%s +%sc' % (index, size))
-
-            # It is necessary to avoid an endless loop.
 
     def get_paren_search_dir(self, index, start, end):
         """
@@ -1625,6 +1622,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
+
+
 
 
 
