@@ -1111,7 +1111,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         else:    
             yield(chk, index2, stopindex)
     
-    def find(self, regex, index='1.0', *args, step='', **kwargs):
+    def find(self, regex, index='1.0', stopindex='end', forwards=None, 
+        backwards=False, exact=False, regexp=True, nocase=False, elide=False, 
+        nolinestop=False, step=''):
 
         """
         It returns an iterator of matches. It is based on the Text.search method.
@@ -1131,26 +1133,23 @@ class AreaVi(Text, DataEvent, IdleEvent):
         cc7 cc8 cc9
 
         Would match cc1, cc4, cc7.
-
-        The remaining arguments of this method are the same passed to AreaVi.search.
         """
 
 
         if not regex: 
-            return
-
-        count = IntVar()
+            raise TypeError('Regex should be non blank!')
 
         while True:
-            match = self.isearch(regex, index, *args, **kwargs)
+            match = self.isearch(regex, index, stopindex, 
+            forwards, backwards, exact, regexp, nocase, elide=elide, 
+            nolinestop=nolinestop)
 
-            if not match: 
-                break
+            if not match: break
 
             index = '%s%s' % (match[2], step)
 
             # If the two positions are equal it means
-            # regex is like $ or ^. It has increase
+            # regex is like $ or ^. It has to increase
             # one char in order to find the next match.
             # Otherwise we get endless loop.
             if self.compare(index, '<=', match[1]): 
