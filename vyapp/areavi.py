@@ -1111,34 +1111,73 @@ class AreaVi(Text, DataEvent, IdleEvent):
         else:    
             yield(chk, index2, stopindex)
     
-    def find(self, regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
-             elide=None, nolinestop=None, step=''):
+    def find(self, regex, index='1.0', *args, step='', **kwargs):
+
         """
         It returns an iterator of matches. It is based on the Text.search method.
 
         for match, index0, index1 in area.find('pattern'):
             passs
+
+        The step parameter is used to add a distance between
+        each one of the matches.
+
+        area.find('c+', step='+1l linestart') 
+
+        In the example below:
+
+        cc1 cc2 cc3
+        cc4 cc5 cc6
+        cc7 cc8 cc9
+
+        Would match cc1, cc4, cc7.
+
+        The remaining arguments of this method are the same passed to AreaVi.search.
         """
+
+
+        if not regex: 
+            return
 
         count = IntVar()
 
         while True:
-            index = self.search(regex, index, stopindex, exact=exact, nocase=nocase, 
-                                nolinestop=nolinestop, regexp=regexp, elide=elide, count=count)
+            match = self.isearch(regex, index, *args, **kwargs)
 
-            # If regex = '' it ends in an infinite loop.
-            if not index or not regex:
+            if not match: 
                 break
 
-            len   = count.get()
-            tmp   = '%s +%sc' % (index, len)
-            chunk = self.get(index, tmp)
+            index = '%s%s' % (match[2], step)
+            index = self.index(index)
 
-            pos0  = self.index(index)
-            pos1  = self.index('%s +%sc' % (index, len))
-            index = '%s%s' % (tmp, step)
+            # If the two positions are equal it means
+            # regex is like $ or ^. It has increase
+            # one char in order to find the next match.
+            # Otherwise we get endless loop.
+            if index == match[1]:
+                index = '%s+1c' % match[2]
+            yield(match)
 
-            yield(chunk, pos0, pos1)
+    def isearch(self, pattern, *args, **kwargs):
+        """
+        Improved search, in the sense it return the matched chunk
+        the initial position and the end position.
+        """
+        count = IntVar()
+
+        index = self.search(pattern, *args, count=count, **kwargs)
+
+        if not index:
+            return 
+
+        len = count.get()
+
+        tmp   = '%s +%sc' % (index, len)
+        chunk = self.get(index, tmp)
+
+        pos0  = self.index(index)
+        pos1  = self.index('%s +%sc' % (index, len))
+        return chunk, pos0, pos1
 
     def search(self, pattern, index, stopindex=None, forwards=None,
                 backwards=None, exact=None, regexp=None, nocase=None,
@@ -1249,8 +1288,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         return index, len(data)
 
-    def replace_all(self, regex, data, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
-             elide=None, nolinestop=None):
+    def replace_all(self, regex, data, index='1.0', stopindex='end', 
+        exact=None, regexp=True, nocase=None, elide=None, nolinestop=None):
+
         """
         It is used to replace all occurrences of a given match in a range.
         It accepts a callback function that determines what is replaced.
@@ -1262,8 +1302,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.mark_set('(REP_STOPINDEX)', stopindex)
 
         while True:
-            map = self.replace(regex, data, index, '(REP_STOPINDEX)', exact=exact, nocase=nocase, 
-                               nolinestop=nolinestop, regexp=regexp, elide=elide)
+            map = self.replace(regex, data, index, '(REP_STOPINDEX)', 
+            exact=exact, nocase=nocase, nolinestop=nolinestop, 
+                regexp=regexp, elide=elide)
 
             if not map: 
                 return self.index('(REP_STOPINDEX)')
