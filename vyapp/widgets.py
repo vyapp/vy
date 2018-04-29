@@ -180,7 +180,7 @@ class LinePicker(OptionWindow):
         # an iterator and display no results even when there are
         # errors.
         options = list(options)
-        ranges = zip(('%s - %s %s' % (relpath(filename), line, msg)
+        ranges = zip(('%s - %s:%s' % (msg, relpath(filename), line)
         for filename, line, msg in options), options)
         super(LinePicker, self).__call__(list(ranges))
 
@@ -199,6 +199,7 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
+
 
 
 
