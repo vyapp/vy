@@ -1,9 +1,9 @@
 ##############################################################################
-# clone, vy, vyapp, github.
+# clone repo.
 cd ~/projects
 git clone git@github.com:iogf/vy.git vy-code
 ##############################################################################
-# clone, vy, wiki.
+# clone wiki.
 cd ~/projects
 git clone git@github.com:iogf/vy.wiki.git vy.wiki-code
 ##############################################################################
@@ -31,45 +31,44 @@ git push
 ##############################################################################
 git commit -m 'Fixing setup.py version.'
 ##############################################################################
-# check, pull, request, vy, avamsi.
+# check avamsi patch.
 cd /home/tau/projects/vy-code/
 git checkout -b avamsi-patch-1 master
 git pull https://github.com/avamsi/vy.git patch-1
 
-# merge, patch, pull, into, development, vy, avamsi, contribution.
+# merge the patch.
 git checkout development
 git merge --no-ff avamsi-patch-1
 git push origin development
 ##############################################################################
-# check, pull, request, vy, yetone.
+# check pull request by yetone.
 cd /home/tau/projects/vy-code/
 git checkout -b yetone-patch-1 master
 git pull https://github.com/yetone/vy.git patch-1
 
-# merge, patch, pull, into, development, vy, avamsi, contribution.
 git checkout development
 git merge --no-ff avamsi-patch-1
 git push origin development
 
 ##############################################################################
-# vy, checkout, all, *.
+# check out all.
 cd /home/tau/projects/vy-code/
 git checkout *
 ##############################################################################
-# create, development, branch, vy.
+# create dev branch.
 cd /home/tau/projects/vy-code/
 git branch -a
 git checkout -b development
 git push --set-upstream origin development
 ##############################################################################
-# merge development into master, vy.
+# merge development into master.
 cd /home/tau/projects/vy-code/
 git checkout master
 git merge development
 git push
 git checkout development
 ##############################################################################
-# merge master into development, vy.
+# merge master into development.
 cd /home/tau/projects/vy-code/
 git checkout development
 git merge master
@@ -77,18 +76,18 @@ git checkout development
 git push
 
 ##############################################################################
-# delete the development branch, vy.
+# delete the development branch.
 cd /home/tau/projects/vy-code/
 git branch -d development
 git push origin :development
 git fetch -p 
 ##############################################################################
-# commit, undo, vy, vyapp, checkout.
+# check diffs.
 cd /home/tau/projects/vy-code/
 git diff
 git checkout *
 ##############################################################################
-# install, vy, from, pip2, requeriments.
+# install from pip requirements.
 cd ~/projects/vy-code
 sudo bash -i
 pip2 install -r requirements.txt
@@ -174,6 +173,7 @@ git rm --cached -r build
 
 l Control-bar
 l Key-bar
+
 
 
 
