@@ -323,17 +323,6 @@ autoload(vyapp.plugins.block_sel)
 # import vyapp.plugins.fsniff
 # autoload(vyapp.plugins.fsniff)
 
-
-# The html checker plugin that uses
-# Html tidy. It is necessary to have that
-# package installed.
-# The path argument corresponds to where your tidy
-# executable stays.
-# from vyapp.plugins import html_checker
-# html_checker.HtmlChecker.PATH = 'tidy'
-# autoload(html_checker)
-
-
 # Python syntax checker through pyflakes.
 # from vyapp.plugins import python_checker
 # The path to pyflakes executable.
@@ -590,6 +579,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
