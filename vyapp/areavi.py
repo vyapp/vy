@@ -24,7 +24,12 @@ class IdleEvent(object):
         self.funcid  = ''
 
     def dispatch_idle(self, event):
-        self.widget.after_cancel(self.funcid)
+        # Make sure self.funcid is initialized before calling after_cancel.
+        # The idea here it is to have <<idle>> spawned once when the user
+        # stopped typing.
+
+        if self.funcid:
+            self.widget.after_cancel(self.funcid)
         self.funcid = self.widget.after(self.timeout, 
         lambda: self.widget.event_generate('<<Idle>>'))
 
@@ -1661,6 +1666,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
