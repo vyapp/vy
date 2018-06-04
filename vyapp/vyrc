@@ -374,16 +374,6 @@ autoload(vyapp.plugins.python_completion)
 # autoload(golang_completion)
 
 
-# Javascript completion using tern.
-# Initializes the tern daemon and installs javascript 
-# autocomplete plugin. Notice 'tern' should stand for your tern plugin path.
-# It means where your tern script is in.
-# from vyapp.plugins import javascript_completion
-# javascript_completion.JavascriptCompletion.PATH = 'tern'
-# javascript_completion.JavascriptCompletion.PORT = 1234
-# autoload(vyapp.plugins.javascript_completion)
-
-
 # Used to insert tab, spaces.
 from vyapp.plugins import spacing
 spacing.Tab.SCHEME = {
@@ -559,6 +549,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

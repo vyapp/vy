@@ -13,13 +13,15 @@ setup(name="vy",
                 "vyapp.plugins.jdb",
                 "vyapp.plugins.pdb"],
       scripts=['vy'],
-      package_data={'vyapp': ['vyrc'], 'vyapp.plugins':['tern-config']},
+      package_data={'vyapp': ['vyrc']},
       author="Iury O. G. Figueiredo",
       author_email="ioliveira@id.uff.br",
-      url='https://github.com/iogf/vy',
+      url='https://github.com/vyapp/vy',
       download_url='https://github.com/iogf/vy/releases',
       keywords=['vy', 'vi', 'vim', 'emacs', 'sublime', 'atom', 'nano', 'vim-like'],
       classifiers=[])
+
+
 
 
 
