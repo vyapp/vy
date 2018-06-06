@@ -625,20 +625,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except Exception:
             pass
 
-    def select_char(self):
-        """
-        Select the cursor char.
-        """
-
-        self.addsel('insert', 'insert +1c')
-    
-    def unselect_char(self):
-        """
-        Unselect the cursor char.
-        """
-
-        self.rmsel('insert', 'insert +1c')
-
     def del_char(self):
         """
         It deletes a char from the cursor position.
@@ -1666,6 +1652,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
