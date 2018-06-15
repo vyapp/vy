@@ -495,32 +495,6 @@ import vyapp.plugins.codec
 # import vyapp.plugins.spawn.cross_platform
 
 ##############################################################################
-# The vy irc mode.
-from vyapp.plugins.vyirc import IrcMode
-
-# Uncomment these lines to set up your custom color scheme.
-# It accepts all available config options for Tkinter Text widget.
-# IrcMode.TAGCONF = {'(VYIRC-PRIVMSG)': {'foreground': '#688B96'},
-# '(VYIRC-JOIN)': {'foreground': '#F06EF0'},
-# '(VYIRC-PART)': {'foreground': '#F0BDAD'},
-# '(VYIRC-QUIT)': {'foreground': '#4EDB1F'},
-# '(VYIRC-NICK)': {'foreground': '#E9F0AD'},
-# '(VYIRC-KICK)': {'foreground': '#FC8D9A'},
-# '(VYIRC-353)': {'foreground': '#BF9163'},
-# '(VYIRC-332)': {'foreground': '#81BFFC'},
-# '(VYIRC-CLOSE)': {'foreground': '#A7F2E9'}}
-
-# Here, the network connections can be defined. 
-def irc_freenode(addr='irc.freenode.org', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
-             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#vy']):
-    IrcMode(addr, port, user, nick, irccmd, channels)
-
-def irc_arcamens(addr='irc.arcamens.com', port=6667, user='vy vy vy :vyirc', nick='vyirc', 
-             irccmd='PRIVMSG nickserv :identify nick_password', channels=['#arcamens']):
-    IrcMode(addr, port, user, nick, irccmd, channels)
-
-
-##############################################################################
 # Setup area settings, like default background, foreground, font style etc.
 
 # Note: Plugins like syntax highlighting will define AreaVi instance settings 
@@ -535,20 +509,5 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
