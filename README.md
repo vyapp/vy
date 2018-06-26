@@ -39,24 +39,18 @@ The plugins are documented: the documentation can be accessed from vy by droppin
 
 ![screenshot-1](screenshot-1.jpg)
 
-Features
-========
+Built-in Features
+=================
 
 - **Python Debugger**
 
-- **Terminal**
-
-- **Auto Completion**
-  
 - **Fuzzy Search**
 
 - **Incremental Search**
 
+- **Python Auto Completion**
+
 - **Tabs/Panes**
-
-- **Irc Client** 
-
-- **File Manager**
 
 - **Self documenting**
 
@@ -66,11 +60,7 @@ Features
 
 - **Handy Shortcuts**
 
-- **Integration with Pyflakes/Vulture**
-
 - **Easily customizable (vyrc in python)**
-
-- **Smart silver search**
 
 Basic Install
 =============
@@ -96,6 +86,15 @@ Documentation
 
 [Wiki](https://github.com/iogf/vy/wiki)
 
+Plugins/Extensions
+==================
+
+The github organization https://github.com/vyapp is meant
+to hold most of the standard vy plugins. 
+
+It has plugins for auto completion, syntax checking of languages and many
+other extensions.
+
 Support
 =======
 
@@ -104,14 +103,6 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
-
-
-
-
-
-
-
-
 
 
 
