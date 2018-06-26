@@ -8,7 +8,6 @@ setup(name="vy",
       packages=["vyapp", 
                 "vyapp.plugins",
                 "vyapp.plugins.syntax",
-                "vyapp.plugins.spawn",
                 "vyapp.plugins.syntax.styles",
                 "vyapp.plugins.jdb",
                 "vyapp.plugins.pdb"],
@@ -20,6 +19,7 @@ setup(name="vy",
       download_url='https://github.com/iogf/vy/releases',
       keywords=['vy', 'vi', 'vim', 'emacs', 'sublime', 'atom', 'nano', 'vim-like'],
       classifiers=[])
+
 
 
 
