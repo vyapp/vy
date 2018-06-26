@@ -1,8 +1,7 @@
 jedi
 pygments
-untwisted==1.4.2
-quickirc==1.1.1
 future
+
 
 
 
