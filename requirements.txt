@@ -1,6 +1,8 @@
 jedi
+untwisted==1.4.2
 pygments
 future
+
 
 
 
