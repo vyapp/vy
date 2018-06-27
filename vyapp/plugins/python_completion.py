@@ -17,7 +17,7 @@ completion.
 
 """
 
-from vyapp.completion import CompletionWindow
+from vyapp.completion import CompletionWindow, TextWindow
 from jedi import Script
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
@@ -34,7 +34,6 @@ class PythonCompletionWindow(CompletionWindow):
         script      = Script(source, line, col, area.filename)
         completions = script.completions()
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
-        self.bind('<F1>', lambda event: sys.stdout.write('%s\n%s\n' % ('#' * 80, self.box.selection_docs())))
 
 def install(area):
     trigger = lambda event: area.hook('python-completion', 'INSERT', '<Control-Key-period>', 
@@ -49,6 +48,7 @@ def active_python_completion():
                   lambda event: PythonCompletionWindow(event.widget), add=False)
 
 ENV['active_python_completion'] = active_python_completion
+
 
 
 

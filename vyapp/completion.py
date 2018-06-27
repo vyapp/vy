@@ -1,6 +1,6 @@
 from vyapp.widgets import FloatingWindow, MatchBox, Echo
 from vyapp.tools import match_sub_pattern
-from tkinter import LEFT, BOTH
+from tkinter import LEFT, BOTH, Text, SCROLL
 
 class Option(object):
     def __init__(self, name, type='', doc=''):
@@ -73,15 +73,56 @@ class CompleteBox(MatchBox, Echo):
         for ind in self.completions:
             self.insert('end', ind.name)
 
+class TextWindow(FloatingWindow):
+    def __init__(self, area, data, *args, **kwargs):
+        FloatingWindow.__init__(self, area, *args, **kwargs)
+
+        self.text = Text(master=self)
+        self.text.insert('1.0', data)
+        self.text.pack(side=LEFT, fill=BOTH, expand=True)
+        self.text.focus_set()
+        self.text.bind('<FocusOut>', lambda event: self.destroy(), add=True)
+
 class CompletionWindow(FloatingWindow):
     def __init__(self, area, completions, *args, **kwargs):
         FloatingWindow.__init__(self, area, *args, **kwargs)
         self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
 
+
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
 
+        self.text = Text(master=self, blockcursor=True, insertbackground='black', )
+        # self.text.bindtags((self.text,  '.'))
+        self.text.pack(side=LEFT, fill=BOTH, expand=True)
 
+        self.text.pack_forget()
 
+        # We need this otherwise it propagates the event
+        # and the window gets destroyed in the wrong situation.
+        self.box.bind('<FocusOut>', lambda event: 'break', add=True)
+        self.text.bind('<FocusOut>', lambda event: 'break', add=True)
 
+        self.text.bind('<Escape>', self.options_window, add=True)
 
+        self.text.bind('<Alt-p>', lambda event: 
+        self.text.yview(SCROLL, 1, 'page'), add=True)
+
+        self.text.bind('<Alt-o>', lambda evenet: 
+        self.text.yview(SCROLL, -1, 'page'), add=True)
+
+        self.bind('<F1>', lambda event: self.docs_window())
+
+    def options_window(self, event):
+        self.text.pack_forget()
+        self.box.pack(side=LEFT, fill=BOTH, expand=True)
+        self.box.focus_set()
+        return 'break'
+
+    def docs_window(self):
+        docs = self.box.selection_docs()
+        self.box.pack_forget()
+        self.text.delete('1.0', 'end')
+        self.text.insert('1.0', docs)
+        self.text.pack(side=LEFT, fill=BOTH, expand=True)
+        self.text.focus_set()

@@ -83,7 +83,6 @@ vyapp/plugins/shift.py
 vyapp/plugins/skewer.py
 vyapp/plugins/spacing.py
 vyapp/plugins/splits.py
-vyapp/plugins/startup.py
 vyapp/plugins/sym_pair_sel.py
 vyapp/plugins/symbol_jumps.py
 vyapp/plugins/tab_search.py
