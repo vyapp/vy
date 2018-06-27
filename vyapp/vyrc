@@ -63,10 +63,6 @@ autoload(vyapp.plugins.mode_status)
 
 import vyapp.plugins.io_status
 autoload(vyapp.plugins.io_status)
-
-
-# Start untwisted reactor.
-import vyapp.plugins.startup
 ##############################################################################
 # Extra/programming language modes.
 
@@ -472,6 +468,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
