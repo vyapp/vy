@@ -81,11 +81,16 @@ Plugins/Extensions
 
 - **Smart Search with The Silver Searcher**
 
+- **HTML Tidy Integration**
+
 - **Find Function/Class Definition**
 
 - **Irc Client Plugin**
 
 - **Fancy File Manager**
+
+The github organization https://github.com/vyapp is meant
+to hold most of the standard vy plugins. 
 
 Basic Install
 =============
@@ -110,15 +115,6 @@ Documentation
 =============
 
 [Wiki](https://github.com/iogf/vy/wiki)
-
-Plugins/Extensions
-==================
-
-The github organization https://github.com/vyapp is meant
-to hold most of the standard vy plugins. 
-
-It has plugins for auto completion, syntax checking of languages and many
-other extensions.
 
 Support
 =======
