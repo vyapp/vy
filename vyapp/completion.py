@@ -111,7 +111,7 @@ class CompletionWindow(FloatingWindow):
         self.text.bind('<Alt-o>', lambda evenet: 
         self.text.yview(SCROLL, -1, 'page'), add=True)
 
-        self.bind('<F1>', lambda event: self.docs_window())
+        self.box.bind('<F1>', lambda event: self.docs_window())
 
     def options_window(self, event):
         self.text.pack_forget()
@@ -126,3 +126,4 @@ class CompletionWindow(FloatingWindow):
         self.text.insert('1.0', docs)
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
         self.text.focus_set()
+
