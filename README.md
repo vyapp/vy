@@ -79,7 +79,7 @@ Plugins/Extensions
 
 - **Python Pyflakes Integration**
 
-- **Smart Lax Search)**
+- **Smart Search with The Silver Searcher**
 
 - **Find Function/Class Definition**
 
