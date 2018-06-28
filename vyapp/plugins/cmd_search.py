@@ -46,7 +46,7 @@ def sniff(regex, handle, *args, **kwargs):
     for ind in seq:
         handle(*ind)
 
-def sel(*args, **kargs):
+def sel(*args, **kwargs):
     """
     """
     AreaVi.ACTIVE.map_matches('sel', 
@@ -80,5 +80,6 @@ ENV['gsub']  = gsub
 ENV['get']   = get
 ENV['split'] = split
 ENV['lsub']  = lsub
+
 
 
