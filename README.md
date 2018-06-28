@@ -62,6 +62,31 @@ Built-in Features
 
 - **Easily customizable (vyrc in python)**
 
+- **Quick Snippet Search**
+
+Plugins/Extensions
+==================
+
+- **Golang Auto Completion**
+
+- **Javascript Auto Completion**
+
+- **Ruby Auto Completion**
+
+- **Terminal-like**
+
+- **Python Vulture Integration**
+
+- **Python Pyflakes Integration**
+
+- **Smart Lax Search)**
+
+- **Find Function/Class Definition**
+
+- **Irc Client Plugin**
+
+- **Fancy File Manager**
+
 Basic Install
 =============
 
@@ -103,6 +128,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
