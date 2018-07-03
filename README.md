@@ -68,6 +68,12 @@ Built-in Features
 
 - **Terminal-like**
 
+- **Smart Search with The Silver Searcher**
+
+- **Find Function/Class Definition**
+
+- **Irc Client Plugin**
+
 Plugins/Extensions
 ==================
 
@@ -81,13 +87,7 @@ Plugins/Extensions
 
 - **Python Pyflakes Integration**
 
-- **Smart Search with The Silver Searcher**
-
 - **HTML Tidy Integration**
-
-- **Find Function/Class Definition**
-
-- **Irc Client Plugin**
 
 The github organization https://github.com/vyapp is meant
 to hold most of the standard vy plugins. 
@@ -124,6 +124,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
