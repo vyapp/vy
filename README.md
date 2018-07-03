@@ -66,6 +66,8 @@ Built-in Features
 
 - **File Manager**
 
+- **Terminal-like**
+
 Plugins/Extensions
 ==================
 
@@ -74,8 +76,6 @@ Plugins/Extensions
 - **Javascript Auto Completion**
 
 - **Ruby Auto Completion**
-
-- **Terminal-like**
 
 - **Python Vulture Integration**
 
