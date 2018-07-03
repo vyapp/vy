@@ -64,6 +64,8 @@ Built-in Features
 
 - **Quick Snippet Search**
 
+- **File Manager**
+
 Plugins/Extensions
 ==================
 
@@ -86,8 +88,6 @@ Plugins/Extensions
 - **Find Function/Class Definition**
 
 - **Irc Client Plugin**
-
-- **Fancy File Manager**
 
 The github organization https://github.com/vyapp is meant
 to hold most of the standard vy plugins. 
@@ -124,6 +124,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
