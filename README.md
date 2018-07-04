@@ -72,8 +72,6 @@ Built-in Features
 
 - **Find Function/Class Definition**
 
-- **Irc Client Plugin**
-
 Plugins/Extensions
 ==================
 
@@ -88,6 +86,8 @@ Plugins/Extensions
 - **Python Pyflakes Integration**
 
 - **HTML Tidy Integration**
+
+- **Irc Client Plugin**
 
 The github organization https://github.com/vyapp is meant
 to hold most of the standard vy plugins. 
@@ -124,6 +124,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
