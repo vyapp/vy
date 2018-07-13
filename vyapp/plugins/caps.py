@@ -10,7 +10,7 @@ Commands
 Command: lower()
 Description: Turn the selected text into lower case.
 
-Command: uppwer()
+Command: upper()
 Description: Turn the selected text into upper case.
 """
 
