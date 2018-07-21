@@ -28,7 +28,7 @@ import sys
 import urllib.request, urllib.error, urllib.parse
 
 def open_cursor_url(event):
-    webbrowser.open_new_tab(event.widget.get_seq('insert'))
+    webbrowser.open_new_tab(event.widget.get(*self.get_seq_range()))
     event.widget.chmode('NORMAL')
 
 def open_current_file(event):
@@ -47,6 +47,7 @@ def install(area):
     area.install('urls', ('ALPHA', '<Key-l>', open_cursor_url),
                  ('ALPHA', '<Key-o>', open_current_file),
                  ('ALPHA', '<Key-s>', get_url_source))
+
 
 
 

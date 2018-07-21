@@ -282,15 +282,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.insert(index, data)
         self.see('insert')
 
-    def cmd_like(self):
-        """
-        This method retrieves the cursor line then deletes it afterwards.
-        """
-
-        data = self.get('insert linestart', 'insert lineend')
-        self.delete('insert linestart', 'insert lineend')
-        return data
-
     def indref(self, index):
         """
         This is a short hand function. It is used to convert a Text index
@@ -662,26 +653,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except TclError:
             pass
 
-    def sel_text_start(self):
-        """
-        It selects all text from cursor position to the start position
-        of the text.
-
-        """
-
-        index = self.index('insert')
-        self.go_text_start()
-        self.addsel(index, 'insert')
-
-    def sel_text_end(self):
-        """
-        It selects all text from the cursor position to the end of the text.
-        """
-
-        index = self.index('insert')
-        self.go_text_end()
-        self.addsel(index, 'insert')
-
     def go_text_start(self):
         """
         Place the cursor at the beginning of the file.
@@ -698,25 +669,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.mark_set('insert', 'end linestart')
         self.see('insert')
     
-    def sel_line_start(self):
-        """
-        It adds selection from the cursor position to the 
-        start of the line.
-        """
-
-        index = self.index('insert')
-        self.go_line_start()
-        self.addsel(index, 'insert')
-
-    def sel_line_end(self):
-        """
-        It selects all text from the cursor position to the end of the line.
-        """
-
-        index = self.index('insert')
-        self.go_line_end()
-        self.addsel(index, 'insert')
-
     def go_line_start(self):
         """
         Place the cursor at the beginning of the line.
@@ -851,21 +803,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.tag_remove('sel', 'insert linestart', 'insert +1l linestart')
 
 
-    def toggle_line_selection(self):
-        """
-        Toggle line selection.
-        """
-
-        self.toggle_sel('insert linestart', 'insert +1l linestart')
-
-    def toggle_sel(self, index0, index1):
-        """
-        Toggle selection in the range defined by index0 and index1.
-        """
-
-        self.toggle_range('sel', index0, index1)
-
-
     def toggle_range(self, name, index0, index1):
         """
         Toggle tag name in the range defined by index0 and index1.
@@ -883,53 +820,23 @@ class AreaVi(Text, DataEvent, IdleEvent):
         else:
             self.tag_add(name, index0, index1)
 
-    def select_word(self, index='insert'):
-        """
-        Select the closest word from the cursor.
-        """
-
-        index1, index2 = self.get_word_range(index)
-        self.tag_add('sel', index1, index2)
-    
-    def get_word_range(self, index):
+    def get_word_range(self, index='insert'):
         index1 = self.search('\W', index, regexp=True, stopindex='%s linestart' % index, backwards=True)
         index2 = self.search('\W', index, regexp=True, stopindex='%s lineend' % index)
         index1 = '%s linestart' % index if not index1 else '%s +1c' % index1
         index2 = '%s lineend' % index if not index2 else index2
         return index1, index2
 
-    def select_seq(self, index='insert'):
-        """
-        Select the closest sequence of non blank characters from the cursor.
-        """
-
-        index1, index2 = self.get_seq_range(index)
-        self.tag_add('sel', index1, index2)
-
-    def get_seq_range(self, index):
+    def get_seq_range(self, index='insert'):
         index1 = self.search(' ', index, regexp=True, stopindex='%s linestart' %index, backwards=True)
         index2 = self.search(' ', index, regexp=True, stopindex='%s lineend' % index)
         index1 = '%s linestart' % index if not index1 else '%s +1c' % index1
         index2=  '%s lineend' % index if not index2 else index2
         return index1, index2
 
-    def get_word(self, index='insert'):
-        return self.get(*self.get_word_range(index))
-
-    def get_seq(self, index='insert'):
-
-        return self.get(*self.get_seq_range(index))
-
     def get_line(self, index='insert'):
         return self.get('%s linestart' % index, 
         '%s lineend' % index)
-
-    def select_all(self):
-        """
-        It selects all text.
-        """
-
-        self.tag_add('sel', '1.0', 'end')
 
     def shift_right(self, srow, erow, width, char=' '):
         """

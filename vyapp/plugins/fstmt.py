@@ -56,7 +56,9 @@ class Fstmt(object):
 
     def catch_pattern(self):
         pattern = self.area.join_ranges('sel')
-        pattern = pattern if pattern else self.area.get_word()
+        pattern = pattern if pattern else self.area.get(
+        *self.area.get_word_range())
+
         pattern = escape(pattern)
         return pattern
 
@@ -87,6 +89,7 @@ class Fstmt(object):
             root.status.set_msg('No pattern set!')
         else:
             self.run_cmd(pattern, *args)
+
 
 
 
