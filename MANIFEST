@@ -46,6 +46,8 @@ vyapp/plugins/default.py
 vyapp/plugins/delta_mode.py
 vyapp/plugins/editrc.py
 vyapp/plugins/find.py
+vyapp/plugins/fsniffer.py
+vyapp/plugins/fstmt.py
 vyapp/plugins/gamma_mode.py
 vyapp/plugins/golang_mode.py
 vyapp/plugins/hlink.py
@@ -64,6 +66,7 @@ vyapp/plugins/line_sel.py
 vyapp/plugins/line_strips.py
 vyapp/plugins/main_jumps.py
 vyapp/plugins/match_sym_pair.py
+vyapp/plugins/mc.py
 vyapp/plugins/mode_shortcut.py
 vyapp/plugins/mode_status.py
 vyapp/plugins/normal_mode.py
@@ -81,6 +84,7 @@ vyapp/plugins/ruby_mode.py
 vyapp/plugins/seek_symbol.py
 vyapp/plugins/shift.py
 vyapp/plugins/skewer.py
+vyapp/plugins/sniper.py
 vyapp/plugins/spacing.py
 vyapp/plugins/splits.py
 vyapp/plugins/sym_pair_sel.py
@@ -100,6 +104,10 @@ vyapp/plugins/pdb/__init__.py
 vyapp/plugins/pdb/cross_platform.py
 vyapp/plugins/pdb/event.py
 vyapp/plugins/pdb/unix_platform.py
+vyapp/plugins/spawn/__init__.py
+vyapp/plugins/spawn/base_spawn.py
+vyapp/plugins/spawn/cross_platform.py
+vyapp/plugins/spawn/unix_platform.py
 vyapp/plugins/syntax/__init__.py
 vyapp/plugins/syntax/keys.py
 vyapp/plugins/syntax/spider.py

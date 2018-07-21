@@ -924,46 +924,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return self.get('%s linestart' % index, 
         '%s lineend' % index)
 
-    def scroll_line_up(self):
-        """
-        It scrolls one line up
-        """
-        # should be rewritten.
-        # it fails with append.
-        self.yview(SCROLL, -1, 'units')
-        is_visible = self.dlineinfo('insert')
-        if not is_visible:
-            self.mark_set('insert', 'insert -1l')
-    
-    def scroll_line_down(self):
-        """
-        It scrolls one line down.
-        """
-        # should be rewritten.
-        # it fails with append.
-
-        self.yview(SCROLL, 1, 'units')
-        is_visible = self.dlineinfo('insert')
-        if not is_visible:
-            self.mark_set('insert', 'insert +1l')
-    
-
-    def scroll_page_down(self):
-        """
-        It scrolls one page down.
-        """
-        self.yview(SCROLL, 1, 'page')
-        self.mark_set('insert', '@0,0')
-
-
-    def scroll_page_up(self):
-        """
-        It scrolls one page up.
-        """
-
-        self.yview(SCROLL, -1, 'page')
-        self.mark_set('insert', '@0,0')
-    
     def insert_line_down(self):
         """
         It inserts one line down from the cursor position.
@@ -1652,6 +1612,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
