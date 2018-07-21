@@ -37,6 +37,8 @@ class BlockSel:
         ('NORMAL', '<Control-H>', self.block_left),
         ('NORMAL', '<Control-L>', self.block_right),
         ('NORMAL', '<Control-V>', self.start_block_selection))
+        area.mark_set('(BLOCK_SEL_MARK)', '1.0')
+
         self.area = area
 
     def addblock(self, index0, index1):
@@ -145,3 +147,4 @@ class BlockSel:
         root.status.set_msg('Dropped block selection mark.')
 
 install = BlockSel
+

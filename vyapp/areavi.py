@@ -64,8 +64,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.filename = default_filename
 
         self.mark_set('(CURSOR_LAST_COL)', '1.0')
-        self.mark_set('(RANGE_SEL_MARK)', '1.0')
-        self.mark_set('(BLOCK_SEL_MARK)', '1.0')
 
         # def cave(event):
             # AreaVi.ACTIVE = event.widget
@@ -379,13 +377,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         # The mark used by self.down, self.up.
         self.mark_set('(CURSOR_LAST_COL)', 'insert')
     
-    def start_selection(self):
-        """  
-        Start range selection.
-        """
-
-        self.mark_set('(RANGE_SEL_MARK)', 'insert')
-    
     def rmsel(self, index0, index1):
         """
         It removes the tag sel from the range that is delimited by index0 and index1
@@ -428,44 +419,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             return index1
         else:
             return index0
-
-    def sel_up(self):
-        """
-        It adds 'sel' one line up the 'insert' position
-        and sets the cursor one line up.
-        """
-
-        self.rmsel('(RANGE_SEL_MARK)', 'insert')
-        self.up()
-        self.addsel('(RANGE_SEL_MARK)', 'insert')
-
-    def sel_down(self):
-        """ 
-        It adds or removes selection one line down. 
-        """
-
-        self.rmsel('(RANGE_SEL_MARK)', 'insert')
-        self.down()
-        self.addsel('(RANGE_SEL_MARK)', 'insert')
-    
-    def sel_right(self):
-        """ 
-        It adds or removes selection one character right.
-        """
-
-
-        self.rmsel('(RANGE_SEL_MARK)', 'insert')
-        self.right()
-        self.addsel('(RANGE_SEL_MARK)', 'insert')
-    
-    def sel_left(self):
-        """ 
-        It adds or removes selection one character left.
-        """
-
-        self.rmsel('(RANGE_SEL_MARK)', 'insert')
-        self.left()
-        self.addsel('(RANGE_SEL_MARK)', 'insert')
 
     def clear_selection(self):
         """
