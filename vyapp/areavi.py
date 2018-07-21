@@ -872,29 +872,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
     
         return str(self.tk.call(tuple(args)))
 
-    def iseek(self, regex, index='insert', stopindex='end', backwards=None, exact=None, regexp=True,
-                        nocase=None, elide=None, nolinestop=None):
-        """
-        Find regex backwards/fowards from index position and changes insert
-        mark to the prev/next match.
-        """
-
-        count = IntVar()
-
-        index = self.search(regex, index=index, stopindex=stopindex, regexp=regexp, 
-        exact=exact, nocase=nocase, elide=elide, nolinestop=nolinestop, 
-        backwards=backwards, count=count)
-
-        if not index: return
-
-        index0 = self.index('%s +%sc' % (index, count.get())) 
-        self.mark_set('insert', index if backwards else index0)
-        self.see('insert')
-
-        return index, index0
-
-    def ipick(self, name, regex, index='insert', stopindex='end', verbose=False, backwards=None, exact=None, regexp=True,
-                        nocase=None, elide=None, nolinestop=None):
+    def ipick(self, name, regex, index='insert', stopindex='end', 
+        verbose=False, backwards=None, exact=None, regexp=True, 
+        nocase=None, elide=None, nolinestop=None):
 
         """
         """
@@ -908,16 +888,19 @@ class AreaVi(Text, DataEvent, IdleEvent):
         if ranges: index0, index1 = ranges[:2]
         else: index0 = index1 = index
 
-        index = self.iseek(regex, index=index0 if backwards else index1, stopindex=stopindex,
-        backwards=backwards, exact=exact, regexp=regexp, nocase=nocase, 
-        elide=elide, nolinestop=nolinestop)
+        index = self.isearch(regex, index=index0 if backwards else index1, 
+        stopindex=stopindex, backwards=backwards, exact=exact, regexp=regexp, 
+        nocase=nocase, elide=elide, nolinestop=nolinestop)
 
-        if not index:
-            return
+        if not index: return
+        _, start, end = index
+
+        self.mark_set('insert', start if backwards else end)
+        self.see('insert')
 
         self.tag_remove(name, '1.0', 'end')
-        self.tag_add(name, *index)
-        return index
+        self.tag_add(name, start, end)
+        return start, end
 
     def replace(self, regex, data, index=None, stopindex=None,  
         forwards=None, backwards=None, exact=None, regexp=True, 
@@ -1027,9 +1010,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         size  = IntVar(0)
 
         while True:
-            index0 = self.search('\%s|\%s' % (start, end), index = index0,
-                                     stopindex = '%s %s%sc' % (index, sign, max), 
-                                     count = size, backwards = dir, regexp = True) 
+            index0 = self.search('\%s|\%s' % (start, end), 
+            index = index0, stopindex = '%s %s%sc' % (index, sign, max), 
+            count = size, backwards = dir, regexp = True) 
 
             if not index0: return ''
 

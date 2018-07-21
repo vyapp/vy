@@ -80,24 +80,26 @@ class SeekSymbol(object):
         self.area.chmode('JUMP_BACK')
 
     def jump_next(self, num):
-        char = get_char(num)
-        self.area.iseek(char, index='insert', stopindex='end', regexp=False)
-    
+        char  = get_char(num)
+        _, index0, index1 = self.area.isearch(char, index='insert', 
+        stopindex='end', regexp=False)
+
+        self.area.mark_set('insert', index1)
+        self.area.see('insert')
+
     def jump_back(self, num):
-        char = get_char(num)
-        self.area.iseek(char, index='insert', stopindex='1.0',  regexp=False, backwards=True)
-    
+        char  = get_char(num)
+        _, index0, index1 = self.area.isearch(char, index='insert', 
+        stopindex='1.0', regexp=False, backwards=True)
+
+        self.area.mark_set('insert', index0)
+        self.area.see('insert')
+
     def select_data(self):
         self.area.addsel('insert', '(RANGE_SEL_MARK)')
         self.area.chmode('NORMAL')
 
 install = SeekSymbol
-
-
-
-
-
-
 
 
 

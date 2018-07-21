@@ -40,7 +40,12 @@ class SymbolJumps:
 
         chars = [escape(ind) for ind in self.chars]
         REG   = '|'.join(chars)
-        self.area.iseek(REG, index='insert', stopindex='end')
+
+        _, index0, index1 = self.area.isearch(REG, index='insert',
+        stopindex='end', regexp=True)
+
+        self.area.mark_set('insert', index1)
+        self.area.see('insert')
 
     def prev_sym(self, event):
         """
@@ -49,16 +54,13 @@ class SymbolJumps:
 
         chars = [escape(ind) for ind in self.chars]
         REG   = '|'.join(chars)
-        self.area.iseek(REG,  backwards=True, stopindex='1.0')
+
+        _, index0, index1 = self.area.isearch(REG,  index='insert', 
+        backwards=True, stopindex='1.0', regexp=True)
+
+        self.area.mark_set('insert', index0)
+        self.area.see('insert')
 
 install = SymbolJumps
-
-
-
-
-
-
-
-
 
 

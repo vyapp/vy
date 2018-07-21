@@ -65,7 +65,8 @@ class Find(object):
 
         area.tags_config(self.TAGCONF)
 
-        area.install('find', ('NORMAL', '<Alt-slash>', lambda event: self.start()))
+        area.install('find', ('NORMAL', 
+        '<Alt-slash>', lambda event: self.start()))
 
     def start(self):
         self.index = ('insert', 'insert')
@@ -113,13 +114,17 @@ class Find(object):
 
     def up(self, wid):
         regex = wid.get()
-        self.index = self.area.ipick('(CATCHED)', regex, index='insert', 
+        index = self.area.ipick('(CATCHED)', regex, index='insert', 
         stopindex='1.0', backwards=True, **self.opts)
 
     def down(self, wid):
         regex = wid.get()
-        self.index = self.area.ipick('(CATCHED)', regex, index='insert', 
-        stopindex='end', **self.opts)
+        index = self.area.ipick('(CATCHED)', regex, 
+        index='insert', stopindex='end', **self.opts)
+
+        # Otherwise it breaks replace on when 
+        # up is called more than once.
+        if index: self.index = index
 
     def pick_selection_matches(self, wid):
         regex = wid.get()
@@ -139,6 +144,7 @@ class Find(object):
         self.area.replace_all(regex, Find.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 
