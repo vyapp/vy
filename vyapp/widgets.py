@@ -47,7 +47,7 @@ class Echo(object):
         self.area.insert('insert', char)
 
     def on_backspace(self, event):
-        self.area.backspace()
+        self.area.delete('insert -1c', 'insert')
         self.on_delete(event)
 
     def on_delete(self, event):

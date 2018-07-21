@@ -615,12 +615,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except Exception:
             pass
 
-    def backspace(self):
-        """
-        """
-
-        self.delete('insert -1c', 'insert')
-
     def do_undo(self):
         """
         It does undo.
