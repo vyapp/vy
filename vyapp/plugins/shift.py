@@ -20,14 +20,33 @@ Description: Shift to the left.
 """
 
 class Shift(object):
-    def __init__(self, area, width=4, char=' '):
+    def __init__(self, area, width=4):
         self.width = width
-        self.char  = char
-        area.install('shift', ('NORMAL', '<Key-greater>', lambda event: event.widget.shift_sel_right(self.width, self.char)),
-                     ('NORMAL', '<Key-less>', lambda event: event.widget.shift_sel_left(self.width)))
 
+        area.install('shift', 
+        ('NORMAL', '<Key-greater>', self.sel_right),
+        ('NORMAL', '<Key-less>',  self.sel_left))
+        self.area = area
+
+    def sel_right(self, event):
+        """
+        Shift ranges of selected text to the right.
+        """
+        srow, scol = self.area.indref('sel.first')
+        erow, ecol = self.area.indref('sel.last')
+        self.area.shift_right(srow, erow, self.width)
+    
+    def sel_left(self, event):
+        """
+        Shift ranges of selected text to the left.
+        """
+
+        srow, scol = self.area.indref('sel.first')
+        erow, ecol = self.area.indref('sel.last')
+        self.area.shift_left(srow, erow, self.width)
 
 install = Shift
+
 
 
 

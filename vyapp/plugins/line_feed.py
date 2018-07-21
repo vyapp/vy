@@ -21,22 +21,36 @@ Description: Insert a line up then goes insert mode.
 
 """
 
-def insert_down(area):
-        area.insert_line_down()
-        area.chmode('INSERT')
+class LineFeed:
+    def __init__(self, area):
+        area.install('line-feed', 
+        ('NORMAL', '<Key-m>', self.insert_down),
+        ('NORMAL', '<Key-n>', self.insert_up))
 
-def insert_up(area):
-        area.insert_line_up()
-        area.chmode('INSERT')
+        self.area = area
 
-def install(area):
-    area.install('line-feed', ('NORMAL', '<Key-m>', lambda event: insert_down(event.widget)),
-                 ('NORMAL', '<Key-n>', lambda event: insert_up(event.widget)))
+    def insert_down(self, event):
+        """
+        It inserts one line down from the cursor position.
+        """
 
+        self.area.edit_separator()
+        self.area.insert('insert +1l linestart', '\n')
+        self.area.mark_set('insert', 'insert +1l linestart')
 
+        self.area.see('insert')
+        self.area.chmode('INSERT')
+    
+    def insert_up(self, event):
+        """
+        It inserts one line up.
+        """
 
+        self.area.edit_separator()
+        self.area.insert('insert linestart', '\n')
+        self.area.mark_set('insert', 'insert -1l linestart')
+        self.area.see('insert')
 
+        self.area.chmode('INSERT')
 
-
-
-
+install = LineFeed

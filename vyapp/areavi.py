@@ -924,16 +924,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return self.get('%s linestart' % index, 
         '%s lineend' % index)
 
-    def insert_line_down(self):
-        """
-        It inserts one line down from the cursor position.
-        """
-
-        self.edit_separator()
-        self.insert('insert +1l linestart', '\n')
-        self.mark_set('insert', 'insert +1l linestart')
-        self.see('insert')
-    
     def select_all(self):
         """
         It selects all text.
@@ -941,35 +931,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         self.tag_add('sel', '1.0', 'end')
 
-    def insert_line_up(self):
-        """
-        It inserts one line up.
-        """
-
-        self.edit_separator()
-        self.insert('insert linestart', '\n')
-        self.mark_set('insert', 'insert -1l linestart')
-        self.see('insert')
-
-
-    def shift_sel_right(self, width, char):
-        """
-        Shift ranges of selected text to the right.
-        """
-        srow, scol = self.indref('sel.first')
-        erow, ecol = self.indref('sel.last')
-        self.shift_right(srow, erow, width, char)
-    
-    def shift_sel_left(self, width):
-        """
-        Shift ranges of selected text to the left.
-        """
-
-        srow, scol = self.indref('sel.first')
-        erow, ecol = self.indref('sel.last')
-        self.shift_left(srow, erow, width)
-    
-    def shift_right(self, srow, erow, width, char):
+    def shift_right(self, srow, erow, width, char=' '):
         """
         Given a start row and a end row it shifts
         a block of text to the right.
