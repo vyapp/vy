@@ -3,7 +3,6 @@
 """
 
 from tkinter import *
-from re import escape
 import string
 import os
 
@@ -653,24 +652,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except TclError:
             pass
 
-    def go_next_sym(self, chars):
-        """
-        Place the cursor at the next occurrence of one of the chars.
-        """
-
-        chars = [escape(ind) for ind in chars]
-        REG   = '|'.join(chars)
-        self.iseek(REG, index='insert', stopindex='end')
-
-    def go_prev_sym(self, chars):
-        """
-        Place the cursor at the previous occurrence of one of the chars.
-        """
-
-        chars = [escape(ind) for ind in chars]
-        REG   = '|'.join(chars)
-        self.iseek(REG,  backwards=True, stopindex='1.0')
-    
     def del_line(self):
         """
         It deletes the cursor line, makes the cursor visible
@@ -1424,27 +1405,4 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
