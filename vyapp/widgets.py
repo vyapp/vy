@@ -44,7 +44,7 @@ class Echo(object):
         if event.char:  self.on_char(event.char)
 
     def on_char(self, char):
-        self.area.echo(char)
+        self.area.insert('insert', char)
 
     def on_backspace(self, event):
         self.area.backspace()
@@ -199,6 +199,7 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
+
 
 
 

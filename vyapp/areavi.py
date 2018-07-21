@@ -615,9 +615,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except Exception:
             pass
 
-    def echo(self, data):
-        self.insert('insert', data)
-
     def backspace(self):
         """
         """
