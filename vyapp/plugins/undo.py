@@ -18,10 +18,13 @@ Event: <Key-period>
 Description: Do redo.
 """
 
+class Undo:
+    def __init__(self, area):
+        area.install('undo', 
+        ('NORMAL', '<Key-comma>', lambda event: event.widget.edit_undo()),
+        ('NORMAL', '<Key-period>', lambda event: event.widget.edit_redo()))
 
-def install(area):
-    area.install('undo', ('NORMAL', '<Key-comma>', lambda event: event.widget.do_undo()),
-                 ('NORMAL', '<Key-period>', lambda event: event.widget.do_redo()))
+install = Undo
 
 
 

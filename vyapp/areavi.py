@@ -581,26 +581,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except Exception:
             pass
 
-    def do_undo(self):
-        """
-        It does undo.
-        """
-
-        try:
-            self.edit_undo()
-        except TclError:
-            pass
-    
-    def do_redo(self):
-        """
-        It redoes.
-        """
-
-        try:
-            self.edit_redo()
-        except TclError:
-            pass
-
     def cpsel(self, sep=''):
         """
         Copy selected text to the clipboard.
