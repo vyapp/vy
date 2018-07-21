@@ -603,35 +603,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.edit_separator()
         self.swap_ranges('sel', '', '1.0', 'end')
 
-    def ptsel(self):
-        """
-        Paste text at the cursor position.
-        """
-
-        data = self.clipboard_get()
-        self.edit_separator()
-        self.insert('insert', data)
-
-    def ptsel_after(self):
-        """
-        Paste text one line down the cursor position.
-        """
-
-        data = self.clipboard_get()
-        self.edit_separator()
-        self.insert('insert +1l linestart', data)
-
-
-    def ptsel_before(self):
-        """
-        Paste text one line up the cursor position.
-        """
-
-        data = self.clipboard_get()
-        self.edit_separator()
-        self.insert('insert linestart', data)
-
-
     def toggle_range(self, name, index0, index1):
         """
         Toggle tag name in the range defined by index0 and index1.

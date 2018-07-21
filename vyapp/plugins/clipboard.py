@@ -47,16 +47,45 @@ Description: Cut selection and add to the clipboard with a separator \n.
 
 """
 
-def install(area):
-    area.install('clipboard', ('NORMAL', '<Key-y>', lambda event: event.widget.cpsel()),
-                 ('NORMAL', '<Key-u>', lambda event: event.widget.ctsel()),
-                 ('NORMAL', '<Key-t>', lambda event: event.widget.ptsel()),
-                 ('NORMAL', '<Key-r>', lambda event: event.widget.ptsel_after()),
-                 ('NORMAL', '<Key-e>', lambda event: event.widget.ptsel_before()),
-                 ('NORMAL', '<Control-Y>', lambda event: event.widget.cpsel('\n')),
-                 ('NORMAL', '<Control-U>', lambda event: event.widget.ctsel('\n')))
+class Clipboard:
+    def __init__(self, area):
+        area.install('clipboard', 
+        ('NORMAL', '<Key-y>', lambda event: event.widget.cpsel()),
+        ('NORMAL', '<Key-u>', lambda event: event.widget.ctsel()),
+        ('NORMAL', '<Key-t>', self.ptsel),
+        ('NORMAL', '<Key-r>', self.ptsel_after),
+        ('NORMAL', '<Key-e>', self.ptsel_before),
+        ('NORMAL', '<Control-Y>', lambda event: event.widget.cpsel('\n')),
+        ('NORMAL', '<Control-U>', lambda event: event.widget.ctsel('\n')))
+        self.area = area
+
+    def ptsel(self, event):
+        """
+        Paste text at the cursor position.
+        """
+
+        data = self.area.clipboard_get()
+        self.area.edit_separator()
+        self.area.insert('insert', data)
+
+    def ptsel_after(self, event):
+        """
+        Paste text one line down the cursor position.
+        """
+
+        data = self.area.clipboard_get()
+        self.area.edit_separator()
+        self.area.insert('insert +1l linestart', data)
 
 
+    def ptsel_before(self, event):
+        """
+        Paste text one line up the cursor position.
+        """
+
+        data = self.area.clipboard_get()
+        self.area.edit_separator()
+        self.area.insert('insert linestart', data)
 
 
-
+install = Clipboard
