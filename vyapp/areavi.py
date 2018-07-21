@@ -788,21 +788,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.insert('insert linestart', data)
 
 
-    def select_line(self):
-        """
-        It adds selection to the cursor line.
-        """
-
-        self.tag_add('sel', 'insert linestart', 'insert +1l linestart')
-
-    def unselect_line(self):
-        """
-        It removes selection from the cursor line.
-        """
-
-        self.tag_remove('sel', 'insert linestart', 'insert +1l linestart')
-
-
     def toggle_range(self, name, index0, index1):
         """
         Toggle tag name in the range defined by index0 and index1.
