@@ -89,7 +89,8 @@ class DataSel:
         """
 
         index = self.area.index('insert')
-        self.area.go_text_start()
+        self.area.mark_set('insert', '1.0')
+        self.area.see('insert')
         self.area.addsel(index, 'insert')
 
     def sel_text_end(self, event):
@@ -98,7 +99,8 @@ class DataSel:
         """
 
         index = self.area.index('insert')
-        self.area.go_text_end()
+        self.area.mark_set('insert', 'end linestart')
+        self.area.see('insert')
         self.area.addsel(index, 'insert')
 
     def sel_line_start(self, event):
@@ -108,7 +110,7 @@ class DataSel:
         """
 
         index = self.area.index('insert')
-        self.area.go_line_start()
+        self.area.mark_set('insert', 'insert linestart')
         self.area.addsel(index, 'insert')
 
     def sel_line_end(self, event):
@@ -117,7 +119,7 @@ class DataSel:
         """
 
         index = self.area.index('insert')
-        self.area.go_line_end()
+        self.area.mark_set('insert', 'insert lineend')
         self.area.addsel(index, 'insert')
 
     def sel_line(self, event):
@@ -129,4 +131,5 @@ class DataSel:
         'insert linestart', 'insert +1l linestart')
 
 install = DataSel
+
 

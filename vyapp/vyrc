@@ -137,11 +137,6 @@ import vyapp.plugins.shift
 autoload(vyapp.plugins.shift, width=2)
 
 
-# Used to quickly jump to the end/start of the cursor line.
-import vyapp.plugins.line_jumps
-autoload(vyapp.plugins.line_jumps)
-
-
 # Used to quickly jump to the end/start of the file.
 import vyapp.plugins.text_jumps
 autoload(vyapp.plugins.text_jumps)
@@ -155,11 +150,6 @@ autoload(vyapp.plugins.splits)
 # Used to deal with tabs.
 import vyapp.plugins.tabs
 autoload(vyapp.plugins.tabs)
-
-
-# Default events for 'Text'.
-import vyapp.plugins.default
-autoload(vyapp.plugins.default)
 
 
 # Implement keycommands to undo/redo operations.
@@ -192,12 +182,6 @@ autoload(vyapp.plugins.line_scroll)
 # This plugin implements keycommands to scroll pages.
 import vyapp.plugins.page_scroll
 autoload(vyapp.plugins.page_scroll)
-
-
-# This plugin implements keycommands to jump quickly
-# to the next/previous word from the cursor position.
-import vyapp.plugins.word_jumps
-autoload(vyapp.plugins.word_jumps)
 
 
 # Used to select the text between pairs of (), [], {} when 

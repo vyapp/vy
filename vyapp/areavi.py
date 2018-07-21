@@ -653,51 +653,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except TclError:
             pass
 
-    def go_text_start(self):
-        """
-        Place the cursor at the beginning of the file.
-        """
-
-        self.mark_set('insert', '1.0')
-        self.see('insert')
-    
-    def go_text_end(self):
-        """
-        Place the cursor at the end of the file.
-        """
-
-        self.mark_set('insert', 'end linestart')
-        self.see('insert')
-    
-    def go_line_start(self):
-        """
-        Place the cursor at the beginning of the line.
-        """
-
-        self.mark_set('insert', 'insert linestart')
-        
-
-    def go_line_end(self):
-        """
-        Place the cursor at the end of the line.
-        """
-
-        self.mark_set('insert', 'insert lineend')
-
-    def go_next_word(self):
-        """
-        Place the cursor at the next word.
-        """
-
-        self.iseek('\M', index='insert', stopindex='end')
-
-    def go_prev_word(self):
-        """
-        Place the cursor at the previous word.
-        """
-
-        self.iseek('\M', backwards=True, index='insert', stopindex='1.0')
-
     def go_next_sym(self, chars):
         """
         Place the cursor at the next occurrence of one of the chars.
@@ -1256,6 +1211,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.delete('1.0', 'end')
         self.insert('1.0', data)
         self.event_generate('<<LoadData>>')
+        self.mark_set('insert', '1.0')
+        self.see('insert')
+
         _, extension = os.path.splitext(self.filename)
         self.event_generate('<<Load/*%s>>' % extension)
 
