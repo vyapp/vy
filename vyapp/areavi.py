@@ -1005,50 +1005,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         else:
             return None
 
-    def sel_matching_pair_data(self, index, max=1500, pair=('(', ')')):
-        index = self.case_pair(index, max, *pair)
-        if not index: return
-
-        min = self.min(index, 'insert')
-        max = self.max(index, 'insert')
-        min = '%s +1c' % min
-
-        self.tag_add('sel', min, max)
-
-    def sel_matching_pair(self, index, max=1500, pair=('(', ')')):
-        """
-        """
-        index = self.case_pair(index, max, *pair)
-        if not index: return
-
-        min = self.min(index, 'insert')
-        max = self.max(index, 'insert')
-        max = '%s +1c' % max
-
-        self.tag_add('sel', min, max)
-
-    def get_matching_pair(self, index, max, start='(', end=')'):
-        """
-        """
-
-        index0 = self.search(start, regexp=False, index=index, backwards=True)
-        if not index0: return
-
-        index1 = self.search(end, regexp=False, index=index)
-        if not index1: return
-
-
-        index2 = self.case_pair(index0, max, start, end)
-        if not index2: return
-
-        index3 = self.case_pair(index1, max, start, end)
-        if not index3: return
-
-        if self.is_in_range(index, index0, index2):
-            return index0, index2
-        elif self.is_in_range(index, index3, index1):
-            return index3, index1
-        
     def case_pair(self, index, max, start='(', end=')'):
         """
         Once this method is called, it returns an index for the next
@@ -1326,4 +1282,5 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 

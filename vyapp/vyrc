@@ -186,8 +186,8 @@ autoload(vyapp.plugins.page_scroll)
 
 # Used to select the text between pairs of (), [], {} when 
 # the cursor is placed over one of the (), {}, [].
-import vyapp.plugins.sym_pair_sel
-autoload(vyapp.plugins.sym_pair_sel)
+import vyapp.plugins.pair_sel
+autoload(vyapp.plugins.pair_sel)
 
 
 # Implement a keycomand to select/unselect a line.
