@@ -621,7 +621,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.clipboard_clear()
         self.clipboard_append(data)
         self.edit_separator()
-        self.delete_ranges('sel')
+        self.swap_ranges('sel', '', '1.0', 'end')
 
     def ptsel(self):
         """
@@ -1220,13 +1220,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             range = self.tag_nextrange(name, index0, index1)
             if not range: break
             self.swap(data, *range)
-
-    def delete_ranges(self, name, index0='1.0', index1='end'):
-        """
-        It deletes ranges of text that are mapped to tag name between index0 and index1.
-        """
-
-        self.swap_ranges(name, '', index0, index1)
 
     def join_ranges(self, name, sep=''):
         """     
