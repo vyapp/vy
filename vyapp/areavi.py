@@ -235,12 +235,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             self.tag_remove(ind, '1.0', 'end')
         self.db.clear()
 
-    def curline(self):
-        """
-        This method returns the string that corresponds to the cursor line.
-        """
-        return self.get('insert linestart', 'insert +1l linestart')
-
     def tags_config(self, config):
         for indi, indj in config.items():
             self.tag_config(indi, **indj)

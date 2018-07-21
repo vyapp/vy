@@ -90,7 +90,8 @@ class Spawn(BaseSpawn):
         root.status.set_msg('Killed process!')
 
     def dump_line(self):
-        data = self.input.curline().encode(self.input.charset)
+        data = self.input.get('insert linestart', 'insert +1l linestart')
+        data = data.encode(self.input.charset)
         self.stdin.dump(data)
         self.input.down()
 
@@ -120,6 +121,7 @@ ENV['vpy'] = lambda : VSpawn('bash -c "tee -i >(stdbuf -o 0 python -i -u)"')
 
 ENV['hrb'] = lambda : HSpawn('bash -c "stdbuf -o 0 irb --inf-ruby-mode"')
 ENV['vrb'] = lambda : VSpawn('bash -c "stdbuf -o 0 irb --inf-ruby-mode"')
+
 
 
 

@@ -51,7 +51,8 @@ class Spawn(BaseSpawn):
         root.status.set_msg('Killed process!')
 
     def dump_line(self):
-        data = self.input.curline().encode(self.input.charset)
+        data = self.input.get('insert linestart', 'insert +1l linestart')
+        data = data.encode(self.input.charset)
         self.expect.send(data)
         self.input.down()
 
@@ -73,6 +74,7 @@ class VSpawn(Spawn):
 
 ENV['hspawn'] = HSpawn
 ENV['vspawn'] = VSpawn
+
 
 
 
