@@ -281,7 +281,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.insert(index, data)
         self.see('insert')
 
-    def indref(self, index):
+    def indref(self, index='insert'):
         """
         This is a short hand function. It is used to convert a Text index
         into two integers like:
@@ -321,6 +321,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         position line and col.
         """
 
+        print('Warning: AreaVi.indcur is deprecated. Use AreaVi.indref.')
         a, b  = self.indref('insert')
         return int(a), int(b)
 
@@ -335,33 +336,18 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.mark_set('insert', index)
         self.see('insert')
 
-    def is_end(self):
-        """
-        This function returns True if the cursor is positioned
-        at the end of the AreaVi instance.
-        """
-
-        # I have to use 'end -1l linestart' since it seems the 'end' tag
-        # corresponds to a one line after the last visible line.
-        # So last line lineend != 'end'.
-
-        return self.compare('insert linestart', '!=', 'end -1l linestart')
-
-    def is_start(self):
-        """
-        This function returns True if the cursor is
-        at the start of the text region. It is on index '1.0'
-        """
-
-        return self.compare('insert linestart', '!=', '1.0')
 
     def down(self):
         """  
         It sets the cursor position one line down.  
         """
 
-        if not self.is_end():
-            return
+        # I have to use 'end -1l linestart' since it seems the 'end' tag
+        # corresponds to a one line after the last visible line.
+        # So last line lineend != 'end'.
+
+        is_end = self.compare('insert linestart', '!=', 'end -1l linestart')
+        if not is_end: return
 
         a, b = self.indref('(CURSOR_LAST_COL)')
         c, d = self.indcur()
@@ -372,9 +358,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         It sets the cursor one line up.  
         """
 
-        if not self.is_start():
-            return
+        is_start = self.compare('insert linestart', '!=', '1.0')
 
+        if not is_start: return
         a, b = self.indref('(CURSOR_LAST_COL)')
         c, d = self.indcur()
         self.setcur(c - 1, b)
