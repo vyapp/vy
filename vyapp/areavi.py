@@ -386,13 +386,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         self.mark_set('(RANGE_SEL_MARK)', 'insert')
     
-    def start_block_selection(self):
-        """
-        Start block selection.
-        """
-
-        self.mark_set('(BLOCK_SEL_MARK)', 'insert')
-
     def rmsel(self, index0, index1):
         """
         It removes the tag sel from the range that is delimited by index0 and index1
@@ -474,103 +467,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.left()
         self.addsel('(RANGE_SEL_MARK)', 'insert')
 
-    def addblock(self, index0, index1):
-        """
-        It adds block selection from index0 to index1.
-        """
-
-        index2 = self.min(index0, index1)
-        index3 = self.max(index0, index1)
-
-        a, b   = self.indint(index2)
-        c, d   = self.indint(index3)
-
-        for ind in range(a, c + 1):
-            self.addsel('%s.%s' % (ind, min(b, d)), '%s.%s' % (ind, max(b, d)))
-
-    def rmblock(self, index0, index1):
-        """
-        It removes block selection from index0 to index1.
-        """
-
-        index2 = self.min(index0, index1)
-        index3 = self.max(index0, index1)
-
-        a, b   = self.indint(index2)
-        c, d   = self.indint(index3)
-
-        for ind in range(a, c + 1):
-            self.rmsel('%s.%s' % (ind, min(b, d)),  '%s.%s' % (ind, max(b, d)))
-
-    def block_down(self):
-        """  
-        It adds or removes block selection one line down.  
-        """
-
-        a, b  = self.indref('(CURSOR_LAST_COL)')
-        c, d  = self.indcur()
-
-        index = self.index('(BLOCK_SEL_MARK)')
-        self.rmblock(index, '%s.%s' % (c, b))
-        self.down()
-
-        a, b   = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
-
-        self.addblock(index, '%s.%s' % (c, b))
-
-    def block_up(self):
-        """  
-        It adds or removes block selection one line up.  
-        """
-
-        a, b   = self.indref('(CURSOR_LAST_COL)')
-        c, d   = self.indcur()
-        index  = self.index('(BLOCK_SEL_MARK)')
-
-        self.rmblock(index, '%s.%s' % (c, b))
-        self.up()
-
-        a, b = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
-
-        self.addblock(index, '%s.%s' % (c, b))
-
-    def block_left(self):
-        """
-        It adds block selection to the left.
-        """
-
-        a, b   = self.indref('(CURSOR_LAST_COL)')
-        c, d   = self.indcur()
-
-        index = self.index('(BLOCK_SEL_MARK)')
-        self.rmblock(index, '%s.%s' % (c, b))
-        self.left()
-
-        a, b   = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
-
-        self.addblock(index, '%s.%s' % (c, b))
-
-    def block_right(self):
-        """
-        It adds/removes block selection to the right.
-        """
-
-        a, b   = self.indref('(CURSOR_LAST_COL)')
-        c, d   = self.indcur()
-
-        index = self.index('(BLOCK_SEL_MARK)')
-        self.rmblock(index, '%s.%s' % (c, b))
-        self.right()
-
-        a, b   = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
-
-        self.addblock(index, '%s.%s' % (c, b))
-
-                
     def clear_selection(self):
         """
         Unselect all text.
