@@ -615,14 +615,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except Exception:
             pass
 
-    def del_char(self):
-        """
-        It deletes a char from the cursor position.
-        """
-
-        self.edit_separator()
-        self.delete('insert', 'insert +1c')
-
     def echo(self, data):
         self.insert('insert', data)
 
@@ -652,17 +644,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         except TclError:
             pass
 
-    def del_line(self):
-        """
-        It deletes the cursor line, makes the cursor visible
-        and adds a separator to the undo stack.
-        """
-
-        self.edit_separator()
-        self.delete('insert linestart', 'insert +1l linestart')
-        self.see('insert')
-    
-
     def cpsel(self, sep=''):
         """
         Copy selected text to the clipboard.
@@ -685,15 +666,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.edit_separator()
         self.delete_ranges('sel')
 
-
-    def del_sel(self):
-        """
-        It deletes all selected text.
-        """
-        self.edit_separator()
-        self.delete_ranges('sel')
-    
-
     def ptsel(self):
         """
         Paste text at the cursor position.
@@ -702,7 +674,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         data = self.clipboard_get()
         self.edit_separator()
         self.insert('insert', data)
-    
 
     def ptsel_after(self):
         """
