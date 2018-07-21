@@ -542,13 +542,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         self.addblock(index, '%s.%s' % (c, b))
 
-    def is_line_start(self):
-        """
-        It returns True if the cursor is at the start of the cursor line.
-        """
-
-        return self.compare('insert', '!=', 'insert linestart')
-
     def block_left(self):
         """
         It adds block selection to the left.
@@ -565,13 +558,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         c, d = self.indcur()
 
         self.addblock(index, '%s.%s' % (c, b))
-
-    def is_line_end(self):
-        """
-        It returns True if the cursor is at the end of the cursor line.
-        """
-
-        return self.compare('insert', '!=', 'insert lineend')
 
     def block_right(self):
         """
