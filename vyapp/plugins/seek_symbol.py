@@ -18,11 +18,11 @@ Event: <Key-c>
 Description: Switch to JUMP_BACK mode.
 
 Mode: JUMP_BACK
-Event: <Backspace>
+Event: <Control-v>
 Description: Switch to JUMP_NEXT mode.
 
 Mode: JUMP_NEXT
-Event: <Backspace>
+Event: <Control-c>
 Description: Switch to JUMP_BACK mode.
 
 Mode: JUMP_NEXT
@@ -42,6 +42,8 @@ Event: <Tab>
 Description: It adds/removes selection from initial cursor position to the insert position.
 """
 
+from vyapp.app import root
+
 def get_char(num):
     try:
         char = chr(num)
@@ -56,51 +58,55 @@ class SeekSymbol(object):
         area.add_mode('JUMP_NEXT')
 
         area.install('seek-symbol', 
-        ('NORMAL', '<Key-v>', lambda event: self.start_next_mode()), 
-        ('NORMAL', '<Key-c>', lambda event: self.start_back_mode()),
-        ('JUMP_BACK', '<Tab>', lambda event: self.select_data()),
-        ('JUMP_BACK', '<Key>', lambda event: self.jump_back(event.keysym_num)),
-        ('JUMP_BACK', '<Return>', lambda event: event.widget.chmode('INSERT')),
-        ('JUMP_NEXT', '<Return>', lambda event: event.widget.chmode('INSERT')),
-        ('JUMP_NEXT', '<BackSpace>', lambda event: event.widget.chmode('JUMP_BACK')),
-        ('JUMP_BACK', '<BackSpace>', lambda event: event.widget.chmode('JUMP_NEXT')),
-        ('JUMP_BACK', '<Control-v>', lambda event: self.area.start_selection()),
-        ('JUMP_NEXT', '<Tab>', lambda event: self.select_data()),
-        ('JUMP_NEXT', '<Control-v>', lambda event: self.area.start_selection()),
-        ('JUMP_NEXT', '<Key>', lambda event: self.jump_next(event.keysym_num)))
+        ('NORMAL', '<Key-v>', self.next_mode),
+        ('NORMAL', '<Key-c>', self.back_mode),
+        ('JUMP_BACK', '<Tab>', self.sel_data),
+        ('JUMP_BACK', '<Key>', self.jump_back),
+        ('JUMP_BACK', '<Return>', self.switch_insert),
+        ('JUMP_NEXT', '<Return>', self.switch_insert),
+        ('JUMP_NEXT', '<Control-c>', self.back_mode),
+        ('JUMP_BACK', '<Control-v>', self.next_mode),
+        ('JUMP_NEXT', '<Tab>', self.sel_data),
+        ('JUMP_NEXT', '<Key>', self.jump_next))
     
         self.area = area
 
-    def start_next_mode(self):
-        self.area.start_selection()
+    def next_mode(self, event):
+        self.area.mark_set('(RANGE_SEL_MARK)', 'insert')
         self.area.chmode('JUMP_NEXT')
 
-    def start_back_mode(self):
-        self.area.start_selection()
+        root.status.set_msg('Switched to JUMP_NEXT mode.')
+
+    def back_mode(self, event):
+        self.area.mark_set('(RANGE_SEL_MARK)', 'insert')
         self.area.chmode('JUMP_BACK')
 
-    def jump_next(self, num):
-        char  = get_char(num)
+        root.status.set_msg('Switched to JUMP_BACK mode.')
+
+    def switch_insert(self, event):
+        self.area.chmode('INSERT')
+        root.status.set_msg('Switched to INSERT mode.')
+
+    def jump_next(self, event):
+        char  = get_char(event.keysym_num)
         _, index0, index1 = self.area.isearch(char, index='insert', 
         stopindex='end', regexp=False)
 
         self.area.mark_set('insert', index1)
         self.area.see('insert')
 
-    def jump_back(self, num):
-        char  = get_char(num)
+    def jump_back(self, event):
+        char  = get_char(event.keysym_num)
         _, index0, index1 = self.area.isearch(char, index='insert', 
         stopindex='1.0', regexp=False, backwards=True)
 
         self.area.mark_set('insert', index0)
         self.area.see('insert')
 
-    def select_data(self):
+    def sel_data(self, event):
         self.area.addsel('insert', '(RANGE_SEL_MARK)')
         self.area.chmode('NORMAL')
 
 install = SeekSymbol
-
-
 
 
