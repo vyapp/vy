@@ -49,7 +49,7 @@ def sniff(regex, handle, *args, **kwargs):
 def sel(*args, **kwargs):
     """
     """
-    AreaVi.ACTIVE.map_matches('sel', 
+    AreaVi.ACTIVE.select_matches('sel', 
     AreaVi.ACTIVE.find(*args, **kwargs))
 
 def gsub(*args, **kwargs):
@@ -65,7 +65,7 @@ def get(*args):
 def split(*args, **kwargs):
     """
     """
-    AreaVi.ACTIVE.map_matches('sel', 
+    AreaVi.ACTIVE.select_matches('sel', 
     AreaVi.ACTIVE.split(*args, **kwargs))
 
 def lsub(*args):
@@ -80,6 +80,7 @@ ENV['gsub']  = gsub
 ENV['get']   = get
 ENV['split'] = split
 ENV['lsub']  = lsub
+
 
 
 

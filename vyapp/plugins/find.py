@@ -128,7 +128,7 @@ class Find(object):
 
     def pick_selection_matches(self, wid):
         regex = wid.get()
-        self.area.map_matches('(CATCHED)', 
+        self.area.select_matches('(CATCHED)', 
         self.area.collect('sel', regex, **self.opts))
 
     def replace_on_cur(self, wid):
@@ -144,6 +144,7 @@ class Find(object):
         self.area.replace_all(regex, Find.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 

@@ -542,7 +542,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             self.replace_all(regex, data, 
                 ranges[ind], ranges[ind + 1], *args, **kwargs)
 
-    def map_matches(self, name, matches):
+    def select_matches(self, name, matches):
         """"
         It adds a tag to the match ranges from either AreaVi.find or
         AreaVi.collect.
@@ -605,7 +605,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             nolinestop=nolinestop)
 
             if not match: break
-
             index = '%s%s' % (match[2], step)
 
             # If the two positions are equal it means
@@ -618,18 +617,14 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def isearch(self, pattern, *args, **kwargs):
         """
-        Improved search, in the sense it return the matched chunk
+        Just search shortcut, in the sense it return the matched chunk
         the initial position and the end position.
         """
         count = IntVar()
-
         index = self.search(pattern, *args, count=count, **kwargs)
+        if not index: return 
 
-        if not index:
-            return 
-
-        len = count.get()
-
+        len   = count.get()
         tmp   = '%s +%sc' % (index, len)
         chunk = self.get(index, tmp)
 
