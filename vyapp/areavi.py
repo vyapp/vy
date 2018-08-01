@@ -265,14 +265,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         for indi, indj in args:
             self.tag_add(name, indi, indj)
 
-    def insee(self, index, data):
-        """
-        This method inserts data at index position then makes the cursor visible.
-        """
-
-        self.insert(index, data)
-        self.see('insert')
-
     def indref(self, index='insert'):
         """
         This is a short hand function. It is used to convert a Text index
@@ -313,7 +305,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         position line and col.
         """
 
-        print('Warning: AreaVi.indcur is deprecated. Use AreaVi.indref.')
         a, b  = self.indref('insert')
         return int(a), int(b)
 
@@ -1065,5 +1056,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 

@@ -58,8 +58,9 @@ class SnippetPicker(OptionWindow):
         index = self.listbox.index(ACTIVE)
         snippet = self.options[index][1][1]
 
-        area.insee('insert', snippet)
-        
+        area.insert('insert', snippet)
+        area.see('insert')
+
         # Select the tab.
         root.note.select(area.master.master.master)
         root.status.set_msg('Snippet: %s!' % self.options[index][0])
@@ -69,7 +70,8 @@ class SnippetPicker(OptionWindow):
         index   = self.listbox.index(ACTIVE)
         snippet = self.options[index][1][1]
 
-        AreaVi.INPUT.insee('insert', snippet)
+        AreaVi.INPUT.insert('insert', snippet)
+        AreaVi.INPUT.see('insert')
         root.status.set_msg('Snippet: %s!' % self.options[index][0])
 
         self.close()
@@ -175,6 +177,7 @@ class Ysnippet(object):
 
 
 install = Ysnippet
+
 
 
 
