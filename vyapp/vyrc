@@ -355,8 +355,9 @@ autoload(vyapp.plugins.inline_comment)
 # specifies the interpreter path.
 # import vyapp.plugins.pdb.unix_platform
 # autoload(vyapp.plugins.pdb.unix_platform, python='python2')
-import vyapp.plugins.pdb.cross_platform
-autoload(vyapp.plugins.pdb.cross_platform, python='python2')
+
+# import vyapp.plugins.pdb.cross_platform
+# autoload(vyapp.plugins.pdb.cross_platform, python='python2')
 
 
 # This plugin highlights links when files are opened.
@@ -471,6 +472,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 
