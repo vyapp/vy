@@ -20,30 +20,27 @@ from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 
 class Tab(object):
-    default_size, default_char = 4, ' '
     scheme = {}
 
     def __init__(self, area):
         self.area = area
-        area.install('spacing', ('INSERT', '<Tab>',  self.insert_tab))
+        area.install('spacing', (-1, '<<LoadData>>', self.set_scm),
+        (-1, '<<SaveData>>', self.set_scm), 
+        ('INSERT', '<Tab>',  self.insert_tabchar))
     
-    def insert_tab(self, event):
+    def set_scm(self, event):
         ph, ext    = splitext(self.area.filename.lower())
-        size, char = self.scheme.get(ext, 
-        (self.default_size, self.default_char))
+        size, char = self.scheme.get(ext)
 
-        self.area.edit_separator()
-        self.area.insert('insert', char * size)
+        self.area.settab(size, char)
+
+    def insert_tabchar(self, event):
+        self.area.indent()
         return 'break'
 
     @classmethod
     def set_scheme(cls, scheme={}):
         cls.scheme.update(scheme)
-
-    @classmethod
-    def set_default(cls, default_size, default_char):
-        cls.default_size = default_size
-        cls.default_char = default_char
 
 def tabset(size, char):
     """
@@ -53,9 +50,12 @@ def tabset(size, char):
 
     ph, ext = splitext(AreaVi.ACTIVE.filename.lower())
     Tab.scheme[ext] = size, char 
+    AreaVi.ACTIVE.tabsize = size
+    AreaVi.ACTIVE.tabchar = char
 
 ENV['tabset'] = tabset
 install = Tab
+
 
 
 

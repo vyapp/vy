@@ -20,9 +20,7 @@ Description: Shift to the left.
 """
 
 class Shift(object):
-    def __init__(self, area, width=4):
-        self.width = width
-
+    def __init__(self, area):
         area.install('shift', 
         ('NORMAL', '<Key-greater>', self.sel_right),
         ('NORMAL', '<Key-less>',  self.sel_left))
@@ -34,7 +32,7 @@ class Shift(object):
         """
         srow, scol = self.area.indref('sel.first')
         erow, ecol = self.area.indref('sel.last')
-        self.area.shift_right(srow, erow, self.width)
+        self.area.shift_right(srow, erow, 1, self.area.tabchar)
     
     def sel_left(self, event):
         """
@@ -43,9 +41,10 @@ class Shift(object):
 
         srow, scol = self.area.indref('sel.first')
         erow, ecol = self.area.indref('sel.last')
-        self.area.shift_left(srow, erow, self.width)
+        self.area.shift_left(srow, erow, 1)
 
 install = Shift
+
 
 
 

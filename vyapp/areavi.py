@@ -75,9 +75,21 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.project  = ''
         self.assoc_c  = 0
 
+        # The character used for indentation.
+        self.tabchar = ' '
+        self.tabsize = 4
+
         def set_input(e):
             AreaVi.INPUT = e.widget
         self.hook('AreaVi', '-1', '<FocusIn>', set_input)
+
+    def settab(self, tabsize, tabchar):
+        self.tabchar = tabchar
+        self.tabsize = tabsize
+
+    def indent(self):
+        self.edit_separator()
+        self.insert('insert', self.tabchar * self.tabsize)
 
     def update_map(self, namespace, map):
         scheme = self.map.setdefault(namespace, {})
@@ -1051,6 +1063,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
+
 
 
 
