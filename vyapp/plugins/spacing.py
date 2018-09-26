@@ -30,7 +30,8 @@ class Tab(object):
     
     def set_scm(self, event):
         ph, ext    = splitext(self.area.filename.lower())
-        size, char = self.scheme.get(ext)
+        # When no '' default is specified it uses size = 4 and char = ' '.
+        size, char = self.scheme.get(ext, self.scheme.get('', (4, ' ')))
 
         self.area.settab(size, char)
 
@@ -55,6 +56,7 @@ def tabset(size, char):
 
 ENV['tabset'] = tabset
 install = Tab
+
 
 
 
