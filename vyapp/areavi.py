@@ -538,21 +538,23 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in seq: 
                 yield indj
 
-    def replace_ranges(self, name, regex, data, *args, **kwargs):
+    def replace_ranges(self, name, regex, data, forwards=None, backwards=False,
+        exact=False, regexp=True, nocase=False, elide=False, nolinestop=False):
+
         """
         It replaces all occurrences of regex in the ranges that are mapped to tag name.
 
         name     - Name of the tag.
         regex    - The pattern.
         data     - The data to replace.
-        args     - Arguments given to AreaVi.find.
-        **kwargs - A dictionary of arguments given to AreaVi.find.
         """
 
-        ranges = self.tag_ranges(name)
-        for ind in range(0, len(ranges) - 1, 2):
-            self.replace_all(regex, data, 
-                ranges[ind], ranges[ind + 1], *args, **kwargs)
+        while True:
+            map = self.tag_nextrange(name, '1.0', 'end')
+            if not map: break
+            self.tag_remove(name, *map)
+            self.replace_all(regex, data, map[0], map[1], 
+                    exact, regexp, nocase, elide, nolinestop)
 
     def select_matches(self, name, matches):
         """"
@@ -706,11 +708,15 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         """
         It is used to replace occurrences of a given match.
-
         It is possible to use a callback function to return what is replaced 
         as well.
 
-        Obs: If the replacement cant be performed anymore it just returns None.
+        If the replacement cant be performed anymore it just returns None otherwise
+        it returns the index and length of the replacement.
+
+        Like:
+        index, length
+
         """
         tmp = index
         count = IntVar()
@@ -1063,6 +1069,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
