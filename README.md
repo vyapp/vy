@@ -72,6 +72,10 @@ Built-in Features
 
 - **Find Function/Class Definition**
 
+- **Python Vulture Integration**
+
+- **Python Pyflakes Integration**
+
 Plugins/Extensions
 ==================
 
@@ -80,10 +84,6 @@ Plugins/Extensions
 - **Javascript Auto Completion**
 
 - **Ruby Auto Completion**
-
-- **Python Vulture Integration**
-
-- **Python Pyflakes Integration**
 
 - **HTML Tidy Integration**
 
@@ -124,6 +124,7 @@ Support
 **Address:** irc.freenode.org
 
 **Channel:** #vy
+
 
 
 
