@@ -47,6 +47,9 @@ class TabSearch(object):
         elem = next(seq)
         root.note.on(elem)
 
+        wid  = root.note.nametowidget(root.note.select())
+        root.title('Vy %s' % wid.focused_area.filename)
+
     def switch_back(self, wid):
         """
         """
@@ -55,6 +58,9 @@ class TabSearch(object):
         seq  = root.note.back(lambda text: data in text)
         elem = next(seq)
         root.note.on(elem)
+
+        wid  = root.note.nametowidget(root.note.select())
+        root.title('Vy %s' % wid.focused_area.filename)
 
     def stop(self, wid):
         root.note.set_area_focus()

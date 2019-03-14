@@ -37,9 +37,9 @@ class PanedHorizontalWindow(PanedWindow):
         self.add(frame)
 
         def save_focus(event):
-            self.master.last_focused_area = area
+            self.master.focused_area = area
 
-        self.master.last_focused_area = area
+        self.master.focused_area = area
         area.bind('<FocusIn>', save_focus)
         return area
 
@@ -61,7 +61,7 @@ class PanedVerticalWindow(PanedWindow):
 
     def __init__(self, *args, **kwargs):
         PanedWindow.__init__(self, orient=VERTICAL, *args, **kwargs)
-        self.last_focused_area = None
+        self.focused_area = None
 
     def create(self, filename='none'):
         """
@@ -170,11 +170,11 @@ class NoteVi(Notebook):
 
     def set_area_focus(self):
         wid  = self.nametowidget(self.select())
-        wid.last_focused_area.focus_set()
+        wid.focused_area.focus_set()
 
     def restore_area_focus(self):
         """
-        When an AreaVvi is destroyed, the last_focused_area
+        When an AreaVi is destroyed, the focused_area
         is a dead widget, so it gives focus to the first AreaVi
         in the active tab.
         """
@@ -194,12 +194,6 @@ class NoteVi(Notebook):
         wid=self.focus_get()
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
-
-
-
-
-
-
 
 
 
