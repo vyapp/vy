@@ -1,40 +1,66 @@
 """
+Overview
+========
+
+Key-Commands
+============
+
+Namespace: tab-search
 
 """
+
 from vyapp.ask import Get
 from vyapp.app import root
 
 class TabSearch(object):
     def __init__(self, area):
         self.area = area
+
         area.install('tab-search', 
-        (-1, '<Alt-i>', lambda event: self.search_next()),
-        (-1, '<Alt-u>', lambda event: self.search_back()))
+        (-1, '<Alt-i>', self.on_next_mode),
+        (-1, '<Alt-u>', self.on_back_mode))
 
-    def search_next(self):
-        get = Get(events={
-        '<<Data>>': lambda wid: root.note.switch_next(wid.get()), 
-        '<Alt-p>': lambda wid: root.note.switch_next(wid.get(), True), 
-        '<Alt-o>': lambda wid: root.note.switch_back(wid.get(), True), 
+    def on_next_mode(self, event):
+        get = Get(events={'<<Data>>': self.switch_next, 
+        '<Alt-p>': self.switch_next, 
+        '<Alt-o>': self.switch_back, 
         '<Escape>': self.stop, 
         '<Return>': self.stop})
+
         return 'break'
 
-    def search_back(self):
+    def on_back_mode(self, event):
         get = Get(events={
-        '<<Data>>': lambda wid: root.note.switch_back(wid.get()), 
-        '<Alt-p>': lambda wid: root.note.switch_next(wid.get(), True), 
-        '<Alt-o>': lambda wid: root.note.switch_back(wid.get(), True), 
+        '<<Data>>': self.switch_back, 
+        '<Alt-p>': self.switch_next, 
+        '<Alt-o>': self.switch_back, 
         '<Escape>': self.stop, 
         '<Return>': self.stop})
+
         return 'break'
+
+    def switch_next(self, wid):
+        """
+        """
+        data = wid.get()
+        seq  = root.note.next(lambda text: data in text)
+        elem = next(seq)
+        root.note.on(elem)
+
+    def switch_back(self, wid):
+        """
+        """
+
+        data = wid.get()
+        seq  = root.note.back(lambda text: data in text)
+        elem = next(seq)
+        root.note.on(elem)
 
     def stop(self, wid):
         root.note.set_area_focus()
         return True
 
 install = TabSearch
-
 
 
 
