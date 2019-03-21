@@ -61,15 +61,12 @@ class Find(object):
 
     def __init__(self, area):
         self.area  = area
-        self.index = None
-
         area.tags_config(self.TAGCONF)
 
         area.install('find', ('NORMAL', 
         '<Alt-slash>', lambda event: self.start()))
 
     def start(self):
-        self.index = ('insert', 'insert')
         root.status.set_msg('Set replacement: %s' % self.data)
 
         get = Get(events={
@@ -77,7 +74,7 @@ class Find(object):
         '<Alt-o>': self.up, '<Escape>': self.cancel, 
         '<Alt-p>': self.down, '<Return>': self.cancel,
         '<Alt-slash>':  self.pick_selection_matches,
-        '<Alt-period>': self.replace_on_cur,
+        '<Alt-period>': self.replace_on_cursor,
         '<Alt-semicolon>': self.replace_on_selection, 
         '<Alt-comma>': self.replace_all_matches, 
         '<Control-n>': self.toggle_nocase_option,
@@ -122,18 +119,17 @@ class Find(object):
         index = self.area.ipick('(CATCHED)', regex, 
         index='insert', stopindex='end', **self.opts)
 
-        # Otherwise it breaks replace on when 
-        # up is called more than once.
-        if index: self.index = index
-
     def pick_selection_matches(self, wid):
         regex = wid.get()
         self.area.select_matches('(CATCHED)', 
         self.area.collect('sel', regex, **self.opts))
 
-    def replace_on_cur(self, wid):
+    def replace_on_cursor(self, wid):
         regex = wid.get()
-        self.area.replace(regex, Find.data, self.index[0], **self.opts)
+        # As there is just one range for catched due to ipick
+        # mapping just one per call.
+        index = self.area.tag_nextrange('(CATCHED)', '1.0')
+        self.area.replace(regex, Find.data, index[0], **self.opts)
 
     def replace_on_selection(self, wid):
         regex = wid.get()
@@ -144,8 +140,5 @@ class Find(object):
         self.area.replace_all(regex, Find.data, '1.0', 'end', **self.opts)
 
 install = Find
-
-
-
 
 
