@@ -751,7 +751,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         It accepts a callback function that determines what is replaced.
         """
 
-        # It avoids overleapping of replacements.
+        # It avoids overlapping of replacements.
         self.mark_set('(REP_STOPINDEX)', stopindex)
 
         while True:
