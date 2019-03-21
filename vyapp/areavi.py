@@ -718,6 +718,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         index, length
 
         """
+        if not regex: 
+            raise TypeError('Regex should be non blank!')
+
         tmp = index
         count = IntVar()
 
@@ -729,15 +732,13 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         index0 = self.index('%s +%sc' % (index, count.get()))
 
-        # if self.compare(index, '>=', index0): return
-
         if callable(data): 
             data = data(self.get(index, index0), index, index0)
 
         self.delete(index, index0)
         self.insert(index, data)
         
-        # Does the replacement then if it cant be done anymore it returns None.
+        # Does the replacement then if it can't be done anymore it returns None.
         if self.compare(index0, '>=', 'end'): return
 
         return index, len(data)
@@ -750,15 +751,13 @@ class AreaVi(Text, DataEvent, IdleEvent):
         It accepts a callback function that determines what is replaced.
         """
 
-        # It is needed because the range will grow
-        # when data is inserted, the intent is searching
-        # over a pre defined range.
+        # It avoids overleapping of replacements.
         self.mark_set('(REP_STOPINDEX)', stopindex)
 
         while True:
-            map = self.replace(regex, data, index, '(REP_STOPINDEX)', 
-            exact=exact, nocase=nocase, nolinestop=nolinestop, 
-                regexp=regexp, elide=elide)
+            map = self.replace(regex, data, index, 
+                '(REP_STOPINDEX)', exact=exact, nocase=nocase, 
+                    nolinestop=nolinestop, regexp=regexp, elide=elide)
 
             if not map: 
                 return self.index('(REP_STOPINDEX)')
@@ -1069,6 +1068,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
