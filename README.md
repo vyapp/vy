@@ -125,6 +125,15 @@ Support
 
 **Channel:** #vy
 
+Donnors
+=======
+
+christian Chapman (i.am.christian.chapman@gmail.com) 
+
+200.000 dollars 
+
+I thank Christian too much for his help. It will keep vy work for a long long time.
+
 
 
 
