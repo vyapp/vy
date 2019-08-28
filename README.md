@@ -132,6 +132,11 @@ christian Chapman (i.am.christian.chapman@gmail.com)
 
 I thank Christian too much for his help. It will keep vy work for a long long time.
 
+Nikita Aizikovskyi (nikita.aizikovskyi@gmail.com)
+
+I thank Nikita who has donnated money. Nikita also sings my poems.
+
+
 
 
 
