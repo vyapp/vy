@@ -134,7 +134,7 @@ I thank Christian too much for his help. It will keep vy work for a long long ti
 
 Nikita Aizikovskyi (nikita.aizikovskyi@gmail.com)
 
-I thank Nikita who has donnated money. Nikita also sings my poems.
+I thank Nikita who has donated money. Nikita also sings my poems.
 
 
 
