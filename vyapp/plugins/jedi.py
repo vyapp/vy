@@ -21,14 +21,12 @@ from vyapp.completion import CompletionWindow, TextWindow
 from jedi import Script
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
-import sys
 
 class PythonCompletionWindow(CompletionWindow):
     """
     """
 
     def __init__(self, area, *args, **kwargs):
-        source      = area.get('1.0', 'end')
         source      = area.get('1.0', 'end')
         line, col   = area.indcur()
         script      = Script(source, line, col, area.filename)
@@ -48,6 +46,8 @@ def active_python_completion():
                   lambda event: PythonCompletionWindow(event.widget), add=False)
 
 ENV['active_python_completion'] = active_python_completion
+
+
 
 
 

@@ -56,6 +56,7 @@ class Clipboard:
         ('NORMAL', '<Key-r>', self.ptsel_after),
         ('NORMAL', '<Key-e>', self.ptsel_before),
         ('NORMAL', '<Control-Y>', lambda event: event.widget.cpsel('\n')),
+        ('NORMAL', '<Control-I>', self.ptsel_block),
         ('NORMAL', '<Control-U>', lambda event: event.widget.ctsel('\n')))
         self.area = area
 
@@ -87,5 +88,14 @@ class Clipboard:
         self.area.edit_separator()
         self.area.insert('insert linestart', data)
 
+    def ptsel_block(self, event):
+        data      = self.area.clipboard_get()
+        data      = data.split('\n')
+        line, col = self.area.indcur()
+
+        self.area.edit_separator()
+        for ind in range(0, len(data)):
+            self.area.insert('%s.%s' % (line + ind, col), data[ind])
 
 install = Clipboard
+

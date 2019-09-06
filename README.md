@@ -125,16 +125,20 @@ Support
 
 **Channel:** #vy
 
-Donnors
-=======
+Donors
+======
 
-christian Chapman (i.am.christian.chapman@gmail.com) 
+Christian Chapman (i.am.christian.chapman@gmail.com) 
 
 I thank Christian too much for his help. It will keep vy work for a long long time.
 
 Nikita Aizikovskyi (nikita.aizikovskyi@gmail.com)
 
 I thank Nikita who has donated money. Nikita also sings my poems.
+
+Yuri Brandão
+
+A great friend who is also a passionate developer.
 
 
 
