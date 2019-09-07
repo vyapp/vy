@@ -10,15 +10,17 @@ setup(name="vy",
                 "vyapp.plugins.syntax",
                 "vyapp.plugins.spawn",
                 "vyapp.plugins.syntax.styles",
+                "vyapp.plugins.ycmd",
                 "vyapp.plugins.pdb"],
       scripts=['vy'],
-      package_data={'vyapp': ['vyrc']},
+      package_data={'vyapp': ['vyrc'], 'vyapp.plugins.ycmd': ['default_settings.json']},
       author="Iury O. G. Figueiredo",
       author_email="ioliveira@id.uff.br",
       url='https://github.com/vyapp/vy',
       download_url='https://github.com/iogf/vy/releases',
       keywords=['vy', 'vi', 'vim', 'emacs', 'sublime', 'atom', 'nano', 'vim-like'],
       classifiers=[])
+
 
 
 
