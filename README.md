@@ -119,12 +119,6 @@ Documentation
 Support
 =======
 
-#### Freenode
-
-**Address:** irc.freenode.org
-
-**Channel:** #vy
-
 Donors
 ======
 
@@ -139,6 +133,7 @@ I thank Nikita who has donated money. Nikita also sings my poems.
 Yuri Brandão
 
 A great friend who is also a passionate developer.
+
 
 
 

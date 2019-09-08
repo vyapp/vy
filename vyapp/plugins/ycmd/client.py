@@ -33,7 +33,7 @@ import json
 import time
 import os
 
-HMAC_LENGTH  = 16
+HMAC_LENGTH  = 32
 IDLE_SUICIDE = 10800  # 3 hours
 MAX_WAIT     = 5
 
@@ -47,12 +47,14 @@ class YcmdServer:
         self.url           = 'http://127.0.0.1:%s' % port 
         self.cmd           = 'python -m %s --port %s --options_file %s'
         self.hmac_secret   = os.urandom(HMAC_LENGTH)
-        self.hmac_secret   = str(b64encode(self.hmac_secret), 'utf-8')
+        self.hmac_secret   = b64encode(self.hmac_secret)
 
         with open(self.settings_file) as fd:
           self.settings = json.loads(fd.read())
 
-        self.settings[ 'hmac_secret' ] = self.hmac_secret
+        self.settings[ 'hmac_secret' ] = self.hmac_secret.decode('ISO-8859-1 ')
+        print('Set hmac:', self.hmac_secret)
+
         with NamedTemporaryFile(mode = 'w+', delete = False) as tmpfile:
             json.dump(self.settings, tmpfile)
 
@@ -68,18 +70,15 @@ class YcmdServer:
        'file_data': data
         }
 
-        data = json.dumps(data, ensure_ascii = False)
-
         url = '%s/completions' % self.url
         hmac_secret = self.hmac_req('POST', '/completions', data, self.hmac_secret)
-        data = data.encode('utf-8')
+        print('Sending hmac:%s' % hmac_secret)
 
         headers = {
-            'X-Ycm-Hmac': hmac_secret,
-            'content-type': 'application/json',
+            'x-ycm-hmac': hmac_secret,
         }
-        print('hmac is', hmac_secret)
-        req = requests.post(url, data=data, headers=headers)
+
+        req = requests.post(url, json=data, headers=headers)
         print(req.headers)
         print(req.json())
 
@@ -94,10 +93,11 @@ class YcmdServer:
         # path        = bytes(path, encoding = 'utf-8')
         # body        = bytes(body, encoding = 'utf-8')
         # hmac_secret = bytes(hmac_secret, encoding = 'utf-8' )
-        hmac_secret = bytes(hmac_secret, encoding = 'utf-8' )
-        method      = bytes(method, encoding = 'utf-8' )
-        path        = bytes(path, encoding = 'utf-8' )
-        body        = bytes(body, encoding = 'utf-8' )
+        # hmac_secret = bytes(hmac_secret, encoding = 'utf-8' )
+        method      = bytes(method, encoding = 'ISO-8859-1 ' )
+        path        = bytes(path, encoding = 'ISO-8859-1 ' )
+        body        = json.dumps(body, ensure_ascii = False)
+        body        = bytes(body, encoding = 'ISO-8859-1 ' )
 
         method = bytes(hmac.new(hmac_secret, 
         method, digestmod = hashlib.sha256).digest())
@@ -113,7 +113,7 @@ class YcmdServer:
         data = bytes(hmac.new(hmac_secret, joined, 
         digestmod = hashlib.sha256).digest())
 
-        return str(b64encode(data), 'utf8')
+        return str(b64encode(data), encoding='ISO-8859-1 ')
 
 class YcmdWindow(CompletionWindow):
     """
@@ -123,7 +123,7 @@ class YcmdWindow(CompletionWindow):
         source      = area.get('1.0', 'end')
         line, col   = area.indcur()
 
-        data = {area.filename: {'filetypes': ['python'], 'contents': source}}
+        data = {area.filename: {'filetypes': ['cpp'], 'contents': source}}
         completions = server.completions(line, col, area.filename, data, dirname(area.filename))
 
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
@@ -143,4 +143,5 @@ class YcmdCompletion:
         cls.server = YcmdServer(path, port,  settings_file, '')
 
 install = YcmdCompletion
+
 
