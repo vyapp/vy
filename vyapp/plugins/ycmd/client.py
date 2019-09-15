@@ -125,10 +125,9 @@ class YcmdWindow(CompletionWindow):
         line, col = area.indcur()
     
         data = {area.filename: 
-        {'filetypes': ['python'], 
-        'contents': source}}
+        {'filetypes': ['python'], 'contents': source}}
 
-        completions = server.completions(line, col, 
+        completions = server.completions(line, col + 1, 
         area.filename, data, dirname(area.filename))
 
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
@@ -136,11 +135,8 @@ class YcmdWindow(CompletionWindow):
 class YcmdCompletion:
     server = None
     def __init__(self, area):
-
         completions = lambda event: YcmdWindow(event.widget, self.server)
-
-        area.install('ycmd', ('INSERT', 
-        '<Control-Key-period>', completions))
+        area.install('ycmd', ('INSERT', '<Control-Key-period>', completions))
 
     @classmethod
     def setup(cls, path, port=43247):
