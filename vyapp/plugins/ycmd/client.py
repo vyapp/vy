@@ -18,14 +18,14 @@ completion.
 """
 
 from vyapp.completion import CompletionWindow, Option
+from os.path import expanduser, join, exists, dirname
 from base64 import b64encode, b64decode
 from vyapp.plugins import ENV
 from tempfile import NamedTemporaryFile
 from subprocess import Popen, PIPE
 from vyapp.areavi import AreaVi
 from urllib.parse import urlparse
-
-from os.path import join, dirname
+from shutil import copyfile
 import requests
 import hashlib
 import atexit
@@ -33,6 +33,7 @@ import hmac
 import json
 import time
 import os
+import time
 
 HMAC_LENGTH  = 32
 IDLE_SUICIDE = 10800  # 3 hours
@@ -51,7 +52,7 @@ FILETYPES = {
 class YcmdServer:
     def __init__(self, path, port, settings_file, extra_file):
         self.settings_file = settings_file
-        self.extra_file    = extra_file ###
+        self.extra_file    = extra_file 
         self.settings      = None
         self.path          = path
         self.port          = port
@@ -82,7 +83,8 @@ class YcmdServer:
        'column_num': col,
        'filepath': path,
        'file_data': data,
-       'event_name': 'FileReadyToParse'
+       'event_name': 'FileReadyToParse',
+       'extra_conf_data': self.extra_file
         }
 
         url = '%s/event_notification' % self.url
@@ -183,13 +185,23 @@ class YcmdCompletion:
 
     @classmethod
     def setup(cls, path, port=43247):
-        settings_file = join(dirname(__file__),  'default_settings.json')
-        cls.server = YcmdServer(path, port,  settings_file, '')
-        # requests.adapters.DEFAULT_POOL_TIMEOUT = 2000
-        import time
+        # Create the default_settings.json file in case it doesn't exist.
+        # The file is located in the home dir.
+        settings_file = join(expanduser('~'), '.default_settings.json')
+        if not exists(settings_file): 
+            copyfile(join(dirname(__file__), 
+                'default_settings.json'), settings_file)
+
+        extra_file = join(expanduser('~'), '.ycm_extra_conf.py')
+        if not exists(extra_file): 
+            copyfile(join(dirname(__file__), 
+                'ycm_extra_conf.py'), extra_file)
+
+        cls.server = YcmdServer(path, port,  settings_file, extra_file)
         print('Starting Ycmd server!')
-        time.sleep(1)
+        time.sleep(2)
 
 install = YcmdCompletion
+
 
 
