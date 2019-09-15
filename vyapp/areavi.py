@@ -61,7 +61,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.default_filename = default_filename
 
         # The file's path and name.
-        self.filename = default_filename
+        self.filename  = default_filename
+        self.extension = os.path.splitext(self.filename)
 
         self.mark_set('(CURSOR_LAST_COL)', '1.0')
 
@@ -847,13 +848,16 @@ class AreaVi(Text, DataEvent, IdleEvent):
         
         filename - Name of the file.
         """
-        filename      = os.path.abspath(filename)        
-        self.filename = filename
-        fd            = open(filename, 'rb')
+        self.filename     = os.path.abspath(filename)        
+        _, self.extension = os.path.splitext(self.filename)
+
+        self.event_generate('<<Pre-LoadData>>')
+        self.event_generate('<<Pre-LoadData/*%s>>' % self.extension)
+
+        fd            = open(self.filename, 'rb')
         data          = fd.read()
         fd.close()
 
-        # i could generate a tk event here.
         try:
             data = data.decode(self.charset)
         except UnicodeDecodeError:
@@ -861,12 +865,11 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         self.delete('1.0', 'end')
         self.insert('1.0', data)
-        self.event_generate('<<LoadData>>')
         self.mark_set('insert', '1.0')
         self.see('insert')
 
-        _, extension = os.path.splitext(self.filename)
-        self.event_generate('<<Load/*%s>>' % extension)
+        self.event_generate('<<LoadData>>')
+        self.event_generate('<<Load/*%s>>' % self.extension)
 
     def decode(self, name):
         self.charset = name
@@ -876,9 +879,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
         It saves the actual text content in the current file.
         """
-        _, extension = os.path.splitext(self.filename)
+        _, self.extension = os.path.splitext(self.filename)
         self.event_generate('<<Pre-SaveData>>')
-        self.event_generate('<<Pre-Save/*%s>>' % extension)
+        self.event_generate('<<Pre-Save/*%s>>' % self.extension)
 
         data = self.get('1.0', 'end')
         data = data.encode(self.charset)
@@ -886,7 +889,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         fd.write(data)
         fd.close()
         self.event_generate('<<SaveData>>')
-        self.event_generate('<<Save/*%s>>' % extension)
+        self.event_generate('<<Save/*%s>>' % self.extension)
 
     def save_data_as(self, filename):
         """
@@ -1068,6 +1071,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

@@ -38,6 +38,16 @@ HMAC_LENGTH  = 32
 IDLE_SUICIDE = 10800  # 3 hours
 MAX_WAIT     = 5
 
+# Vim filetypes mapping.
+FILETYPES = {
+'.c': 'cpp',
+'.py': 'python',
+'.go': 'golang',
+'.c++':'cpp',
+'.js':'javascript'
+}
+
+
 class YcmdServer:
     def __init__(self, path, port, settings_file, extra_file):
         self.settings_file = settings_file
@@ -48,7 +58,7 @@ class YcmdServer:
         self.url           = 'http://127.0.0.1:%s' % port 
         self.cmd           = 'python -m %s --port %s --options_file %s'
         self.hmac_secret   = os.urandom(HMAC_LENGTH)
-        self.hmac_secret   = b64encode(self.hmac_secret).decode('ascii ')
+        self.hmac_secret   = b64encode(self.hmac_secret).decode('utf8 ')
 
         with open(self.settings_file) as fd:
           self.settings = json.loads(fd.read())
@@ -75,17 +85,17 @@ class YcmdServer:
         url = '%s/completions' % self.url
 
         hmac_secret = self.hmac_req('POST', '/completions', 
-        data, self.hmac_secret.encode('ascii'))
+        data, self.hmac_secret.encode('utf8'))
 
         headers = {
-            'x-ycm-hmac': hmac_secret,
+            'X-YCM-HMAC': hmac_secret,
         }
 
         req = requests.post(url, json=data, headers=headers)
         return self.fmt_options(req.json())
 
     def fmt_options(self, data):
-        return [Option(ind['insertion_text'], 
+        return [Option(ind['insertion_text'],
             'Type:%s' % ind['kind']) for ind in data['completions']]
     
     def hmac_req(self, method, path, body, hmac_secret):
@@ -125,7 +135,7 @@ class YcmdWindow(CompletionWindow):
         line, col = area.indcur()
     
         data = {area.filename: 
-        {'filetypes': ['python'], 'contents': source}}
+        {'filetypes': [FILETYPES[area.extension]], 'contents': source}}
 
         completions = server.completions(line, col + 1, 
         area.filename, data, dirname(area.filename))
@@ -144,6 +154,7 @@ class YcmdCompletion:
         cls.server = YcmdServer(path, port,  settings_file, '')
 
 install = YcmdCompletion
+
 
 
 
