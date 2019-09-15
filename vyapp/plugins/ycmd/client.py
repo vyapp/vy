@@ -17,13 +17,14 @@ completion.
 
 """
 
-from vyapp.completion import CompletionWindow, TextWindow
+from vyapp.completion import CompletionWindow, Option
 from base64 import b64encode, b64decode
 from vyapp.plugins import ENV
 from tempfile import NamedTemporaryFile
 from subprocess import Popen, PIPE
 from vyapp.areavi import AreaVi
 from urllib.parse import urlparse
+
 from os.path import join, dirname
 import requests
 import hashlib
@@ -47,22 +48,23 @@ class YcmdServer:
         self.url           = 'http://127.0.0.1:%s' % port 
         self.cmd           = 'python -m %s --port %s --options_file %s'
         self.hmac_secret   = os.urandom(HMAC_LENGTH)
-        self.hmac_secret   = b64encode(self.hmac_secret)
+        self.hmac_secret   = b64encode(self.hmac_secret).decode('ascii ')
 
         with open(self.settings_file) as fd:
           self.settings = json.loads(fd.read())
 
-        self.settings[ 'hmac_secret' ] = self.hmac_secret.decode('ISO-8859-1 ')
-        print('Set hmac:', self.hmac_secret)
+        self.settings[ 'hmac_secret' ] = self.hmac_secret
 
         with NamedTemporaryFile(mode = 'w+', delete = False) as tmpfile:
             json.dump(self.settings, tmpfile)
 
         self.daemon = Popen(self.cmd % (self.path, self.port,
-        tmpfile.name), shell=1, encoding='utf-8')
+        tmpfile.name), shell=1)
         atexit.register(self.daemon.terminate)
 
-    def completions(self, line, col, path, data, dir, target=None, cmdargs=None):
+    def completions(self, line, col, path, data, 
+        dir, target=None, cmdargs=None):
+
         data = {
        'line_num': line,
        'column_num': col,
@@ -71,33 +73,32 @@ class YcmdServer:
         }
 
         url = '%s/completions' % self.url
-        hmac_secret = self.hmac_req('POST', '/completions', data, self.hmac_secret)
-        print('Sending hmac:%s' % hmac_secret)
+
+        hmac_secret = self.hmac_req('POST', '/completions', 
+        data, self.hmac_secret.encode('ascii'))
 
         headers = {
             'x-ycm-hmac': hmac_secret,
         }
 
         req = requests.post(url, json=data, headers=headers)
-        print(req.headers)
-        print(req.json())
+        return self.fmt_options(req.json())
 
+    def fmt_options(self, data):
+        return [Option(ind['insertion_text'], 
+            'Type:%s' % ind['kind']) for ind in data['completions']]
+    
     def hmac_req(self, method, path, body, hmac_secret):
         """
-        Calculate hmac for request. The algorithm is based on what is seen
-        in https://github.com/ycm-core/ycmd/blob/master/examples/example_client.py
+        Calculate hmac for request. The algorithm is based on what is seen in
+        https://github.com/ycm-core/ycmd/blob/master/examples/example_client.py
         at CreateHmacForRequest function.
         """
 
-        # method      = bytes(method, encoding = 'utf-8')
-        # path        = bytes(path, encoding = 'utf-8')
-        # body        = bytes(body, encoding = 'utf-8')
-        # hmac_secret = bytes(hmac_secret, encoding = 'utf-8' )
-        # hmac_secret = bytes(hmac_secret, encoding = 'utf-8' )
-        method      = bytes(method, encoding = 'ISO-8859-1 ' )
-        path        = bytes(path, encoding = 'ISO-8859-1 ' )
-        body        = json.dumps(body, ensure_ascii = False)
-        body        = bytes(body, encoding = 'ISO-8859-1 ' )
+        method = bytes(method, encoding = 'utf8' )
+        path   = bytes(path, encoding = 'utf8' )
+        body   = json.dumps(body, ensure_ascii = False)
+        body   = bytes(body, encoding = 'utf8' )
 
         method = bytes(hmac.new(hmac_secret, 
         method, digestmod = hashlib.sha256).digest())
@@ -113,18 +114,22 @@ class YcmdServer:
         data = bytes(hmac.new(hmac_secret, joined, 
         digestmod = hashlib.sha256).digest())
 
-        return str(b64encode(data), encoding='ISO-8859-1 ')
+        return str(b64encode(data), encoding='utf8 ')
 
 class YcmdWindow(CompletionWindow):
     """
     """
 
     def __init__(self, area, server, *args, **kwargs):
-        source      = area.get('1.0', 'end')
-        line, col   = area.indcur()
+        source    = area.get('1.0', 'end')
+        line, col = area.indcur()
+    
+        data = {area.filename: 
+        {'filetypes': ['python'], 
+        'contents': source}}
 
-        data = {area.filename: {'filetypes': ['cpp'], 'contents': source}}
-        completions = server.completions(line, col, area.filename, data, dirname(area.filename))
+        completions = server.completions(line, col, 
+        area.filename, data, dirname(area.filename))
 
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
 
@@ -143,5 +148,6 @@ class YcmdCompletion:
         cls.server = YcmdServer(path, port,  settings_file, '')
 
 install = YcmdCompletion
+
 
 
