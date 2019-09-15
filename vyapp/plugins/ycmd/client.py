@@ -56,7 +56,7 @@ class YcmdServer:
         self.path          = path
         self.port          = port
         self.url           = 'http://127.0.0.1:%s' % port 
-        self.cmd           = 'python -m %s --port %s --options_file %s'
+        self.cmd           = 'python -m %s --port %s --log debug --options_file  %s'
         self.hmac_secret   = os.urandom(HMAC_LENGTH)
 
         with open(self.settings_file) as fd:
@@ -71,6 +71,29 @@ class YcmdServer:
         self.daemon = Popen(self.cmd % (self.path, self.port,
         tmpfile.name), shell=1)
         atexit.register(self.daemon.terminate)
+
+    def ready(self, line, col, path, data):
+        """
+        Send file ready.
+        """
+
+        data = {
+       'line_num': line,
+       'column_num': col,
+       'filepath': path,
+       'file_data': data,
+       'event_name': 'FileReadyToParse'
+        }
+
+        url = '%s/event_notification' % self.url
+        hmac_secret = self.hmac_req('POST', '/event_notification', 
+        data, self.hmac_secret)
+
+        headers = {
+            'X-YCM-HMAC': hmac_secret,
+        }
+
+        req = requests.post(url, json=data, headers=headers)
 
     def completions(self, line, col, path, data, 
         dir, target=None, cmdargs=None):
@@ -92,11 +115,12 @@ class YcmdServer:
         }
 
         req = requests.post(url, json=data, headers=headers)
+        print('Request data:', req.json())
         return self.fmt_options(req.json())
 
     def fmt_options(self, data):
-        return [Option(ind['insertion_text'],
-            'Type:%s' % ind['kind']) for ind in data['completions']]
+        return [Option(ind.get('insertion_text', ''),
+            'Type:%s' % ind.get('kind', '')) for ind in data['completions']]
     
     def hmac_req(self, method, path, body, hmac_secret):
         """
@@ -146,15 +170,26 @@ class YcmdCompletion:
     server = None
     def __init__(self, area):
         completions = lambda event: YcmdWindow(event.widget, self.server)
-        area.install('ycmd', ('INSERT', '<Control-Key-period>', completions))
+
+        # This lambda sends the ReadyToParseEvent to ycmd whenever a file is
+        # opened or saved. It is necessary to start some 
+        # ycmd language completers.
+        ready = lambda event: self.server.ready(1, 1, area.filename, 
+        {area.filename:  {'filetypes': [FILETYPES[area.extension]], 
+        'contents': area.get('1.0', 'end')}})
+
+        area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
+        (-1, '<<LoadData>>', ready), (-1, '<<SaveData>>', ready))
 
     @classmethod
     def setup(cls, path, port=43247):
         settings_file = join(dirname(__file__),  'default_settings.json')
         cls.server = YcmdServer(path, port,  settings_file, '')
+        # requests.adapters.DEFAULT_POOL_TIMEOUT = 2000
+        import time
+        print('Starting Ycmd server!')
+        time.sleep(1)
 
 install = YcmdCompletion
-
-
 
 

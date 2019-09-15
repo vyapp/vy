@@ -330,6 +330,19 @@ import vyapp.plugins.jedi
 autoload(vyapp.plugins.jedi)
 
 
+# You may need to setup tidy path here depending on your installation.
+# But if tidy is available in the environment then no need to uncomment this line.
+from  vyapp.plugins import tidy
+# tidy.HtmlChecker.PATH = '/path/to/tidy'
+autoload(tidy)
+
+
+# Auto completion using ycmd.
+# from vyapp.plugins.ycmd import client
+# client.YcmdCompletion.setup('ycmd')
+# autoload(client)
+
+
 # Used to insert tab, spaces.
 # The default size/char in case the file has no 
 # extension or it is not specified it is ''. When there is no '':(size, char)
@@ -473,6 +486,9 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
+
+
 
 
 
