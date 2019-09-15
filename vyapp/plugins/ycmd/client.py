@@ -58,12 +58,12 @@ class YcmdServer:
         self.url           = 'http://127.0.0.1:%s' % port 
         self.cmd           = 'python -m %s --port %s --options_file %s'
         self.hmac_secret   = os.urandom(HMAC_LENGTH)
-        self.hmac_secret   = b64encode(self.hmac_secret).decode('utf8 ')
 
         with open(self.settings_file) as fd:
           self.settings = json.loads(fd.read())
 
-        self.settings[ 'hmac_secret' ] = self.hmac_secret
+        hmac_secret = b64encode(self.hmac_secret).decode('utf8 ')
+        self.settings[ 'hmac_secret' ] = hmac_secret
 
         with NamedTemporaryFile(mode = 'w+', delete = False) as tmpfile:
             json.dump(self.settings, tmpfile)
@@ -85,7 +85,7 @@ class YcmdServer:
         url = '%s/completions' % self.url
 
         hmac_secret = self.hmac_req('POST', '/completions', 
-        data, self.hmac_secret.encode('utf8'))
+        data, self.hmac_secret)
 
         headers = {
             'X-YCM-HMAC': hmac_secret,
