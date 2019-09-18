@@ -12,7 +12,7 @@ Namespace: ycmd
 
 Mode: INSERT
 Event: <Control-Key-period>
-Description: Open the completion window with possible python words for
+Description: Open the completion window with possible words for
 completion.
 
 """
@@ -27,6 +27,7 @@ from vyapp.areavi import AreaVi
 from urllib.parse import urlparse
 from shutil import copyfile
 import requests
+import random
 import hashlib
 import atexit
 import hmac
@@ -57,7 +58,7 @@ class YcmdServer:
         self.path          = path
         self.port          = port
         self.url           = 'http://127.0.0.1:%s' % port 
-        self.cmd           = 'python -m %s --port %s --log debug --options_file  %s'
+        self.cmd           = 'python -m ycmd --port %s --options_file  %s'
         self.hmac_secret   = os.urandom(HMAC_LENGTH)
 
         with open(self.settings_file) as fd:
@@ -69,8 +70,9 @@ class YcmdServer:
         with NamedTemporaryFile(mode = 'w+', delete = False) as tmpfile:
             json.dump(self.settings, tmpfile)
 
-        self.daemon = Popen(self.cmd % (self.path, self.port,
-        tmpfile.name), shell=1)
+        self.daemon = Popen(self.cmd % (self.port,
+        tmpfile.name), shell=1, cwd=self.path)
+
         atexit.register(self.daemon.terminate)
 
     def ready(self, line, col, path, data):
@@ -84,7 +86,7 @@ class YcmdServer:
        'filepath': path,
        'file_data': data,
        'event_name': 'FileReadyToParse',
-       'extra_conf_data': self.extra_file
+       # 'extra_conf_data': self.extra_file
         }
 
         url = '%s/event_notification' % self.url
@@ -95,7 +97,8 @@ class YcmdServer:
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = requests.post(url, json=data, headers=headers)
+        req = requests.post(url, 
+            json=data, headers=headers)
 
     def completions(self, line, col, path, data, 
         dir, target=None, cmdargs=None):
@@ -176,15 +179,16 @@ class YcmdCompletion:
         # This lambda sends the ReadyToParseEvent to ycmd whenever a file is
         # opened or saved. It is necessary to start some 
         # ycmd language completers.
-        ready = lambda event: self.server.ready(1, 1, area.filename, 
+        ready = lambda : self.server.ready(1, 1, area.filename, 
         {area.filename:  {'filetypes': [FILETYPES[area.extension]], 
         'contents': area.get('1.0', 'end')}})
 
+        wrapper = lambda event: area.after(1000, ready)
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
-        (-1, '<<LoadData>>', ready), (-1, '<<SaveData>>', ready))
+        (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper))
 
     @classmethod
-    def setup(cls, path, port=43247):
+    def setup(cls, path):
         # Create the default_settings.json file in case it doesn't exist.
         # The file is located in the home dir.
         settings_file = join(expanduser('~'), '.default_settings.json')
@@ -192,16 +196,16 @@ class YcmdCompletion:
             copyfile(join(dirname(__file__), 
                 'default_settings.json'), settings_file)
 
-        extra_file = join(expanduser('~'), '.ycm_extra_conf.py')
-        if not exists(extra_file): 
-            copyfile(join(dirname(__file__), 
-                'ycm_extra_conf.py'), extra_file)
+        # extra_file = join(expanduser('~'), '.ycm_extra_conf.py')
+        # if not exists(extra_file): 
+            # copyfile(join(dirname(__file__), 
+                # 'ycm_extra_conf.py'), extra_file)
 
-        cls.server = YcmdServer(path, port,  settings_file, extra_file)
-        print('Starting Ycmd server!')
-        time.sleep(2)
+        port = random.randint(1000, 9999)
+        cls.server = YcmdServer(path, port,  settings_file, '')
 
 install = YcmdCompletion
+
 
 
 
