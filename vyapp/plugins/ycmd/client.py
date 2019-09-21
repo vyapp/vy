@@ -26,6 +26,7 @@ from subprocess import Popen, PIPE
 from vyapp.areavi import AreaVi
 from urllib.parse import urlparse
 from shutil import copyfile
+from vyapp.plugins import ENV
 import requests
 import random
 import hashlib
@@ -86,7 +87,11 @@ class YcmdServer:
        'filepath': path,
        'file_data': data,
        'event_name': 'FileReadyToParse',
-       # 'extra_conf_data': self.extra_file
+
+        # The path to the ycm file. Do i really need
+        # to drop it or ycmd searches for a .ycm_extra_conf
+        # file recursively up to the filepath dirs?
+       'extra_conf_data': self.extra_file
         }
 
         url = '%s/event_notification' % self.url
@@ -200,11 +205,22 @@ class YcmdCompletion:
         # if not exists(extra_file): 
             # copyfile(join(dirname(__file__), 
                 # 'ycm_extra_conf.py'), extra_file)
+# 
+        # port = random.randint(1000, 9999)
+        # cls.server = YcmdServer(path, port,  settings_file, '')
 
-        port = random.randint(1000, 9999)
-        cls.server = YcmdServer(path, port,  settings_file, '')
+def init_ycm():
+    """ Generate a ycm_extra_conf.py file to specify
+    compilation flags for a project. This is necessary to get
+    semantic analysis for c-family languages.
+
+    Check ycmd docs for more details.
+    """
+
+    pass
 
 install = YcmdCompletion
+
 
 
 
