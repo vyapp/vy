@@ -20,13 +20,14 @@ completion.
 from vyapp.completion import CompletionWindow, Option
 from os.path import expanduser, join, exists, dirname
 from base64 import b64encode, b64decode
-from vyapp.plugins import ENV
+from vyapp.areavi import AreaVi
 from tempfile import NamedTemporaryFile
 from subprocess import Popen, PIPE
 from vyapp.areavi import AreaVi
 from urllib.parse import urlparse
 from shutil import copyfile
 from vyapp.plugins import ENV
+from vyapp.app import root
 import requests
 import random
 import hashlib
@@ -34,8 +35,9 @@ import atexit
 import hmac
 import json
 import time
-import os
 import time
+import sys
+import os
 
 HMAC_LENGTH  = 32
 IDLE_SUICIDE = 10800  # 3 hours
@@ -76,6 +78,26 @@ class YcmdServer:
 
         atexit.register(self.daemon.terminate)
 
+    def load_conf(self, path):
+        data = {
+       'filepath': path,
+        }
+
+        url = '%s/load_extra_conf_file' % self.url
+        hmac_secret = self.hmac_req('POST', '/load_extra_conf_file', 
+        data, self.hmac_secret)
+
+        headers = {
+            'X-YCM-HMAC': hmac_secret,
+        }
+
+        req = requests.post(url, 
+            json=data, headers=headers)
+
+        print('File to load:', path)
+        print('Load conf response:', req.json())
+        print('Loading extra conf...')
+
     def ready(self, line, col, path, data):
         """
         Send file ready.
@@ -87,11 +109,6 @@ class YcmdServer:
        'filepath': path,
        'file_data': data,
        'event_name': 'FileReadyToParse',
-
-        # The path to the ycm file. Do i really need
-        # to drop it or ycmd searches for a .ycm_extra_conf
-        # file recursively up to the filepath dirs?
-       'extra_conf_data': self.extra_file
         }
 
         url = '%s/event_notification' % self.url
@@ -104,6 +121,14 @@ class YcmdServer:
 
         req = requests.post(url, 
             json=data, headers=headers)
+
+        rsp = req.json()
+        exc = rsp.get('exception')
+
+        if exc:
+            if exc.get('TYPE') == 'UnknownExtraConf':
+                self.load_conf(exc['extra_conf_file'])
+        print('FileReadyToParse JSON:\n', req.json())
 
     def completions(self, line, col, path, data, 
         dir, target=None, cmdargs=None):
@@ -194,34 +219,40 @@ class YcmdCompletion:
 
     @classmethod
     def setup(cls, path):
-        # Create the default_settings.json file in case it doesn't exist.
-        # The file is located in the home dir.
+        """ 
+        Create the default_settings.json file in case it doesn't exist.
+        The file is located in the home dir. It also starts ycmd server.
+        """
+
         settings_file = join(expanduser('~'), '.default_settings.json')
         if not exists(settings_file): 
             copyfile(join(dirname(__file__), 
                 'default_settings.json'), settings_file)
 
-        # extra_file = join(expanduser('~'), '.ycm_extra_conf.py')
-        # if not exists(extra_file): 
-            # copyfile(join(dirname(__file__), 
-                # 'ycm_extra_conf.py'), extra_file)
-# 
-        # port = random.randint(1000, 9999)
-        # cls.server = YcmdServer(path, port,  settings_file, '')
+        port = random.randint(1000, 9999)
+        cls.server = YcmdServer(path, port,  settings_file, '')
 
-def init_ycm():
-    """ Generate a ycm_extra_conf.py file to specify
+def init_ycm(path=expanduser('~')):
+    """ 
+    Generate a ycm_extra_conf.py file to specify
     compilation flags for a project. This is necessary to get
     semantic analysis for c-family languages.
+
+    The path argument is your project root folder in case you need
+    special conf for your project. 
+
+    When no path is given it will create a gloal ycm conf in  your 
+    home dir. 
 
     Check ycmd docs for more details.
     """
 
-    pass
+    conf = join(path, '.ycm_extra_conf.py')
+    if exists(conf): 
+        root.status.set_msg('File overwritten: %s' % conf)
+    copyfile(join(dirname(__file__), 'ycm_extra_conf.py'), conf)
 
+ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
-
-
-
 
 

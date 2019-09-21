@@ -11,13 +11,12 @@ import sys
 parser = argparse.ArgumentParser()
 
 parser.add_argument('files', nargs='*', help='Files')
+parser.add_argument('-t', '--tab', dest='scheme', 
+action='append_const', const=None, default=[], 
+help='Instantiate a new tab. Ex: -t -p file0 file1')
 
-parser.add_argument(
-'-t', '--tab', dest='scheme', action='append_const', const=None,
-default=[], help='Instantiate a new tab. Ex: -t -p file0 file1')
-
-parser.add_argument(
-'-p', '--panel', action='append', dest='scheme', default=[], nargs='+', 
+parser.add_argument('-p', '--panel', 
+action='append', dest='scheme', default=[], nargs='+',  
 help='Open files in vertical/horizontal ways -p file0 file1 -p file2')
 
 parser.add_argument('-v', '--verbose', action='store_true',
@@ -44,13 +43,17 @@ lst  = lst + [[[ind]] for ind in args.files]
 # variable.
 root.create_vyrc()
 
-if not lst: root.note.create('none')
-else: root.note.load(*lst)
+if not lst: 
+    root.note.create('none')
+else: 
+    root.note.load(*lst)
 
 # It first waits vyrc file to be loaded in order to set sys.stderr.
 # Otherwise errors when loading the vyrc file will be missed as well as when
 # attempting to load a non existing file.
-if not args.verbose: sys.stderr = Debug()
+if not args.verbose: 
+    sys.stderr = Debug()
+
 
 
 
