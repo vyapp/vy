@@ -240,30 +240,27 @@ class YcmdCompletion:
             copyfile(join(dirname(__file__), 
                 'default_settings.json'), settings_file)
 
-        xconf      = init_ycm(xconf)
+        xconf = join(xconf, '.ycm_extra_conf.py')
+        if not exists(xconf): 
+            copyfile(join(dirname(__file__), 'ycm_extra_conf.py'), xconf)
+    
         port       = random.randint(1000, 9999)
         cls.server = YcmdServer(path, port,  settings_file)
 
 def init_ycm(path):
     """ 
-    Generate a ycm_extra_conf.py file to specify
+    Generate a ycm_extra_conf.py file in the given path dir to specify
     compilation flags for a project. This is necessary to get
     semantic analysis for c-family languages.
-
-    The path argument is your project root folder in case you need
-    special conf for your project. 
-
-    When no path is given it will create a gloal ycm conf in  your 
-    home dir. 
 
     Check ycmd docs for more details.
     """
 
     conf = join(path, '.ycm_extra_conf.py')
-    if not exists(conf): 
-        copyfile(join(dirname(__file__), 'ycm_extra_conf.py'), conf)
-    else:
-        root.status.set_msg('Ycm conf found: %s' % conf)
+    if exists(conf):
+        root.status.set_msg('File overwritten: %s' % conf)
+    copyfile(join(dirname(__file__), 'ycm_extra_conf.py'), conf)
+
     return conf
 
 ENV['init_ycm'] = init_ycm
