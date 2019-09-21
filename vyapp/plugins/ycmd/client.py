@@ -54,9 +54,11 @@ FILETYPES = {
 
 
 class YcmdServer:
-    def __init__(self, path, port, settings_file, extra_file):
+    def __init__(self, path, port, settings_file):
+        """
+        """
+
         self.settings_file = settings_file
-        self.extra_file    = extra_file 
         self.settings      = None
         self.path          = path
         self.port          = port
@@ -79,6 +81,9 @@ class YcmdServer:
         atexit.register(self.daemon.terminate)
 
     def load_conf(self, path):
+        """
+        """
+
         data = {
        'filepath': path,
         }
@@ -218,10 +223,16 @@ class YcmdCompletion:
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper))
 
     @classmethod
-    def setup(cls, path):
+    def setup(cls, path, xconf=expanduser('~')):
         """ 
         Create the default_settings.json file in case it doesn't exist.
         The file is located in the home dir. It also starts ycmd server.
+
+        It also creates a global ycm_extra_conf.py file in your home dir.
+        This file is used for giving completion for c-family languages and
+        specifying some specific settings.
+
+        Check ycmd docs for details.
         """
 
         settings_file = join(expanduser('~'), '.default_settings.json')
@@ -229,10 +240,11 @@ class YcmdCompletion:
             copyfile(join(dirname(__file__), 
                 'default_settings.json'), settings_file)
 
-        port = random.randint(1000, 9999)
-        cls.server = YcmdServer(path, port,  settings_file, '')
+        xconf      = init_ycm(xconf)
+        port       = random.randint(1000, 9999)
+        cls.server = YcmdServer(path, port,  settings_file)
 
-def init_ycm(path=expanduser('~')):
+def init_ycm(path):
     """ 
     Generate a ycm_extra_conf.py file to specify
     compilation flags for a project. This is necessary to get
@@ -248,9 +260,11 @@ def init_ycm(path=expanduser('~')):
     """
 
     conf = join(path, '.ycm_extra_conf.py')
-    if exists(conf): 
-        root.status.set_msg('File overwritten: %s' % conf)
-    copyfile(join(dirname(__file__), 'ycm_extra_conf.py'), conf)
+    if not exists(conf): 
+        copyfile(join(dirname(__file__), 'ycm_extra_conf.py'), conf)
+    else:
+        root.status.set_msg('Ycm conf found: %s' % conf)
+    return conf
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
