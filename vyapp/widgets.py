@@ -68,28 +68,32 @@ class FloatingWindow(Toplevel):
     def update(self):
         Toplevel.update(self)
 
-        rootx                = self.area.winfo_rootx()
-        rooty                = self.area.winfo_rooty()
-        self.start_index     = self.area.index('insert')
-        x, y, width, height  = self.area.bbox('insert')
-        info                 = self.area.dlineinfo('insert')
-        line_x               = info[0]
-        line_y               = info[1]
-        line_width           = info[2]
-        line_height          = info[3]
-        baseline             = info[4]
-        win_height           = self.winfo_height()
-        area_height          = self.area.winfo_height()
-        win_width            = self.winfo_width()
-        area_width           = self.area.winfo_width()
-        vpos                 = self.calculate_vertical_position(y, rooty, 
-                                                    line_height, win_height, area_height)
-        hpos                 = self.calculate_horizontal_position(x, rootx, win_width, area_width)
+        rootx               = self.area.winfo_rootx()
+        rooty               = self.area.winfo_rooty()
+        self.start_index    = self.area.index('insert')
+        x, y, width, height = self.area.bbox('insert')
+        info                = self.area.dlineinfo('insert')
+        line_x              = info[0]
+        line_y              = info[1]
+        line_width          = info[2]
+        line_height         = info[3]
+        baseline            = info[4]
+        win_height          = self.winfo_height()
+        area_height         = self.area.winfo_height()
+        win_width           = self.winfo_width()
+        area_width          = self.area.winfo_width()
+
+        vpos = self.calculate_vertical_position(y, rooty, 
+        line_height, win_height, area_height)
+
+        hpos = self.calculate_horizontal_position(x, 
+        rootx, win_width, area_width)
 
 
         self.wm_geometry("+%d+%d" % (hpos, vpos))
 
-    def calculate_vertical_position(self, y, rooty, line_height, win_height, area_height):
+    def calculate_vertical_position(self, y, rooty, 
+        line_height, win_height, area_height):
         if rooty + y + win_height + line_height > rooty + area_height:
             return rooty + y - win_height
         else:
@@ -199,10 +203,6 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
-
-
-
-
 
 
 
