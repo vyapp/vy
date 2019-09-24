@@ -28,6 +28,7 @@ from urllib.parse import urlparse
 from shutil import copyfile
 from vyapp.plugins import ENV
 from vyapp.app import root
+import shlex
 import requests
 import random
 import hashlib
@@ -75,8 +76,11 @@ class YcmdServer:
         with NamedTemporaryFile(mode = 'w+', delete = False) as tmpfile:
             json.dump(self.settings, tmpfile)
 
-        self.daemon = Popen(self.cmd % (self.port,
-        tmpfile.name), shell=1, cwd=self.path)
+        # It is necessary to use stdout=PIPE, stderr=PIPE otherwise
+        # we get ycmd outputing stuff even in non verbose mode.
+        self.cmd    = self.cmd % (self.port, tmpfile.name)
+        self.cmd    = shlex.split(self.cmd)
+        self.daemon = Popen(self.cmd, stdout=PIPE, stderr=PIPE, cwd=self.path)
 
         atexit.register(self.daemon.terminate)
 
@@ -124,16 +128,11 @@ class YcmdServer:
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = requests.post(url, 
-            json=data, headers=headers)
-
+        req = requests.post(url, json=data, headers=headers)
         rsp = req.json()
-        exc = rsp.get('exception')
 
-        if exc:
-            if exc.get('TYPE') == 'UnknownExtraConf':
-                self.load_conf(exc['extra_conf_file'])
-        print('FileReadyToParse JSON:\n', req.json())
+        print('FileReadyToParse JSON:\n', rsp)
+        return rsp
 
     def completions(self, line, col, path, data, 
         dir, target=None, cmdargs=None):
@@ -209,18 +208,27 @@ class YcmdWindow(CompletionWindow):
 class YcmdCompletion:
     server = None
     def __init__(self, area):
+        self.area   = area
         completions = lambda event: YcmdWindow(event.widget, self.server)
 
+        wrapper = lambda event: area.after(1000, self.on_ready)
+        area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
+        (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper))
+
+    def on_ready(self):
         # This lambda sends the ReadyToParseEvent to ycmd whenever a file is
         # opened or saved. It is necessary to start some 
         # ycmd language completers.
-        ready = lambda : self.server.ready(1, 1, area.filename, 
-        {area.filename:  {'filetypes': [FILETYPES[area.extension]], 
-        'contents': area.get('1.0', 'end')}})
+        data = {self.area.filename:  
+        {'filetypes': [FILETYPES[self.area.extension]], 
+        'contents': self.area.get('1.0', 'end')}}
 
-        wrapper = lambda event: area.after(1000, ready)
-        area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
-        (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper))
+        rsp = self.server.ready(1, 1, self.area.filename, data)
+        exc = rsp.get('exception')
+
+        if exc and exc.get('TYPE') == 'UnknownExtraConf':
+            root.status.set_msg((('Found %s!' 
+                ' lycm(path) to load.') % exc['extra_conf_file']))
 
     @classmethod
     def setup(cls, path, xconf=expanduser('~')):
@@ -234,7 +242,6 @@ class YcmdCompletion:
 
         Check ycmd docs for details.
         """
-
         settings_file = join(expanduser('~'), '.default_settings.json')
         if not exists(settings_file): 
             copyfile(join(dirname(__file__), 
@@ -244,8 +251,19 @@ class YcmdCompletion:
         if not exists(xconf): 
             copyfile(join(dirname(__file__), 'ycm_extra_conf.py'), xconf)
     
-        port       = random.randint(1000, 9999)
-        cls.server = YcmdServer(path, port,  settings_file)
+        port        = random.randint(1000, 9999)
+        cls.server  = YcmdServer(path, port,  settings_file)
+        ENV['lycm'] = cls.lycm
+
+    @classmethod
+    def lycm(cls, path=None):
+        """
+        """
+        home = expanduser('~')
+        path = path if path else join(home, '.ycm_extra_conf.py')
+
+        cls.server.load_conf(path)
+        root.status.set_msg('Loaded %s' % path)
 
 def init_ycm(path):
     """ 
@@ -265,5 +283,6 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
+
 
 
