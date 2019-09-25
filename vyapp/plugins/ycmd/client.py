@@ -4,6 +4,9 @@ Overview
 
 This plugin does autocompletion using ycmd.
 
+Install
+=======
+
 
 Key-Commands
 ============
@@ -14,6 +17,10 @@ Mode: INSERT
 Event: <Control-Key-period>
 Description: Open the completion window with possible words for
 completion.
+
+Commands
+========
+
 
 """
 
@@ -128,7 +135,7 @@ class YcmdServer:
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = requests.post(url, json=data, headers=headers)
+        req = requests.post(url, json=data, headers=headers, timeout=1)
         rsp = req.json()
 
         print('FileReadyToParse JSON:\n', rsp)
@@ -153,13 +160,17 @@ class YcmdServer:
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = requests.post(url, json=data, headers=headers)
+        req = requests.post(url, json=data, headers=headers, timeout=2)
         print('Request data:', req.json())
         return self.fmt_options(req.json())
 
     def fmt_options(self, data):
         return [Option(ind.get('insertion_text', ''),
-            'Type:%s' % ind.get('kind', '')) for ind in data['completions']]
+        '\n\n'.join(('Type:\n%s' % ind.get('kind', None),
+        'Extra info:\n%s' % ind.get('extra_menu_info', None),
+        'Docs:\n%s' % ind.get('detailed_info', None),
+        'Data:\n%s' % ind.get('extra_data', {}).get('doc_string', None)))) 
+        for ind in data['completions']]
     
     def hmac_req(self, method, path, body, hmac_secret):
         """
@@ -226,7 +237,19 @@ class YcmdCompletion:
         rsp = self.server.ready(1, 1, self.area.filename, data)
         exc = rsp.get('exception')
 
+        # If the found xconf is global then load it otherwise
+        # notify the user of the local xconf.
         if exc and exc.get('TYPE') == 'UnknownExtraConf':
+            self.is_gxconf(exc['extra_conf_file'])
+
+    @classmethod
+    def is_gxconf(cls, xconf):
+        gxconf = expanduser('~')
+        gxconf = join(gxconf, '.ycm_extra_conf.py')
+
+        if xconf == gxconf:
+            cls.server.load_conf(gxconf)
+        else:
             root.status.set_msg((('Found %s!' 
                 ' lycm(path) to load.') % exc['extra_conf_file']))
 
@@ -253,6 +276,7 @@ class YcmdCompletion:
     
         port        = random.randint(1000, 9999)
         cls.server  = YcmdServer(path, port,  settings_file)
+        # wrapper     = lambda event: area.after(1000, self.load_gxconf)
         ENV['lycm'] = cls.lycm
 
     @classmethod
@@ -283,6 +307,9 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
+
+
+
 
 
 
