@@ -245,12 +245,15 @@ class YcmdWindow(CompletionWindow):
 class YcmdCompletion:
     server = None
     def __init__(self, area):
-        self.area   = area
-        completions = lambda event: YcmdWindow(event.widget, self.server)
+        self.area       = area
+        self.err_picker = LinePicker()
+        completions     = lambda event: YcmdWindow(event.widget, self.server)
+        wrapper         = lambda event: area.after(1000, self.on_ready)
 
-        wrapper = lambda event: area.after(1000, self.on_ready)
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
-        (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper))
+        (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper), 
+        ('NORMAL', '<Control-greater>', 
+        lambda event: self.err_picker.display()))
 
     def on_ready(self):
         """
@@ -272,7 +275,7 @@ class YcmdCompletion:
 
         if req.status_code == 500:
             self.on_exc(rsp)
-        elif req.status_code == 200:
+        elif req.status_code == 200 and rsp:
             self.on_diagnostics(rsp)
 
     def on_diagnostics(self, rsp):
@@ -283,8 +286,8 @@ class YcmdCompletion:
         ind['location']['line_num'], ind['text']) 
         for ind in rsp]
 
-        options = LinePicker()
-        options(ranges)
+        self.err_picker(ranges)
+        root.status.set_msg('Ycmd found errors. Displaying diagnostics!')
 
     def on_exc(self, rsp):
        exc = rsp.get('exception')
