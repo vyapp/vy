@@ -27,6 +27,7 @@ Commands
 from vyapp.completion import CompletionWindow, Option
 from os.path import expanduser, join, exists, dirname
 from base64 import b64encode, b64decode
+from vyapp.widgets import LinePicker
 from tempfile import NamedTemporaryFile
 from subprocess import Popen, PIPE
 from shutil import copyfile
@@ -275,7 +276,15 @@ class YcmdCompletion:
             self.on_diagnostics(rsp)
 
     def on_diagnostics(self, rsp):
-        pass
+        """
+        """
+
+        ranges = [(ind['location']['filepath'], 
+        ind['location']['line_num'], ind['text']) 
+        for ind in rsp]
+
+        options = LinePicker()
+        options(ranges)
 
     def on_exc(self, rsp):
        exc = rsp.get('exception')
