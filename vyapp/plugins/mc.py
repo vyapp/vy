@@ -87,6 +87,7 @@ class Mc(object):
         ('NORMAL', '<Key-U>', lambda e: self.open()),
         ('NORMAL', '<Key-F>', lambda e: self.info()),
         ('NORMAL', '<Key-E>', lambda e: self.rename()),
+        ('NORMAL', '<Control-E>', lambda e: self.create_dir()),
 
         ('NORMAL', '<Key-J>', lambda e:self.ls(self.ph)))
 
@@ -141,8 +142,8 @@ class Mc(object):
 
     def cp(self):
         destin = self.area.get_line()
-        code = check_call('cp -R %s "%s"' % (' '.join(Mc.clipboard), 
-        destin), shell=1)
+        code   = check_call('cp -R %s "%s"' % (
+            ' '.join(Mc.clipboard), destin), shell=1)
 
         root.status.set_msg('Files copied!')
         del Mc.clipboard[:]
@@ -150,19 +151,18 @@ class Mc(object):
 
     def mv(self):
         destin = self.area.get_line()
-        code = check_call('mv %s "%s"' % (' '.join(Mc.clipboard), 
-        destin), shell=1)
+        code   = check_call('mv %s "%s"' % (
+            ' '.join(Mc.clipboard), destin), shell=1)
 
         root.status.set_msg('Files moved!')
         del Mc.clipboard[:]
         self.ls(self.ph)
 
     def rename(self):
-        path     = self.area.get_line()
-        ask      = Ask()
-        filename = ask.data
-        destin   = join(dirname(path), filename)
-        code     = check_call('mv "%s" %s' % (path, 
+        path   = self.area.get_line()
+        ask    = Ask()
+        destin = join(dirname(path), ask.data)
+        code   = check_call('mv "%s" %s' % (path, 
         destin), shell=1)
 
         root.status.set_msg('File renamed!')
@@ -183,6 +183,17 @@ class Mc(object):
         # No need for "" because it is passing the entire filename
         # as parameter.
         Popen(['xdg-open', '%s'  % filename])
+
+    def create_dir(self):
+        root.status.set_msg('Type dir name:')
+        path = self.area.get_line()
+
+        ask  = Ask()
+        path = join(path, ask.data)
+        code = check_call('mkdir "%s"' % path, shell=1)
+
+        root.status.set_msg('Folder created!')
+        self.ls(self.ph)
 
 install = Mc
 
