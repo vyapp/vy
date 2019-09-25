@@ -117,7 +117,7 @@ class Mc(object):
     def info(self):
         filename = self.area.get_line()
 
-        data = check_output('stat "%s"' % filename, shell=1)
+        data = check_output('stat "%s"' % filename, shell=1, encoding='utf8')
         self.area.delete('1.0', 'end')
         self.area.append(data, '(MC-FILE)')
 
@@ -128,11 +128,11 @@ class Mc(object):
         self.area.delete('1.0', 'end')
 
         data = check_output('find "%s" -maxdepth 1 -type d' % 
-        ph, shell=1)
+        ph, shell=1, encoding='utf8')
         self.area.append(data, '(MC-DIRECTORY)')
 
         data = check_output('find "%s" -maxdepth 1 -type f' % 
-        ph, shell=1)
+        ph, shell=1, encoding='utf8')
         self.area.append(data, '(MC-FILE)')
 
         # If the previous commands ran succesfully
@@ -185,5 +185,6 @@ class Mc(object):
         Popen(['xdg-open', '%s'  % filename])
 
 install = Mc
+
 
 
