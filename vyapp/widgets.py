@@ -111,13 +111,15 @@ class FloatingWindow(Toplevel):
 
 
 class OptionWindow(Toplevel):
-    def  __call__(self, options=[]):
+    def  __call__(self, options=[], display=True):
         self.options = options
 
         self.listbox.delete(0, END)
         for key, value in options:
             self.listbox.insert(END, key)
-        return self.display()
+
+        if display:
+            self.display()
 
     def  __init__(self):
         Toplevel.__init__(self, master=root)
@@ -179,14 +181,22 @@ class LinePicker(OptionWindow):
         lambda event: self.on_tab())
         self.area = None
 
-    def  __call__(self, options=[]):
+    def  __call__(self, options=[], display=True):
+        """
+        Fill a LinePicker with a list of options. 
+        
+        When display=False it just fills the Line 
+        Picker for later showing the options with LinePicker.display method.
+        """
         # Make sure it is a list otherwise it may receive
         # an iterator and display no results even when there are
         # errors.
         options = list(options)
         ranges = zip(('%s - %s:%s' % (msg, relpath(filename), line)
         for filename, line, msg in options), options)
-        super(LinePicker, self).__call__(list(ranges))
+
+        ranges = list(ranges)
+        super(LinePicker, self).__call__(ranges, display)
 
     def on_tab(self):
         index = self.listbox.index(ACTIVE)
@@ -203,6 +213,5 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
-
 
 

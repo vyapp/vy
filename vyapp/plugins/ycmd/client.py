@@ -286,7 +286,7 @@ class YcmdCompletion:
         ind['location']['line_num'], ind['text']) 
         for ind in rsp]
 
-        self.err_picker(ranges)
+        self.err_picker(ranges, display=False)
         root.status.set_msg('Ycmd found errors. Displaying diagnostics!')
 
     def on_exc(self, rsp):
@@ -359,4 +359,5 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
+
 
