@@ -27,11 +27,8 @@ Commands
 from vyapp.completion import CompletionWindow, Option
 from os.path import expanduser, join, exists, dirname
 from base64 import b64encode, b64decode
-from vyapp.areavi import AreaVi
 from tempfile import NamedTemporaryFile
 from subprocess import Popen, PIPE
-from vyapp.areavi import AreaVi
-from urllib.parse import urlparse
 from shutil import copyfile
 from vyapp.plugins import ENV
 from vyapp.app import root
@@ -42,8 +39,6 @@ import hashlib
 import atexit
 import hmac
 import json
-import time
-import time
 import sys
 import os
 
@@ -107,8 +102,7 @@ class YcmdServer:
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = requests.post(url, 
-            json=data, headers=headers)
+        req = self.post(url, json=data, headers=headers)
 
         print('File to load:', path)
         print('Load conf response:', req.json())
@@ -135,11 +129,24 @@ class YcmdServer:
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = requests.post(url, json=data, headers=headers, timeout=1)
-        rsp = req.json()
+        req = self.post(url, json=data, headers=headers, timeout=1)
 
-        print('FileReadyToParse JSON:\n', rsp)
-        return rsp
+        print('FileReadyToParse JSON:\n', req.json())
+        return req
+
+    def post(self, *args, **kwargs):
+        """
+        Abstract the workings of HTTP POST method to validate
+        HMAC in responses.
+        """
+
+        req = requests.post(*args, **kwargs)
+        is_valid = self.is_vhmac(req.text, 
+        req.headers['X-YCM-HMAC'], self.hmac_secret)
+
+        if not is_valid:
+            raise RuntimeError('Invalid HMAC response')
+        return req
 
     def completions(self, line, col, path, data, 
         dir, target=None, cmdargs=None):
@@ -160,7 +167,7 @@ class YcmdServer:
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = requests.post(url, json=data, headers=headers, timeout=2)
+        req = self.post(url, json=data, headers=headers, timeout=2)
         print('Request data:', req.json())
         return self.fmt_options(req.json())
 
@@ -200,6 +207,24 @@ class YcmdServer:
 
         return str(b64encode(data), encoding='utf8 ')
 
+    def is_vhmac(self, body, hmac_header, hmac_secret):
+        """
+        Check the response hmac.
+        """
+
+        body = body.encode('utf8')
+        a = b64decode(hmac_header)
+        b = bytes(hmac.new(hmac_secret,
+        msg = body, digestmod = hashlib.sha256).digest())
+
+        if len(a) != len(b):
+            return False
+       
+        result = 0
+        for x, y in zip(a, b):
+            result |= x ^ y
+        return result == 0
+       
 class YcmdWindow(CompletionWindow):
     """
     """
@@ -227,21 +252,36 @@ class YcmdCompletion:
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper))
 
     def on_ready(self):
-        # This lambda sends the ReadyToParseEvent to ycmd whenever a file is
-        # opened or saved. It is necessary to start some 
-        # ycmd language completers.
+        """
+        This method sends the ReadyToParseEvent to ycmd whenever a file is
+        opened or saved. It is necessary to start some 
+        ycmd language completers.
+
+        When there is a global .ycm_extra_conf.py in the home dir
+        then it is loaded automatically otherwise a message is
+        displayed to the user to load it using lycm.
+        """
+
         data = {self.area.filename:  
         {'filetypes': [FILETYPES[self.area.extension]], 
         'contents': self.area.get('1.0', 'end')}}
 
-        rsp = self.server.ready(1, 1, self.area.filename, data)
-        exc = rsp.get('exception')
+        req = self.server.ready(1, 1, self.area.filename, data)
+        rsp = req.json()
 
-        # If the found xconf is global then load it otherwise
-        # notify the user of the local xconf.
-        if exc and exc.get('TYPE') == 'UnknownExtraConf':
-            self.is_gxconf(exc['extra_conf_file'])
+        if req.status_code == 500:
+            self.on_exc(rsp)
+        elif req.status_code == 200:
+            self.on_diagnostics(rsp)
 
+    def on_diagnostics(self, rsp):
+        pass
+
+    def on_exc(self, rsp):
+       exc = rsp.get('exception')
+       if exc and exc.get('TYPE') == 'UnknownExtraConf':
+           self.is_gxconf(exc['extra_conf_file'])
+   
     @classmethod
     def is_gxconf(cls, xconf):
         gxconf = expanduser('~')
@@ -251,7 +291,7 @@ class YcmdCompletion:
             cls.server.load_conf(gxconf)
         else:
             root.status.set_msg((('Found %s!' 
-                ' lycm(path) to load.') % exc['extra_conf_file']))
+                ' lycm(path) to load.') % xconf))
 
     @classmethod
     def setup(cls, path, xconf=expanduser('~')):
@@ -307,9 +347,4 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
-
-
-
-
-
 
