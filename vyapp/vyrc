@@ -181,7 +181,7 @@ import vyapp.plugins.line_index
 autoload(vyapp.plugins.line_index)
 
 
-# Implement keycommands to control where data written 
+# Implement keycommands to control where data is written 
 # to sys.stdout is going to be echoed.
 import vyapp.plugins.outputs
 autoload(vyapp.plugins.outputs)
@@ -486,6 +486,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

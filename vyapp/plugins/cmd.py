@@ -4,6 +4,9 @@ Overview
 
 It implements functionalities to execute python code that affects vy state. 
 
+With this plugin it is possible to drop the output to a given 
+Line.Col inside an AreaVi instance.
+
 Key-Commands
 ============
 
@@ -34,7 +37,6 @@ def exec_cmd(area, env):
     ask    = Ask()
     area.active()
     exc(ask.data, env)
-    root.status.set_msg('Command executed!')
     return 'break'
 
 def exec_region(area, env):
@@ -42,17 +44,16 @@ def exec_region(area, env):
     data = data.encode('utf-8')
     exc(data, env)
     area.clear_selection()
-    root.status.set_msg('Region executed!')
 
 def set_target(area):
     area.active()
-    root.status.set_msg('Target set !')
     return 'break'
 
 install = lambda area: area.install('cmd',
-(-1, '<Alt-semicolon>', lambda event: exec_cmd(event.widget, ENV)), 
+(-1, '<Alt-semicolon>', lambda event: exec_cmd(event.widget, ENV)),
 ('NORMAL', '<Key-semicolon>', lambda event: exec_region(event.widget, ENV)),
 (-1, '<Control-Alt-semicolon>', lambda event: set_target(event.widget)))
+
 
 
 

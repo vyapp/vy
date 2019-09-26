@@ -140,9 +140,12 @@ class OutputController:
     
         area.install('outputs', (-1, '<Alt-bracketleft>', self.add_output),
         (-1, '<Alt-braceleft>', self.rm_output),
-        (-1, '<Alt-bracketright>', lambda event: code_output.display()),
+        (-1, '<Alt-bracketright>', self.view_log),
         (-1, '<Control-Alt-bracketleft>',  self.restore_output))
     
+    def view_log(self, event):
+        code_output.display()
+
     def add_output(self, event):
         sys.stdout.append(Stdout(self.area))
         root.status.set_msg('Output set on: %s' % \
@@ -164,5 +167,6 @@ code_output = TextWindow('')
 code_output.withdraw()
 sys.stdout.append(CmdOutput(code_output))
 install = OutputController
+
 
 
