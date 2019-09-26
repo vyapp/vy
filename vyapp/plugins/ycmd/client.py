@@ -109,16 +109,16 @@ class YcmdServer:
     def is_alive(self):
         """
         """
-        hmac_secret = self.hmac_req('POST', 
-        '/healthy', {}, self.hmac_secret)
+        hmac_secret = self.hmac_req('GET', 
+        '/healthy', '', self.hmac_secret)
 
         url = '%s/healthy' % self.url
         headers = {
             'X-YCM-HMAC': hmac_secret,
         }
 
-        req = self.post(url, json={}, headers=headers)
-        print('Is alive handle:', req.status_code)
+        req = self.get(url, headers=headers)
+        print('Is alive handle:', req.status_code, req.json())
 
     def ready(self, line, col, path, data):
         """
@@ -153,6 +153,20 @@ class YcmdServer:
         """
 
         req = requests.post(*args, **kwargs)
+        is_valid = self.is_vhmac(req.text, 
+        req.headers['X-YCM-HMAC'], self.hmac_secret)
+
+        if not is_valid:
+            raise RuntimeError('Invalid HMAC response')
+        return req
+
+    def get(self, *args, **kwargs):
+        """
+        Abstract the workings of HTTP GET method to validate
+        HMAC in responses.
+        """
+
+        req = requests.get(*args, **kwargs)
         is_valid = self.is_vhmac(req.text, 
         req.headers['X-YCM-HMAC'], self.hmac_secret)
 
@@ -264,8 +278,8 @@ class YcmdCompletion:
         # Used to keep the server alive.
         def keep():
             self.server.is_alive()
-            area.after(250000, keep)
-        area.after(250000, keep)
+            area.after(2000, keep)
+        area.after(2000, keep)
 
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper), 
