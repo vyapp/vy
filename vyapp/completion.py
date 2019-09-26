@@ -73,7 +73,7 @@ class CompleteBox(MatchBox, Echo):
         for ind in self.completions:
             self.insert('end', ind.name)
 
-class TextWindow(FloatingWindow):
+class FloatingText(FloatingWindow):
     def __init__(self, area, data, *args, **kwargs):
         FloatingWindow.__init__(self, area, *args, **kwargs)
 
@@ -126,4 +126,5 @@ class CompletionWindow(FloatingWindow):
         self.text.insert('1.0', docs)
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
         self.text.focus_set()
+
 

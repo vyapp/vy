@@ -31,9 +31,10 @@ a given AreaVi instance.
 """
 
 from vyapp.app import root
+from vyapp.widgets import TextWindow
 import sys
 
-class Stdout(object):    
+class Stdout:    
     """
     This class is used to wrap an AreaVi widget to be 
     used as stdout channel.
@@ -62,7 +63,7 @@ class Stdout(object):
     def __eq__(self, other):
         return self.area == other
 
-class Transmitter(object):
+class Transmitter:
     """
     This class would replace sys.stdout. It is used to dispatch
     data that is written to sys.stdout, the data is dispatched to its
@@ -81,23 +82,22 @@ class Transmitter(object):
         It clears all children and restores the default
         child.
         """
-
-        del self.base[:]
+        self.base.clear()
         self.base.append(self.default)
 
     def append(self, fd):
-        """
-        It appends a new child.
-        """
+        try:
+            self.base.remove(fd)
+        except ValueError:
+            pass
+        finally:
+            self.base.append(fd)
 
-        self.base.append(fd)
-
-    def remove(self, fd):
-        """
-        It removes a given child.
-        """
-
-        self.base.remove(fd)
+    def discard(self, fd):
+        try:
+            self.base.remove(fd)
+        except ValueError:
+            pass
 
     def write(self, data):
         """
@@ -118,45 +118,51 @@ class Transmitter(object):
             try:
                 ind.write(data)
             except Exception:
-                self.base.remove(ind)
+                self.base.discard(ind)
 
-class OutputController(object):
-    sys.stdout = Transmitter(sys.__stdout__)
+class CmdOutput:    
+    """
+    """
 
+    def __init__(self, win):
+        self.win = win
+
+    def write(self, data):
+        self.win.text.insert('end', data)
+        self.win.text.see('end')
+
+    def __eq__(self, other):
+        return self.win.text == other
+
+class OutputController:
     def __init__(self, area):
         self.area = area
+    
         area.install('outputs', (-1, '<Alt-bracketleft>', self.add_output),
         (-1, '<Alt-braceleft>', self.rm_output),
+        (-1, '<Alt-bracketright>', lambda event: code_output.display()),
         (-1, '<Control-Alt-bracketleft>',  self.restore_output))
     
     def add_output(self, event):
-        try:
-            sys.stdout.remove(self.area)
-        except ValueError:
-            pass
-    
         sys.stdout.append(Stdout(self.area))
         root.status.set_msg('Output set on: %s' % \
         self.area.index('insert'))
         return 'break'
     
     def rm_output(self, event):
-        try:
-            sys.stdout.remove(self.area)
-        except Exception:
-            root.status.set_msg('Output removed!')
-        else:
-            root.status.set_msg('Output removed!')
+        sys.stdout.discard(self.area)
+        root.status.set_msg('Output removed!')
         return 'break'
     
     def restore_output(self, event):
         sys.stdout.restore()
         root.status.set_msg('Stdout restored!')
         return 'break'
-    
+
+sys.stdout  = Transmitter(sys.__stdout__)
+code_output = TextWindow('')
+code_output.withdraw()
+sys.stdout.append(CmdOutput(code_output))
 install = OutputController
-
-
-
 
 

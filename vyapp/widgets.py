@@ -1,4 +1,4 @@
-from tkinter import Listbox, Toplevel,  BOTH, END, TOP, ACTIVE
+from tkinter import Listbox, Toplevel,  BOTH, END, TOP, ACTIVE, Text, LEFT, SCROLL
 from os.path import exists, dirname, join, relpath
 from vyapp.tools import findline
 from vyapp.areavi import AreaVi
@@ -167,6 +167,41 @@ class OptionWindow(Toplevel):
         self.grab_release()
         self.withdraw()
 
+class TextWindow(Toplevel):
+    def __init__(self,  data, title='TextWindow', *args, **kwargs):
+        Toplevel.__init__(self, master=root, *args, **kwargs)
+        self.title(title)
+
+        self.text = Text(master=self, blockcursor=True, insertbackground='black', )
+        self.text.bind('<Alt-p>', lambda event: 
+        self.text.yview(SCROLL, 1, 'page'), add=True)
+
+        self.text.bind('<Alt-o>', lambda evenet: 
+        self.text.yview(SCROLL, -1, 'page'), add=True)
+
+        self.text.insert('1.0', data)
+        self.text.pack(side=LEFT, fill=BOTH, expand=True)
+        self.text.focus_set()
+        self.text.bind('<Escape>', lambda event: self.close())
+        self.text.bind('<Key-k>', lambda event: self.text.event_generate('<Up>'))
+        self.text.bind('<Key-j>', lambda event: self.text.event_generate('<Down>'))
+
+        self.protocol("WM_DELETE_WINDOW", self.close)
+
+        self.transient(root)
+        self.withdraw()
+
+    def display(self):
+        self.grab_set()
+        self.deiconify()
+        self.text.focus_set()
+        # self.text.see('end')
+
+    def close(self):
+        self.deiconify()
+        self.grab_release()
+        self.withdraw()
+
 class LinePicker(OptionWindow):
     def __init__(self):
         OptionWindow.__init__(self)
@@ -213,5 +248,6 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
+
 
 

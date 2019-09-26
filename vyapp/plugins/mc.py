@@ -52,6 +52,10 @@ Mode: NORMAL
 Event: <Control-g> 
 Description: Clear the clipboard.
 
+Mode: NORMAL
+Event: <Control-E> 
+Description: Create a dir over the cursor path.
+
 """
 
 from subprocess import check_output, check_call, Popen

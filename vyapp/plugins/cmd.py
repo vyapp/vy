@@ -34,6 +34,7 @@ def exec_cmd(area, env):
     ask    = Ask()
     area.active()
     exc(ask.data, env)
+    root.status.set_msg('Command executed!')
     return 'break'
 
 def exec_region(area, env):
@@ -41,12 +42,7 @@ def exec_region(area, env):
     data = data.encode('utf-8')
     exc(data, env)
     area.clear_selection()
-
-def exec_all_data(area, env):
-    data = area.get('1.0', 'end')
-    data = data.encode('utf-8')
-    exc(data, env)
-    return 'break'
+    root.status.set_msg('Region executed!')
 
 def set_target(area):
     area.active()
@@ -55,15 +51,8 @@ def set_target(area):
 
 install = lambda area: area.install('cmd',
 (-1, '<Alt-semicolon>', lambda event: exec_cmd(event.widget, ENV)), 
-(-1, '<Alt-colon>', lambda event: exec_all_data(event.widget, ENV)),
 ('NORMAL', '<Key-semicolon>', lambda event: exec_region(event.widget, ENV)),
 (-1, '<Control-Alt-semicolon>', lambda event: set_target(event.widget)))
-
-
-
-
-
-
 
 
 

@@ -872,6 +872,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.event_generate('<<Load/*%s>>' % self.extension)
 
     def decode(self, name):
+        """
+        Used to change the areavi encoding.
+        """
+
         self.charset = name
         self.load_data(self.filename)
 
@@ -1071,6 +1075,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 

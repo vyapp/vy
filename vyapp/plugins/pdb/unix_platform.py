@@ -213,7 +213,7 @@ class Pdb(object):
 
     def evaluate_expression(self):
         ask  = Ask()
-        self.send('print %s\r\n' % ask.data)
+        self.send('print(%s)\r\n' % ask.data)
 
     def execute_statement(self):
         ask  = Ask()
@@ -238,16 +238,12 @@ class Pdb(object):
         It is useful when restarting pdb as a different process.
         """
     
-        wids = AreaVi.get_opened_files(root)
+        widgets = AreaVi.get_opened_files(root)
         for index, (filename, line) in self.map_index.items():
-            try:
-                area = wids[filename]
-            except KeyError:
-                pass
-            else:
-                area.tag_delete(
-                  '_breakpoint_%s' % index)        
-
+            area = widgets.get(filename)
+            if area:
+                area.tag_delete('_breakpoint_%s' % index)
+    
     def handle_line(self, device, filename, line, args):
         """
     
@@ -304,5 +300,6 @@ class Pdb(object):
 
 pdb     = Pdb()
 install = pdb
+
 
 
