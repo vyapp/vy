@@ -36,11 +36,16 @@ import sys
 def exec_cmd(area, env):
     ask    = Ask()
     area.active()
+    sys.stdout.write('\nLine executed:\n%s>>>\n' % ask.data)
+
+    data = data.encode('utf-8')
     exc(ask.data, env)
     return 'break'
 
 def exec_region(area, env):
     data = area.join_ranges('sel')
+    sys.stdout.write('\nRegion executed:\n%s>>>\n' % data)
+
     data = data.encode('utf-8')
     exc(data, env)
     area.clear_selection()
@@ -53,7 +58,4 @@ install = lambda area: area.install('cmd',
 (-1, '<Alt-semicolon>', lambda event: exec_cmd(event.widget, ENV)),
 ('NORMAL', '<Key-semicolon>', lambda event: exec_region(event.widget, ENV)),
 (-1, '<Control-Alt-semicolon>', lambda event: set_target(event.widget)))
-
-
-
 

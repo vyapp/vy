@@ -163,10 +163,11 @@ class OutputController:
         return 'break'
 
 sys.stdout  = Transmitter(sys.__stdout__)
-code_output = TextWindow('')
+code_output = TextWindow('', title='Cmd Output')
 code_output.withdraw()
 sys.stdout.append(CmdOutput(code_output))
 install = OutputController
+
 
 
 

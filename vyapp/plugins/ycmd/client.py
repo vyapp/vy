@@ -37,15 +37,12 @@ import shlex
 import requests
 import random
 import hashlib
-import atexit
 import hmac
 import json
 import sys
 import os
 
 HMAC_LENGTH  = 32
-IDLE_SUICIDE = 10800  # 3 hours
-MAX_WAIT     = 5
 
 # Vim filetypes mapping.
 FILETYPES = {
@@ -58,7 +55,7 @@ FILETYPES = {
 
 
 class YcmdServer:
-    def __init__(self, path, port, settings_file):
+    def __init__(self, path, port, settings_file, idle_suicide=300):
         """
         """
 
@@ -67,7 +64,7 @@ class YcmdServer:
         self.path          = path
         self.port          = port
         self.url           = 'http://127.0.0.1:%s' % port 
-        self.cmd           = 'python -m ycmd --port %s --options_file  %s'
+        self.idle_suicide  = idle_suicide
         self.hmac_secret   = os.urandom(HMAC_LENGTH)
 
         with open(self.settings_file) as fd:
@@ -81,11 +78,11 @@ class YcmdServer:
 
         # It is necessary to use stdout=PIPE, stderr=PIPE otherwise
         # we get ycmd outputing stuff even in non verbose mode.
-        self.cmd    = self.cmd % (self.port, tmpfile.name)
-        self.cmd    = shlex.split(self.cmd)
-        self.daemon = Popen(self.cmd, stdout=PIPE, stderr=PIPE, cwd=self.path)
+        self.cmd = ['python', '-m', 'ycmd', 
+        '--port', str(self.port), '--options_file', tmpfile.name, 
+        '--idle_suicide_seconds', str(self.idle_suicide)]
 
-        atexit.register(self.daemon.terminate)
+        self.daemon = Popen(self.cmd, stdout=PIPE, stderr=PIPE, cwd=self.path)
 
     def load_conf(self, path):
         """
@@ -96,8 +93,8 @@ class YcmdServer:
         }
 
         url = '%s/load_extra_conf_file' % self.url
-        hmac_secret = self.hmac_req('POST', '/load_extra_conf_file', 
-        data, self.hmac_secret)
+        hmac_secret = self.hmac_req('POST', 
+        '/load_extra_conf_file', data, self.hmac_secret)
 
         headers = {
             'X-YCM-HMAC': hmac_secret,
@@ -108,6 +105,20 @@ class YcmdServer:
         print('File to load:', path)
         print('Load conf response:', req.json())
         print('Loading extra conf...')
+
+    def is_alive(self):
+        """
+        """
+        hmac_secret = self.hmac_req('POST', 
+        '/healthy', {}, self.hmac_secret)
+
+        url = '%s/healthy' % self.url
+        headers = {
+            'X-YCM-HMAC': hmac_secret,
+        }
+
+        req = self.post(url, json={}, headers=headers)
+        print('Is alive handle:', req.status_code)
 
     def ready(self, line, col, path, data):
         """
@@ -250,6 +261,12 @@ class YcmdCompletion:
         completions     = lambda event: YcmdWindow(event.widget, self.server)
         wrapper         = lambda event: area.after(1000, self.on_ready)
 
+        # Used to keep the server alive.
+        def keep():
+            self.server.is_alive()
+            area.after(250000, keep)
+        area.after(250000, keep)
+
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper), 
         ('NORMAL', '<Control-greater>', 
@@ -328,7 +345,6 @@ class YcmdCompletion:
     
         port        = random.randint(1000, 9999)
         cls.server  = YcmdServer(path, port,  settings_file)
-        # wrapper     = lambda event: area.after(1000, self.load_gxconf)
         ENV['lycm'] = cls.lycm
 
     @classmethod
@@ -359,5 +375,6 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
+
 
 
