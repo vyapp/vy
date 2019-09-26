@@ -46,7 +46,7 @@ HMAC_LENGTH  = 32
 
 # Vim filetypes mapping.
 FILETYPES = {
-'.c': 'cpp',
+'.c': 'c',
 '.py': 'python',
 '.go': 'golang',
 '.c++':'cpp',
@@ -214,8 +214,11 @@ class YcmdServer:
 
         method = bytes(method, encoding = 'utf8' )
         path   = bytes(path, encoding = 'utf8' )
-        body   = json.dumps(body, ensure_ascii = False)
-        body   = bytes(body, encoding = 'utf8' )
+
+        # In case of HTTP GET it can't use json.dumps because it returns
+        # "''" that makes the hmac be calculated wrongly.
+        body = json.dumps(body, ensure_ascii = False) if body else ''
+        body = bytes(body, encoding = 'utf8' )
 
         method = bytes(hmac.new(hmac_secret, 
         method, digestmod = hashlib.sha256).digest())
@@ -278,8 +281,8 @@ class YcmdCompletion:
         # Used to keep the server alive.
         def keep():
             self.server.is_alive()
-            area.after(2000, keep)
-        area.after(2000, keep)
+            area.after(250000, keep)
+        area.after(250000, keep)
 
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper), 
