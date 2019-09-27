@@ -10,6 +10,7 @@ from vyapp.plugins import ENV
 from shutil import copyfile
 from tkinter import Tk
 from os import mkdir
+import sys
 
 class App(Tk):
     """
@@ -68,4 +69,8 @@ class Debug(object):
         from git for example.
         """
         pass
+
+def printd(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
 

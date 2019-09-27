@@ -33,6 +33,7 @@ from subprocess import Popen, PIPE
 from shutil import copyfile
 from vyapp.plugins import ENV
 from vyapp.app import root
+from vyapp.base import printd
 import shlex
 import requests
 import random
@@ -50,7 +51,8 @@ FILETYPES = {
 '.py': 'python',
 '.go': 'golang',
 '.c++':'cpp',
-'.js':'javascript'
+'.js':'javascript',
+'.java': 'java'
 }
 
 
@@ -82,7 +84,7 @@ class YcmdServer:
         '--port', str(self.port), '--options_file', tmpfile.name, 
         '--idle_suicide_seconds', str(self.idle_suicide)]
 
-        self.daemon = Popen(self.cmd, stdout=PIPE, stderr=PIPE, cwd=self.path)
+        self.daemon = Popen(self.cmd,  cwd=self.path)
 
     def load_conf(self, path):
         """
@@ -102,9 +104,8 @@ class YcmdServer:
 
         req = self.post(url, json=data, headers=headers)
 
-        print('File to load:', path)
-        print('Load conf response:', req.json())
-        print('Loading extra conf...')
+        printd('Ycmd - Loading extra conf...', path)
+        printd('Ycmd - Load conf response:', req.json())
 
     def is_alive(self):
         """
@@ -118,7 +119,8 @@ class YcmdServer:
         }
 
         req = self.get(url, headers=headers)
-        print('Is alive handle:', req.status_code, req.json())
+        printd('Ycmd - /healthy response status..\n', req.status_code)
+        printd('Ycmd - /healthy response JSON', req.json())
 
     def ready(self, line, col, path, data):
         """
@@ -143,7 +145,8 @@ class YcmdServer:
 
         req = self.post(url, json=data, headers=headers, timeout=1)
 
-        print('FileReadyToParse JSON:\n', req.json())
+        printd('Ycmd - /FileReadyToParse status', req.status_code)
+        printd('Ycmd - FileReadyToParse Event Response JSON:\n', req.json())
         return req
 
     def post(self, *args, **kwargs):
@@ -194,7 +197,7 @@ class YcmdServer:
         }
 
         req = self.post(url, json=data, headers=headers, timeout=2)
-        print('Request data:', req.json())
+        printd('Request data:', req.json())
         return self.fmt_options(req.json())
 
     def fmt_options(self, data):
@@ -392,6 +395,9 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
+
+
+
 
 
 
