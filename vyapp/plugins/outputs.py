@@ -40,24 +40,17 @@ class Stdout:
     used as stdout channel.
     """
 
-    TAG_CODE = 'code'
     def __init__(self, area):
-        # I am selecting from the beginning to the start of a line
-        # below to the insert cursor so i add a line
-        # to the end of the line below to the cursor then
-        # the code_mark will be after the sel mark.
-        # this was a pain in the ass to notice.
         self.area = area
-        self.area.mark_set('code_mark', 'insert')
+        self.area.mark_set('(CODE_MARK)', 'insert')
 
     def write(self, data):
         """
         This method is called to write data to the AreaVi widget.
         """
 
-        index0 = self.area.index('code_mark')
-        self.area.insert('code_mark', data)
-        self.area.tag_add(self.TAG_CODE, index0, 'code_mark')
+        index0 = self.area.index('(CODE_MARK)')
+        self.area.insert('(CODE_MARK)', data)
         self.area.see('insert')
 
     def __eq__(self, other):
@@ -113,12 +106,15 @@ class Transmitter:
         destroyed. It will throw an exception
         when writing to that areavi.
         """
+        root.status.set_msg(('Code output written to sys.stdout.. '
+        'Press <Alt-bracketright> to check.'))
 
         for ind in self.base[:]: 
             try:
                 ind.write(data)
             except Exception:
                 self.base.discard(ind)
+
 
 class CmdOutput:    
     """
@@ -148,8 +144,7 @@ class OutputController:
 
     def add_output(self, event):
         sys.stdout.append(Stdout(self.area))
-        root.status.set_msg('Output set on: %s' % \
-        self.area.index('insert'))
+        root.status.set_msg('Output set on: %s' % self.area.index('insert'))
         return 'break'
     
     def rm_output(self, event):
@@ -167,6 +162,7 @@ code_output = TextWindow('', title='Cmd Output')
 code_output.withdraw()
 sys.stdout.append(CmdOutput(code_output))
 install = OutputController
+
 
 
 
