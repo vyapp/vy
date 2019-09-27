@@ -106,8 +106,6 @@ class Transmitter:
         destroyed. It will throw an exception
         when writing to that areavi.
         """
-        root.status.set_msg(('Code output written to sys.stdout.. '
-        'Press <Alt-bracketright> to check.'))
 
         for ind in self.base[:]: 
             try:
@@ -162,6 +160,7 @@ code_output = TextWindow('', title='Cmd Output')
 code_output.withdraw()
 sys.stdout.append(CmdOutput(code_output))
 install = OutputController
+
 
 
 
