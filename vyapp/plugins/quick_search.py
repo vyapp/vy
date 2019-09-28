@@ -1,31 +1,48 @@
 """
+Overview
+========
+
+This plugin implements incremental search which is handy to quickly
+jump to specific positions of the text.
 
 Key-Commands
 ============
 
 Namespace: quick-search
+
+
 """
 
 from vyapp.ask import Get
 from vyapp.regutils import build_regex
+from vyapp.base import printd
 from vyapp.app import root
 
 class QuickSearch(object):
-    TAGCONF = {'(SEARCH_MATCH)' : {
-    'background':'yellow', 'foreground':'black'}}
+    confs = {
+        'background':'yellow', 'foreground':'black'
+    }
 
     def __init__(self, area, nocase=True):
-
-        """
-
-        """
         self.area   = area
         self.nocase = nocase
-        area.tags_config(self.TAGCONF)
+        area.tag_config('(SEARCH_MATCH)', self.confs)
 
         area.install('quick-search',
         ('NORMAL', '<Key-q>', self.start_backwards),
         ('NORMAL', '<Key-a>', self.start_forwards))
+
+    @classmethod
+    def config_scheme(cls, **confs):
+        """
+        Used to set matched region properties. These properties
+        can be background, foreground etc. 
+
+        Check Tkinter Text widget documentation on tags for more info.
+        """
+
+        cls.confs.update(confs)
+        printd('Quick Search - Setting confs = ', cls.confs)
 
     def start_forwards(self, event):
         self.index     = self.area.index('insert')
@@ -86,5 +103,6 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 
 

@@ -78,7 +78,7 @@ autoload(vyapp.plugins.assoc)
 # The project attribute is used by other plugins to perform
 # useful operations related to development.
 from vyapp.plugins.project import Project
-Project.config_sentinels('.git', '.svn', '.hg', '._')
+# Project.config_sentinels('.git', '.svn', '.hg', '._')
 autocall(Project)
 
 
@@ -146,10 +146,11 @@ autoload(vyapp.plugins.main_jumps)
 
 
 # The quick_search plugin implements incremental search.
-from vyapp.plugins import quick_search
-# quick_search.QuickSearch.TAGCONF = {'(SEARCH_MATCH)' : {
-# 'background':'yellow', 'foreground':'black'}}
-autoload(quick_search)
+# The matching regions can have their appearence customized with
+# the QuickSearch.config_scheme method.
+from vyapp.plugins.quick_search import QuickSearch
+# QuickSearch.config_scheme(background='yellow', foreground='black')
+autocall(QuickSearch)
 
 
 # Used to jump quickly to chars.
@@ -493,34 +494,6 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

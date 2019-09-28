@@ -28,17 +28,16 @@ def get_sentinel_file(path, *args):
                 return ''
             
 class Project(object):
-    sentinels = set(['.git', '.svn', '.hg', '._'])
+    sentinels = ('.git', '.svn', '.hg', '._')
 
     def  __init__(self, area):
         self.area  = area
-        area.install('fstmt', 
-        (-1, '<<LoadData>>', self.set_path),
+        area.install('fstmt', (-1, '<<LoadData>>', self.set_path),
         (-1, '<<SaveData>>', self.set_path))
 
     @classmethod
     def config_sentinels(cls, *sentinels):
-        cls.sentinels = set(sentinels)
+        cls.sentinels = sentinels
         printd('Project - Setting sentinels = ', cls.sentinels)
 
     def set_path(self, event):
@@ -50,6 +49,7 @@ class Project(object):
         self.area.filename, *Project.sentinels)
 
 install = Project
+
 
 
 
