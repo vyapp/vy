@@ -21,6 +21,9 @@ completion.
 Commands
 ========
 
+Command: lycm(path=None)
+Description: Create a .ycm_extra_conf.py in the specified folder path. When
+path is not specified it creates in the user home dir.
 
 """
 

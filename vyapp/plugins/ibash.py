@@ -15,29 +15,23 @@ Event: <Control-C>
 Description: Send a SIGINT signal to the bash interpreter.
 
 Mode: NORMAL
-Event: <Control-backslash>
-Description: Send  SIGQUIT signal to the bash interpreter.
-
-Mode: NORMAL
-Event: <Control-F1>
-Description: Restart the bash interpreter process.
-
-Mode: NORMAL
-Event: <Return>
+Event: <Shift-Return>
 Description: Send the cursor line to the bash interpreter.
 
 Mode: NORMAL
-Event: <Control-Return>
+Event: <Control-F9>
 Description: Send the region of code that is selected to the bash interpreter.
 
 Mode: NORMAL
-Event: <Shift-F1>
-Description: Send the current line and a Tab character to the bash interpreter,
-asking for auto completion of the command.
-
-Mode: NORMAL
-Event: <Shift-Return>
+Event: <F9>
 Description: Ask for the user to type a command to be dropped to the bash interpreter.
+
+Commands
+========
+
+Command: lsh
+Description: Restart the underlying bash process.
+
 """
 
 
