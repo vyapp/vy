@@ -11,6 +11,7 @@ a vy project file.
 
 from os.path import exists, dirname, join
 from vyapp.app import root
+from vyapp.base import printd
 from vyapp.ask import Ask
 
 def get_sentinel_file(path, *args):
@@ -27,23 +28,29 @@ def get_sentinel_file(path, *args):
                 return ''
             
 class Project(object):
-    SENTINELS = ['.git', '.svn', '.hg', '._']
+    sentinels = set(['.git', '.svn', '.hg', '._'])
 
     def  __init__(self, area):
         self.area  = area
         area.install('fstmt', 
-        (-1, '<<LoadData>>', self.auto),
-        (-1, '<<SaveData>>', self.auto))
+        (-1, '<<LoadData>>', self.set_path),
+        (-1, '<<SaveData>>', self.set_path))
 
-    def auto(self, event):
+    @classmethod
+    def config_sentinels(cls, *sentinels):
+        cls.sentinels = set(sentinels)
+        printd('Project - Setting sentinels = ', cls.sentinels)
+
+    def set_path(self, event):
         """    
         Set the project root automatically.
         """
 
         self.area.project = get_sentinel_file(
-        self.area.filename, *Project.SENTINELS)
+        self.area.filename, *Project.sentinels)
 
 install = Project
+
 
 
 

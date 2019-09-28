@@ -330,7 +330,7 @@ class YcmdCompletion:
             area.after(250000, keep)
         area.after(250000, keep)
 
-        area.master.bind('<Destroy>', self.on_unload)
+        # area.master.bind('<Destroy>', self.on_unload)
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper), 
         ('NORMAL', '<Control-greater>', lambda event: self.err_picker.display()))
@@ -338,7 +338,6 @@ class YcmdCompletion:
     def on_unload(self, event):
         """
         """
-        print('On frame destroy.')
         data = {self.area.filename:  
         {'filetypes': [FILETYPES[self.area.extension]], 
         'contents': self.area.get('1.0', 'end')}}
@@ -459,6 +458,7 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
+
 
 
 
