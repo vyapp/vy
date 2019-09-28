@@ -34,7 +34,7 @@ from shutil import copyfile
 from vyapp.plugins import ENV
 from vyapp.app import root
 from vyapp.base import printd
-import shlex
+import atexit
 import requests
 import random
 import hashlib
@@ -85,6 +85,7 @@ class YcmdServer:
         '--idle_suicide_seconds', str(self.idle_suicide)]
 
         self.daemon = Popen(self.cmd,  cwd=self.path)
+        atexit.register(self.daemon.terminate)
 
     def load_conf(self, path):
         """
@@ -395,6 +396,7 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
+
 
 
 
