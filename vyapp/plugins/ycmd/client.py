@@ -137,8 +137,22 @@ class YcmdServer:
         return req
 
     def debug_info(self, line, col, path, data):
-        req = self.e_send('debug_info', line, col, path, data)
-        printd('Ycmd - /debug_info status', req.status_code)
+        data = {
+       'line_num': line,
+       'column_num': col,
+       'filepath': path,
+       'file_data': data
+        }
+
+        url = '%s/debug_info' % self.url
+        hmac_secret = self.hmac_req('POST', '/debug_info', 
+        data, self.hmac_secret)
+
+        headers = {
+            'X-YCM-HMAC': hmac_secret,
+        }
+
+        req = self.post(url, json=data, headers=headers, timeout=2)
         printd('Ycmd - debug_info Event Response JSON:\n', req.json())
         return req
 
@@ -316,7 +330,7 @@ class YcmdCompletion:
             area.after(250000, keep)
         area.after(250000, keep)
 
-        # area.master.master.bind('<Destroy>', self.on_unload)
+        area.master.bind('<Destroy>', self.on_unload)
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper), 
         ('NORMAL', '<Control-greater>', lambda event: self.err_picker.display()))
