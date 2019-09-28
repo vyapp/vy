@@ -37,13 +37,13 @@ from shutil import copyfile
 from vyapp.plugins import ENV
 from vyapp.app import root
 from vyapp.base import printd
+from vyapp.areavi import AreaVi
 import atexit
 import requests
 import random
 import hashlib
 import hmac
 import json
-import sys
 import os
 
 HMAC_LENGTH  = 32
@@ -131,12 +131,28 @@ class YcmdServer:
         Send file ready.
         """
 
+        req = self.e_send('FileReadyToParse', line, col, path, data)
+        printd('Ycmd - /FileReadyToParse status', req.status_code)
+        printd('Ycmd - FileReadyToParse Event Response JSON:\n', req.json())
+        return req
+
+    def debug_info(self, line, col, path, data):
+        req = self.e_send('debug_info', line, col, path, data)
+        printd('Ycmd - /debug_info status', req.status_code)
+        printd('Ycmd - debug_info Event Response JSON:\n', req.json())
+        return req
+
+    def e_send(self, name,  line, col, path, data):
+        """
+        Send event notification.
+        """
+
         data = {
        'line_num': line,
        'column_num': col,
        'filepath': path,
        'file_data': data,
-       'event_name': 'FileReadyToParse',
+       'event_name': name,
         }
 
         url = '%s/event_notification' % self.url
@@ -148,10 +164,19 @@ class YcmdServer:
         }
 
         req = self.post(url, json=data, headers=headers, timeout=1)
-
-        printd('Ycmd - /FileReadyToParse status', req.status_code)
-        printd('Ycmd - FileReadyToParse Event Response JSON:\n', req.json())
         return req
+
+    def buffer_unload(self, line, col, path, data):
+        """
+        When an AreaVi instance is destroyed it is sent.
+        It is useful to lower resource consume.
+        """
+
+        req = self.e_send('BufferUnload', line, col, path, data)
+        printd('Ycmd - BufferUnload status', req.status_code)
+        printd('Ycmd - BufferUnload Event Response JSON:\n', req.json())
+        return req
+
 
     def post(self, *args, **kwargs):
         """
@@ -291,10 +316,22 @@ class YcmdCompletion:
             area.after(250000, keep)
         area.after(250000, keep)
 
+        # area.master.master.bind('<Destroy>', self.on_unload)
         area.install('ycmd', ('INSERT', '<Control-Key-period>', completions),
         (-1, '<<LoadData>>', wrapper), (-1, '<<SaveData>>', wrapper), 
-        ('NORMAL', '<Control-greater>', 
-        lambda event: self.err_picker.display()))
+        ('NORMAL', '<Control-greater>', lambda event: self.err_picker.display()))
+
+    def on_unload(self, event):
+        """
+        """
+        print('On frame destroy.')
+        data = {self.area.filename:  
+        {'filetypes': [FILETYPES[self.area.extension]], 
+        'contents': self.area.get('1.0', 'end')}}
+
+        req = self.server.buffer_unload(1, 1, self.area.filename, data)
+        printd('Ycmd - BufferUnload status', req.status_code)
+        printd('Ycmd - BufferUnload JSON response', req.json())
 
     def on_ready(self):
         """
@@ -370,6 +407,15 @@ class YcmdCompletion:
         port        = random.randint(1000, 9999)
         cls.server  = YcmdServer(path, port,  settings_file)
         ENV['lycm'] = cls.lycm
+        ENV['dycm'] = cls.dycm
+
+    @classmethod
+    def dycm(cls):
+        data = {AreaVi.ACTIVE.filename:  
+        {'filetypes': [FILETYPES[AreaVi.ACTIVE.extension]], 
+        'contents': AreaVi.ACTIVE.get('1.0', 'end')}}
+
+        cls.server.debug_info(1, 1, AreaVi.ACTIVE.filename, data)
 
     @classmethod
     def lycm(cls, path=None):
@@ -399,10 +445,6 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
-
-
-
-
 
 
 
