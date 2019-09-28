@@ -48,6 +48,7 @@ from untwisted.iofile import *
 from vyapp.ask import Ask
 from subprocess import Popen, PIPE, STDOUT
 from os import environ, setsid, killpg
+from vyapp.tools import error
 from vyapp.plugins import ENV
 import sys
 
@@ -57,7 +58,6 @@ class Process(object):
         ('NORMAL', '<Control-F9>', lambda event: self.dump_region(event.widget)),
         ('NORMAL', '<Shift-Return>', lambda event: self.dump_line(event.widget)),
         ('NORMAL', '<F9>', lambda event: self.ask_data_and_dump(event.widget)),
-        ('NORMAL', '<Control-backslash>', lambda event: self.dump_signal(3)),
         ('NORMAL', '<Control-C>', lambda event: self.dump_signal(2)))
         ENV['lsh'] = self.restart
 
@@ -90,7 +90,7 @@ class Process(object):
 
         root.status.set_msg('Process killed and started !')
 
-    def dump_line_and_tab(self, area):
+    def dump_tab(self, area):
         data = area.get('insert linestart', 'insert -1c lineend')
         data = data.encode('utf-8')
         self.stdin.dump('%s\t\t' % data)
@@ -112,8 +112,16 @@ class Process(object):
         self.stdin.dump(b'%s\n' %  data)
 
     def dump_signal(self, signal):
+        root.status.set_msg('(ibash) Signal number:')
+        ask    = Ask()
+        signal = None
+
+        try:
+            signal = int(ask.data)
+        except ValueError as e:
+            root.status.set_msg('(ibash) Invalid signal')
         killpg(self.child.pid, signal)
-    
+
 process = Process()
 install = process
 
