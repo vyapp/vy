@@ -47,11 +47,13 @@ of text for the previously set replacement.
 """
 
 from vyapp.ask import Get, Ask
+from vyapp.base import printd
 from vyapp.app import root
 
 class Find(object):
-    TAGCONF = { '(CATCHED)': {
-    'background':'green', 'foreground':'white'}}
+    confs = {
+        'background':'green', 'foreground':'white'
+    }
 
     opts  = {'nolinestop': False, 'regexp': True,
     'nocase': True, 'exact': False,'elide': False}
@@ -61,10 +63,22 @@ class Find(object):
 
     def __init__(self, area):
         self.area  = area
-        area.tags_config(self.TAGCONF)
+        area.tag_config('(CATCHED)', self.confs)
 
         area.install('find', ('NORMAL', 
         '<Alt-slash>', lambda event: self.start()))
+
+    @classmethod
+    def c_scheme(cls, **confs):
+        """
+        Used to set matched region properties. These properties
+        can be background, foreground etc. 
+
+        Check Tkinter Text widget documentation on tags for more info.
+        """
+
+        cls.confs.update(confs)
+        printd('Find - Setting confs = ', cls.confs)
 
     def start(self):
         root.status.set_msg('Set replacement: %s' % self.data)
@@ -140,5 +154,6 @@ class Find(object):
         self.area.replace_all(regex, Find.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 

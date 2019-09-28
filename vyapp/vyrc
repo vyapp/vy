@@ -78,7 +78,7 @@ autoload(vyapp.plugins.assoc)
 # The project attribute is used by other plugins to perform
 # useful operations related to development.
 from vyapp.plugins.project import Project
-# Project.config_sentinels('.git', '.svn', '.hg', '._')
+Project.c_sentinels('.git', '.svn', '.hg', '._')
 autocall(Project)
 
 
@@ -149,7 +149,7 @@ autoload(vyapp.plugins.main_jumps)
 # The matching regions can have their appearence customized with
 # the QuickSearch.config_scheme method.
 from vyapp.plugins.quick_search import QuickSearch
-# QuickSearch.config_scheme(background='yellow', foreground='black')
+# QuickSearch.c_scheme(background='yellow', foreground='black')
 autocall(QuickSearch)
 
 
@@ -199,10 +199,9 @@ autoload(vyapp.plugins.cmd)
 # Used to search for text/format text with regex.
 # The class attribute TAGCONF holds default styling 
 # for the tag '(CATCHED)' That's added on matching patterns.
-from vyapp.plugins import find
-# find.Find.TAGCONF = { '(CATCHED)': {
-# 'background':'green', 'foreground':'white'}}
-autoload(find)
+from vyapp.plugins.find import Find
+Find.c_scheme(background='green', foreground='white')
+autocall(Find)
 
 
 # It implements ways of opening/saving files.
@@ -494,6 +493,7 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
+
 
 
 

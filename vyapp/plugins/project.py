@@ -36,7 +36,7 @@ class Project(object):
         (-1, '<<SaveData>>', self.set_path))
 
     @classmethod
-    def config_sentinels(cls, *sentinels):
+    def c_sentinels(cls, *sentinels):
         cls.sentinels = sentinels
         printd('Project - Setting sentinels = ', cls.sentinels)
 
@@ -49,6 +49,7 @@ class Project(object):
         self.area.filename, *Project.sentinels)
 
 install = Project
+
 
 
 
