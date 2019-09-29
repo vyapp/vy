@@ -35,13 +35,14 @@ from subprocess import Popen, STDOUT, PIPE
 from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from re import findall, escape
+from vyapp.base import printd
 from vyapp.app import root
 from vyapp.ask import Ask
 from os.path import join
 
 class Fstmt(object):
     options = LinePicker()
-    PATH    = 'ag'
+    path    = 'ag'
 
     def  __init__(self, area):
         self.area    = area
@@ -54,6 +55,11 @@ class Fstmt(object):
         ('NORMAL', '<Key-bar>', 
         lambda event: self.picker('-i')))
 
+    @classmethod
+    def c_path(cls, path='ag'):
+        cls.path = path
+        printd('Fstmt - Setting ag path = ', path)
+
     def catch_pattern(self):
         pattern = self.area.join_ranges('sel')
         pattern = pattern if pattern else self.area.get(
@@ -63,7 +69,7 @@ class Fstmt(object):
         return pattern
 
     def make_cmd(self, pattern, dir, *args):
-        cmd =  [Fstmt.PATH, '--nocolor', '--nogroup', 
+        cmd =  [Fstmt.path, '--nocolor', '--nogroup', 
         '--vimgrep', '--noheading']
         cmd.extend(args)
         cmd.extend([pattern, dir])
@@ -89,7 +95,5 @@ class Fstmt(object):
             root.status.set_msg('No pattern set!')
         else:
             self.run_cmd(pattern, *args)
-
-
 
 
