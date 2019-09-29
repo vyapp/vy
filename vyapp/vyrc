@@ -262,14 +262,13 @@ autoload(vyapp.plugins.block_sel)
 ##############################################################################
 # Extra plugins.
 
-# Used to perform lax searches over pre defined
-# folders.
-# from vyapp.plugins.sniper import Sniper
-# Setup the path for where sniper will 
-# search for string patterns when in wide search
-# mode.
-# Sniper.DIRS = ['/home/user/projects']
-# autocall(Sniper)
+# Used to perform searches in pre defined or git, svn, hg projects.
+# Use Sniper.c_dirs to set the folders where you usually search for data.
+# The Sniper.c_path is used to set your ag path.
+from vyapp.plugins.sniper import Sniper
+# Sniper.c_dirs('/home/user/projects')
+# Sniper.c_path('ag')
+autocall(Sniper
 
 
 # from vyapp.plugins.fstmt import Fstmt

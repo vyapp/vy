@@ -37,7 +37,7 @@ Mode: INPUT
 Event: <Key-w>
 Description: Set wide search, in wide search mode sniper
 will be searching in the directories that were set
-in Sniper.DIRS. In non wide search sniper will search
+in Sniper.dirs. In non wide search sniper will search
 in your current file project and in your AreaVi.HOME.
 
 Mode: INPUT
@@ -51,6 +51,7 @@ from vyapp.regutils import build_regex
 from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from vyapp.tools import error
+from vyapp.base import printd
 from vyapp.app import root
 from vyapp.ask import Get
 from re import findall
@@ -58,11 +59,11 @@ from re import findall
 class Sniper:
     options = LinePicker()
     # Path to ag program.
-    PATH = 'ag'
+    path = 'ag'
 
     # Dirs where ag will search when in 
     # wide mode.
-    DIRS = []
+    dirs = ()
 
     # Sniper search options.
     file_regex = ''
@@ -76,6 +77,7 @@ class Sniper:
 
     def  __init__(self, area):
         self.area = area
+
         area.install('sniper', 
         ('NORMAL', '<Key-b>', lambda event: self.options.display()),
         ('NORMAL', '<Key-B>', lambda event: Get(events = {
@@ -89,6 +91,27 @@ class Sniper:
         '<Control-w>':self.set_wide, 
         '<Control-m>':self.set_multiline, 
         '<Escape>':  lambda wid: True})))
+
+        if not self.dirs:
+            printd('Sniper - Sniper.dirs is not set.')
+
+    @classmethod
+    def c_path(cls, path='ag'):
+        """
+        Set the ag path. If ag is known to your environment then
+        there is no need to set it.
+        """
+        pass
+        cls.path = path
+        printd('Sniper - Setting ag path = ', path)
+
+    @classmethod
+    def c_dirs(cls, *dirs):
+        """
+        Folders where ag will be searching for data.
+        """
+        cls.dirs = dirs
+        printd('Sniper - Setting dirs =', *dirs)
 
     def set_wide(self, wid):
         Sniper.wide = False if Sniper.wide else True
@@ -125,7 +148,7 @@ class Sniper:
         wid.delete(0, 'end')
 
     def make_cmd(self, pattern):
-        cmd = [self.PATH, '--nocolor', '--nogroup',
+        cmd = [self.path, '--nocolor', '--nogroup',
         '--vimgrep', '--noheading']
 
         if self.ignore:
@@ -149,7 +172,7 @@ class Sniper:
         if not Sniper.wide:
             cmd.extend([self.area.project, AreaVi.HOME])
         else:
-            cmd.extend(Sniper.DIRS)
+            cmd.extend(Sniper.dirs)
         return cmd
 
     def run_cmd(self, pattern):
@@ -177,6 +200,7 @@ class Sniper:
         return True
 
 install = Sniper
+
 
 
 
