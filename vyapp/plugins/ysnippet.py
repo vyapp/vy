@@ -50,7 +50,6 @@ class SnippetPicker(OptionWindow):
         options = zip(map(lambda ind: ind[1], options),
         map(lambda ind: (ind[0], ind[2]), options))
         super(SnippetPicker, self).__call__(list(options))
-        print(self.options)
 
     def drop_on_tab(self, event):
         area = root.note.create('none')
@@ -160,9 +159,6 @@ class Ysnippet(object):
 
         sql = "SELECT * FROM snippet WHERE %s" % ' and '.join([tmp] * len(chks))
 
-        print('Ysnipet dropping sql:', sql)
-        print('Ysnipet dropping attrs:', attrs)
-
         self.cur.execute(sql, attrs)
         matches = self.cur.fetchall()
         return matches
@@ -177,6 +173,7 @@ class Ysnippet(object):
 
 
 install = Ysnippet
+
 
 
 

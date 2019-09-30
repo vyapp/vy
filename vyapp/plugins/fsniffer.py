@@ -11,63 +11,91 @@ Namespace: fsniffer
 
 Mode: Global
 Event: <Alt-minus>
-Description: Locate a file and open it in the current AreaVi instance.
+Description: Locate a file and display it on the statusbar.
 
-Mode: Global
-Event: <Alt-equal>
-Description: Locate a file and open it in another tab.
+
+Mode: INPUT
+Event: <Return>
+Description: Load a located file on a new tab.
+
+Mode: INPUT
+Event: <Control-d>
+Description: Load a located file on the current AreaVi instance.
 
 """
-
+from vyapp.regutils import build_regex
+from subprocess import Popen, STDOUT, PIPE
+from vyapp.widgets import LinePicker
 from vyapp.ask import Get
 from vyapp.app import root
-from vyapp.regutils import build_regex
-from subprocess import check_output, CalledProcessError
+from os.path import join, basename
 
 
 class FSniffer(object):
+    options = LinePicker()
+
+    wide = False
     def __init__(self, area):
-
         self.area = area
-        self.path = ''
-        area.install('fsniffer', (-1, '<Alt-minus>', lambda event: 
-        Get(events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
-        '<Return>': self.view_on_current, '<Escape>': lambda wid: True})),
-        (-1, '<Alt-equal>', lambda event: 
-        Get(events={'<<Idle>>' : self.find, '<<Data>>': self.update_process,
-        '<Return>': self.view_on_new_tab, '<Escape>': lambda wid: True})))
+        area.install('fsniffer', 
+        ('NORMAL', '<Key-minus>', lambda e: self.options.display()), 
+        ('NORMAL', '<Control-minus>', lambda event: Get(events={'<Return>' : self.find,
+        '<Control-w>':self.set_wide, 
+        '<<Idle>>': self.update_pattern,
+        '<Escape>': lambda wid: True})))
+    
+    @classmethod
+    def set_wide(cls, event):
+        FSniffer.wide = False if FSniffer.wide else True
+        root.status.set_msg('Set wide search: %s' % FSniffer.wide)
 
-    def run_cmd(self, data):
-        path = check_output(['locate', '--limit', '1', 
-        '--regexp', build_regex(data, '.*')], encoding='utf8')
-        path = path.strip('\n').rstrip('\n')
-        return path
+    def update_pattern(self, wid):
+        pattern = ' '.join(self.make_cmd(wid.get()))
+        root.status.set_msg('Unix locate cmd: %s' % pattern)
+
+    def make_cmd(self, pattern):
+        # When FSniffer.wide is False it searches in the current 
+        # Areavi instance project.
+        cmd   = ['locate', '--limit', '50']
+        regex = build_regex(pattern, '.*')
+
+        if self.wide:
+            cmd.extend(['--regexp', regex])
+        else:
+            cmd.extend(['--regexp', '%s.*%s' % (
+                self.area.project, regex)])
+        return cmd
+
+    def run_cmd(self, pattern):
+        cmd   = self.make_cmd(pattern)
+        child = Popen(cmd, stdout=PIPE, stderr=STDOUT, 
+        encoding=self.area.charset)
+
+        output = child.communicate()[0]
+        return output
 
     def find(self, wid):
-        try:
-            self.path = self.run_cmd(wid.get())
-        except CalledProcessError:
-            root.status.set_msg('No match found.')
+        pattern = wid.get()
+        output = self.run_cmd(pattern)
+        if output:
+            self.fmt_output(output)
         else:
-            root.status.set_msg(
-            'Matched: %s' % self.path)
-
-    def view_on_current(self, wid):
-        if not self.path: return
-        self.area.load_data(self.path)
+            root.status.set_msg('No results:%s!' % pattern)
         return True
 
-    def view_on_new_tab(self, wid):
-        if not self.path: return
-        # The NoteVi.load method should be rethought.
-        # When it throws an exception it opens a blank tab.
-        root.note.load([[self.path]])
-        return True
+    def fmt_output(self, output):
+        output = output.strip('\n').rstrip('\n')
+        ranges = output.split('\n')
+        ranges = [ind for ind in ranges
+            if ranges]
 
-    def update_process(self, wid):
-        self.path = ''
-        root.status.set_msg('Locating...')
+        ranges = [(ind, '0', basename(ind)) for ind in ranges]
+
+        self.options(ranges)
 
 install = FSniffer
+
+
+
 
 
