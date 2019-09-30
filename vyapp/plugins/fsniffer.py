@@ -9,20 +9,17 @@ Key-Commands
 
 Namespace: fsniffer
 
-Mode: Global
-Event: <Alt-minus>
-Description: Locate a file and display it on the statusbar.
+Mode: NORMAL
+Event: <Control-minus>
+Description: Ask for a filename pattern to be located using unix locate command.
 
 
 Mode: INPUT
 Event: <Return>
-Description: Load a located file on a new tab.
-
-Mode: INPUT
-Event: <Control-d>
-Description: Load a located file on the current AreaVi instance.
+Description: Display possible file matches on a line picker widget. 
 
 """
+
 from vyapp.regutils import build_regex
 from subprocess import Popen, STDOUT, PIPE
 from vyapp.widgets import LinePicker
