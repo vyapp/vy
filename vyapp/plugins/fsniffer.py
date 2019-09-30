@@ -36,9 +36,9 @@ class FSniffer(object):
         self.area = area
         area.install('fsniffer', 
         ('NORMAL', '<Key-minus>', lambda e: self.options.display()), 
-        ('NORMAL', '<Control-minus>', lambda event: Get(events={'<Return>' : self.find,
-        '<Control-w>':self.set_wide, 
-        '<<Idle>>': self.update_pattern,
+        ('NORMAL', '<Control-minus>', 
+        lambda event: Get(events={'<Return>' : self.find,
+        '<Control-w>':self.set_wide, '<<Idle>>': self.update_pattern,
         '<Escape>': lambda wid: True})))
     
     @classmethod

@@ -47,13 +47,7 @@ class Project(object):
 
         self.area.project = get_sentinel_file(
         self.area.filename, *Project.sentinels)
+        printd('Project - Setting project path = ', self.area.project)
 
 install = Project
-
-
-
-
-
-
-
 
