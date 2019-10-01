@@ -60,6 +60,7 @@ Description: Create a dir over the cursor path.
 
 from subprocess import check_output, check_call, Popen
 from os.path import expanduser, dirname, join
+from vyapp.base import printd
 from vyapp.tools import error
 from vyapp.app import root
 from vyapp.ask import Ask
@@ -70,7 +71,7 @@ check_output = error(check_output)
 check_call  = error(check_call)
 
 class Mc(object):
-    TAGCONF = {'(MC-DIRECTORY)': {'foreground': 'red'},
+    confs = {'(MC-DIRECTORY)': {'foreground': 'red'},
     '(MC-FILE)': {'foreground': 'yellow'}}
 
     clipboard = []
@@ -95,7 +96,20 @@ class Mc(object):
 
         ('NORMAL', '<Key-J>', lambda e:self.ls(self.ph)))
 
-        area.tags_config(self.TAGCONF)
+        area.tags_config(self.confs)
+
+    @classmethod
+    def c_appearence(cls, dir, file):
+        """
+        Used to configure foreground/background for directory entries.
+
+        Check Tkinter Text widget tags for more info.
+        """
+
+        cls.confs['(MC-DIRECTORY)'] = dir
+        cls.confs['(MC-FILE)']      = file
+
+        printd('Mc - Setting dir/file confs = ', cls.confs)
 
     def list_clipboard(self):
         self.area.delete('1.0', 'end')
@@ -200,6 +214,7 @@ class Mc(object):
         self.ls(self.ph)
 
 install = Mc
+
 
 
 
