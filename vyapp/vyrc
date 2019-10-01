@@ -147,9 +147,9 @@ autoload(vyapp.plugins.main_jumps)
 
 # The quick_search plugin implements incremental search.
 # The matching regions can have their appearence customized with
-# the QuickSearch.config_scheme method.
+# the QuickSearch.c_appearance method.
 from vyapp.plugins.quick_search import QuickSearch
-# QuickSearch.c_scheme(background='yellow', foreground='black')
+QuickSearch.c_appearance(background='yellow', foreground='black')
 autocall(QuickSearch)
 
 
@@ -200,7 +200,7 @@ autoload(vyapp.plugins.cmd)
 # The class attribute TAGCONF holds default styling 
 # for the tag '(CATCHED)' That's added on matching patterns.
 from vyapp.plugins.find import Find
-Find.c_scheme(background='green', foreground='white')
+Find.c_appearance(background='green', foreground='white')
 autocall(Find)
 
 
@@ -290,9 +290,9 @@ autoload(vyapp.plugins.block_sel)
 
 # The mc filenamanager.
 # Configure your color scheme with 
-# Mc.c_appearence method..
+# Mc.c_appearance method..
 # from vyapp.plugins.mc import Mc
-# Mc.c_appearence(dir={'foreground': 'red'}, 
+# Mc.c_appearance(dir={'foreground': 'red'}, 
 # file={'foreground': 'yellow'})
 # autocall(Mc)
 

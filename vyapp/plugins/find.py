@@ -69,7 +69,7 @@ class Find(object):
         '<Alt-slash>', lambda event: self.start()))
 
     @classmethod
-    def c_scheme(cls, **confs):
+    def c_appearance(cls, **confs):
         """
         Used to set matched region properties. These properties
         can be background, foreground etc. 
@@ -154,6 +154,7 @@ class Find(object):
         self.area.replace_all(regex, Find.data, '1.0', 'end', **self.opts)
 
 install = Find
+
 
 
 

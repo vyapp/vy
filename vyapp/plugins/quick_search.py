@@ -33,7 +33,7 @@ class QuickSearch(object):
         ('NORMAL', '<Key-a>', self.start_forwards))
 
     @classmethod
-    def c_scheme(cls, **confs):
+    def c_appearance(cls, **confs):
         """
         Used to set matched region properties. These properties
         can be background, foreground etc. 
@@ -103,6 +103,7 @@ class QuickSearch(object):
 
 
 install = QuickSearch
+
 
 
 

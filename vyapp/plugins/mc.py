@@ -99,7 +99,7 @@ class Mc(object):
         area.tags_config(self.confs)
 
     @classmethod
-    def c_appearence(cls, dir, file):
+    def c_appearance(cls, dir, file):
         """
         Used to configure foreground/background for directory entries.
 
@@ -109,7 +109,7 @@ class Mc(object):
         cls.confs['(MC-DIRECTORY)'] = dir
         cls.confs['(MC-FILE)']      = file
 
-        printd('Mc - Setting dir/file confs = ', cls.confs)
+        printd('Mc - Setting dir/file appearance confs = ', cls.confs)
 
     def list_clipboard(self):
         self.area.delete('1.0', 'end')
@@ -214,6 +214,7 @@ class Mc(object):
         self.ls(self.ph)
 
 install = Mc
+
 
 
 
