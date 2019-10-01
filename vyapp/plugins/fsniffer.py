@@ -18,6 +18,14 @@ Mode: INPUT
 Event: <Return>
 Description: Display possible file matches on a line picker widget. 
 
+Mode: INPUT
+Event: <Control-w>
+Description: Set wide search. In wide search the locate command will
+search for files in the whole file system. When an AreaVi instance has 
+no project path set then wide search as false will have no efect. 
+When wide search is False and project path is set then it searches in the
+current file project dirs.
+
 """
 
 from vyapp.regutils import build_regex
@@ -56,7 +64,7 @@ class FSniffer(object):
         cmd   = ['locate', '--limit', '50']
         regex = build_regex(pattern, '.*')
 
-        if self.wide:
+        if self.wide or not self.area.project:
             cmd.extend(['--regexp', regex])
         else:
             cmd.extend(['--regexp', '%s.*%s' % (
@@ -91,6 +99,7 @@ class FSniffer(object):
         self.options(ranges)
 
 install = FSniffer
+
 
 
 
