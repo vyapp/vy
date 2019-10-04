@@ -8,15 +8,7 @@ from os.path import abspath
 import sys
 from os.path import exists, dirname, join
 
-
-def get_area_tab_index(area):
-    """
-    This function returns the tab index that area is
-    attached to.
-    """
-
-    return area.master.master.master
-
+    
 def set_line(area, line, col=0):
     """
     This function receives an AreaVi widget instance and a line number
@@ -24,7 +16,7 @@ def set_line(area, line, col=0):
     """
 
     sys.stderr.write(area.filename + '\n')
-    root.note.select(get_area_tab_index(area))
+    root.note.select(area.master.master.master)
     area.focus()
     area.setcur(line, col)
 
@@ -73,4 +65,5 @@ def get_project_root(path):
         if not exists(join(tmp, '__init__.py')):
             return path
         path = tmp
+
 

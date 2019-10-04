@@ -22,21 +22,3 @@ def install(area):
     area.install('python-mode', ('NORMAL', '<Key-exclam>', 
     lambda event: python_mode(area)))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

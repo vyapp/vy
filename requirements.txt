@@ -1,9 +1,10 @@
 vulture
 pyflakes
-untwisted==1.4.3
+untwisted==2.0.1
 jedi
 pygments
 future
+
 
 
 
