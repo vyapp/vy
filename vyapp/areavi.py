@@ -864,7 +864,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             self.charset = ''
 
         self.delete('1.0', 'end')
-        self.insert('1.0', data)
+        self.insert('end', data)
         self.mark_set('insert', '1.0')
         self.see('insert')
 
@@ -887,7 +887,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.event_generate('<<Pre-SaveData>>')
         self.event_generate('<<Pre-Save/*%s>>' % self.extension)
 
-        data = self.get('1.0', 'end')
+        data = self.get('1.0', 'end -1c')
         data = data.encode(self.charset)
         fd   = open(self.filename, 'wb')
         fd.write(data)
@@ -1075,6 +1075,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+
 
 
 
