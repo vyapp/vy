@@ -139,6 +139,7 @@ class OutputController:
     
     def view_log(self, event):
         code_output.display()
+        return 'break'
 
     def add_output(self, event):
         sys.stdout.append(Stdout(self.area))
@@ -160,6 +161,7 @@ code_output = TextWindow('', title='Cmd Output')
 code_output.withdraw()
 sys.stdout.append(CmdOutput(code_output))
 install = OutputController
+
 
 
 

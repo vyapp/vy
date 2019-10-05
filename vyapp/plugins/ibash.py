@@ -38,6 +38,7 @@ Description: Restart the underlying bash process.
 from untwisted.network import core, xmap, READ, WRITE, Device
 from untwisted.tkinter import extern
 from vyapp.app import root
+from vyapp.base import printd
 from untwisted.iofile import *
 from vyapp.ask import Ask
 from subprocess import Popen, PIPE, STDOUT
@@ -60,6 +61,7 @@ class Process(object):
         self.start()
 
     def start(self):
+        printd('Ibash - Bash process started...')
         self.child  = Popen(self.cmd, shell=0, stdout=PIPE, stdin=PIPE, 
                             preexec_fn=setsid, stderr=STDOUT,  env=environ)
         
@@ -118,4 +120,5 @@ class Process(object):
 
 process = Process()
 install = process
+
 
