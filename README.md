@@ -76,6 +76,10 @@ Built-in Features
 
 - **Python Pyflakes Integration**
 
+- **Built-in Auto Completion Ycmd/YouCompleteMe""
+
+- **HTML Tidy Integration**
+
 Plugins/Extensions
 ==================
 
@@ -84,8 +88,6 @@ Plugins/Extensions
 - **Javascript Auto Completion**
 
 - **Ruby Auto Completion**
-
-- **HTML Tidy Integration**
 
 - **Irc Client Plugin**
 
@@ -133,14 +135,6 @@ I thank Nikita who has donated money. Nikita also sings my poems.
 Yuri Brandão
 
 A great friend who is also a passionate developer.
-
-
-
-
-
-
-
-
 
 
 
