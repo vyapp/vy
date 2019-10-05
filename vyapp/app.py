@@ -27,10 +27,7 @@ args = parser.parse_args()
 lst = [list(g) for k, g in itertools.groupby(args.scheme, 
 lambda x: not x) if not k]
 
-# parser.add_option("-v", "--debug", action="store_true", 
-# default=False, dest="debug")
-# (opt, args) = parser.parse_args()
-
+print('Loading vyrc...')
 # It points to the root toplevel window of vy. 
 # It is the one whose AreaVi instances
 # are placed on. 
@@ -53,6 +50,7 @@ else:
 # attempting to load a non existing file.
 if not args.verbose: 
     sys.stderr = Debug()
+
 
 
 

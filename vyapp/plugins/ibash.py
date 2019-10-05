@@ -53,7 +53,7 @@ class Process(object):
         ('NORMAL', '<Control-F9>', lambda event: self.dump_region(event.widget)),
         ('NORMAL', '<Shift-Return>', lambda event: self.dump_line(event.widget)),
         ('NORMAL', '<F9>', lambda event: self.ask_data_and_dump(event.widget)),
-        ('NORMAL', '<Control-C>', lambda event: self.dump_signal(2)))
+        ('NORMAL', '<Control-C>', self.dump_signal))
         ENV['lsh'] = self.restart
 
     def __init__(self, cmd=['bash', '-i']):
@@ -61,7 +61,7 @@ class Process(object):
         self.start()
 
     def start(self):
-        printd('Ibash - Bash process started...')
+        print('Ibash - Bash process started...')
         self.child  = Popen(self.cmd, shell=0, stdout=PIPE, stdin=PIPE, 
                             preexec_fn=setsid, stderr=STDOUT,  env=environ)
         
@@ -103,12 +103,13 @@ class Process(object):
         area.down()
 
     def ask_data_and_dump(self, area):
-        ask  = Ask()
-        data = ask.data.encode('utf-8')
-        self.stdin.dump(b'%s\n' %  data)
+        ask = Ask()
 
-    def dump_signal(self, signal):
-        root.status.set_msg('(ibash) Signal number:')
+        if ask.data:
+            self.stdin.dump(b'%s\n' %  ask.data.encode('utf-8'))
+
+    def dump_signal(self, event):
+        root.status.set_msg('(ibash) Signal number SIGINT(2)/SIGQUIT(3):')
         ask    = Ask()
         signal = None
 
@@ -120,5 +121,6 @@ class Process(object):
 
 process = Process()
 install = process
+
 
 
