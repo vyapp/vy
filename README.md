@@ -44,6 +44,9 @@ Features/Plugins
 
 - **Python Debugger**
 
+- **Integrates with python Rope**
+    * https://github.com/python-rope/rope
+
 - **Fuzzy Search**
 
 - **Incremental Search**
