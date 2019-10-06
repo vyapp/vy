@@ -87,7 +87,7 @@ Features/Plugins
 - **Find Function/Class Definition**
 
 - **Python Vulture Integration**
-    *https://github.com/jendrikseipp/vulture
+    * https://github.com/jendrikseipp/vulture
 
 - **Python Auto Completion**
     * https://github.com/davidhalter/jedi
