@@ -136,7 +136,7 @@ import vyapp.plugins.main_jumps
 autoload(vyapp.plugins.main_jumps)
 
 # The quick_search plugin implements incremental search.
-# The matching regions can have their appearence customized with
+# The matching regions can have their appearance customized with
 # the QuickSearch.c_appearance method.
 from vyapp.plugins.quick_search import QuickSearch
 QuickSearch.c_appearance(background='yellow', foreground='black')
@@ -313,6 +313,12 @@ autoload(tidy)
 # JavascriptCompletion.PORT = 1234
 # autocall(JavascriptCompletion)
 
+# Golang auto completion with gocode engine. Don't mix it
+# with ycmd plugin.
+# from vyapp.plugins.gohints import GolangCompletion
+# GolangCompletion.PATH ='~/.go/bin/gocode'
+# autocall(GolangCompletion)
+
 # Used to insert tab, spaces.
 # The default size/char in case the file has no 
 # extension or it is not specified it is ''. When there is no '':(size, char)
@@ -444,9 +450,3 @@ def setup(area):
                 font=('Monospace', 8, 'bold'), undo=True)
 
 autocall(setup) 
-
-
-
-
-
-
