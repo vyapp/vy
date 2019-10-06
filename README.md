@@ -51,9 +51,15 @@ Features/Plugins
 
 - **Incremental Search**
 
+- **Python Pyflakes Integration**
+    * https://github.com/PyCQA/pyflakes
+
 - **Tabs/Panes**
 
 - **Self documenting**
+
+- **HTML Tidy Integration**
+    * http://tidy.sourceforge.net/
 
 - **Powerful plugin API**
 
@@ -61,9 +67,15 @@ Features/Plugins
 
 - **Handy Shortcuts**
 
+- **Ycmd/YouCompleteMe Auto Completion**
+    * https://github.com/ycm-core/ycmd
+
 - **Easily customizable (vyrc in python)**
 
 - **Quick Snippet Search**
+
+- **Smart Search with The Silver Searcher**
+    *https://github.com/ggreer/the_silver_searcher
 
 - **File Manager**
 
@@ -72,26 +84,22 @@ Features/Plugins
 - **Irc Client Plugin**
     * https://github.com/vyapp/vyirc
 
-- **Smart Search with The Silver Searcher**
-
 - **Find Function/Class Definition**
 
 - **Python Vulture Integration**
-
-- **Python Pyflakes Integration**
-
-- **Ycmd/YouCompleteMe Auto Completion**
-
-- **HTML Tidy Integration**
+    *https://github.com/jendrikseipp/vulture
 
 - **Python Auto Completion**
+    * https://github.com/davidhalter/jedi
 
 - **Ruby Auto Completion**
     * https://github.com/vyapp/rsense
 
 - **Golang Auto Completion**
+    * https://github.com/nsf/gocode
 
 - **Javascript Auto Completion**
+    * https://github.com/nsf/gocode
 
 The github organization https://github.com/vyapp is meant
 to hold vy related projects.
