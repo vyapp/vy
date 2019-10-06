@@ -27,13 +27,51 @@ from rope.base.libutils import path_to_resource
 from rope.base.change import MoveResource
 from vyapp.app import root
 from rope.base.evaluate import eval_location
+from rope.base import libutils
+from rope.refactor.move import create_move
 
 class PythonRefactor(object):
     def __init__(self, area):
         self.area  = area
         self.files = None
-        area.install('rope', ('PYTHON', '<Key-R>', error(self.pick_name)))
+        area.install('rope', ('PYTHON', '<Key-R>', error(self.get_rename_data)),
+        ('PYTHON', '<Key-A>', self.static_analysis),
+        ('PYTHON', '<Key-M>', error(self.get_move_data)))
 
+    def static_analysis(self, event):
+        path    = get_project_root(self.area.filename)
+        project = Project(path)
+        mod     = path_to_resource(project, self.area.filename)
+
+        data = libutils.analyze_module(project, mod)
+        project.close()
+
+    def get_move_data(self, event):
+        ask = Ask()
+        if ask.data:
+            self.move(ask.data)
+
+    def move(self, name):
+        """
+        """
+        tmp0    = self.area.get('1.0', 'insert')
+        offset  = len(tmp0)
+
+        path    = get_project_root(self.area.filename)
+        project = Project(path)
+        mod     = path_to_resource(project, self.area.filename)
+        mover   = create_move(project, mod, offset)
+        destin  = path_to_resource(project, name)
+        changes = mover.get_changes(destin)
+        project.do(changes)
+
+        self.update_instances(changes)
+        project.close()
+
+        self.area.chmode('NORMAL')
+        root.status.set_msg('Resources moved!')
+
+        
     def update_instances(self, changes):
         """
         After changes it updates all AreaVi instances which 
@@ -69,7 +107,7 @@ class PythonRefactor(object):
         if instance:
             instance.load_data(new.real_path)
 
-    def pick_name(self, event):
+    def get_rename_data(self, event):
         ask = Ask()
         if ask.data:
             self.rename(ask.data)
