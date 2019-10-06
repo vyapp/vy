@@ -38,10 +38,8 @@ autoload(vyapp.plugins.builtin_modes)
 import vyapp.plugins.python_mode
 autoload(vyapp.plugins.python_mode)
 
-
 import vyapp.plugins.golang_mode
 autoload(vyapp.plugins.golang_mode)
-
 
 import vyapp.plugins.html_mode
 autoload(vyapp.plugins.html_mode)
@@ -239,7 +237,7 @@ autoload(vyapp.plugins.block_sel)
 # from vyapp.plugins.sniper import Sniper
 # Sniper.c_dirs('/home/user/projects')
 # Sniper.c_path('ag')
-# autocall(Sniper
+# autocall(Sniper)
 
 # Uncomment and set the path to silver search in case 
 # it is not available in the environment.
@@ -299,9 +297,9 @@ autoload(vyapp.plugins.jedi)
 
 # You may need to setup tidy path here depending on your installation.
 # But if tidy is available in the environment then no need to uncomment this line.
-from  vyapp.plugins import tidy
+# from  vyapp.plugins import tidy
 # tidy.HtmlChecker.PATH = '/path/to/tidy'
-autoload(tidy)
+# autoload(tidy)
 
 # Auto completion using ycmd.
 # from vyapp.plugins.ycmd import client
