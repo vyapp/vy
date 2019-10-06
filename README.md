@@ -48,8 +48,6 @@ Built-in Features
 
 - **Incremental Search**
 
-- **Python Auto Completion**
-
 - **Tabs/Panes**
 
 - **Self documenting**
@@ -76,23 +74,25 @@ Built-in Features
 
 - **Python Pyflakes Integration**
 
-- **Built-in Auto Completion Ycmd/YouCompleteMe""
+- **Ycmd/YouCompleteMe Auto Completion""
 
 - **HTML Tidy Integration**
 
-Plugins/Extensions
-==================
+- **Python Auto Completion**
 
 - **Golang Auto Completion**
 
 - **Javascript Auto Completion**
+
+Plugins/Extensions
+==================
 
 - **Ruby Auto Completion**
 
 - **Irc Client Plugin**
 
 The github organization https://github.com/vyapp is meant
-to hold most of the standard vy plugins. 
+to hold vy related projects.
 
 Basic Install
 =============
@@ -117,9 +117,6 @@ Documentation
 =============
 
 [Wiki](https://github.com/iogf/vy/wiki)
-
-Support
-=======
 
 Donors
 ======
