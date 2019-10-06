@@ -81,14 +81,14 @@ Features/Plugins
 - **Python Auto Completion**
 
 - **Ruby Auto Completion**
-    https://github.com/vyapp/rsense
+    * https://github.com/vyapp/rsense
 
 - **Golang Auto Completion**
 
 - **Javascript Auto Completion**
 
 - **Irc Client Plugin**
-    https://github.com/vyapp/vyirc
+    * https://github.com/vyapp/vyirc
 
 The github organization https://github.com/vyapp is meant
 to hold vy related projects.
