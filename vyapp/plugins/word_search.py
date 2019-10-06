@@ -31,7 +31,7 @@ class WordSearch(object):
     def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
         self.area = area
         area.tag_configure('(ISEARCH_MATCH)', **setup)
-        area.install('word-search', ('NORMAL', '<Key-0>', lambda event: 
+        area.install('word-search', ('NORMAL', '<Control-z>', lambda event: 
         Get(events={
         '<Return>' : self.start, 
         '<Alt-p>'  : lambda wid: self.go_down(), 

@@ -26,8 +26,8 @@ Description: Open an input box in order to type inline python code to be execute
 
 """
 
-
-from vyapp.exe import exc
+from traceback import print_exc as debug
+from vyapp.tools import exec_pipe
 from vyapp.ask import Ask
 from vyapp.plugins import ENV
 from vyapp.app import root
@@ -39,7 +39,7 @@ def exec_cmd(area, env):
     sys.stdout.write('\nLine executed:\n%s>>>\n' % ask.data)
 
     data = ask.data.encode('utf-8')
-    exc(data, env)
+    exec_pipe(data, env)
     return 'break'
 
 def exec_region(area, env):
@@ -47,7 +47,7 @@ def exec_region(area, env):
     sys.stdout.write('\nRegion executed:\n%s>>>\n' % data)
 
     data = data.encode('utf-8')
-    exc(data, env)
+    exec_pipe(data, env)
     area.clear_selection()
 
 def set_target(area):

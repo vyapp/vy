@@ -308,6 +308,11 @@ autoload(tidy)
 # client.YcmdCompletion.setup('/path/to/ycmd')
 # autoload(client)
 
+# from vyapp.plugins.ternjs.completer import JavascriptCompletion 
+# JavascriptCompletion.PATH = 'tern'
+# JavascriptCompletion.PORT = 1234
+# autocall(JavascriptCompletion)
+
 # Used to insert tab, spaces.
 # The default size/char in case the file has no 
 # extension or it is not specified it is ''. When there is no '':(size, char)

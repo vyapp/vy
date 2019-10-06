@@ -21,7 +21,6 @@ Description: Send the cursor line to the process and insert a line down.
 from untwisted.expect import Expect, LOAD, CLOSE
 from vyapp.plugins.spawn.base_spawn import BaseSpawn
 from untwisted.network import xmap
-from vyapp.exe import exec_quiet
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 from vyapp.app import root
