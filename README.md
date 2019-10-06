@@ -74,7 +74,7 @@ Built-in Features
 
 - **Python Pyflakes Integration**
 
-- **Ycmd/YouCompleteMe Auto Completion""
+- **Ycmd/YouCompleteMe Auto Completion**
 
 - **HTML Tidy Integration**
 
