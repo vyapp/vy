@@ -29,7 +29,7 @@ from vyapp.app import root
 class PythonRefactor(object):
     def __init__(self, area):
         self.area    = area
-        area.install('rope', ('PYTHON', '<Key-R>', error(self.rename)),)
+        area.install('rope', ('PYTHON', '<Key-R>', error(self.pick_name)))
 
     def update_instances(self, updates):
         """
@@ -45,15 +45,19 @@ class PythonRefactor(object):
             if instance:
                 instance.load_data(ind.real_path)
 
-    def rename(self, event):
+    def pick_name(self, event):
+        ask = Ask()
+        if ask.data:
+            self.rename(ask.data)
+
+    def rename(self, name):
         tmp0    = self.area.get('1.0', 'insert')
         offset  = len(tmp0)
-        ask     = Ask()
         path    = get_project_root(self.area.filename)
         project = Project(path)
         mod     = path_to_resource(project, self.area.filename)
         renamer = Rename(project, mod, offset)
-        changes = renamer.get_changes(ask.data)
+        changes = renamer.get_changes(name)
         project.do(changes)
 
         updates  = changes.get_changed_resources()
