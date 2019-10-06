@@ -36,7 +36,6 @@ Description: Restart the underlying bash process.
 
 
 from untwisted.network import core, xmap, READ, WRITE, Device
-from untwisted.tkinter import extern
 from vyapp.app import root
 from vyapp.base import printd
 from untwisted.iofile import *

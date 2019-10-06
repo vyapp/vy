@@ -3,7 +3,7 @@ This module exposes the vyapp.app.root attribute that is a variable pointing
 to the App class instance. The App class instance holds all vy editor's widgets.
 """
 
-from .base import App, Debug
+from vyapp.base import App, Debug
 import argparse
 import itertools
 import sys
@@ -50,10 +50,4 @@ else:
 # attempting to load a non existing file.
 if not args.verbose: 
     sys.stderr = Debug()
-
-
-
-
-
-
 

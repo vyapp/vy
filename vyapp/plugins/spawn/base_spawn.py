@@ -1,7 +1,5 @@
 from untwisted.event import LOAD, CLOSE
-from untwisted.tkinter import extern
 from vyapp.app import root
-
 import signal
 
 class BaseSpawn(object):
@@ -50,8 +48,3 @@ class BaseSpawn(object):
 
     def handle_close(self, expect):
         pass
-
-# Install untwisted reactor.
-extern(root)
-
-

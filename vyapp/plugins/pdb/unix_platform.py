@@ -103,7 +103,6 @@ Description: Terminate the process.
 """
 
 from untwisted.network import core, READ, Device
-from untwisted.tkinter import extern
 from subprocess import Popen, PIPE, STDOUT
 from untwisted.iofile import *
 from untwisted.wrappers import xmap
