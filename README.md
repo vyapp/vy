@@ -66,6 +66,9 @@ Features/Plugins
 
 - **Terminal-like**
 
+- **Irc Client Plugin**
+    * https://github.com/vyapp/vyirc
+
 - **Smart Search with The Silver Searcher**
 
 - **Find Function/Class Definition**
@@ -86,9 +89,6 @@ Features/Plugins
 - **Golang Auto Completion**
 
 - **Javascript Auto Completion**
-
-- **Irc Client Plugin**
-    * https://github.com/vyapp/vyirc
 
 The github organization https://github.com/vyapp is meant
 to hold vy related projects.
