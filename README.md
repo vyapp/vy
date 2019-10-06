@@ -39,8 +39,8 @@ The plugins are documented: the documentation can be accessed from vy by droppin
 
 ![screenshot-1](screenshot-1.jpg)
 
-Built-in Features
-=================
+Features/Plugins
+================
 
 - **Python Debugger**
 
@@ -80,16 +80,15 @@ Built-in Features
 
 - **Python Auto Completion**
 
+- **Ruby Auto Completion**
+    https://github.com/vyapp/rsense
+
 - **Golang Auto Completion**
 
 - **Javascript Auto Completion**
 
-Plugins/Extensions
-==================
-
-- **Ruby Auto Completion**
-
 - **Irc Client Plugin**
+    https://github.com/vyapp/vyirc
 
 The github organization https://github.com/vyapp is meant
 to hold vy related projects.
@@ -132,7 +131,3 @@ I thank Nikita who has donated money. Nikita also sings my poems.
 Yuri Brandão
 
 A great friend who is also a passionate developer.
-
-
-
-
