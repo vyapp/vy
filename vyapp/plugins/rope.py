@@ -37,10 +37,7 @@ class PythonRefactor(object):
         were changed.
         """
         files = AreaVi.get_opened_files(root)
-        print('\nRope - Renamed resource ..\n')
-
         for ind in updates:
-            print('File:', ind.real_path)
             instance = files.get(ind.real_path)
             if instance:
                 instance.load_data(ind.real_path)
@@ -62,6 +59,10 @@ class PythonRefactor(object):
 
         updates  = changes.get_changed_resources()
         self.update_instances(updates)
+
+        print('\nRope - Renamed resource ..\n')
+        print(changes.get_description())
+
         self.area.chmode('NORMAL')
         root.status.set_msg('Resources renamed!')
         project.close()
