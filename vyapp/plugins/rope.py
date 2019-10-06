@@ -2,6 +2,9 @@
 Overview
 ========
 
+Integrates with python rope refactoring tools. It allows users
+to rename variables, methods, classes and also move python resources
+easily.
 
 Key-Commands
 ============
@@ -10,7 +13,9 @@ Namespace: rope
 
 Mode: PYTHON
 Event: <Key-R>
-Description: 
+Description: Rename a given python resource. Place the cursor
+over the resource string on the AreaVi instance then issue  the keycommand 
+to perform the renaming along the whole project. 
 """
 
 from vyapp.ask import Ask
