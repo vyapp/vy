@@ -75,7 +75,7 @@ Features/Plugins
 - **Quick Snippet Search**
 
 - **Smart Search with The Silver Searcher**
-    *https://github.com/ggreer/the_silver_searcher
+    * https://github.com/ggreer/the_silver_searcher
 
 - **File Manager**
 
