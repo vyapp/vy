@@ -44,7 +44,7 @@ Features/Plugins
 
 - **Python Debugger**
 
-- **Integrates with python Rope**
+- **Rope Refactoring Tools **
     * https://github.com/python-rope/rope
 
 - **Fuzzy Search**
