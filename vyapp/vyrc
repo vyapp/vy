@@ -254,8 +254,8 @@ autoload(vyapp.plugins.block_sel)
 # autoload(fsniffer)
 
 # The ysnippet plugin.
-# import vyapp.plugins.ysnippet
-# autoload(vyapp.plugins.ysnippet)
+import vyapp.plugins.ysnippet
+autoload(vyapp.plugins.ysnippet)
 
 # The mc filenamanager.
 # Configure your color scheme with 
