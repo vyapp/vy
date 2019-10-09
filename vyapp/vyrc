@@ -5,6 +5,9 @@ import sys
 from os.path import expanduser, join
 sys.path.append(join(expanduser('~'), '.vy'))
 ##############################################################################
+# Functions used to load the plugins.
+from vyapp.plugins import autoload, autocall, mapset
+##############################################################################
 # Install untwisted reactor into tkinter. 
 # Plugins like ibash, spawn wouldn't work without this import.
 
