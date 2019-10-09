@@ -318,7 +318,7 @@ autoload(vyapp.plugins.jedi)
 # Golang auto completion with gocode engine. Don't mix it
 # with ycmd plugin.
 # from vyapp.plugins.gohints import GolangCompletion
-# GolangCompletion.PATH ='~/.go/bin/gocode'
+# GolangCompletion.PATH ='/path/to/gocode'
 # autocall(GolangCompletion)
 
 # Used to insert tab, spaces.
