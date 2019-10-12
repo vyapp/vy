@@ -38,8 +38,8 @@ from os.path import join, basename
 
 class FSniffer(object):
     options = LinePicker()
+    wide    = True
 
-    wide = False
     def __init__(self, area):
         self.area = area
         area.install('fsniffer', 

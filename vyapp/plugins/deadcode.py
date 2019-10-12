@@ -51,10 +51,14 @@ class PythonAnalysis:
         ('PYTHON', '<Key-O>', self.check_all))
     
     def check_all(self, event):
-        output = self.run_cmd(self.area.filename)
+        path  = get_project_root(self.area.filename)
+        child = Popen([self.PATH,  path],
+        stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
+        output = child.communicate()[0]
+
         regex  = '(.+):([0-9]+):?[0-9]*:(.+)' 
         ranges = findall(regex, output)
-        sys.stdout.write('Global errors:\n%s\n' % output)
+        sys.stdout.write('Vulture found global errors:\n%s\n' % output)
         self.area.chmode('NORMAL')
 
         if ranges:
@@ -62,15 +66,12 @@ class PythonAnalysis:
         else:
             root.status.set_msg('No errors!')
 
-    def run_cmd(self, filename):
-        path  = get_project_root(filename)
+    def check_module(self, event):
+        path  = get_project_root(self.area.filename)
         child = Popen([self.PATH,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
-        return output
 
-    def check_module(self, event):
-        output = self.run_cmd(self.area.filename)
         regex  = '(%s):([0-9]+):?[0-9]*:(.+)' % relpath(self.area.filename)
         ranges = findall(regex, output)
 
@@ -83,7 +84,7 @@ class PythonAnalysis:
             root.status.set_msg('No errors!')
         
     def display(self, ranges):
-        root.status.set_msg('Errors were found!' )
+        root.status.set_msg('Vulture found errors!' )
         options = LinePicker()
         options(ranges)
 

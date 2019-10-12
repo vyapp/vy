@@ -26,7 +26,6 @@ from rope.refactor.rename import Rename
 from rope.base.libutils import path_to_resource
 from rope.base.change import MoveResource
 from vyapp.app import root
-from rope.base.evaluate import eval_location
 from rope.base import libutils
 from rope.refactor.move import create_move
 
@@ -43,7 +42,7 @@ class PythonRefactor(object):
         project = Project(path)
         mod     = path_to_resource(project, self.area.filename)
 
-        data = libutils.analyze_module(project, mod)
+        libutils.analyze_module(project, mod)
         project.close()
 
     def get_move_data(self, event):
