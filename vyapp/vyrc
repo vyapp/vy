@@ -310,6 +310,10 @@ autoload(vyapp.plugins.jedi)
 # client.YcmdCompletion.setup('/path/to/ycmd')
 # autoload(client)
 
+# Refactorying tools.
+import vyapp.plugins.rope
+autoload(vyapp.plugins.rope)
+
 # from vyapp.plugins.ternjs.completer import JavascriptCompletion 
 # JavascriptCompletion.PATH = 'tern'
 # JavascriptCompletion.PORT = 1234

@@ -4,14 +4,4 @@ untwisted==2.0.1
 jedi
 pygments
 future
-
-
-
-
-
-
-
-
-
-
-
+rope
