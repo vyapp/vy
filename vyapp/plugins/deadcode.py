@@ -14,8 +14,13 @@ Namespace: deadcode
 
 Mode: PYTHON
 Event: <Key-o>
-Description: Highlight all lines
-which were reported by vulture.
+Description: Highlight all lines which were reported 
+by vulture on the current file.
+
+Mode: PYTHON
+Event: <Key-O>
+Description: Highlight all lines which were reported 
+by vulture on all files.
 
 Commands
 ========
@@ -28,7 +33,7 @@ using the same keys as defined in text_spots plugin.
 """
 
 from subprocess import Popen, STDOUT, PIPE
-from os.path import exists, dirname, join, relpath
+from os.path import relpath
 from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from vyapp.plugins import ENV
@@ -42,16 +47,34 @@ class PythonAnalysis:
 
     def  __init__(self, area):
         self.area = area
+        area.install('deadcode', ('PYTHON', '<Key-o>', self.check_module),
+        ('PYTHON', '<Key-O>', self.check_all))
+    
+    def check_all(self, event):
+        output = self.run_cmd(self.area.filename)
+        regex  = '(.+):([0-9]+):?[0-9]*:(.+)' 
+        ranges = findall(regex, output)
+        sys.stdout.write('Global errors:\n%s\n' % output)
+        self.area.chmode('NORMAL')
 
-    def check(self):
-        path  = get_project_root(self.area.filename)
-        child = Popen([self.PATH,  path], 
+        if ranges:
+            self.display(ranges)
+        else:
+            root.status.set_msg('No errors!')
+
+    def run_cmd(self, filename):
+        path  = get_project_root(filename)
+        child = Popen([self.PATH,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
+        return output
 
+    def check_module(self, event):
+        output = self.run_cmd(self.area.filename)
         regex  = '(%s):([0-9]+):?[0-9]*:(.+)' % relpath(self.area.filename)
         ranges = findall(regex, output)
-        sys.stdout.write('Errors:\n%s\n' % output)
+
+        sys.stdout.write('%s errors:\n%s\n' % (self.area.filename, output))
         self.area.chmode('NORMAL')
 
         if ranges:
@@ -64,17 +87,10 @@ class PythonAnalysis:
         options = LinePicker()
         options(ranges)
 
-def install(area):
-    python_analysis = PythonAnalysis(area)
-    picker = lambda event: python_analysis.check()
-
-    area.install('deadcode', 
-    ('PYTHON', '<Key-o>', picker))
+install = PythonAnalysis
 
 def py_analysis():
     python_analysis = PythonAnalysis(AreaVi.ACTIVE)
     python_analysis.check()
-
 ENV['py_analysis'] = py_analysis
-
 
