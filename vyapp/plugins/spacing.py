@@ -18,6 +18,7 @@ Description: Insert a tab/space based on the programming file type.
 from os.path import splitext
 from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
+from vyapp.app import root
 
 class Tab(object):
     scheme = {}
@@ -53,11 +54,7 @@ def tabset(size, char):
     Tab.scheme[ext] = size, char 
     AreaVi.ACTIVE.tabsize = size
     AreaVi.ACTIVE.tabchar = char
+    root.status.set_msg('Tab size:char:%s:%s' % (size, repr(char)))
 
 ENV['tabset'] = tabset
 install = Tab
-
-
-
-
-
