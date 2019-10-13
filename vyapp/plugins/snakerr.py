@@ -37,20 +37,26 @@ from vyapp.areavi import AreaVi
 from vyapp.tools import get_project_root
 from vyapp.plugins import ENV
 from vyapp.app import root
+from vyapp.base import printd
 from re import findall
 import sys
 
 class PythonChecker(object):
-    PATH = 'pyflakes'
+    path = 'pyflakes'
 
     def  __init__(self, area):
         self.area = area
         area.install('snakerr', ('PYTHON', '<Key-h>', self.check_module),
         ('PYTHON', '<Key-H>', self.check_all))
 
+    @classmethod
+    def c_path(cls, path):
+        printd('Snakerr - Setting Pyflakes path = ', cls.path)
+        cls.path = path
+
     def check_all(self, event):
         path  = get_project_root(self.area.filename)
-        child = Popen([self.PATH,  path],
+        child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 
@@ -70,7 +76,7 @@ class PythonChecker(object):
 
     def check_module(self, event):
         path  = get_project_root(self.area.filename)
-        child = Popen([self.PATH,  path],
+        child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 

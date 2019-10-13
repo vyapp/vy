@@ -270,13 +270,10 @@ autoload(vyapp.plugins.ysnippet)
 # autoload(vyapp.plugins.ibash)
 
 # Python syntax checker through pyflakes.
-from vyapp.plugins import snakerr
-# The path to pyflakes executable. You don't need to
-# uncomment this line if pyflakes executable is available 
-# in your environment path.
-# snakerr.PythonChecker.PATH = 'pyflakes'
-# The code to load the plugin.
-autoload(snakerr)
+# Use the classmethod c_path to set pyflakes path.
+from vyapp.plugins.snakerr import PythonChecker
+PythonChecker.c_path('pyflakes')
+autocall(PythonChecker)
 
 # Python analysis through vulture.
 from vyapp.plugins import deadcode
