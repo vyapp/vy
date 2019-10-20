@@ -64,7 +64,7 @@ class PythonAnalysis:
         printd('Deadcode - Setting Vulture path = ', cls.path)
         cls.path = path
     
-    def check_all(self, event):
+    def check_all(self, event=None):
         path  = get_project_root(self.area.filename)
         child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
@@ -79,7 +79,7 @@ class PythonAnalysis:
         if ranges:
             self.options(ranges)
 
-    def check_module(self, event):
+    def check_module(self, event=None):
         path  = get_project_root(self.area.filename)
         child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
@@ -99,6 +99,6 @@ install = PythonAnalysis
 
 def py_analysis():
     python_analysis = PythonAnalysis(AreaVi.ACTIVE)
-    python_analysis.check()
+    python_analysis.check_all()
 ENV['py_analysis'] = py_analysis
 

@@ -58,7 +58,7 @@ class StaticChecker(object):
         printd('Snakerr - Setting Mypy path = ', cls.path)
         cls.path = path
 
-    def check_all(self, event):
+    def check_all(self, event=None):
         path  = get_project_root(self.area.filename)
         child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
@@ -74,7 +74,7 @@ class StaticChecker(object):
         if ranges:
             self.options(ranges)
 
-    def check_module(self, event):
+    def check_module(self, event=None):
         path  = get_project_root(self.area.filename)
         child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
@@ -93,7 +93,7 @@ class StaticChecker(object):
 install = StaticChecker
 def py_static():
     checker = StaticChecker(AreaVi.ACTIVE)
-    checker.check()
+    checker.check_all()
 
 ENV['py_static'] = py_static
 

@@ -61,7 +61,7 @@ class PythonChecker(object):
         printd('Snakerr - Setting Pyflakes path = ', cls.path)
         cls.path = path
 
-    def check_all(self, event):
+    def check_all(self, event=None):
         path  = get_project_root(self.area.filename)
         child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
@@ -80,7 +80,7 @@ class PythonChecker(object):
         if ranges:
             self.options(ranges)
 
-    def check_module(self, event):
+    def check_module(self, event=None):
         path  = get_project_root(self.area.filename)
         child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
@@ -98,7 +98,7 @@ class PythonChecker(object):
 install = PythonChecker
 def py_errors():
     python_checker = PythonChecker(AreaVi.ACTIVE)
-    python_checker.check()
+    python_checker.check_all()
 
 ENV['py_errors'] = py_errors
 
