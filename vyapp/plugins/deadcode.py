@@ -38,21 +38,29 @@ from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from vyapp.plugins import ENV
 from vyapp.tools import get_project_root
+from vyapp.base import printd
 from vyapp.app import root
 from re import findall
 import sys
 
 class PythonAnalysis:
-    PATH = 'vulture'
+    options = LinePicker()
+    path    = 'vulture'
 
     def  __init__(self, area):
         self.area = area
-        area.install('deadcode', ('PYTHON', '<Key-o>', self.check_module),
+        area.install('deadcode', ('PYTHON', '<Control-o>', self.check_module),
+        ('PYTHON', '<Key-o>', lambda event: self.options.display()),
         ('PYTHON', '<Key-O>', self.check_all))
+
+    @classmethod
+    def c_path(cls, path):
+        printd('Deadcode - Setting Vulture path = ', cls.path)
+        cls.path = path
     
     def check_all(self, event):
         path  = get_project_root(self.area.filename)
-        child = Popen([self.PATH,  path],
+        child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 
@@ -61,14 +69,13 @@ class PythonAnalysis:
         sys.stdout.write('Vulture found global errors:\n%s\n' % output)
         self.area.chmode('NORMAL')
 
+        root.status.set_msg('Vulture errors: %s' % len(ranges))
         if ranges:
-            self.display(ranges)
-        else:
-            root.status.set_msg('No errors!')
+            self.options(ranges)
 
     def check_module(self, event):
         path  = get_project_root(self.area.filename)
-        child = Popen([self.PATH,  path],
+        child = Popen([self.path,  path],
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 
@@ -78,16 +85,10 @@ class PythonAnalysis:
         sys.stdout.write('%s errors:\n%s\n' % (self.area.filename, output))
         self.area.chmode('NORMAL')
 
+        root.status.set_msg('Vulture errors: %s' % len(ranges))
         if ranges:
-            self.display(ranges)
-        else:
-            root.status.set_msg('No errors!')
+            self.options(ranges)
         
-    def display(self, ranges):
-        root.status.set_msg('Vulture found errors!' )
-        options = LinePicker()
-        options(ranges)
-
 install = PythonAnalysis
 
 def py_analysis():

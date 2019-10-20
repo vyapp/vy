@@ -10,7 +10,7 @@ git clone git@github.com:iogf/vy.wiki.git vy.wiki-code
 cd /home/tau/projects/vy.wiki-code/
 git pull
 ##############################################################################
-# push vy wiki docs.
+# push wiki docs.
 cd /home/tau/projects/vy.wiki-code/
 git status
 git add *
@@ -22,7 +22,7 @@ git push
 cd /home/tau/projects/vy-code/
 find . -name "*.pyc" -exec rm -f {} \;
 ##############################################################################
-# push vy code.
+# push code.
 cd /home/tau/projects/vy-code/
 git status
 git add *
@@ -99,39 +99,37 @@ python setup.py install
 rm -fr build
 exit
 ##############################################################################
-# preview, check, markdown, vy, github, compile, transform, convert, html.
+# preview markdown docs.
 cd /home/tau/projects/vy-code
 markdown README.md > README.html
 google-chrome README.html
 rm README.html
 ##############################################################################
-# generate, table of contents, vy, markdown, BOOK.md
+# generate table of contents TOC.
 cd /home/tau/projects/vy-code
 gh-md-toc BOOK.md >> table.md
 vy table.md
 rm table.md
 ##############################################################################
-# remove, uninstall, delete global, vy, vyapp, installation, package.
+# remove global installation.
 sudo bash -i
 rm -fr /home/tau/.vy
 rm -fr /usr/local~/projects/python2.7/dist-packages/vyapp
 rm /usr/local~/projects/python2.7/dist-packages/vy-*.egg-info
 exit
 ##############################################################################
-# build, make, a tarball, tar.gz, sdist, vy, vyapp.
+# build tarball.
 cd /home/tau/projects/vy-code
 python2.6 setup.py sdist 
 rm -fr dist
 rm MANIFEST
 ##############################################################################
-# share, put, place, host, package, python, pip, application, vy, pypi.
-
+# upload to pypi/pip.
 cd ~/projects/vy-code
 python setup.py sdist register upload
 rm -fr dist
 ##############################################################################
-
-# install, tern-chrome-extesion, get, autocompletion, chrome, plugins, development, vy.
+# Install tern chrome extesion to get auto completion for javascript in the browser.
 
 # BROKEN!
 
@@ -147,17 +145,6 @@ sudo npm -g install tern-chrome-extension
 # }
 
 vy ~/.tern-config
-##############################################################################
-
-grep -rl  'CompletionWindow' . | xargs sed -i 's/CompletionWindow/CompletionWindow/g' 
-
-
-ls -dla -1 $PWD/*
-ls -d --all  /home/tau/*
-ls -d --all  /home/tau/*.*
-grep -rl  '<Key-g>' .
-grep -rl  '<Control-g>' .
-
 ##############################################################################
 # futurize code.
 

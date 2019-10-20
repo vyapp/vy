@@ -36,11 +36,13 @@ from re import findall
 import sys
 
 class StaticChecker(object):
-    path = 'mypy'
+    options = LinePicker()
+    path    = 'mypy'
 
     def  __init__(self, area):
         self.area = area
-        area.install('snakerr', ('PYTHON', '<Key-t>', self.check_module),
+        area.install('snakerr', ('PYTHON', '<Control-t>', self.check_module),
+        ('PYTHON', '<Key-t>', lambda event: self.options.display()),
         ('PYTHON', '<Key-T>', self.check_all))
 
     @classmethod
@@ -57,13 +59,12 @@ class StaticChecker(object):
         regex  = '(.+?):([0-9]+):(.+)' 
         ranges = findall(regex, output)
 
-        sys.stdout.write('Mypy errors:\n%s\n' % output)
+        sys.stdout.write('Mypy errors: \n%s\n' % output)
         self.area.chmode('NORMAL')
 
+        root.status.set_msg('Mypy errors: %s' % len(ranges))
         if ranges:
-            self.display(ranges)
-        else:
-            root.status.set_msg('Found no errors!')
+            self.options(ranges)
 
     def check_module(self, event):
         path  = get_project_root(self.area.filename)
@@ -73,18 +74,13 @@ class StaticChecker(object):
 
         regex  = '(%s):([0-9]+):(.+)' % relpath(self.area.filename)
         ranges = findall(regex, output)
-        sys.stdout.write('Errors:\n%s\n' % output)
+        sys.stdout.write('Mypy errors: \n%s\n' % output)
         self.area.chmode('NORMAL')
 
+        root.status.set_msg('Mypy errors: %s' % len(ranges))
         if ranges:
-            self.display(ranges)
-        else:
-            root.status.set_msg('Found no errors!')
-        
-    def display(self, ranges):
-        root.status.set_msg('Found errors!' )
-        options = LinePicker()
-        options(ranges)
+            self.options(ranges)
+
 
 install = StaticChecker
 def py_static():

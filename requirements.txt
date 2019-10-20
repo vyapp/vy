@@ -5,3 +5,4 @@ jedi
 pygments
 future
 rope
+mypy

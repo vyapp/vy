@@ -39,11 +39,13 @@ from re import findall
 import sys
 
 class PythonChecker(object):
-    path = 'pyflakes'
+    options = LinePicker()
+    path    = 'pyflakes'
 
     def  __init__(self, area):
         self.area = area
-        area.install('snakerr', ('PYTHON', '<Key-h>', self.check_module),
+        area.install('snakerr', ('PYTHON', '<Control-h>', self.check_module),
+        ('PYTHON', '<Key-h>', lambda event: self.options.display()),
         ('PYTHON', '<Key-H>', self.check_all))
 
     @classmethod
@@ -65,11 +67,10 @@ class PythonChecker(object):
 
         sys.stdout.write('Pyflakes found global errors:\n%s\n' % output)
         self.area.chmode('NORMAL')
+        root.status.set_msg('Pyflakes errors: %s' % len(ranges))
 
         if ranges:
-            self.display(ranges)
-        else:
-            root.status.set_msg('No errors!')
+            self.options(ranges)
 
     def check_module(self, event):
         path  = get_project_root(self.area.filename)
@@ -81,17 +82,11 @@ class PythonChecker(object):
         ranges = findall(regex, output)
         sys.stdout.write('Errors:\n%s\n' % output)
         self.area.chmode('NORMAL')
+        root.status.set_msg('Pyflakes errors: %s' % len(ranges))
 
         if ranges:
-            self.display(ranges)
-        else:
-            root.status.set_msg('No errors!')
+            self.options(ranges)
         
-    def display(self, ranges):
-        root.status.set_msg('Pyflakes found errors!' )
-        options = LinePicker()
-        options(ranges)
-
 install = PythonChecker
 def py_errors():
     python_checker = PythonChecker(AreaVi.ACTIVE)

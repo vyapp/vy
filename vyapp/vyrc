@@ -281,11 +281,11 @@ StaticChecker.c_path('mypy')
 autocall(StaticChecker)
 
 # Python analysis through vulture.
-from vyapp.plugins import deadcode
 # The path to vulture executable. No need to set it
 # if vulture is on your env path.
-# deadcode.PythonAnalysis.PATH = 'vulture'
-autoload(deadcode)
+from vyapp.plugins.deadcode import PythonAnalysis
+PythonAnalysis.c_path('vulture')
+autocall(PythonAnalysis)
 
 # Download html from the clipboard url in the active AreaVi
 # instance.
