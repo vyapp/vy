@@ -14,16 +14,20 @@ Key-Commands
 ============
 
 Mode: ALPHA
-Event: <Key-p>
+Event: <Control-i>
 Description: Store in the sqlite database the selected region of text from the
 focused AreaVi instance.
 
 Mode: ALPHA
-Event: <Key-i>
+Event: <Key-I>
 Description: Perform a search based on a pattern. The pattern looks as follow:
 Pattern: str0 + str1 + str2 + ...
 The matched snippets will contain each one of the strings either in the title
 or in the data attribute.
+
+Mode: ALPHA
+Event: <Key-i>
+Description: Just display the previous search matches.
 
 """
 
@@ -99,16 +103,19 @@ class Ysnippet(object):
 
         """
 
-        self.area   = area
+        self.area = area
 
         area.install('ysnippet',
-        ('ALPHA', '<Key-p>', self.put),
-        ('ALPHA', '<Control-i>', self.reload),
-        ('ALPHA', '<Key-i>', self.find),)
+        ('ALPHA', '<Control-i>', self.put),
+        ('ALPHA', '<Key-i>', self.reload),
+        ('ALPHA', '<Key-I>', self.find),)
 
         # Create table
         self.cur.execute('''CREATE TABLE if not exists 
         snippet (id integer PRIMARY KEY, title text, data text);''')
+
+    def ask_title(self, event):
+        root.status.set_msg()
 
     def put(self, event):
         """
