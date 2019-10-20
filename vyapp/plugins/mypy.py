@@ -2,10 +2,10 @@
 Overview
 ========
 
-Offers syntax checking for python with pyflakes.
+Run static typer checker on code.
 
 Extern dependencies:
-    pyflakes
+    mypy
 
 Key-Commands
 ============
@@ -13,17 +13,14 @@ Key-Commands
 Namespace: snakerr
 
 Mode: PYTHON
-Event: <Key-h>
+Event: <Key-F>
 Description: Highlight all lines
 with syntax errors. 
 
 Commands
 ========
 
-Command: py_errors()
-Description: Run pyflakes over the current file and highlighs
-all lines with errors. It is possible to jump upwards/downwards
-using the same keys as defined in text_spots plugin.
+Command: py_static()
 
 """
 
@@ -38,17 +35,17 @@ from vyapp.base import printd
 from re import findall
 import sys
 
-class PythonChecker(object):
-    path = 'pyflakes'
+class StaticChecker(object):
+    path = 'mypy'
 
     def  __init__(self, area):
         self.area = area
-        area.install('snakerr', ('PYTHON', '<Key-h>', self.check_module),
-        ('PYTHON', '<Key-H>', self.check_all))
+        area.install('snakerr', ('PYTHON', '<Key-t>', self.check_module),
+        ('PYTHON', '<Key-T>', self.check_all))
 
     @classmethod
     def c_path(cls, path):
-        printd('Snakerr - Setting Pyflakes path = ', cls.path)
+        printd('Snakerr - Setting Mypy path = ', cls.path)
         cls.path = path
 
     def check_all(self, event):
@@ -57,19 +54,16 @@ class PythonChecker(object):
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 
-        # Pyflakes omit the column attribute when there are
-        # syntax errors thus the (.+?) in the beggining of the
-        # regex is necessary.
-        regex  = '(.+?):([0-9]+):?[0-9]*:(.+)' 
+        regex  = '(.+?):([0-9]+):(.+)' 
         ranges = findall(regex, output)
 
-        sys.stdout.write('Pyflakes found global errors:\n%s\n' % output)
+        sys.stdout.write('Mypy errors:\n%s\n' % output)
         self.area.chmode('NORMAL')
 
         if ranges:
             self.display(ranges)
         else:
-            root.status.set_msg('No errors!')
+            root.status.set_msg('Found no errors!')
 
     def check_module(self, event):
         path  = get_project_root(self.area.filename)
@@ -77,7 +71,7 @@ class PythonChecker(object):
         stdout=PIPE, stderr=STDOUT, encoding=self.area.charset)
         output = child.communicate()[0]
 
-        regex  = '(%s):([0-9]+):?[0-9]*:(.+)' % relpath(self.area.filename)
+        regex  = '(%s):([0-9]+):(.+)' % relpath(self.area.filename)
         ranges = findall(regex, output)
         sys.stdout.write('Errors:\n%s\n' % output)
         self.area.chmode('NORMAL')
@@ -85,17 +79,18 @@ class PythonChecker(object):
         if ranges:
             self.display(ranges)
         else:
-            root.status.set_msg('No errors!')
+            root.status.set_msg('Found no errors!')
         
     def display(self, ranges):
-        root.status.set_msg('Pyflakes found errors!' )
+        root.status.set_msg('Found errors!' )
         options = LinePicker()
         options(ranges)
 
-install = PythonChecker
-def py_errors():
-    python_checker = PythonChecker(AreaVi.ACTIVE)
-    python_checker.check()
+install = StaticChecker
+def py_static():
+    checker = StaticChecker(AreaVi.ACTIVE)
+    checker.check()
 
-ENV['py_errors'] = py_errors
+ENV['py_static'] = py_static
+
 

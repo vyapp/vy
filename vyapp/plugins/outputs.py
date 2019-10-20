@@ -162,9 +162,3 @@ code_output.withdraw()
 sys.stdout.append(CmdOutput(code_output))
 install = OutputController
 
-
-
-
-
-
-

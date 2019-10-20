@@ -36,7 +36,7 @@ import sys
 def exec_cmd(area, env):
     ask = Ask()
     area.active()
-    sys.stdout.write('\nLine executed:\n%s>>>\n' % ask.data)
+    sys.stdout.write('\nLine executed:\n%s\n>>>\n' % ask.data)
 
     data = ask.data.encode('utf-8')
     exec_pipe(data, env)
@@ -44,7 +44,7 @@ def exec_cmd(area, env):
 
 def exec_region(area, env):
     data = area.join_ranges('sel')
-    sys.stdout.write('\nRegion executed:\n%s>>>\n' % data)
+    sys.stdout.write('\nRegion executed:\n%s\n>>>\n' % data)
 
     data = data.encode('utf-8')
     exec_pipe(data, env)

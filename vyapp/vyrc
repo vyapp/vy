@@ -275,6 +275,11 @@ from vyapp.plugins.snakerr import PythonChecker
 PythonChecker.c_path('pyflakes')
 autocall(PythonChecker)
 
+# Python static analysis with mypy.
+from vyapp.plugins.mypy import StaticChecker
+StaticChecker.c_path('mypy')
+autocall(StaticChecker)
+
 # Python analysis through vulture.
 from vyapp.plugins import deadcode
 # The path to vulture executable. No need to set it
