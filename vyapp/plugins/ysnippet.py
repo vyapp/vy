@@ -106,29 +106,35 @@ class Ysnippet(object):
         self.area = area
 
         area.install('ysnippet',
-        ('ALPHA', '<Control-i>', self.put),
+        ('ALPHA', '<Control-i>', self.get_title),
         ('ALPHA', '<Key-i>', self.reload),
-        ('ALPHA', '<Key-I>', self.find),)
+        ('ALPHA', '<Key-I>', self.get_pattern),)
 
         # Create table
         self.cur.execute('''CREATE TABLE if not exists 
         snippet (id integer PRIMARY KEY, title text, data text);''')
 
-    def ask_title(self, event):
-        root.status.set_msg()
+    def get_title(self, event):
+        root.status.set_msg('Snippet title:')
+        ask = Ask()
 
-    def put(self, event):
+        if ask.data: 
+            self.store(ask.data)
+
+    def get_pattern(self, event):
+        root.status.set_msg('Snippet pattern:')
+        ask = Ask()
+
+        if ask.data: 
+            self.find(ask.data)
+
+    def store(self, data):
         """
         In order to update a snippet it has to contain
         a field @(id)
         """
 
-        ask = Ask()
-
-        if not ask.data: 
-            return
-
-        values = (ask.data, self.area.join_ranges('sel', '\n'))
+        values = (data, self.area.join_ranges('sel', '\n'))
 
         self.area.tag_remove('sel', 'sel.first', 'sel.last')
         
@@ -140,16 +146,11 @@ class Ysnippet(object):
 
         root.status.set_msg('Snippet saved!')
 
-    def find(self, event):
+    def find(self, data):
         """
         """
-        ask = Ask()
-
-        # If it is none then the user canceled the entry.
-        # It should accept '' as a valid entry.
-        if ask.data == None: return
         
-        matches = self.build_sql(ask.data)
+        matches = self.build_sql(data)
 
         if not len(matches):
             root.status.set_msg('No snippet found')
@@ -180,8 +181,4 @@ class Ysnippet(object):
 
 
 install = Ysnippet
-
-
-
-
 
