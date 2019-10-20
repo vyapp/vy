@@ -14,8 +14,16 @@ Namespace: snakerr
 
 Mode: PYTHON
 Event: <Key-h>
-Description: Highlight all lines
+Description: Show previous Pyflakes reports.
+
+Mode: PYTHON
+Event: <Control-h>
+Description: Run Pyflakes on the current file.
 with syntax errors. 
+
+Mode: PYTHON
+Event: <Key-H>
+Description:  Run Pyflakes on the whole current file project.
 
 Commands
 ========

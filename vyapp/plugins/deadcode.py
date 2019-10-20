@@ -13,7 +13,13 @@ Key-Commands
 Namespace: deadcode
 
 Mode: PYTHON
+
+
+Mode: PYTHON
 Event: <Key-o>
+Description: Show previous Vulture reports.
+
+Event: <Control-o>
 Description: Highlight all lines which were reported 
 by vulture on the current file.
 

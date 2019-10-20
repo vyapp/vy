@@ -79,6 +79,9 @@ Features/Plugins
 
 - **File Manager**
 
+- **Python Static Type Checker**
+    * http://mypy-lang.org/
+
 - **Terminal-like**
 
 - **Irc Client Plugin**

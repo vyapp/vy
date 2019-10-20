@@ -2,20 +2,28 @@
 Overview
 ========
 
-Run static typer checker on code.
+Run static typer checker on your project files. It uses mypy.
 
 Extern dependencies:
-    mypy
+    http://mypy-lang.org/
 
 Key-Commands
 ============
 
-Namespace: snakerr
+Namespace: mypy
 
 Mode: PYTHON
-Event: <Key-F>
-Description: Highlight all lines
+Event: <Key-h>
+Description: Show previous Mypy reports.
+
+Mode: PYTHON
+Event: <Control-t>
+Description: Run Mypy on the current file.
 with syntax errors. 
+
+Mode: PYTHON
+Event: <Key-T>
+Description:  Run Mypy on the whole current file project.
 
 Commands
 ========
@@ -41,7 +49,7 @@ class StaticChecker(object):
 
     def  __init__(self, area):
         self.area = area
-        area.install('snakerr', ('PYTHON', '<Control-t>', self.check_module),
+        area.install('mypy', ('PYTHON', '<Control-t>', self.check_module),
         ('PYTHON', '<Key-t>', lambda event: self.options.display()),
         ('PYTHON', '<Key-T>', self.check_all))
 
