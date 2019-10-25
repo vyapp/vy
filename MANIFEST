@@ -65,6 +65,7 @@ vyapp/plugins/main_jumps.py
 vyapp/plugins/match_sym_pair.py
 vyapp/plugins/mc.py
 vyapp/plugins/mode_shortcut.py
+vyapp/plugins/mypy.py
 vyapp/plugins/outputs.py
 vyapp/plugins/page_scroll.py
 vyapp/plugins/pair_sel.py

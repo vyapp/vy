@@ -37,8 +37,13 @@ class PythonRefactor(object):
         ('PYTHON', '<Key-A>', self.static_analysis),
         ('PYTHON', '<Key-M>', error(self.get_move_data)))
 
+    def get_root_path(self):
+        if self.area.project:
+            return self.area.project
+        return get_project_root(self.area.filename)
+
     def static_analysis(self, event):
-        path    = get_project_root(self.area.filename)
+        path    = self.get_root_path()
         project = Project(path)
         mod     = path_to_resource(project, self.area.filename)
 
@@ -56,7 +61,9 @@ class PythonRefactor(object):
         tmp0    = self.area.get('1.0', 'insert')
         offset  = len(tmp0)
 
-        path    = get_project_root(self.area.filename)
+        path    = self.get_root_path()
+        project = Project(path)
+
         project = Project(path)
         mod     = path_to_resource(project, self.area.filename)
         mover   = create_move(project, mod, offset)
@@ -114,7 +121,7 @@ class PythonRefactor(object):
     def rename(self, name):
         tmp0    = self.area.get('1.0', 'insert')
         offset  = len(tmp0)
-        path    = get_project_root(self.area.filename)
+        path    = self.get_root_path()
         project = Project(path)
         mod     = path_to_resource(project, self.area.filename)
         renamer = Rename(project, mod, offset)
