@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name="vy",
-      version="3.11.0",
+      version="3.12.0",
       description="A vim-like in python made from scratch.",
       packages=["vyapp", 
                 "vyapp.plugins",

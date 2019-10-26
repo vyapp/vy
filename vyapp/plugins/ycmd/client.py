@@ -241,16 +241,24 @@ class YcmdServer:
 
         req = self.post(url, json=data, headers=headers, timeout=2)
         printd('Request data:', req.json())
-        return self.fmt_options(req.json())
+        return self.build_docs(req.json())
 
-    def fmt_options(self, data):
-        return [Option(ind.get('insertion_text', ''),
-        '\n\n'.join(('Type:\n%s' % ind.get('kind', None),
-        'Extra info:\n%s' % ind.get('extra_menu_info', None),
-        'Docs:\n%s' % ind.get('detailed_info', None),
-        'Data:\n%s' % ind.get('extra_data', {}).get('doc_string', None)))) 
-        for ind in data['completions']]
-    
+    def build_docs(self, data):
+        return [Option(ind.get('insertion_text', ''), 
+            self.fmt_option(ind)) for ind in data['completions']]
+
+    def fmt_option(self, option):
+        kind     = option.get('kind', '')
+        details  = option.get('detailed_info', '')
+        data     = option.get('extra_data', {})
+        location = data.get('location', {})
+        path     = location.get('filepath', '')
+        line     = location.get('line_num', '')
+
+        return '\n\n'.join(('Kind: %s' % kind, 
+        'Details: %s' % details, 'Path: %s\nLine:%s' % (path, line)))
+
+            
     def hmac_req(self, method, path, body, hmac_secret):
         """
         Calculate hmac for request. The algorithm is based on what is seen in
