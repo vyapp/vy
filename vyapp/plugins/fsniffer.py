@@ -10,12 +10,12 @@ Key-Commands
 Namespace: fsniffer
 
 Mode: NORMAL
-Event: <Control-minus>
+Event: <Alt-y>
 Description: Ask for a filename pattern to be located using unix locate command.
 
 
 Mode: INPUT
-Event: <Return>
+Event: <Alt-t>
 Description: Display possible file matches on a line picker widget. 
 
 Mode: INPUT
@@ -43,8 +43,8 @@ class FSniffer(object):
     def __init__(self, area):
         self.area = area
         area.install('fsniffer', 
-        ('NORMAL', '<Key-minus>', lambda e: self.options.display()), 
-        ('NORMAL', '<Control-minus>', 
+        ('NORMAL', '<Alt-t>', lambda e: self.options.display()), 
+        ('NORMAL', '<Alt-y>', 
         lambda event: Get(events={'<Return>' : self.find,
         '<Control-w>':self.set_wide, '<<Idle>>': self.update_pattern,
         '<Escape>': lambda wid: True})))
