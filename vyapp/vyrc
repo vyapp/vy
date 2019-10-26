@@ -316,6 +316,10 @@ autoload(vyapp.plugins.jedi)
 import vyapp.plugins.rope
 autoload(vyapp.plugins.rope)
 
+# Select a JSON data and format it.
+import vyapp.plugins.jsonfmt
+autoload(vyapp.plugins.jsonfmt)
+
 # from vyapp.plugins.ternjs.completer import JavascriptCompletion 
 # JavascriptCompletion.PATH = 'tern'
 # JavascriptCompletion.PORT = 1234
