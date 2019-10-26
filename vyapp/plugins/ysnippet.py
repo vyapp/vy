@@ -13,20 +13,20 @@ The search is done through the snippet title or data.
 Key-Commands
 ============
 
-Mode: ALPHA
-Event: <Control-i>
+Mode: NORMAL
+Event: <Control-r>
 Description: Store in the sqlite database the selected region of text from the
 focused AreaVi instance.
 
-Mode: ALPHA
-Event: <Key-I>
+Mode: NORMAL
+Event: <Control-f>
 Description: Perform a search based on a pattern. The pattern looks as follow:
 Pattern: str0 + str1 + str2 + ...
 The matched snippets will contain each one of the strings either in the title
 or in the data attribute.
 
-Mode: ALPHA
-Event: <Key-i>
+Mode: NORMAL
+Event: <Control-e>
 Description: Just display the previous search matches.
 
 """
@@ -106,9 +106,9 @@ class Ysnippet(object):
         self.area = area
 
         area.install('ysnippet',
-        ('ALPHA', '<Control-i>', self.get_title),
-        ('ALPHA', '<Key-i>', self.reload),
-        ('ALPHA', '<Key-I>', self.get_pattern),)
+        ('NORMAL', '<Control-r>', self.get_title),
+        ('NORMAL', '<Control-e>', self.reload),
+        ('NORMAL', '<Control-f>', self.get_pattern),)
 
         # Create table
         self.cur.execute('''CREATE TABLE if not exists 
