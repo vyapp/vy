@@ -52,6 +52,7 @@ def exec_region(area, env):
 
 def set_target(area):
     area.active()
+    root.status.set_msg('Target set!')
     return 'break'
 
 install = lambda area: area.install('cmd',
