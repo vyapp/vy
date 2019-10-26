@@ -36,11 +36,14 @@ class FmtJSON:
         stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=1)
 
         output, err = child.communicate(data)
+        print('\nJSON Errors:\n', err)
 
         if child.returncode: 
-            root.status.set_msg('JSON Error: %s' % err)
+            root.status.set_msg('JSON Errors! Check its output.')
         else:
             self.area.swap(output, start, end)
+
+        self.area.chmode('NORMAL')
 
     def fmt_data(self, start, end, data):
         self.area.delete(start, end)
