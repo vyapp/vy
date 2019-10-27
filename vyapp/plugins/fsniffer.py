@@ -55,13 +55,13 @@ class FSniffer(object):
         root.status.set_msg('Set wide search: %s' % FSniffer.wide)
 
     def update_pattern(self, wid):
-        pattern = ' '.join(self.make_cmd(wid.get()))
-        root.status.set_msg('Unix locate cmd: %s' % pattern)
+        pattern = build_regex(wid.get(), '.*')
+        root.status.set_msg('File pattern: %s' % pattern)
 
     def make_cmd(self, pattern):
         # When FSniffer.wide is False it searches in the current 
         # Areavi instance project.
-        cmd   = ['locate', '--limit', '50']
+        cmd   = ['locate', '--limit', '200']
         regex = build_regex(pattern, '.*')
 
         if self.wide or not self.area.project:
@@ -69,12 +69,17 @@ class FSniffer(object):
         else:
             cmd.extend(['--regexp', '%s.*%s' % (
                 self.area.project, regex)])
+
+        # Used to filter only files because locate doesn't support 
+        # searching only for files.
+        cmd = '%s | %s' % (' '.join(cmd), '''while read -r file; do
+          [ -d "$file" ] || printf '%s\n' "$file"; done''')
         return cmd
 
     def run_cmd(self, pattern):
         cmd   = self.make_cmd(pattern)
         child = Popen(cmd, stdout=PIPE, stderr=STDOUT, 
-        encoding=self.area.charset)
+        encoding=self.area.charset, shell=True)
 
         output = child.communicate()[0]
         return output
