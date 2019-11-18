@@ -88,15 +88,14 @@ class CompletionWindow(FloatingWindow):
         FloatingWindow.__init__(self, area, *args, **kwargs)
         self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
 
-
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
 
         self.text = Text(master=self, blockcursor=True, insertbackground='black', )
         # self.text.bindtags((self.text,  '.'))
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
-
         self.text.pack_forget()
+        self.update()
 
         # We need this otherwise it propagates the event
         # and the window gets destroyed in the wrong situation.
@@ -116,15 +115,20 @@ class CompletionWindow(FloatingWindow):
     def options_window(self, event):
         self.text.pack_forget()
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+        self.update()
+
         self.box.focus_set()
         return 'break'
 
     def docs_window(self):
         docs = self.box.selection_docs()
         self.box.pack_forget()
+
         self.text.delete('1.0', 'end')
         self.text.insert('1.0', docs)
+
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
         self.text.focus_set()
+        self.update()
 
 
