@@ -32,7 +32,7 @@ to switch focus between tabs and panes.
 
 There is a vyrc file written in Python that is very well documented and organized to make it simple to load
 plugins and set stuff at startup. You can take the best out of vy with no need to learn some odd language
-like vimscript or emacs LISP; since vy is written in Python, you use Python to develop for it.
+like vimscript or Emacs Lisp; since vy is written in Python, you use Python to develop for it.
 
 All built-in functions are well documented, which simplifies the process of plugin development as well as personalizing stuff.
 The plugins are documented: the documentation can be accessed from vy by dropping Python code to the interpreter.
