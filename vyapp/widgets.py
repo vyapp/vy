@@ -62,7 +62,9 @@ class FloatingWindow(Toplevel):
         self.area = area
         self.wm_overrideredirect(1)
         self.wm_geometry("+10000+10000")
-        # self.bind('<Configure>', lambda event: self.update())
+        self.area.bind('<Configure>', lambda event: self.destroy(), add=True)
+        self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
+
         self.update()
 
     def update(self):
@@ -108,7 +110,7 @@ class FloatingWindow(Toplevel):
     def calculate_horizontal_position(self, x, 
         rootx, win_width, area_width):
 
-        hpos0 = rootx + area_width - win_width
+        hpos0 = rootx + x - win_width
         hpos1 = rootx + x
         m     = x + rootx + win_width
         n     = rootx + area_width

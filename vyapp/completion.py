@@ -81,13 +81,10 @@ class FloatingText(FloatingWindow):
         self.text.insert('1.0', data)
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
         self.text.focus_set()
-        self.text.bind('<FocusOut>', lambda event: self.destroy(), add=True)
 
 class CompletionWindow(FloatingWindow):
     def __init__(self, area, completions, *args, **kwargs):
         FloatingWindow.__init__(self, area, *args, **kwargs)
-        self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
-
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
 
