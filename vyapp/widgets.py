@@ -65,6 +65,10 @@ class FloatingWindow(Toplevel):
         self.area.bind('<Configure>', lambda event: self.destroy(), add=True)
         self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
 
+        # Note: One of the possibilities it would be making the
+        # floating window be updated whenever a key is pressed.
+        # It would change the window position accordingly.
+        self.start_index = self.area.index('insert')
         self.update()
 
     def update(self):
@@ -72,7 +76,6 @@ class FloatingWindow(Toplevel):
 
         rootx               = self.area.winfo_rootx()
         rooty               = self.area.winfo_rooty()
-        self.start_index    = self.area.index('insert')
         x, y, width, height = self.area.bbox('insert')
         info                = self.area.dlineinfo('insert')
         line_x              = info[0]
