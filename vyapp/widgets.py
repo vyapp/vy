@@ -41,7 +41,8 @@ class Echo(object):
         self.bind('<Key>', self.dispatch)
 
     def dispatch(self, event):
-        if event.char:  self.on_char(event.char)
+        if event.char:  
+            self.on_char(event.char)
 
     def on_char(self, char):
         self.area.insert('insert', char)
