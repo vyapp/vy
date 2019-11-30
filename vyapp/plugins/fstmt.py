@@ -13,17 +13,17 @@ Key-Commands
 Namespace: fstmt
 
 Mode: NORMAL
-Event: <Control-backslash>
-Description: Same as <Key-bar> but matches sensitively.
+Event: <Control-z>
+Description: Same as <Key-bar> but matches insensitively.
 
 Mode: NORMAL
-Event: <Key-backslash>
+Event: <Key-z>
 Description: Open the previous found pattern occurrences.
 
 Mode: NORMAL
-Event: <Key-bar>
+Event: <Key-Z>
 Description: Get the string under the cursor and perform
-a case insensitive and resursive search in the current project file directory.
+a case sensitive and resursive search in the current project file directory.
 It grabs the string under the cursor only if there is no selected text. 
 
 The search is performed in the current project folder, if fstmt cant find a .git, svn
@@ -48,12 +48,9 @@ class Fstmt(object):
         self.area    = area
 
         area.install('fstmt', 
-        ('NORMAL', '<Key-backslash>', 
-        lambda event: self.options.display()),
-        ('NORMAL', '<Control-bar>', 
-        lambda event: self.picker('-s')),
-        ('NORMAL', '<Key-bar>', 
-        lambda event: self.picker('-i')))
+        ('NORMAL', '<Key-z>', lambda event: self.options.display()),
+        ('NORMAL', '<Control-z>', lambda event: self.picker('-i')),
+        ('NORMAL', '<Key-Z>', lambda event: self.picker('-s')))
 
     @classmethod
     def c_path(cls, path='ag'):

@@ -12,13 +12,15 @@ Key-Commands
 Namespace: word-search
 
 Mode: NORMAL
-Event: <Key-0>
+Event: <Key-M>
 Description: Switch to ISEARCH mode.
 
 Event: <Alt-p> 
+Mode: INPUT
 Description: Put the cursor on the next less possible match.
 
 Event: <Alt-o>
+Mode: INPUT
 Description: Put the cursor on the previous possible match.
 """
 
@@ -31,8 +33,8 @@ class WordSearch(object):
     def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
         self.area = area
         area.tag_configure('(ISEARCH_MATCH)', **setup)
-        area.install('word-search', ('NORMAL', '<Control-z>', lambda event: 
-        Get(events={
+        area.install('word-search', (
+        'NORMAL', '<Key-M>', lambda event: Get(events={
         '<Return>' : self.start, 
         '<Alt-p>'  : lambda wid: self.go_down(), 
         '<Alt-o>'  : lambda wid: self.go_up(), 
