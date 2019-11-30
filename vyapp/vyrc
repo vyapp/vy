@@ -253,6 +253,11 @@ autoload(vyapp.plugins.block_sel)
 # from vyapp.plugins import fsniffer
 # autoload(fsniffer)
 
+# Like fsniffer but works with files and drop results
+# on the current AreaVi instance.
+# from vyapp.plugins import fsearch
+# autoload(fsearch)
+
 # The ysnippet plugin.
 import vyapp.plugins.ysnippet
 autoload(vyapp.plugins.ysnippet)
