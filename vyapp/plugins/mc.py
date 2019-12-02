@@ -70,7 +70,7 @@ from vyapp.ask import Ask
 check_output = error(check_output)
 check_call  = error(check_call)
 
-class Mc(object):
+class Mc:
     confs = {'(MC-DIRECTORY)': {'foreground': 'red'},
     '(MC-FILE)': {'foreground': 'yellow'}}
 
@@ -89,7 +89,6 @@ class Mc(object):
         ('NORMAL', '<Control-g>', lambda e: self.clear_clipboard()),
         ('NORMAL', '<Key-G>', lambda e: self.list_clipboard()),
         ('NORMAL', '<Key-I>', lambda e: self.load()),
-        ('NORMAL', '<Key-U>', lambda e: self.open()),
         ('NORMAL', '<Key-F>', lambda e: self.info()),
         ('NORMAL', '<Key-E>', lambda e: self.rename()),
         ('NORMAL', '<Control-E>', lambda e: self.create_dir()),
@@ -195,12 +194,6 @@ class Mc(object):
     def load(self):
         filename = self.area.get_line()
         root.note.load([[filename]])
-
-    def open(self):
-        filename = self.area.get_line()
-        # No need for "" because it is passing the entire filename
-        # as parameter.
-        Popen(['xdg-open', '%s'  % filename])
 
     def create_dir(self):
         root.status.set_msg('Type dir name:')

@@ -270,6 +270,10 @@ autoload(vyapp.plugins.ysnippet)
 # file={'foreground': 'yellow'})
 # autocall(Mc)
 
+# Open files using xdg_open.
+# import vyapp.plugins.xdg_open
+# autoload(vyapp.plugins.xdg_open)
+
 # Drop/Read data from a bash process.
 # import vyapp.plugins.ibash
 # autoload(vyapp.plugins.ibash)
