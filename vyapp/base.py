@@ -34,9 +34,11 @@ class App(Tk):
         """
 
         Tk.__init__(self, *args, **kwargs)
+        self.note   = None
+        self.status = None
         self.title('Vy')
         self.create_widgets()
-    
+        
     def create_vyrc(self):
         self.dir = join(expanduser('~'), '.vy')
         self.rc  = join(self.dir, 'vyrc')

@@ -111,8 +111,7 @@ class Transmitter:
             try:
                 ind.write(data)
             except Exception:
-                self.base.discard(ind)
-
+                self.discard(ind)
 
 class CmdOutput:    
     """

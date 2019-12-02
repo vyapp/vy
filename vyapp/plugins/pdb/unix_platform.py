@@ -108,7 +108,6 @@ from untwisted.iofile import *
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.plugins.pdb.event import PdbEvents
-from vyapp.tools import set_line
 from vyapp.ask import Ask
 from vyapp.areavi import AreaVi
 from vyapp.app import root
@@ -166,7 +165,11 @@ class Pdb(object):
         Stdin(self.stdin)
         PdbEvents(self.stdout, self.encoding)
 
-        xmap(self.stdout, LOAD, lambda con, data: sys.stdout.write(data))
+        # Note: The data has to be decoded using the area charset
+        # because the area contents would be sometimes printed along
+        # the debugging.
+        xmap(self.stdout, LOAD, lambda con, 
+        data: sys.stdout.write(data.decode(self.area.charset)))
 
         xmap(self.stdout, 'LINE', self.handle_line)
         xmap(self.stdout, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
@@ -254,7 +257,7 @@ class Pdb(object):
         except  KeyError:
             pass
         else:
-            set_line(area, line)
+            root.note.set_line(area, line)
     
     def handle_deleted_breakpoint(self, device, index):
         """
@@ -262,8 +265,8 @@ class Pdb(object):
         """
 
         filename, line = self.map_index[index]
-        NAME           = '_breakpoint_%s' % index
-        area           = None
+        NAME = '_breakpoint_%s' % index
+        area = None
 
         try:
             area = AreaVi.get_opened_files(root)[filename]
@@ -279,14 +282,12 @@ class Pdb(object):
 
         self.map_index[index]           = (filename, line)
         self.map_line[(filename, line)] = index
-        map                             = AreaVi.get_opened_files(root)
 
+        map  = AreaVi.get_opened_files(root)
         area = map[filename]
-        
         NAME = '_breakpoint_%s' % index
-        area.tag_add(NAME, '%s.0 linestart' % line, 
-                     '%s.0 lineend' % line)
-    
+
+        area.tag_add(NAME, '%s.0 linestart' % line, '%s.0 lineend' % line)
         area.tag_config(NAME, **self.setup)
 
     def dump_sigint(self, area):

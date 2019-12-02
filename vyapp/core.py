@@ -5,6 +5,7 @@ This module implements widgets that permit managing tabs, panes in vy.
 from tkinter import *
 from .areavi import AreaVi
 from tkinter.ttk import Notebook
+import sys
 
 class PanedHorizontalWindow(PanedWindow):
     """
@@ -105,6 +106,17 @@ class NoteVi(Notebook):
         Notebook.__init__(self, *args, **kwargs)
         self.bindtags((self, '.', 'all'))
 
+    def set_line(self, area, line, col=0):
+        """
+        This function receives an AreaVi widget instance and a line number
+        then sets the focus to the AreaVi widget and the cursor at line.
+        """
+    
+        sys.stderr.write(area.filename + '\n')
+        self.select(area.master.master.master)
+        area.focus()
+        area.setcur(line, col)
+    
     def create(self, filename):
         """
         This method creates a new tab whose title is the string

@@ -10,17 +10,6 @@ from os.path import abspath
 import sys
 
     
-def set_line(area, line, col=0):
-    """
-    This function receives an AreaVi widget instance and a line number
-    then sets the focus to the AreaVi widget and the cursor at line.
-    """
-
-    sys.stderr.write(area.filename + '\n')
-    root.note.select(area.master.master.master)
-    area.focus()
-    area.setcur(line, col)
-
 def findline(filename, line, col=0):
     files    = AreaVi.get_opened_files(root)
     filename = abspath(filename)
@@ -32,7 +21,7 @@ def findline(filename, line, col=0):
     else:
         pass
     finally:
-        set_line(area, line)
+        root.note.set_line(area, line)
 
 def match_sub_pattern(pattern, lst):
     # pattern = buffer(pattern)

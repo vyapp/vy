@@ -268,5 +268,3 @@ class LinePicker(OptionWindow):
         AreaVi.INPUT.setcur(line, 0)
         self.close()
 
-
-
