@@ -88,11 +88,9 @@ class Mc:
         ('NORMAL', '<Key-K>', lambda e: self.select()),
         ('NORMAL', '<Control-g>', lambda e: self.clear_clipboard()),
         ('NORMAL', '<Key-G>', lambda e: self.list_clipboard()),
-        ('NORMAL', '<Key-I>', lambda e: self.load()),
         ('NORMAL', '<Key-F>', lambda e: self.info()),
         ('NORMAL', '<Key-E>', lambda e: self.rename()),
         ('NORMAL', '<Control-E>', lambda e: self.create_dir()),
-
         ('NORMAL', '<Key-J>', lambda e:self.ls(self.ph)))
 
         area.tags_config(self.confs)
@@ -190,10 +188,6 @@ class Mc:
         del Mc.clipboard[:]
         root.status.set_msg('Deleted files!')
         self.ls(self.ph)
-
-    def load(self):
-        filename = self.area.get_line()
-        root.note.load([[filename]])
 
     def create_dir(self):
         root.status.set_msg('Type dir name:')
