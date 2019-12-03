@@ -131,7 +131,8 @@ class OutputController:
     def __init__(self, area):
         self.area = area
     
-        area.install('outputs', (-1, '<Alt-bracketleft>', self.add_output),
+        area.install('outputs', 
+        (-1, '<Alt-bracketleft>', self.add_output),
         (-1, '<Alt-braceleft>', self.rm_output),
         (-1, '<Alt-bracketright>', self.view_log),
         (-1, '<Control-Alt-bracketleft>',  self.restore_output))
@@ -160,4 +161,5 @@ code_output = TextWindow('', title='Cmd Output')
 code_output.withdraw()
 sys.stdout.append(CmdOutput(code_output))
 install = OutputController
+
 
