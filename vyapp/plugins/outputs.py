@@ -28,6 +28,11 @@ Mode: Global
 Event: <Alt-bracketleft>
 Description: It redirects output from sys.stdout to 
 a given AreaVi instance.
+
+Mode: Global
+Event: <Alt-z>
+Description: Display sys.stdout log on window.
+
 """
 
 from vyapp.app import root
@@ -134,7 +139,7 @@ class OutputController:
         area.install('outputs', 
         (-1, '<Alt-bracketleft>', self.add_output),
         (-1, '<Alt-braceleft>', self.rm_output),
-        (-1, '<Alt-bracketright>', self.view_log),
+        (-1, '<Alt-z>', self.view_log),
         (-1, '<Control-Alt-bracketleft>',  self.restore_output))
     
     def view_log(self, event):
