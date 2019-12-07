@@ -13,7 +13,7 @@ Key-Commands
 Namespace: cmd
 
 Mode: Global
-Event: <Control-Alt-semicolon>
+Event: <Alt-z>
 Description: Set an AreaVi instance as target for commands.
 
 Mode: NORMAL
@@ -33,31 +33,36 @@ from vyapp.plugins import ENV
 from vyapp.app import root
 import sys
 
-def exec_cmd(area, env):
-    ask = Ask()
-    area.active()
-    sys.stdout.write('\nLine executed:\n%s\n>>>\n' % ask.data)
+class Cmd:
+    def __init__(self, area):
+        self.area = area
 
-    data = ask.data.encode('utf-8')
-    exec_pipe(data, env)
-    return 'break'
+        area.install('cmd',
+        (-1, '<Alt-semicolon>',  self.exec_cmd),
+        ('NORMAL', '<Key-semicolon>', self.exec_region),
+        (-1, '<Alt-z>',  self.set_target))
+        
+    def exec_cmd(self, event):
+        ask = Ask()
+        self.area.active()
+        sys.stdout.write('\nLine executed:\n%s\n>>>\n' % ask.data)
+    
+        data = ask.data.encode('utf-8')
+        exec_pipe(data, ENV)
+        return 'break'
+    
+    def exec_region(self, event):
+        data = self.area.join_ranges('sel')
+        sys.stdout.write('\nRegion executed:\n%s\n>>>\n' % data)
+    
+        data = data.encode('utf-8')
+        exec_pipe(data, ENV)
+        self.area.clear_selection()
+    
+    def set_target(self, event):
+        self.area.active()
+        root.status.set_msg('Set command target !')
+        return 'break'
+    
 
-def exec_region(area, env):
-    data = area.join_ranges('sel')
-    sys.stdout.write('\nRegion executed:\n%s\n>>>\n' % data)
-
-    data = data.encode('utf-8')
-    exec_pipe(data, env)
-    area.clear_selection()
-
-def set_target(area):
-    area.active()
-    root.status.set_msg('Target set!')
-    return 'break'
-
-install = lambda area: area.install('cmd',
-(-1, '<Alt-semicolon>', lambda event: exec_cmd(event.widget, ENV)),
-('NORMAL', '<Key-semicolon>', lambda event: exec_region(event.widget, ENV)),
-(-1, '<Control-Alt-semicolon>', lambda event: set_target(event.widget)))
-
-
+install = Cmd
