@@ -92,7 +92,7 @@ cd ~/projects/vy-code
 sudo bash -i
 pip2 install -r requirements.txt
 ##############################################################################
-# install, vy. 
+# install vy. 
 cd ~/projects/vy-code
 sudo bash -i
 python setup.py install

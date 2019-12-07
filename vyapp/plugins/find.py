@@ -15,7 +15,7 @@ Event: <Alt-slash>
 Description: Set a search pattern.
 
 Mode: Get
-Event: <Alt-bracketright>
+Event: <Alt-q>
 Description: Set a replacement pattern.
 
 Mode: Get
@@ -50,7 +50,7 @@ from vyapp.ask import Get, Ask
 from vyapp.base import printd
 from vyapp.app import root
 
-class Find(object):
+class Find:
     confs = {
         'background':'green', 'foreground':'white'
     }
@@ -84,7 +84,7 @@ class Find(object):
         root.status.set_msg('Set replacement: %s' % self.data)
 
         get = Get(events={
-        '<Alt-bracketright>': self.set_data,
+        '<Alt-q>': self.set_data,
         '<Alt-o>': self.up, '<Escape>': self.cancel, 
         '<Alt-p>': self.down, '<Return>': self.cancel,
         '<Alt-slash>':  self.pick_selection_matches,
