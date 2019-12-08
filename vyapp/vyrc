@@ -174,6 +174,11 @@ autoload(vyapp.plugins.line_index)
 import vyapp.plugins.outputs
 autoload(vyapp.plugins.outputs)
 
+# Display sys.stdout log. It is useful when using python
+# pdb to debug applications.
+import vyapp.plugins.syslog
+autoload(vyapp.plugins.syslog)
+
 # Used to execute python code on the fly, things like python functions
 # to substitute text, format stuff etc, load plugins.
 import vyapp.plugins.cmd
@@ -216,8 +221,7 @@ autoload(vyapp.plugins.quick_jumps)
 # the next occurrence of the symbols passed to 
 # symbol_jumps install function.
 import vyapp.plugins.symbol_jumps
-autoload(vyapp.plugins.symbol_jumps, 
-('(', ')', '.', '[', ']', '{', '}', ',', ':', ';', "'", '"'))
+autoload(vyapp.plugins.symbol_jumps, ('(', ')', '[', ']', '{', '}'))
 
 # text_spots plugin is used to mark lines then quickly
 # go to the previous or next mark.

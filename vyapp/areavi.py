@@ -6,7 +6,7 @@ from tkinter import *
 import string
 import os
 
-class DataEvent(object):
+class DataEvent:
     def __init__(self, widget):
         self.widget = widget
         self.widget.bind('<Key>', self.dispatch_data, add=True)
@@ -15,7 +15,7 @@ class DataEvent(object):
         if event.char:
             self.widget.event_generate('<<Data>>')
 
-class IdleEvent(object):
+class IdleEvent:
     def __init__(self, widget):
         self.widget.bind('<<Data>>', self.dispatch_idle, add=True)
         self.widget  = widget

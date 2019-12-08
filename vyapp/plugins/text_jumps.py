@@ -46,7 +46,7 @@ class TextJumps:
         ('NORMAL', '<Key-2>', self.text_end), 
         ('NORMAL', '<Key-o>', self.line_start),
         ('NORMAL', '<Key-p>', self.line_end), 
-        ('NORMAL', '<Key-bracketright>', self.next_word),
+        ('NORMAL', '<Key-braceleft>', self.next_word),
         ('NORMAL', '<Key-braceright>', self.prev_word))
         self.area = area
 

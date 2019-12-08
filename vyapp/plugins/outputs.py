@@ -16,27 +16,22 @@ Key-Commands
 Namespace: outputs
 
 Mode: Global
-Event: <Control-Alt-bracketleft>
+Event: <Alt-Tab>
 Description: it restores sys.stdout.
 
-Mode: Global
-Event: <Alt-braceleft> 
+Mode: NORMAL
+Event: <Control-Tab> 
 Description: It removes a given AreaVi instance from 
 having output written in.
 
 Mode: Global
-Event: <Alt-bracketleft>
+Event: <Tab>
 Description: It redirects output from sys.stdout to 
 a given AreaVi instance.
-
-Mode: Global
-Event: <Alt-q>
-Description: Display sys.stdout log on window.
 
 """
 
 from vyapp.app import root
-from vyapp.widgets import TextWindow
 import sys
 
 class Stdout:    
@@ -118,33 +113,14 @@ class Transmitter:
             except Exception:
                 self.discard(ind)
 
-class CmdOutput:    
-    """
-    """
-
-    def __init__(self, win):
-        self.win = win
-
-    def write(self, data):
-        self.win.text.insert('end', data)
-        self.win.text.see('end')
-
-    def __eq__(self, other):
-        return self.win.text == other
-
 class OutputController:
     def __init__(self, area):
         self.area = area
     
         area.install('outputs', 
-        (-1, '<Alt-bracketleft>', self.add_output),
-        (-1, '<Alt-braceleft>', self.rm_output),
-        (-1, '<Alt-q>', self.view_log),
-        (-1, '<Control-Alt-bracketleft>',  self.restore_output))
-    
-    def view_log(self, event):
-        code_output.display()
-        return 'break'
+        ('NORMAL', '<Tab>', self.add_output),
+        ('NORMAL', '<Control-Tab>', self.rm_output),
+        (-1, '<Alt-Tab>',  self.restore_output))
 
     def add_output(self, event):
         sys.stdout.append(Stdout(self.area))
@@ -162,9 +138,6 @@ class OutputController:
         return 'break'
 
 sys.stdout  = Transmitter(sys.__stdout__)
-code_output = TextWindow('', title='Cmd Output')
-code_output.withdraw()
-sys.stdout.append(CmdOutput(code_output))
 install = OutputController
 
 
