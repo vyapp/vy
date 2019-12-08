@@ -30,7 +30,7 @@ Event: <Key-p>
 Description: Place the cursor at the end of the line.
 
 Mode: NORMAL
-Event: <Key-bracketright> 
+Event: <Key-braceleft> 
 Description: Place the cursor at the beginning of the next word.
 
 
