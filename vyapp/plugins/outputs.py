@@ -63,12 +63,22 @@ class Transmitter:
     child objects that have a write method.
     """
 
-    def __init__(self, default):
-        self.base    = [default]
-        self.default = default
+    def __init__(self, *default):
+        self.base    = []
+        self.default = []
+        self.default.extend(default)
+        self.base.extend(default)
 
-    def flush(self):
-        pass
+    def add_default(self, fd):
+        """
+        """
+
+        try:
+            self.default.remove(fd)
+        except ValueError:
+            pass
+        finally:
+            self.default.append(fd)
 
     def restore(self):
         """
@@ -76,7 +86,7 @@ class Transmitter:
         child.
         """
         self.base.clear()
-        self.base.append(self.default)
+        self.base.extend(self.default)
 
     def append(self, fd):
         try:
@@ -113,6 +123,12 @@ class Transmitter:
             except Exception:
                 self.discard(ind)
 
+    def flush(self):
+        """
+        """
+
+        pass
+
 class OutputController:
     def __init__(self, area):
         self.area = area
@@ -125,12 +141,10 @@ class OutputController:
     def add_output(self, event):
         sys.stdout.append(Stdout(self.area))
         root.status.set_msg('Output set on: %s' % self.area.index('insert'))
-        return 'break'
     
     def rm_output(self, event):
         sys.stdout.discard(self.area)
         root.status.set_msg('Output removed!')
-        return 'break'
     
     def restore_output(self, event):
         sys.stdout.restore()

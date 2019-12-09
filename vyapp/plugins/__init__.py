@@ -17,6 +17,7 @@ def mapset(namespace, map):
     area.update_map(namespace, map), (), {}))
 
 class Command:
+    # target = None
     def __init__(self, name=None):
         self.name = name
 
@@ -27,6 +28,9 @@ class Command:
             return handle(AreaVi.ACTIVE, *args, **kwargs)
         ENV[name] = wrapper
         return wrapper
+
+    def set_target(self, area):
+        pass
 
 # def command(name):
     # def wrapper0(handle):

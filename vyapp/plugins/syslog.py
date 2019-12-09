@@ -35,16 +35,19 @@ class CmdOutput:
         return self.win.text == other
 
 class Syslog:
+    win = TextWindow('', title='Cmd Output')
+    win.withdraw()
+
+    cmd_output = CmdOutput(win)
+    sys.stdout.append(cmd_output)
+    sys.stdout.add_default(cmd_output)
+        
     def __init__(self, area):
         self.area = area
-        area.install('syslog', 
-        (-1, '<Alt-q>', self.view_log))
+        area.install('syslog', (-1, '<Alt-q>', self.view_log))
 
     def view_log(self, event):
-        code_output.display()
+        self.win.display()
         return 'break'
     
-code_output = TextWindow('', title='Cmd Output')
-code_output.withdraw()
-sys.stdout.append(CmdOutput(code_output))
 install = Syslog
