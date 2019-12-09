@@ -2,72 +2,71 @@
 Overview
 ========
 
-This module implements commands to save file and load files into AreaVi instances.
+This module implements Commands to save file and load files into AreaVi instances.
 
 Commands
 ========
 
 Command: ss(filename)
-Description: It dumps the AreaVi command target's content into a file whose name is
+Description: It dumps the AreaVi Command target's content into a file whose name is
 specified.
 filename = The name of the file.
 
 Command: lo(filename)
-Description: Load the contents of filename into the AreaVi command target.
+Description: Load the contents of filename into the AreaVi Command target.
 """
 
-from vyapp.plugins import ENV
+from vyapp.plugins import Command
 from vyapp.areavi import AreaVi
 from vyapp.app import root
 
-def save():
+@Command('s')
+def save(area):
     """
+    Save the contents of the targeted areavi to disk.
     """
-    AreaVi.ACTIVE.save_data()
+    area.save_data()
     root.status.set_msg('File saved!')
 
-def quit():
+@Command('q')
+def quit(area):
     """
     """
 
     root.quit()
 
-def save_as(filename):
+@Command('ss')
+def save_as(area, filename):
     """
     """
 
-    AreaVi.ACTIVE.save_data_as(filename)
+    area.save_data_as(filename)
     root.status.set_msg('File saved as %s!' % filename)
 
-def load_split(filename):
+@Command('lo')
+def load_split(area, filename):
     """
     """
 
-    AreaVi.ACTIVE.load_data(filename)
+    area.load_data(filename)
     root.status.set_msg('Loaded %s' % filename)
 
-def load_tab(filename):
+@Command('to')
+def load_tab(area, filename):
     """
     """
 
     root.note.load([[filename]])
     root.status.set_msg('Loaded %s' % filename)
 
-def vsplit():
+@Command('vsplit')
+def vsplit(area):
     """
     """
-    AreaVi.ACTIVE.master.master.master.create()
+    area.master.master.master.create()
 
-def hsplit():
+@Command('hsplit')
+def hsplit(area):
     """    
     """
-    AreaVi.ACTIVE.master.master.create()
-
-ENV['s'] = save
-ENV['q'] = quit
-ENV['ss'] = save_as
-ENV['lo'] = load_split
-ENV['to'] = load_tab
-ENV['vsplit'] = vsplit
-ENV['hsplit'] = hsplit
-
+    area.master.master.create()

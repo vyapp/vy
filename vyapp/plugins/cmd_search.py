@@ -29,58 +29,53 @@ index     = The start index.
 stopindex = The stopindex.
 """
 
-from vyapp.plugins import ENV
+from vyapp.plugins import Command
 from vyapp.areavi import AreaVi
 
-def find(regex, handle, *args, **kwargs):
+@Command()
+def find(area, regex, handle, *args, **kwargs):
     """
     """
-    seq = AreaVi.ACTIVE.find(regex, *args, **kwargs)    
+    seq = area.find(regex, *args, **kwargs)    
     for ind in seq:
         handle(*ind)
 
-def sniff(regex, handle, *args, **kwargs):
+@Command()
+def sniff(area, regex, handle, *args, **kwargs):
     """
     """
-    seq = AreaVi.ACTIVE.collect('sel', regex, *args, **kwargs) 
+    seq = area.collect('sel', regex, *args, **kwargs) 
     for ind in seq:
         handle(*ind)
 
-def sel(*args, **kwargs):
+@Command()
+def sel(area, *args, **kwargs):
     """
     """
-    AreaVi.ACTIVE.select_matches('sel', 
-    AreaVi.ACTIVE.find(*args, **kwargs))
+    area.select_matches('sel', 
+    area.find(*args, **kwargs))
 
-def gsub(*args, **kwargs):
+@Command()
+def gsub(area, *args, **kwargs):
     """
     """
-    AreaVi.ACTIVE.replace_all(*args, **kwargs)
+    area.replace_all(*args, **kwargs)
 
-def get(*args):
+@Command()
+def get(area, *args):
     """
     """
-    AreaVi.ACTIVE.get(*args)
+    return area.get(*args)
 
-def split(*args, **kwargs):
+@Command()
+def split(area, *args, **kwargs):
     """
     """
-    AreaVi.ACTIVE.select_matches('sel', 
-    AreaVi.ACTIVE.split(*args, **kwargs))
+    area.select_matches('sel', 
+    area.split(*args, **kwargs))
 
-def lsub(*args):
+@Command()
+def lsub(area, *args):
     """
     """
-    AreaVi.ACTIVE.replace_ranges('sel', *args)
-
-ENV['find']  = find
-ENV['sniff'] = sniff
-ENV['sel']   = sel
-ENV['gsub']  = gsub
-ENV['get']   = get
-ENV['split'] = split
-ENV['lsub']  = lsub
-
-
-
-
+    area.replace_ranges('sel', *args)
