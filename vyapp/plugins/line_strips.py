@@ -17,8 +17,6 @@ Description:
 """
 
 from vyapp.plugins import Command
-
-from vyapp.areavi import AreaVi
 from re import escape
 
 @Command()

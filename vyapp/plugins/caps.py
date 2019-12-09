@@ -14,24 +14,29 @@ Command: upper()
 Description: Turn the selected text into upper case.
 """
 
+from vyapp.plugins import Command
 from vyapp.areavi import AreaVi
-from vyapp.plugins import ENV
+from vyapp.app import root
 
-def transform(func):
+@Command()
+def lower(area):
+    """
+    """
+
     map  = AreaVi.ACTIVE.tag_ranges('sel')
     for index in range(0, len(map) - 1, 2):
-        data = AreaVi.ACTIVE.get(map[index], map[index + 1])
-        AreaVi.ACTIVE.delete(map[index], map[index + 1])
-        AreaVi.ACTIVE.insert(map[index], func(data))
+        area.swap(area.get(map[index], 
+            map[index + 1]).lower(), map[index], map[index + 1])
 
-def lower():
-    transform(lambda data: data.lower())
+@Command()
+def upper(area):
+    """
+    """
 
-def upper():
-    transform(lambda data: data.upper())
+    map  = AreaVi.ACTIVE.tag_ranges('sel')
+    for index in range(0, len(map) - 1, 2):
+        area.swap(area.get(map[index], 
+            map[index + 1]).upper(), map[index], map[index + 1])
 
-
-ENV['lower'] = lower
-ENV['upper'] = upper
 
 

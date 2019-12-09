@@ -12,19 +12,11 @@ Description: Count the number of words that appear in the AreaVi widget that was
 set as command target. The result would appear at the statusbar.
 """
 
-from vyapp.areavi import AreaVi
-from vyapp.plugins import ENV
-from re import findall
+from vyapp.plugins import Command
 from vyapp.app import root
+from re import findall
 
-def cw():
-    area = AreaVi.ACTIVE
-
+@Command()
+def cw(area):
     data = area.get('1.0', 'end')
     root.status.set_msg('Count of words:%s' % len(findall('\W+', data)))
-
-ENV['cw'] = cw
-
-
-
-
