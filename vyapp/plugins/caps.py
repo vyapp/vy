@@ -23,7 +23,7 @@ def lower(area):
     """
     """
 
-    map  = AreaVi.ACTIVE.tag_ranges('sel')
+    map  = area.tag_ranges('sel')
     for index in range(0, len(map) - 1, 2):
         area.swap(area.get(map[index], 
             map[index + 1]).lower(), map[index], map[index + 1])
@@ -33,7 +33,7 @@ def upper(area):
     """
     """
 
-    map  = AreaVi.ACTIVE.tag_ranges('sel')
+    map  = area.tag_ranges('sel')
     for index in range(0, len(map) - 1, 2):
         area.swap(area.get(map[index], 
             map[index + 1]).upper(), map[index], map[index + 1])

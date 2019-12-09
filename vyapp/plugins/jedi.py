@@ -19,8 +19,7 @@ completion.
 
 from vyapp.completion import CompletionWindow
 from jedi import Script
-from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
+from vyapp.plugins import Command
 
 class PythonCompletionWindow(CompletionWindow):
     """
@@ -34,18 +33,25 @@ class PythonCompletionWindow(CompletionWindow):
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
 
 def install(area):
-    trigger = lambda event: area.hook('python-completion', 'INSERT', '<Control-Key-period>', 
-                        lambda event: PythonCompletionWindow(event.widget), add=False)
+    trigger = lambda event: area.hook('python-completion', 
+    'INSERT', '<Control-Key-period>', lambda event: PythonCompletionWindow(
+    event.widget), add=False)
+
     remove_trigger = lambda event: area.unhook('INSERT', '<Control-Key-period>')
 
-    area.install('python-completion', (-1, '<<Load/*.py>>', trigger), (-1, '<<Save/*.py>>', trigger),
-                 (-1, '<<LoadData>>', remove_trigger), (-1, '<<SaveData>>', remove_trigger))
+    area.install('jedi', (-1, '<<Load/*.py>>', trigger), 
+    (-1, '<<Save/*.py>>', trigger), (-1, '<<LoadData>>', remove_trigger), 
+    (-1, '<<SaveData>>', remove_trigger))
 
-def active_python_completion():
-    AreaVi.ACTIVE.hook('INSERT', '<Control-Key-period>', 
-                  lambda event: PythonCompletionWindow(event.widget), add=False)
+@Command()
+def acp(area):
+    """
+    Activate python completion when file extension is not 
+    detected automatically.
+    """
+    area.hook('jedi', 'INSERT', '<Control-Key-period>', 
+    lambda event: PythonCompletionWindow(event.widget), add=False)
 
-ENV['active_python_completion'] = active_python_completion
 
 
 
