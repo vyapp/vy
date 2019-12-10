@@ -20,7 +20,6 @@ from vyapp.completion import CompletionWindow, Option
 from os.path import expanduser, join, exists, dirname
 from vyapp.plugins import Command
 from subprocess import Popen, PIPE
-from vyapp.plugins import ENV
 from shutil import copyfile
 from os import getcwd
 import json
