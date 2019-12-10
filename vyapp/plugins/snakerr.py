@@ -38,9 +38,8 @@ using the same keys as defined in text_spots plugin.
 from subprocess import Popen, STDOUT, PIPE
 from os.path import exists, dirname, join, relpath
 from vyapp.widgets import LinePicker
-from vyapp.areavi import AreaVi
+from vyapp.plugins import Command
 from vyapp.tools import get_project_root
-from vyapp.plugins import ENV
 from vyapp.app import root
 from vyapp.base import printd
 from re import findall
@@ -95,10 +94,10 @@ class PythonChecker(object):
         if ranges:
             self.options(ranges)
         
-install = PythonChecker
-def py_errors():
-    python_checker = PythonChecker(AreaVi.ACTIVE)
+@Command()
+def py_errors(area):
+    python_checker = PythonChecker(area)
     python_checker.check_all()
 
-ENV['py_errors'] = py_errors
+install = PythonChecker
 

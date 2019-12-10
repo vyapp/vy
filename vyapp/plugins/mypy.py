@@ -32,6 +32,7 @@ Command: py_static()
 
 """
 
+from vyapp.plugins import Command
 from subprocess import Popen, STDOUT, PIPE
 from os.path import exists, dirname, join, relpath
 from vyapp.widgets import LinePicker
@@ -91,10 +92,7 @@ class StaticChecker(object):
 
 
 install = StaticChecker
-def py_static():
-    checker = StaticChecker(AreaVi.ACTIVE)
+@Command()
+def py_static(area):
+    checker = StaticChecker(area)
     checker.check_all()
-
-ENV['py_static'] = py_static
-
-

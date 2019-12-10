@@ -33,9 +33,9 @@ class PythonRefactor(object):
     def __init__(self, area):
         self.area  = area
         self.files = None
-        area.install('rope', ('PYTHON', '<Key-R>', error(self.get_rename_data)),
+        area.install('rope', ('PYTHON', '<Key-R>', self.ask_and_rename),
         ('PYTHON', '<Key-A>', self.static_analysis),
-        ('PYTHON', '<Key-M>', error(self.get_move_data)))
+        ('PYTHON', '<Key-M>', self.ask_and_move))
 
     def get_root_path(self):
         if self.area.project:
@@ -50,7 +50,8 @@ class PythonRefactor(object):
         libutils.analyze_module(project, mod)
         project.close()
 
-    def get_move_data(self, event):
+    @error
+    def ask_and_move(self, event):
         ask = Ask()
         if ask.data:
             self.move(ask.data)
@@ -113,7 +114,8 @@ class PythonRefactor(object):
         if instance:
             instance.load_data(new.real_path)
 
-    def get_rename_data(self, event):
+    @error
+    def ask_and_rename(self, event):
         ask = Ask()
         if ask.data:
             self.rename(ask.data)
