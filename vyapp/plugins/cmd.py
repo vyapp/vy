@@ -26,6 +26,7 @@ Description: Open an input box in order to type inline python code to be execute
 
 """
 
+from vyapp.plugins import Command
 from traceback import print_exc as debug
 from vyapp.tools import exec_pipe
 from vyapp.ask import Ask
@@ -45,6 +46,7 @@ class Cmd:
     def exec_cmd(self, event):
         ask = Ask()
         self.area.active()
+        Command.set_target(self.area)
         sys.stdout.write('\nLine executed:\n%s\n>>>\n' % ask.data)
     
         data = ask.data.encode('utf-8')
@@ -60,6 +62,8 @@ class Cmd:
         self.area.clear_selection()
     
     def set_target(self, event):
+        Command.set_target(self.area)
+
         self.area.active()
         root.status.set_msg('Set command target !')
         return 'break'

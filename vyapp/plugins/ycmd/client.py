@@ -34,7 +34,7 @@ from vyapp.widgets import LinePicker
 from tempfile import NamedTemporaryFile
 from subprocess import Popen, PIPE
 from shutil import copyfile
-from vyapp.plugins import ENV
+from vyapp.plugins import Command, ENV
 from vyapp.app import root
 from vyapp.base import printd
 from vyapp.areavi import AreaVi
@@ -432,16 +432,19 @@ class YcmdCompletion:
 
     @classmethod
     def dycm(cls):
-        data = {AreaVi.ACTIVE.filename:  
-        {'filetypes': [FILETYPES[AreaVi.ACTIVE.extension]], 
-        'contents': AreaVi.ACTIVE.get('1.0', 'end')}}
+        """
+        """
+        data = {Command.area.filename:  
+        {'filetypes': [FILETYPES[Command.area.extension]], 
+        'contents': Command.area.get('1.0', 'end')}}
 
-        cls.server.debug_info(1, 1, AreaVi.ACTIVE.filename, data)
+        cls.server.debug_info(1, 1, Command.area.filename, data)
 
     @classmethod
     def lycm(cls, path=None):
         """
         """
+
         home = expanduser('~')
         path = path if path else join(home, '.ycm_extra_conf.py')
 
@@ -466,7 +469,4 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
-
-
-
 

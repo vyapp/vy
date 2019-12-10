@@ -49,6 +49,7 @@ to work with other interpreters.
 """
 
 from untwisted.iofile import Stdout, Stdin, LOAD, CLOSE
+from vyapp.plugins import Command
 from untwisted.network import Device
 from vyapp.plugins import ENV
 from vyapp.ask import Ask
@@ -56,7 +57,6 @@ from vyapp.ask import Ask
 from subprocess import Popen, PIPE, STDOUT
 from os import environ, setsid, killpg
 from vyapp.plugins.spawn.base_spawn import BaseSpawn
-from vyapp.areavi import AreaVi
 from vyapp.app import root
 from os import environ 
 
@@ -103,14 +103,14 @@ class Spawn(BaseSpawn):
 class HSpawn(Spawn):
     def __init__(self, cmd):
         Spawn.__init__(self, cmd)
-        BaseSpawn.__init__(self, cmd, AreaVi.ACTIVE, 
-        AreaVi.ACTIVE.master.master.create())
+        BaseSpawn.__init__(self, cmd, Command.area, 
+        Command.area.master.master.create())
 
 class VSpawn(Spawn):
     def __init__(self, cmd):
         Spawn.__init__(self, cmd)
-        BaseSpawn.__init__(self, cmd, AreaVi.ACTIVE, 
-        AreaVi.ACTIVE.master.master.master.create())
+        BaseSpawn.__init__(self, cmd, Command.area, 
+        Command.area.master.master.master.create())
 
 ENV['hspawn']  = HSpawn
 ENV['vspawn']  = VSpawn

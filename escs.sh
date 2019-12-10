@@ -170,13 +170,18 @@ ls
 git submodule update --init --recursive
 ls
 
-# typescript is for tsserver. clang is for c-family completion.
-pacman -S clang cmake gcc-c++ make python3-devel typescript python3-dev
+# Install ycmd-git.
+cd ~/bin/
+git clone git@github.com:ycm-core/ycmd.git ycmd-code
+cd ycmd-code
+ls
+git submodule update --init --recursive
 
-# Compiling ycmd with all features. The --cs-completer, -go-completer are 
-# flags to install the necessary tools.
-python3 install.py --all --cs-completer -go-completer --rust-completer --java-completer --clang-completer
+python3 build.py --all
 
-
+mkdir build
+cd build
+cmake ../cpp -DUSE_PYTHON2=OFF -DUSE_LIBCLANG_COMPLETER=ON
+make VERBOSE=1
 
 
