@@ -122,28 +122,22 @@ class Pdb(object):
         self.area = area
         area.add_mode('PYTHON')
         
-        area.install('pdb', ('PYTHON', '<Key-p>', 
-        lambda event: self.send('print %s' % event.widget.join_ranges(
-        'sel', sep='\r\n'))), 
-        ('PYTHON', '<Key-x>', lambda event: self.evaluate_expression()), 
-        ('PYTHON', '<Key-r>', lambda event: self.execute_statement()), 
-        ('PYTHON', '<Key-1>', lambda event: self.start_debug(event.widget)), 
-        ('PYTHON', '<Key-2>', lambda event: self.start_debug_args(event.widget)), 
-        ('PYTHON', '<Key-q>', lambda event: self.terminate_process()), 
-        ('PYTHON', '<Key-c>', lambda event: self.send('continue\r\n')), 
-        ('PYTHON', '<Key-e>', lambda event: self.send(
-        '!%s' % event.widget.join_ranges('sel', sep='\r\n'))), 
-        ('PYTHON', '<Key-w>', lambda event: self.send('where\r\n')), 
-        ('PYTHON', '<Key-a>', lambda event: self.send('args\r\n')), 
-        ('PYTHON', '<Key-s>', lambda event: self.send('step\r\n')), 
-        ('PYTHON', '<Control-C>', lambda event: self.dump_clear_all()), 
+        area.install('pdb', 
+        ('PYTHON', '<Key-p>', self.send_print),
+        ('PYTHON', '<Key-x>', self.evaluate_expression), 
+        ('PYTHON', '<Key-r>', self.execute_statement), 
+        ('PYTHON', '<Key-1>', self.start_debug), 
+        ('PYTHON', '<Key-2>', self.start_debug_args), 
+        ('PYTHON', '<Key-q>', self.terminate_process), 
+        ('PYTHON', '<Key-c>', self.send_continue), 
+        ('PYTHON', '<Key-e>', self.evaluate_selection), 
+        ('PYTHON', '<Key-w>', self.send_where), 
+        ('PYTHON', '<Key-a>', self.send_args), 
+        ('PYTHON', '<Key-s>', self.send_step), 
+        ('PYTHON', '<Control-C>', self.dump_clear_all), 
         ('PYTHON', '<Control-c>', self.remove_breakpoint),
-        ('PYTHON', '<Key-B>', lambda event: self.send(
-        'tbreak %s:%s\r\n' % (event.widget.filename, 
-        event.widget.indref('insert')[0]))),
-        ('PYTHON', '<Key-b>', lambda event: self.send(
-        'break %s:%s\r\n' % (event.widget.filename, 
-        event.widget.indref('insert')[0]))))
+        ('PYTHON', '<Key-B>',  self.send_tbreak),
+        ('PYTHON', '<Key-b>', self.send_break))
 
         self.python = python
 
@@ -151,6 +145,49 @@ class Pdb(object):
         self.child = None
         self.map_index  = dict()
         self.map_line   = dict()
+
+    def send_break(self, event):
+        self.send('break %s:%s\r\n' % (event.widget.filename, 
+        event.widget.indref('insert')[0]))
+        event.widget.chmode('NORMAL')
+
+    def send_tbreak(self, event):
+        self.send('tbreak %s:%s\r\n' % (event.widget.filename, 
+        event.widget.indref('insert')[0]))
+        event.widget.chmode('NORMAL')
+
+    def send_step(self, event):
+        """
+        """
+
+        self.send('step\r\n')
+
+    def send_args(self, event):
+        self.send('args\r\n')
+        event.widget.chmode('NORMAL')
+
+    def send_where(self, event):
+        """
+        """
+
+        self.send('where\r\n')
+        event.widget.chmode('NORMAL')
+        
+    def evaluate_selection(self, event):
+        """
+        """
+
+        self.send('!%s' % event.widget.join_ranges('sel', sep='\r\n'))
+        event.widget.chmode('NORMAL')
+
+    def send_continue(self, event):
+        self.send('continue\r\n')
+        # event.widget.chmode('NORMAL')
+
+    def send_print(self, event):
+        data = event.widget.join_ranges('sel', sep='\r\n')
+        self.send('print %s' % data)
+        event.widget.chmode('NORMAL')
 
     def create_process(self, args):
         from os import environ, setsid
@@ -184,25 +221,27 @@ class Pdb(object):
         except AttributeError:
             return
 
-    def terminate_process(self):
+    def terminate_process(self, event):
         self.kill_debug_process()
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
         root.status.set_msg('Debug finished !')
+        event.widget.chmode('NORMAL')
 
-    def start_debug(self, area):
+    def start_debug(self, event):
         self.kill_debug_process()
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
         self.create_process([self.python, '-u', 
-        '-m', 'pdb', area.filename])
+        '-m', 'pdb', event.widget.filename])
 
         root.status.set_msg('Debug started !')
+        event.widget.chmode('NORMAL')
 
-    def start_debug_args(self, area):
+    def start_debug_args(self, event):
         ask  = Ask()
         ARGS = '%s -u -m pdb %s %s' % (self.python, 
-        area.filename, ask.data)
+        event.event.filename, ask.data)
 
         ARGS = shlex.split(ARGS)
         self.kill_debug_process()
@@ -212,27 +251,35 @@ class Pdb(object):
         self.create_process(ARGS)
         
         root.status.set_msg('Debug started ! Args: %s' % ask.data)
+        event.widget.chmode('NORMAL')
 
-    def evaluate_expression(self):
+    def evaluate_expression(self, event):
         ask  = Ask()
         self.send('print(%s)\r\n' % ask.data)
+        # event.widget.chmode('NORMAL')
 
-    def execute_statement(self):
+    def execute_statement(self, event):
         ask  = Ask()
         self.send('!%s\r\n' % ask.data)
+        # event.widget.chmode('NORMAL')
 
     def clear_breakpoint_map(self):
         self.map_index.clear()
         self.map_line.clear()
 
-    def dump_clear_all(self):
+    def dump_clear_all(self, event):
         self.send('clear\r\nyes\r\n')
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
+        event.widget.chmode('NORMAL')
 
     def remove_breakpoint(self, event):
+        """
+        """
+
         self.send('clear %s\r\n' % self.map_line[(
         event.widget.filename, str(event.widget.indref('insert')[0]))])
+        event.widget.chmode('NORMAL')
 
     def delete_all_breakpoints(self):
         """
