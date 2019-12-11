@@ -66,10 +66,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         self.mark_set('(CURSOR_LAST_COL)', '1.0')
 
-        # def cave(event):
-            # AreaVi.ACTIVE = event.widget
-        # self.hook(-1, '<FocusIn>', cave)
-        AreaVi.ACTIVE = self
         self.charset  = 'utf-8'
         self.map      = {}
         self.db       = {}
@@ -95,19 +91,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
     def update_map(self, namespace, map):
         scheme = self.map.setdefault(namespace, {})
         scheme.update(map)
-
-    def active(self):
-        """
-        It is used to create a model of target for plugins
-        defining python functions to access the AreaVi instance that was
-        set as target.
-        
-        Plugins that expose python functions to be executed from vy
-        should access AreaVi.ACTIVE when having to manipulate some AreaVi
-        instance content.
-        """
-
-        AreaVi.ACTIVE = self
 
     def chmode(self, id):
         """

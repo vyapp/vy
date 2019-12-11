@@ -45,7 +45,6 @@ class Cmd:
         
     def exec_cmd(self, event):
         ask = Ask()
-        self.area.active()
         Command.set_target(self.area)
         sys.stdout.write('\nLine executed:\n%s\n>>>\n' % ask.data)
     
@@ -64,7 +63,6 @@ class Cmd:
     def set_target(self, event):
         Command.set_target(self.area)
 
-        self.area.active()
         root.status.set_msg('Set command target !')
         return 'break'
     
