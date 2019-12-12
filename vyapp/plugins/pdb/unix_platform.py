@@ -114,13 +114,12 @@ from vyapp.app import root
 import shlex
 import sys
 
-class Pdb(object):
+class Pdb:
     setup={'background':'blue', 'foreground':'yellow'}
     encoding='utf8'
 
     def __call__(self, area, python='python2'):
         self.area = area
-        area.add_mode('PYTHON')
         
         area.install('pdb', 
         ('PYTHON', '<Key-p>', self.send_print),
@@ -241,7 +240,7 @@ class Pdb(object):
     def start_debug_args(self, event):
         ask  = Ask()
         ARGS = '%s -u -m pdb %s %s' % (self.python, 
-        event.event.filename, ask.data)
+        event.widget.filename, ask.data)
 
         ARGS = shlex.split(ARGS)
         self.kill_debug_process()
@@ -287,24 +286,25 @@ class Pdb(object):
         It is useful when restarting pdb as a different process.
         """
     
+        items = self.map_index.items()
+
+        for index, (filename, line) in items:
+            self.del_breakpoint(filename, index)
+
+    def del_breakpoint(self, filename, index):
         widgets = AreaVi.get_opened_files(root)
-        for index, (filename, line) in self.map_index.items():
-            area = widgets.get(filename)
-            if area:
-                area.tag_delete('_breakpoint_%s' % index)
-    
+        area    = widgets.get(filename)
+        if area: area.tag_delete('_breakpoint_%s' % index)
+
     def handle_line(self, device, filename, line, args):
         """
     
         """
 
         wids = AreaVi.get_opened_files(root)
-        try:
-            area = wids[filename]
-        except  KeyError:
-            pass
-        else:
-            root.note.set_line(area, line)
+        area = wids.get(filename)
+
+        if area: root.note.set_line(area, line)
     
     def handle_deleted_breakpoint(self, device, index):
         """
@@ -312,15 +312,7 @@ class Pdb(object):
         """
 
         filename, line = self.map_index[index]
-        NAME = '_breakpoint_%s' % index
-        area = None
-
-        try:
-            area = AreaVi.get_opened_files(root)[filename]
-        except KeyError:
-            return
-
-        area.tag_delete(NAME)
+        self.del_breakpoint(filename, index)
 
     def handle_breakpoint(self, device, index, filename, line):
         """
