@@ -104,10 +104,10 @@ Description: Terminate the process.
 
 from untwisted.network import Device
 from subprocess import Popen, PIPE, STDOUT
+from vyapp.regutils import RegexEvent
 from untwisted.iofile import *
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
-from vyapp.plugins.pdb.event import PdbEvents
 from vyapp.ask import Ask
 from vyapp.areavi import AreaVi
 from vyapp.app import root
@@ -188,31 +188,41 @@ class Pdb:
         self.send('print %s' % data)
         event.widget.chmode('NORMAL')
 
-    def create_process(self, args):
-        from os import environ, setsid
-        self.child  = Popen(args, shell=0, stdout=PIPE, stdin=PIPE, preexec_fn=setsid, 
-                            stderr=STDOUT,  env=environ)
-    
-        self.stdout = Device(self.child.stdout)
-        self.stdin  = Device(self.child.stdin)
-    
-        Stdout(self.stdout)
-        Terminator(self.stdout, delim=b'\n')
-        Stdin(self.stdin)
-        PdbEvents(self.stdout, self.encoding)
+    def install_handles(self, device):
+        Terminator(device, delim=b'\n')
+
+        regstr0 = '\> (.+)\(([0-9]+)\)(.+)'
+        regstr1 = '\(Pdb\) Deleted breakpoint ([0-9]+)'
+        regstr2 = '\(Pdb\) Breakpoint ([0-9]+) at (.+)\:([0-9]+)'
+
+        RegexEvent(device, regstr0, 'LINE', self.encoding)
+        RegexEvent(device, regstr1, 'DELETED_BREAKPOINT', self.encoding)
+        RegexEvent(device, regstr2, 'BREAKPOINT', self.encoding)
 
         # Note: The data has to be decoded using the area charset
         # because the area contents would be sometimes printed along
         # the debugging.
-        xmap(self.stdout, LOAD, lambda con, 
+        xmap(device, LOAD, lambda con, 
         data: sys.stdout.write(data.decode(self.area.charset)))
 
-        xmap(self.stdout, 'LINE', self.handle_line)
-        xmap(self.stdout, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
-        xmap(self.stdout, 'BREAKPOINT', self.handle_breakpoint)
+        xmap(device, 'LINE', self.handle_line)
+        xmap(device, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
+        xmap(device, 'BREAKPOINT', self.handle_breakpoint)
+
+    def create_process(self, args):
+        from os import environ, setsid
+        self.child  = Popen(args, shell=0, stdout=PIPE, 
+        stdin=PIPE, preexec_fn=setsid, stderr=STDOUT,  env=environ)
+    
+        self.stdout = Device(self.child.stdout)
+        self.stdin  = Device(self.child.stdin)
+
+        Stdout(self.stdout)
+        Stdin(self.stdin)
 
         xmap(self.stdin, CLOSE, lambda dev, err: lose(dev))
         xmap(self.stdout, CLOSE, lambda dev, err: lose(dev))
+        self.install_handles(self.stdout)
 
     def kill_process(self):
         if not self.child: return 
@@ -223,7 +233,6 @@ class Pdb:
 
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
-        root.status.set_msg('Debug finished !')
 
     def quit_pdb(self, event):
         self.kill_process()
