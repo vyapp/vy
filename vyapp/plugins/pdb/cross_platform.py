@@ -27,16 +27,20 @@ class Pdb(vyapp.plugins.pdb.unix_platform.Pdb):
         xmap(self.expect, CLOSE, lambda expect: expect.destroy())
 
         def on_quit():
-            self.kill_debug_process()
+            self.kill_process()
             root.destroy()
 
         root.protocol("WM_DELETE_WINDOW", on_quit)
 
-    def kill_debug_process(self):
+    def kill_process(self):
         try:
             self.expect.terminate()
         except Exception:
-            return
+            pass
+
+        self.delete_all_breakpoints()
+        self.clear_breakpoint_map()
+        root.status.set_msg('Debug finished !')
 
     def send(self, data):
         self.expect.send(data.encode(self.encoding))

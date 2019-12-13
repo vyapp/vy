@@ -102,7 +102,7 @@ Description: Terminate the process.
 
 """
 
-from untwisted.network import core, READ, Device
+from untwisted.network import Device
 from subprocess import Popen, PIPE, STDOUT
 from untwisted.iofile import *
 from untwisted.wrappers import xmap
@@ -127,7 +127,7 @@ class Pdb:
         ('PYTHON', '<Key-r>', self.execute_statement), 
         ('PYTHON', '<Key-1>', self.start_debug), 
         ('PYTHON', '<Key-2>', self.start_debug_args), 
-        ('PYTHON', '<Key-q>', self.terminate_process), 
+        ('PYTHON', '<Key-q>', self.quit_pdb), 
         ('PYTHON', '<Key-c>', self.send_continue), 
         ('PYTHON', '<Key-e>', self.evaluate_selection), 
         ('PYTHON', '<Key-w>', self.send_where), 
@@ -214,23 +214,24 @@ class Pdb:
         xmap(self.stdin, CLOSE, lambda dev, err: lose(dev))
         xmap(self.stdout, CLOSE, lambda dev, err: lose(dev))
 
-    def kill_debug_process(self):
-        try:
-            self.child.kill()
-        except AttributeError:
-            return
+    def kill_process(self):
+        if not self.child: return 
+        self.child.kill()
 
-    def terminate_process(self, event):
-        self.kill_debug_process()
+        lose(self.stdin)
+        lose(self.stdout)
+
         self.delete_all_breakpoints()
         self.clear_breakpoint_map()
         root.status.set_msg('Debug finished !')
+
+    def quit_pdb(self, event):
+        self.kill_process()
+        root.status.set_msg('PDB stopped !')
         event.widget.chmode('NORMAL')
 
     def start_debug(self, event):
-        self.kill_debug_process()
-        self.delete_all_breakpoints()
-        self.clear_breakpoint_map()
+        self.kill_process()
         self.create_process([self.python, '-u', 
         '-m', 'pdb', event.widget.filename])
 
@@ -241,12 +242,9 @@ class Pdb:
         ask  = Ask()
         ARGS = '%s -u -m pdb %s %s' % (self.python, 
         event.widget.filename, ask.data)
+        self.kill_process()
 
         ARGS = shlex.split(ARGS)
-        self.kill_debug_process()
-        self.delete_all_breakpoints()
-        self.clear_breakpoint_map()
-
         self.create_process(ARGS)
         
         root.status.set_msg('Debug started ! Args: %s' % ask.data)
