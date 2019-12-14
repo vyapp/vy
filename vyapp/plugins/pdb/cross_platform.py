@@ -23,8 +23,7 @@ class Pdb(unix_platform.Pdb):
         except Exception:
             pass
 
-        self.delete_all_breakpoints()
-        self.clear_breakpoint_map()
+        self.clear_breakpoints_map()
 
     def send(self, data):
         self.expect.send(data.encode(self.encoding))

@@ -141,9 +141,9 @@ class Pdb:
         self.python = python
 
     def __init__(self):
-        self.child = None
-        self.map_index  = dict()
-        self.map_line   = dict()
+        self.child     = None
+        self.map_index = dict()
+        self.map_line  = dict()
 
     def send_break(self, event):
         self.send('break %s:%s\r\n' % (event.widget.filename, 
@@ -180,6 +180,9 @@ class Pdb:
         event.widget.chmode('NORMAL')
 
     def send_continue(self, event):
+        """
+        """
+
         self.send('continue\r\n')
         # event.widget.chmode('NORMAL')
 
@@ -231,8 +234,7 @@ class Pdb:
         lose(self.stdin)
         lose(self.stdout)
 
-        self.delete_all_breakpoints()
-        self.clear_breakpoint_map()
+        self.clear_breakpoints_map()
 
     def quit_pdb(self, event):
         self.kill_process()
@@ -269,14 +271,22 @@ class Pdb:
         self.send('!%s\r\n' % ask.data)
         # event.widget.chmode('NORMAL')
 
-    def clear_breakpoint_map(self):
+    def clear_breakpoints_map(self):
+        """
+        It deletes all added breakpoint tags.
+        It is useful when restarting pdb as a different process.
+        """
+
+        items = self.map_index.items()
+        for index, (filename, line) in items:
+            self.del_breakpoint(filename, index)
+
         self.map_index.clear()
         self.map_line.clear()
 
     def dump_clear_all(self, event):
         self.send('clear\r\nyes\r\n')
-        self.delete_all_breakpoints()
-        self.clear_breakpoint_map()
+        self.clear_breakpoints_map()
         event.widget.chmode('NORMAL')
 
     def remove_breakpoint(self, event):
@@ -286,17 +296,6 @@ class Pdb:
         self.send('clear %s\r\n' % self.map_line[(
         event.widget.filename, str(event.widget.indref('insert')[0]))])
         event.widget.chmode('NORMAL')
-
-    def delete_all_breakpoints(self):
-        """
-        It deletes all added breakpoint tags.
-        It is useful when restarting pdb as a different process.
-        """
-    
-        items = self.map_index.items()
-
-        for index, (filename, line) in items:
-            self.del_breakpoint(filename, index)
 
     def del_breakpoint(self, filename, index):
         widgets = AreaVi.get_opened_files(root)
