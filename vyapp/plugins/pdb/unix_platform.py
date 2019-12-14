@@ -129,7 +129,6 @@ class Pdb:
         ('PYTHON', '<Key-2>', self.start_debug_args), 
         ('PYTHON', '<Key-q>', self.quit_pdb), 
         ('PYTHON', '<Key-c>', self.send_continue), 
-        ('PYTHON', '<Key-e>', self.evaluate_selection), 
         ('PYTHON', '<Key-w>', self.send_where), 
         ('PYTHON', '<Key-a>', self.send_args), 
         ('PYTHON', '<Key-s>', self.send_step), 
@@ -172,13 +171,6 @@ class Pdb:
         self.send('where\r\n')
         event.widget.chmode('NORMAL')
         
-    def evaluate_selection(self, event):
-        """
-        """
-
-        self.send('!%s' % event.widget.join_ranges('sel', sep='\r\n'))
-        event.widget.chmode('NORMAL')
-
     def send_continue(self, event):
         """
         """
