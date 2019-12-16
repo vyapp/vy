@@ -81,13 +81,9 @@ class Pdb(DAP):
 
         self.python = python
 
-    def __init__(self):
-        super(Pdb, self).__init__()
-        self.expect  = None
-
-    def on_close(self, expect):
-        self.expect.terminate()
-        root.status.set_msg('PDB: CLOSED!')
+    def send(self, data):
+        self.expect.send(data.encode(self.encoding))
+        print('Pdb Cmd: ', data)
 
     def send_break(self, event):
         self.send('break %s:%s\r\n' % (event.widget.filename, 
@@ -104,7 +100,6 @@ class Pdb(DAP):
         """
 
         self.send('continue\r\n')
-        # event.widget.chmode('NORMAL')
 
     def send_print(self, event):
         data = event.widget.join_ranges('sel', sep='\r\n')
@@ -122,36 +117,9 @@ class Pdb(DAP):
         RegexEvent(device, regstr1, 'DELETED_BREAKPOINT', self.encoding)
         RegexEvent(device, regstr2, 'BREAKPOINT', self.encoding)
 
-        # Note: The data has to be decoded using the area charset
-        # because the area contents would be sometimes printed along
-        # the debugging.
-        xmap(device, LOAD, lambda con, 
-        data: sys.stdout.write(data.decode(self.area.charset)))
-
         xmap(device, 'LINE', self.handle_line)
         xmap(device, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
         xmap(device, 'BREAKPOINT', self.handle_breakpoint)
-
-    def create_process(self, args):
-        self.expect = Expect(*args)
-        xmap(self.expect, CLOSE, self.on_close)
-        self.install_handles(self.expect)
-
-        root.protocol("WM_DELETE_WINDOW", self.on_quit)
-
-    def on_quit(self):
-        self.expect.terminate()
-        print('PDB process killed!')
-        root.destroy()
-
-    def kill_process(self):
-        if self.expect:
-            self.expect.terminate()
-        self.clear_breakpoints_map()
-
-    def quit_db(self, event):
-        self.kill_process()
-        event.widget.chmode('NORMAL')
 
     def start_debug(self, event):
         self.kill_process()
@@ -188,9 +156,6 @@ class Pdb(DAP):
         self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')
         root.status.set_msg('PDB: Remove breakpoint sent!')
-
-    def send(self, data):
-        self.expect.send(data.encode(self.encoding))
 
     def send_dcmd(self, event):
         ask  = Ask()

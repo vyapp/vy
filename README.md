@@ -42,7 +42,7 @@ The plugins are documented: the documentation can be accessed from vy by droppin
 Features/Plugins
 ================
 
-- **Python Debugger**
+- **Debuggers (Python, Delve)**
 
 - **Rope Refactoring Tools**
     * https://github.com/python-rope/rope

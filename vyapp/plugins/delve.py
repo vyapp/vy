@@ -2,6 +2,13 @@
 Overview
 ========
 
+This module implements a minimal set of features to use Go Delve debugger in vy.
+It implements key-commands to set breakpoints, remove breakpoints and also to send
+Delve commands to be executed on the fly. 
+
+The debugger writes output to sys.stdout which
+can be redirected to multiple AreaVi instances thus allowing better
+inspecting of what is happening in the debugged application.
 
 Key-Commands
 ============
@@ -78,34 +85,14 @@ class Delve(DAP):
         ('GOLANG', '<Control-c>', self.remove_breakpoint),
         ('GOLANG', '<Key-b>', self.send_break))
 
-    def __init__(self):
-        super(Delve, self).__init__()
-        self.expect = None
-
-    def create_process(self, args):
-        self.expect = Expect(*args)
-
-        xmap(self.expect, CLOSE, self.on_close)
-        self.install_handles(self.expect)
-        root.protocol("WM_DELETE_WINDOW", self.on_quit)
-
     def send_dcmd(self, event):
         ask  = Ask()
         self.send('%s\r\n' % ask.data)
         root.status.set_msg('Delve: sent cmd!')
 
-    def on_close(self, expect):
-        self.expect.terminate()
-        root.status.set_msg('Delve: CLOSED!')
-
-    def on_quit(self):
-        self.expect.terminate()
-        print('Delve process killed!')
-        root.destroy()
-
     def send_print(self, event):
         data = event.widget.join_ranges('sel', sep='\r\n')
-        self.send('print %s' % data)
+        self.send('print %s\r\n' % data)
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve: Selected text evaluated !')
 
@@ -124,20 +111,9 @@ class Delve(DAP):
         RegexEvent(device, regstr1, 'DELETED_BREAKPOINT', self.encoding)
         RegexEvent(device, regstr2, 'BREAKPOINT', self.encoding)
 
-        # Note: The data has to be decoded using the area charset
-        # because the area contents would be sometimes printed along
-        # the debugging.
-        xmap(device, LOAD, lambda con, 
-        data: sys.stdout.write(data.decode(self.area.charset)))
-
         xmap(device, 'LINE', self.handle_line)
         xmap(device, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
         xmap(device, 'BREAKPOINT', self.handle_breakpoint)
-
-    def kill_process(self):
-        if self.expect:
-            self.expect.terminate()
-        self.clear_breakpoints_map()
 
     def start_debug(self, event):
         self.kill_process()
@@ -166,6 +142,10 @@ class Delve(DAP):
 
         root.status.set_msg('Delve: Sent breakpoint !')
 
+    def send(self, data):
+        self.expect.send(data.encode(self.encoding))
+        print('Delve Cmd: ', data)
+
     def send_continue(self, event):
         """
         """
@@ -190,15 +170,6 @@ class Delve(DAP):
         self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve: Remove breakpoint sent!')
-
-    def quit_db(self, event):
-        self.kill_process()
-        event.widget.chmode('NORMAL')
-        root.status.set_msg('Quitting Delve!')
-
-    def send(self, data):
-        self.expect.send(data.encode(self.encoding))
-        print('Dlv Cmd: ', data)
 
 delve     = Delve()
 install = delve
