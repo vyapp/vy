@@ -18,30 +18,30 @@ Event: <Key-b>
 Description: Open the previous found occurrences of the pattern.
 
 Mode: INPUT
-Event: <Key-i>
+Event: <Control-i>
 Description: Set a file pattern for silver search to ignore.
 
 Mode: INPUT
-Event: <Key-x>
+Event: <Control-x>
 Description: Set lax pattern search.
 
 Mode: INPUT
-Event: <Key-r>
+Event: <Control-r>
 Description: Set regex search for patterns.
 
 Mode: INPUT
-Event: <Key-l>
+Event: <Control-l>
 Description: Set literal search for patterns.
 
 Mode: INPUT
-Event: <Key-w>
+Event: <Control-w>
 Description: Set wide search, in wide search mode sniper
 will be searching in the directories that were set
 in Sniper.dirs. In non wide search sniper will search
 in your current file project and in your AreaVi.HOME.
 
 Mode: INPUT
-Event: <Key-m>
+Event: <Control-m>
 Description: Set multiline search.
 
 """

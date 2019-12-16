@@ -84,7 +84,7 @@ Event: <Control-c>
 Description: Remove break point that is set at the cursor line.
 
 Mode: PYTHON
-Event: <Control-s>
+Event: <Key-s>
 Description: Send a (s)tep to the debug it means execute the current line, stop at the first possible
 occasion (either in a function that is called or on the next line in the current function).
 
@@ -97,27 +97,22 @@ Event: <Key-r>
 Description: Inject python code to be executed in the current context.
 
 Mode: PYTHON
-Event: <Key-q>
+Event: <Key-Q>
 Description: Terminate the process.
 
 """
-
-from untwisted.network import Device
-from subprocess import Popen, PIPE, STDOUT
+from untwisted.expect import Expect, LOAD, CLOSE
 from vyapp.regutils import RegexEvent
-from untwisted.iofile import *
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.ask import Ask
+from vyapp.mixins import DAP
 from vyapp.areavi import AreaVi
 from vyapp.app import root
 import shlex
 import sys
 
-class Pdb:
-    setup={'background':'blue', 'foreground':'yellow'}
-    encoding='utf8'
-
+class Pdb(DAP):
     def __call__(self, area, python='python2'):
         self.area = area
         
@@ -127,7 +122,8 @@ class Pdb:
         ('PYTHON', '<Key-r>', self.execute_statement), 
         ('PYTHON', '<Key-1>', self.start_debug), 
         ('PYTHON', '<Key-2>', self.start_debug_args), 
-        ('PYTHON', '<Key-q>', self.quit_pdb), 
+        ('PYTHON', '<Key-m>', self.send_dcmd), 
+        ('PYTHON', '<Key-Q>', self.quit_db), 
         ('PYTHON', '<Key-c>', self.send_continue), 
         ('PYTHON', '<Key-w>', self.send_where), 
         ('PYTHON', '<Key-a>', self.send_args), 
@@ -140,9 +136,12 @@ class Pdb:
         self.python = python
 
     def __init__(self):
-        self.child     = None
-        self.map_index = dict()
-        self.map_line  = dict()
+        super(Pdb, self).__init__()
+        self.expect  = None
+
+    def on_close(self, expect):
+        self.expect.terminate()
+        root.status.set_msg('PDB: CLOSED!')
 
     def send_break(self, event):
         self.send('break %s:%s\r\n' % (event.widget.filename, 
@@ -186,9 +185,9 @@ class Pdb:
     def install_handles(self, device):
         Terminator(device, delim=b'\n')
 
-        regstr0 = '\> (.+)\(([0-9]+)\)(.+)'
-        regstr1 = '\(Pdb\) Deleted breakpoint ([0-9]+)'
-        regstr2 = '\(Pdb\) Breakpoint ([0-9]+) at (.+)\:([0-9]+)'
+        regstr0 = '\> (.+)\(([0-9]+)\).+'
+        regstr1 = 'Deleted breakpoint ([0-9]+)'
+        regstr2 = 'Breakpoint ([0-9]+) at (.+)\:([0-9]+)'
 
         RegexEvent(device, regstr0, 'LINE', self.encoding)
         RegexEvent(device, regstr1, 'DELETED_BREAKPOINT', self.encoding)
@@ -205,32 +204,24 @@ class Pdb:
         xmap(device, 'BREAKPOINT', self.handle_breakpoint)
 
     def create_process(self, args):
-        from os import environ, setsid
-        self.child  = Popen(args, shell=0, stdout=PIPE, 
-        stdin=PIPE, preexec_fn=setsid, stderr=STDOUT,  env=environ)
-    
-        self.stdout = Device(self.child.stdout)
-        self.stdin  = Device(self.child.stdin)
+        self.expect = Expect(*args)
+        xmap(self.expect, CLOSE, self.on_close)
+        self.install_handles(self.expect)
 
-        Stdout(self.stdout)
-        Stdin(self.stdin)
+        root.protocol("WM_DELETE_WINDOW", self.on_quit)
 
-        xmap(self.stdin, CLOSE, lambda dev, err: lose(dev))
-        xmap(self.stdout, CLOSE, lambda dev, err: lose(dev))
-        self.install_handles(self.stdout)
+    def on_quit(self):
+        self.expect.terminate()
+        print('PDB process killed!')
+        root.destroy()
 
     def kill_process(self):
-        if not self.child: return 
-        self.child.kill()
-
-        lose(self.stdin)
-        lose(self.stdout)
-
+        if self.expect:
+            self.expect.terminate()
         self.clear_breakpoints_map()
 
-    def quit_pdb(self, event):
+    def quit_db(self, event):
         self.kill_process()
-        root.status.set_msg('PDB stopped !')
         event.widget.chmode('NORMAL')
 
     def start_debug(self, event):
@@ -256,87 +247,40 @@ class Pdb:
     def evaluate_expression(self, event):
         ask  = Ask()
         self.send('print(%s)\r\n' % ask.data)
-        # event.widget.chmode('NORMAL')
 
     def execute_statement(self, event):
         ask  = Ask()
         self.send('!%s\r\n' % ask.data)
-        # event.widget.chmode('NORMAL')
-
-    def clear_breakpoints_map(self):
-        """
-        It deletes all added breakpoint tags.
-        It is useful when restarting pdb as a different process.
-        """
-
-        items = self.map_index.items()
-        for index, (filename, line) in items:
-            self.del_breakpoint(filename, index)
-
-        self.map_index.clear()
-        self.map_line.clear()
 
     def dump_clear_all(self, event):
         self.send('clear\r\nyes\r\n')
-        self.clear_breakpoints_map()
+        # self.clear_breakpoints_map()
         event.widget.chmode('NORMAL')
 
     def remove_breakpoint(self, event):
         """
         """
 
-        self.send('clear %s\r\n' % self.map_line[(
-        event.widget.filename, str(event.widget.indref('insert')[0]))])
+        name = self.get_breakpoint_name(event.widget.filename, 
+        str(event.widget.indref('insert')[0]))
+
+        self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')
-
-    def del_breakpoint(self, filename, index):
-        widgets = AreaVi.get_opened_files(root)
-        area    = widgets.get(filename)
-        if area: area.tag_delete('_breakpoint_%s' % index)
-
-    def handle_line(self, device, filename, line, args):
-        """
-    
-        """
-
-        wids = AreaVi.get_opened_files(root)
-        area = wids.get(filename)
-
-        if area: root.note.set_line(area, line)
-    
-    def handle_deleted_breakpoint(self, device, index):
-        """
-        When a break point is removed.
-        """
-
-        filename, line = self.map_index[index]
-        self.del_breakpoint(filename, index)
-
-    def handle_breakpoint(self, device, index, filename, line):
-        """
-        When a break point is added.
-        """
-
-        self.map_index[index]           = (filename, line)
-        self.map_line[(filename, line)] = index
-
-        map  = AreaVi.get_opened_files(root)
-        area = map[filename]
-        NAME = '_breakpoint_%s' % index
-
-        area.tag_add(NAME, '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config(NAME, **self.setup)
+        root.status.set_msg('PDB: Remove breakpoint sent!')
 
     def dump_sigint(self, area):
         from os import killpg
         killpg(child.pid, 2)
 
-
     def send(self, data):
-        self.stdin.dump(data.encode(self.encoding))
+        self.expect.send(data.encode(self.encoding))
+
+    def send_dcmd(self, event):
+        ask  = Ask()
+
+        if not ask.data: return
+        self.send('%s\r\n' % ask.data)
+        root.status.set_msg('Pdb: sent cmd!')
 
 pdb     = Pdb()
 install = pdb
-
-
-

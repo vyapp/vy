@@ -123,3 +123,4 @@ def exec_pipe(data, env):
     finally:
         sys.stderr = tmp
 
+

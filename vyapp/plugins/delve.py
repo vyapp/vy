@@ -21,8 +21,6 @@ Event? <Key-c>
 Description: 
 
 Mode: GOLANG
-Event: <Key-e>
-Description: 
 
 Mode: GOLANG
 Event: <Key-w>
@@ -49,7 +47,7 @@ Event: <Control-c>
 Description: 
 
 Mode: GOLANG
-Event: <Control-s>
+Event: <Key-s>
 Description: 
 
 Mode: GOLANG
@@ -61,7 +59,7 @@ Event: <Key-r>
 Description: 
 
 Mode: GOLANG
-Event: <Key-q>
+Event: <Key-Q>
 Description: 
 
 """
@@ -71,6 +69,7 @@ from untwisted.expect import Expect, LOAD, CLOSE
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.regutils import RegexEvent
+from vyapp.mixins import DAP
 from vyapp.ask import Ask
 from vyapp.areavi import AreaVi
 from vyapp.app import root
@@ -78,7 +77,7 @@ import shlex
 import sys
 import os
 
-class Delve:
+class Delve(DAP):
     setup={'background':'blue', 'foreground':'yellow'}
     encoding='utf8'
 
@@ -89,24 +88,35 @@ class Delve:
         ('GOLANG', '<Key-p>', self.send_print),
         ('GOLANG', '<Key-x>', self.evaluate_expression), 
         ('GOLANG', '<Key-1>', self.start_debug), 
-        # ('GOLANG', '<Key-2>', self.start_debug_args), 
-        ('GOLANG', '<Key-q>', self.quit_db), 
+        ('GOLANG', '<Key-2>', self.start_debug_args), 
+        ('GOLANG', '<Key-Q>', self.quit_db), 
         ('GOLANG', '<Key-c>', self.send_continue), 
         ('GOLANG', '<Key-a>', self.send_args), 
+        ('GOLANG', '<Key-m>', self.send_dcmd), 
         ('GOLANG', '<Key-s>', self.send_step), 
         ('GOLANG', '<Control-C>', self.dump_clear_all), 
         ('GOLANG', '<Control-c>', self.remove_breakpoint),
         ('GOLANG', '<Key-b>', self.send_break))
 
     def __init__(self):
+        super(Delve, self).__init__()
         self.expect = None
 
     def create_process(self, args):
         self.expect = Expect(*args)
 
-        xmap(self.expect, CLOSE, lambda expect: expect.destroy())
+        xmap(self.expect, CLOSE, self.on_close)
         self.install_handles(self.expect)
         root.protocol("WM_DELETE_WINDOW", self.on_quit)
+
+    def send_dcmd(self, event):
+        ask  = Ask()
+        self.send('%s\r\n' % ask.data)
+        root.status.set_msg('Delve: sent cmd!')
+
+    def on_close(self, expect):
+        self.expect.terminate()
+        root.status.set_msg('Delve: CLOSED!')
 
     def on_quit(self):
         self.expect.terminate()
@@ -134,10 +144,8 @@ class Delve:
         # > [ler5] main.feedSeq() ./problem-10.go:9 (hits goroutine(1):1 total:1) (PC: 0x4aa3e6)
         # Breakpoint delvebreak10 cleared at 0x4aa400 for main.feedSeq() ./.go/src/problem-10/problem-10.go:1
 
-        regstr0 = '\> [^ ]* ?[^ ]+ ([^ ]+):([0-9]+) .+'
-        # regstr1 = '\(Pdb\) Deleted breakpoint ([0-9]+)'
-        regstr1 = 'Breakpoint ([^ ]+) cleared at [^ ]+ for [^ ]+ (.+)\:([0-9]+)'
-
+        regstr0 = '\> [^ ]* ?[^ ]+ ([^ ]+):([0-9]+).+'
+        regstr1 = 'Breakpoint ([^ ]+) cleared at [^ ]+ for [^ ]+ .+\:[0-9]+'
         regstr2 = 'Breakpoint ([a-zA-Z0-9]+) set at [^ ]+ for [^ ]+ (.+)\:([0-9]+)'
 
         RegexEvent(device, regstr0, 'LINE', self.encoding)
@@ -154,12 +162,28 @@ class Delve:
         xmap(device, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
         xmap(device, 'BREAKPOINT', self.handle_breakpoint)
 
-    def start_debug(self, event):
-        if self.expect: self.expect.terminate()
+    def kill_process(self):
+        if self.expect:
+            self.expect.terminate()
         self.clear_breakpoints_map()
+
+    def start_debug(self, event):
+        self.kill_process()
 
         self.create_process(['dlv', 'debug', event.widget.filename])
         root.status.set_msg('Delve debug started !')
+        event.widget.chmode('NORMAL')
+
+    def start_debug_args(self, event):
+        ask  = Ask()
+
+        if not ask.data: return
+        self.kill_process()
+
+        self.create_process(shlex.split('dlv debug %s %s' % (
+            event.widget.filename, ask.data)))
+        
+        root.status.set_msg('Delve debug started: %s' % ask.data)
         event.widget.chmode('NORMAL')
 
     def send_break(self, event):
@@ -184,17 +208,9 @@ class Delve:
         self.send('step\r\n')
         root.status.set_msg('Step sent to Delve !')
 
-    def clear_breakpoints_map(self):
-        """
-        """
-
-        wids  = AreaVi.get_opened_files(root)
-        for filename, area in wids.items():
-            area.tag_delete('DELVE_BREAKPOINT')
-
     def dump_clear_all(self, event):
         self.send('clearall\r\n')
-        self.clear_breakpoints_map()
+        # self.clear_breakpoints_map()
 
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve cleared breakpoints!')
@@ -203,8 +219,10 @@ class Delve:
         """
         """
 
-        line, col = event.widget.indref('insert')
-        self.send('clear delvebreak%s\r\n' % line)
+        name = self.get_breakpoint_name(event.widget.filename, 
+        str(event.widget.indref('insert')[0]))
+
+        self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve: Remove breakpoint sent!')
 
@@ -213,47 +231,10 @@ class Delve:
         self.send('print %s\r\n' % ask.data)
         root.status.set_msg('Sent expression to Delve!')
 
-    def handle_deleted_breakpoint(self, device, index, filename, line):
-        """
-        When a break point is removed.
-        """
-        filename = os.path.abspath(filename)
-        widgets  = AreaVi.get_opened_files(root)
-        area     = widgets.get(filename)
-
-        if area: area.tag_remove('DELVE_BREAKPOINT', 
-            '%s.0 linestart' % line, '%s.0 lineend' % line)
-
-    def handle_line(self, device, filename, line):
-        """
-    
-        """
-        # Need to be factored off.
-        filename = os.path.abspath(filename)
-
-        wids = AreaVi.get_opened_files(root)
-        area = wids.get(filename)
-
-        if area: root.note.set_line(area, line)
-    
-    def handle_breakpoint(self, device, index, filename, line):
-        """
-        When a break point is added.
-        """
-
-        filename = os.path.abspath(filename)
-        map  = AreaVi.get_opened_files(root)
-        area = map[filename]
-
-        area.tag_add('DELVE_BREAKPOINT', '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config('DELVE_BREAKPOINT', **self.setup)
-
     def quit_db(self, event):
-        self.clear_breakpoints_map()
-        self.expect.terminate()
-
-        root.status.set_msg('Delve stopped !')
+        self.kill_process()
         event.widget.chmode('NORMAL')
+        root.status.set_msg('Quitting Delve!')
 
     def send(self, data):
         self.expect.send(data.encode(self.encoding))

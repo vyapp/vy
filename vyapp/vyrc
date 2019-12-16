@@ -366,11 +366,12 @@ autoload(vyapp.plugins.inline_comment)
 
 # Used to debug python applications. The python argument 
 # specifies the interpreter path.
-# import vyapp.plugins.pdb.unix_platform
-# autoload(vyapp.plugins.pdb.unix_platform, python='python2')
+# from vyapp.plugins import pdb
+# autoload(pdb, python='python3')
 
-# import vyapp.plugins.pdb.cross_platform
-# autoload(vyapp.plugins.pdb.cross_platform, python='python2')
+# Used to debug golang applications.
+# from vyapp.plugins import delve
+# autoload(delve)
 
 # This plugin highlights links when files are opened.
 import vyapp.plugins.hlink

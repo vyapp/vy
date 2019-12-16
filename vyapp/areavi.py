@@ -226,7 +226,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def reset_assoc_data(self):
         for ind in self.db.keys():
-            self.tag_remove(ind, '1.0', 'end')
+            self.tag_delete(ind)
         self.db.clear()
 
     def tags_config(self, config):
