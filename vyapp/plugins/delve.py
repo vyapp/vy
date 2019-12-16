@@ -10,57 +10,40 @@ Namespace: delve
 
 Mode: GOLANG
 Event? <Key-1>
-Description: 
+Description: It starts debugging the opened  application with no command line arguments.
 
 Mode: GOLANG
 Event: <Key-2>
-Description: 
+Description: It starts the application with command line arguments that use shlex module to split the arguments.
 
 Mode: GOLANG
 Event? <Key-c>
-Description: 
-
-Mode: GOLANG
-
-Mode: GOLANG
-Event: <Key-w>
-Description: 
-
-Mode: GOLANG
-Event: <Key-a>
-Description: 
+Description: Send a (c)ontinue to the debug process.
+Continue execution, only stop when a breakpoint is encountered.
 
 Mode: GOLANG
 Event: <Key-b>
-Description: 
-
-Mode: GOLANG
-Event: <Key-B>
-Description: 
+Description: Set a break point at the cursor line.
 
 Mode: GOLANG
 Event: <Control-C>
-Description: 
+Description: Clear all break points.
 
 Mode: GOLANG
 Event: <Control-c>
-Description: 
+Description: Remove break point that is set at the cursor line.
 
-Mode: GOLANG
-Event: <Key-s>
-Description: 
+Mode: PYTHON
+Event: <Key-p>
+Description: Evaluate selected text.
 
-Mode: GOLANG
-Event: <Key-x>
-Description: 
-
-Mode: GOLANG
-Event: <Key-r>
-Description: 
+Mode: PYTHON
+Event: <Key-m>
+Description: Send a Delve command to be executed.
 
 Mode: GOLANG
 Event: <Key-Q>
-Description: 
+Description: Terminate the process.
 
 """
 
@@ -86,14 +69,11 @@ class Delve(DAP):
         
         area.install('delve', 
         ('GOLANG', '<Key-p>', self.send_print),
-        ('GOLANG', '<Key-x>', self.evaluate_expression), 
         ('GOLANG', '<Key-1>', self.start_debug), 
         ('GOLANG', '<Key-2>', self.start_debug_args), 
         ('GOLANG', '<Key-Q>', self.quit_db), 
         ('GOLANG', '<Key-c>', self.send_continue), 
-        ('GOLANG', '<Key-a>', self.send_args), 
         ('GOLANG', '<Key-m>', self.send_dcmd), 
-        ('GOLANG', '<Key-s>', self.send_step), 
         ('GOLANG', '<Control-C>', self.dump_clear_all), 
         ('GOLANG', '<Control-c>', self.remove_breakpoint),
         ('GOLANG', '<Key-b>', self.send_break))
@@ -122,14 +102,6 @@ class Delve(DAP):
         self.expect.terminate()
         print('Delve process killed!')
         root.destroy()
-
-    def send_args(self, event):
-        """
-        """
-
-        self.send('args\r\n')
-        event.widget.chmode('NORMAL')
-        root.status.set_msg('Delve: Sent args !')
 
     def send_print(self, event):
         data = event.widget.join_ranges('sel', sep='\r\n')
@@ -201,13 +173,6 @@ class Delve(DAP):
         self.send('continue\r\n')
         root.status.set_msg('Continue sent to Delve !')
 
-    def send_step(self, event):
-        """
-        """
-
-        self.send('step\r\n')
-        root.status.set_msg('Step sent to Delve !')
-
     def dump_clear_all(self, event):
         self.send('clearall\r\n')
         # self.clear_breakpoints_map()
@@ -225,11 +190,6 @@ class Delve(DAP):
         self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve: Remove breakpoint sent!')
-
-    def evaluate_expression(self, event):
-        ask  = Ask()
-        self.send('print %s\r\n' % ask.data)
-        root.status.set_msg('Sent expression to Delve!')
 
     def quit_db(self, event):
         self.kill_process()
