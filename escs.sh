@@ -10,6 +10,12 @@ git clone git@github.com:iogf/vy.wiki.git vy.wiki-code
 cd /home/tau/projects/vy.wiki-code/
 git pull
 ##############################################################################
+# create development branch for wiki.
+cd /home/tau/projects/vy.wiki-code/
+git branch -a
+git checkout -b development
+git push --set-upstream origin development
+##############################################################################
 # push wiki docs.
 cd /home/tau/projects/vy.wiki-code/
 git status
