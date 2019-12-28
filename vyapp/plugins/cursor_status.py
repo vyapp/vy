@@ -14,7 +14,7 @@ class CursorStatus(object):
         in TIME interval.
         """
     
-        row, col = self.area.indref('insert')
+        row, col = self.area.indexref('insert')
         root.status.set_line(row)
         root.status.set_column(col)
         self.funcid = self.area.after(self.timeout, self.update)

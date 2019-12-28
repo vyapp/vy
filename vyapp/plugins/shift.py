@@ -30,8 +30,8 @@ class Shift(object):
         """
         Shift ranges of selected text to the right.
         """
-        srow, scol = self.area.indref('sel.first')
-        erow, ecol = self.area.indref('sel.last')
+        srow, scol = self.area.indexref('sel.first')
+        erow, ecol = self.area.indexref('sel.last')
         self.area.shift_right(srow, erow, 1, self.area.tabchar)
     
     def sel_left(self, event):
@@ -39,8 +39,8 @@ class Shift(object):
         Shift ranges of selected text to the left.
         """
 
-        srow, scol = self.area.indref('sel.first')
-        erow, ecol = self.area.indref('sel.last')
+        srow, scol = self.area.indexref('sel.first')
+        erow, ecol = self.area.indexref('sel.last')
         self.area.shift_left(srow, erow, 1)
 
 install = Shift

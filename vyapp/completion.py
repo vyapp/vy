@@ -53,14 +53,14 @@ class CompleteBox(MatchBox, Echo):
         pattern   = pattern.lower()
         lst       = [ind.lower() for ind in self.get(0, 'end')]
         seq       = match_sub_pattern(pattern, lst)
-        line, col = self.area.indint(self.master.start_index)
+        line, col = self.area.indexsplit(self.master.start_index)
 
         _, index = next(seq, (None, col))
         return '%s.%s' % (line, index)
 
     def on_delete(self, event):
-        m, n = self.area.indint(self.master.start_index)
-        x, y = self.area.indcur()
+        m, n = self.area.indexsplit(self.master.start_index)
+        x, y = self.area.indexref()
         if x != m or (m == x and y < n): self.master.destroy()
 
     def complete(self, event):

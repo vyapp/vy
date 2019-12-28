@@ -314,7 +314,7 @@ class YcmdWindow(CompletionWindow):
 
     def __init__(self, area, server, *args, **kwargs):
         source    = area.get('1.0', 'end')
-        line, col = area.indcur()
+        line, col = area.indexref()
     
         data = {area.filename: 
         {'filetypes': [FILETYPES[area.extension]], 'contents': source}}

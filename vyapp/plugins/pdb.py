@@ -87,12 +87,12 @@ class Pdb(DAP):
 
     def send_break(self, event):
         self.send('break %s:%s\r\n' % (event.widget.filename, 
-        event.widget.indref('insert')[0]))
+        event.widget.indexref('insert')[0]))
         event.widget.chmode('NORMAL')
 
     def send_tbreak(self, event):
         self.send('tbreak %s:%s\r\n' % (event.widget.filename, 
-        event.widget.indref('insert')[0]))
+        event.widget.indexref('insert')[0]))
         event.widget.chmode('NORMAL')
 
     def send_continue(self, event):
@@ -151,7 +151,7 @@ class Pdb(DAP):
         """
 
         name = self.get_breakpoint_name(event.widget.filename, 
-        str(event.widget.indref('insert')[0]))
+        str(event.widget.indexref('insert')[0]))
 
         self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')

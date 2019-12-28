@@ -135,7 +135,7 @@ class Delve(DAP):
         event.widget.chmode('NORMAL')
 
     def send_break(self, event):
-        line, col = event.widget.indref('insert')
+        line, col = event.widget.indexref('insert')
         self.send('break %s %s:%s\r\n' % ('delvebreak%s' % line, 
         event.widget.filename, line))
         event.widget.chmode('NORMAL')
@@ -165,7 +165,7 @@ class Delve(DAP):
         """
 
         name = self.get_breakpoint_name(event.widget.filename, 
-        str(event.widget.indref('insert')[0]))
+        str(event.widget.indexref('insert')[0]))
 
         self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')

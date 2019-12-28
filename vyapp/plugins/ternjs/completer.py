@@ -38,7 +38,7 @@ class JavascriptCompletionWindow(CompletionWindow):
     def __init__(self, area, *args, **kwargs):
         # If ~/.tern-port doesn't exist then run the server.
         source      = area.get('1.0', 'end')
-        line, col   = area.indcur()
+        line, col   = area.indexref()
 
         if not exists(join(expanduser('~'), '.tern-port')): 
             self.run_server()

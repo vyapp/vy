@@ -89,12 +89,14 @@ class BuiltinModes(object):
         """
         """
         self.area.chmode('NORMAL')
+        self.area.clear_selection()
 
     def switch_insert(self, event):
         """
         """
 
         self.area.chmode('INSERT')
+        self.area.clear_selection()
 
     def switch_extra(self, event):
         """

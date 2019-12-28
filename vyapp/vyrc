@@ -100,10 +100,6 @@ autoload(vyapp.plugins.anchors)
 import vyapp.plugins.data_sel
 autoload(vyapp.plugins.data_sel)
 
-# Implement keycommand to remove selection from chars.
-import vyapp.plugins.clear_sel
-autoload(vyapp.plugins.clear_sel)
-
 # Quickly switch focus between tabs by
 # using lazy search pattern.
 import vyapp.plugins.tab_search

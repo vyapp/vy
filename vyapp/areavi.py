@@ -33,7 +33,6 @@ class IdleEvent:
         lambda: self.widget.event_generate('<<Idle>>'))
 
 class AreaVi(Text, DataEvent, IdleEvent):
-    ACTIVE = None
     INPUT  = None
     # Plugins should commonly use self.project
     # if it fails then use HOME.
@@ -261,12 +260,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
         for indi, indj in args:
             self.tag_add(name, indi, indj)
 
-    def indref(self, index='insert'):
+    def indexref(self, index='insert'):
         """
         This is a short hand function. It is used to convert a Text index
         into two integers like:
 
-        a, b = area.indref('insert')
+        a, b = area.indexref('insert')
 
         Now, a and b can be manipulated
         as numbers.
@@ -284,7 +283,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.mark_set('insert', '%s.%s' % (line, col))
         self.see('insert')
 
-    def indint(self, index):
+    def indexsplit(self, index):
         """ 
         Just a shorthand for:
         
@@ -293,15 +292,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         a, b = index.split('.')
-        return int(a), int(b)
-
-    def indcur(self):
-        """
-        It returns two integers that corresponds to the cursor
-        position line and col.
-        """
-
-        a, b  = self.indref('insert')
         return int(a), int(b)
 
     def seecur(self, index):
@@ -328,8 +318,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         is_end = self.compare('insert linestart', '!=', 'end -1l linestart')
         if not is_end: return
 
-        a, b = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
+        a, b = self.indexref('(CURSOR_LAST_COL)')
+        c, d = self.indexref()
         self.setcur(c + 1, b)        
     
     def up(self):   
@@ -340,8 +330,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         is_start = self.compare('insert linestart', '!=', '1.0')
 
         if not is_start: return
-        a, b = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
+        a, b = self.indexref('(CURSOR_LAST_COL)')
+        c, d = self.indexref()
         self.setcur(c - 1, b)
     
     def left(self):
@@ -413,7 +403,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         try:
-            self.tag_remove('sel', 'sel.first', 'sel.last')
+            self.tag_remove('sel', 
+                'sel.first', 'sel.last')
         except Exception:
             pass
 
