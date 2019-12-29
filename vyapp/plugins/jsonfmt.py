@@ -11,9 +11,9 @@ Key-Commands
 
 Namespace: jsonfmt
 
-Mode: ALPHA
+Mode: EXTRA
 Event: <Key-j>
-Description: 
+Description: Format the selected JSON data then switch to NORMAL mode.
 
 """
 
@@ -25,7 +25,7 @@ from vyapp.app import root
 class FmtJSON:
     def __init__(self, area, *args, **kwargs):
         self.area = area
-        area.install('fmtjson', ('ALPHA', '<Key-j>', self.run_printer))
+        area.install('fmtjson', ('EXTRA', '<Key-j>', self.run_printer))
 
     def run_printer(self, event):
         start = self.area.index('sel.first')
