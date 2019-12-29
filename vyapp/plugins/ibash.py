@@ -35,14 +35,12 @@ Description: Restart the underlying bash process.
 """
 
 
-from untwisted.network import core, xmap, READ, WRITE, Device
+from untwisted.network import xmap, Device
 from vyapp.app import root
-from vyapp.base import printd
-from untwisted.iofile import *
+from untwisted.iofile import Stdout, Stdin, lose, CLOSE, LOAD
 from vyapp.ask import Ask
 from subprocess import Popen, PIPE, STDOUT
 from os import environ, setsid, killpg
-from vyapp.tools import error
 from vyapp.plugins import ENV
 import sys
 
@@ -60,7 +58,7 @@ class Process(object):
         self.start()
 
     def start(self):
-        print('Ibash - Bash process started...')
+        print('(ibash) Bash process started...')
         self.child  = Popen(self.cmd, shell=0, stdout=PIPE, stdin=PIPE, 
                             preexec_fn=setsid, stderr=STDOUT,  env=environ)
         
@@ -83,7 +81,7 @@ class Process(object):
         self.child.kill()
         self.start()
 
-        root.status.set_msg('Process killed and started !')
+        root.status.set_msg('(ibash) Process killed and started !')
 
     def dump_tab(self, area):
         data = area.get('insert linestart', 'insert -1c lineend')
@@ -94,18 +92,21 @@ class Process(object):
         data = area.join_ranges('sel')
         data = data.encode('utf-8')
         self.stdin.dump(data)
+        root.status.set_msg('(ibash) Executed region!')
 
     def dump_line(self, area):
         data = area.get('insert linestart', 'insert +1l linestart')
         data = data.encode('utf-8')
         self.stdin.dump(data)
         area.down()
+        root.status.set_msg('(ibash) Executed line!')
 
     def ask_data_and_dump(self, area):
+        root.status.set_msg('(ibash) Type a command:')
         ask = Ask()
 
-        if ask.data:
-            self.stdin.dump(b'%s\n' %  ask.data.encode('utf-8'))
+        self.stdin.dump(b'%s\n' %  ask.data.encode('utf-8'))
+        root.status.set_msg('(ibash) Executed command!')
 
     def dump_signal(self, event):
         root.status.set_msg('(ibash) Signal number SIGINT(2)/SIGQUIT(3):')

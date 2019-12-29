@@ -95,25 +95,24 @@ class Delve(DAP):
 
     def evaluate_expression(self, event):
         ask  = Ask()
-        if not ask.data: return
 
         self.send("print %s\r\n" % ask.data)
-        root.status.set_msg('Delve: sent expression!')
+        root.status.set_msg('(delve) Sent expression!')
 
     def send_restart(self, event):
         self.send('restart\r\n')
-        root.status.set_msg('Delve: sent restart!')
+        root.status.set_msg('(delve) Sent restart!')
 
     def send_dcmd(self, event):
         ask  = Ask()
         self.send('%s\r\n' % ask.data)
-        root.status.set_msg('Delve: sent cmd!')
+        root.status.set_msg('(delve) Sent cmd!')
 
     def evaluate_selection(self, event):
         data = event.widget.join_ranges('sel', sep='\r\n')
         self.send('print %s' % data)
         event.widget.chmode('NORMAL')
-        root.status.set_msg('Delve: Selected text evaluated !')
+        root.status.set_msg('(delve) Sent selection !')
 
     def install_handles(self, device):
         Terminator(device, delim=b'\n')
@@ -126,19 +125,18 @@ class Delve(DAP):
         self.kill_process()
 
         self.create_process(['dlv', 'debug', event.widget.filename])
-        root.status.set_msg('Delve debug started !')
+        root.status.set_msg('(delve) Started !')
         event.widget.chmode('NORMAL')
 
     def run_args(self, event):
         ask  = Ask()
 
-        if not ask.data: return
         self.kill_process()
 
         self.create_process(shlex.split('dlv debug %s %s' % (
             event.widget.filename, ask.data)))
         
-        root.status.set_msg('Delve debug started: %s' % ask.data)
+        root.status.set_msg('(delve) Started: %s' % ask.data)
         event.widget.chmode('NORMAL')
 
     def send_break(self, event):
@@ -150,7 +148,7 @@ class Delve(DAP):
         self.send('break %s %s:%s\r\n' % (bname, event.widget.filename, line))
 
         event.widget.chmode('NORMAL')
-        root.status.set_msg('Delve: Sent breakpoint !')
+        root.status.set_msg('(delve) Sent breakpoint !')
 
     def send(self, data):
         self.expect.send(data.encode(self.encoding))
@@ -161,13 +159,13 @@ class Delve(DAP):
         """
 
         self.send('continue\r\n')
-        root.status.set_msg('Continue sent to Delve !')
+        root.status.set_msg('(delve) Sent continue !')
 
     def dump_clear_all(self, event):
         self.send('clearall\r\n')
 
         event.widget.chmode('NORMAL')
-        root.status.set_msg('Delve cleared breakpoints!')
+        root.status.set_msg('(delve) Sent clearall !')
 
     def remove_breakpoint(self, event):
         """
@@ -179,7 +177,7 @@ class Delve(DAP):
         self.send('clear %s\r\n' % bname)
 
         event.widget.chmode('NORMAL')
-        root.status.set_msg('Delve: Remove breakpoint sent!')
+        root.status.set_msg('(delve) Sent clear !')
 
 delve     = Delve()
 install = delve

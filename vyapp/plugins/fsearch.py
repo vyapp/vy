@@ -28,7 +28,6 @@ from vyapp.regutils import build_regex
 from subprocess import Popen, STDOUT, PIPE
 from vyapp.ask import Get
 from vyapp.app import root
-from os.path import join, basename
 
 
 class FSearch(object):

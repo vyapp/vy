@@ -19,7 +19,6 @@ Description: Switch modes for an AreaVi instance.
 """
 
 from vyapp.plugins import Command
-from vyapp.areavi import AreaVi
 
 @Command()
 def cpsel(area, sep='\n'):

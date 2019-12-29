@@ -88,14 +88,12 @@ class JSDebugger(DAP):
 
     def send_dcmd(self, event):
         ask  = Ask()
-        if not ask.data: return
     
         self.send('%s\r\n' % ask.data)
         root.status.set_msg('JSDebugger: sent cmd!')
 
     def send_exec(self, event):
         ask  = Ask()
-        if not ask.data: return
 
         self.send("exec('%s')\r\n" % ask.data)
         root.status.set_msg('JSDebugger: sent exec cmd!')
@@ -128,7 +126,6 @@ class JSDebugger(DAP):
     def run_args(self, event):
         ask  = Ask()
 
-        if not ask.data: return
         self.kill_process()
 
         self.create_process(shlex.split('node inspect %s %s' % (

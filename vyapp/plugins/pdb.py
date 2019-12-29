@@ -88,10 +88,9 @@ class Pdb(DAP):
 
     def evaluate_expression(self, event):
         ask  = Ask()
-        if not ask.data: return
 
         self.send("p %s\r\n" % ask.data)
-        root.status.set_msg('PDB: sent expression!')
+        root.status.set_msg('(pdb) Sent expression!')
 
     def send(self, data):
         self.expect.send(data.encode(self.encoding))
@@ -101,26 +100,26 @@ class Pdb(DAP):
         self.send('break %s:%s\r\n' % (event.widget.filename, 
         event.widget.indexref('insert')[0]))
         event.widget.chmode('NORMAL')
-        root.status.set_msg('PDB: break sent !')
+        root.status.set_msg('(pdb) Command break sent !')
 
     def send_tbreak(self, event):
         self.send('tbreak %s:%s\r\n' % (event.widget.filename, 
         event.widget.indexref('insert')[0]))
         event.widget.chmode('NORMAL')
-        root.status.set_msg('PDB: tbreak sent !')
+        root.status.set_msg('(pdb) Command tbreak sent !')
 
     def send_continue(self, event):
         """
         """
 
         self.send('continue\r\n')
-        root.status.set_msg('PDB: continue sent !')
+        root.status.set_msg('(pdb) Command continue sent !')
 
     def evaluate_selection(self, event):
         data = event.widget.join_ranges('sel', sep='\r\n')
         self.send('p %s' % data)
         event.widget.chmode('NORMAL')
-        root.status.set_msg('PDB: sent text selection!')
+        root.status.set_msg('(pdb) Sent text selection!')
 
     def install_handles(self, device):
         Terminator(device, delim=b'\n')
@@ -135,7 +134,7 @@ class Pdb(DAP):
         self.create_process([self.python, '-u', 
         '-m', 'pdb', event.widget.filename])
 
-        root.status.set_msg('Debug started !')
+        root.status.set_msg('(pdb) Started !')
         event.widget.chmode('NORMAL')
 
     def run_args(self, event):
@@ -147,13 +146,13 @@ class Pdb(DAP):
         ARGS = shlex.split(ARGS)
         self.create_process(ARGS)
         
-        root.status.set_msg('Debug started ! Args: %s' % ask.data)
+        root.status.set_msg('(pdb) Started with Args: %s' % ask.data)
         event.widget.chmode('NORMAL')
 
     def dump_clear_all(self, event):
         self.send('clear\r\nyes\r\n')
         event.widget.chmode('NORMAL')
-        root.status.set_msg('PDB: clearall sent!')
+        root.status.set_msg('(pdb) Command clearall sent!')
 
     def remove_breakpoint(self, event):
         """
@@ -161,14 +160,13 @@ class Pdb(DAP):
         line, col = event.widget.indexref('insert')
         self.send('clear %s:%s\r\n' % (event.widget.filename, line))
         event.widget.chmode('NORMAL')
-        root.status.set_msg('PDB: clear breakpoint sent!')
+        root.status.set_msg('(pdb) Command clear sent!')
 
     def send_dcmd(self, event):
         ask  = Ask()
 
-        if not ask.data: return
         self.send('%s\r\n' % ask.data)
-        root.status.set_msg('Pdb: sent cmd!')
+        root.status.set_msg('(pdb) Sent cmd!')
 
 pdb     = Pdb()
 install = pdb

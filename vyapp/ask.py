@@ -7,6 +7,9 @@ from vyapp.app import root
 from vyapp.areavi import DataEvent, IdleEvent
 import string
 
+class AskCancel(Exception):
+    pass
+
 class InputBox(object):
     def __init__(self, default_data=''):
         self.default_data = default_data
@@ -55,16 +58,23 @@ class Ask(InputBox):
     # The data inputed by the user.
     ask.data 
 
-    Contains the inputed user value otherwise
-    it is None, it means the user has pressed <Escape>.
+    When the input data process is canceled then it raises
+    AskCancel exception.
+
+    The Ask widget would be used in situations where user input is necessary
+    to proceed with the task thus raising an exception when user cancels is
+    suitable.
     """
 
     def __init__(self, default_data =''):
         InputBox.__init__(self, default_data)
         self.entry.bind('<Return>', lambda event: self.on_success())
         self.entry.bind('<Escape>', lambda event: self.cancel())
-        self.data = ''
+        self.data = None
         self.area.wait_window(self.frame)
+
+        if self.data == None:
+            raise AskCancel('Canceled input!')
 
     def on_success(self):
         self.data = self.entry.get()

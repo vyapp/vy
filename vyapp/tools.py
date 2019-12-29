@@ -124,3 +124,51 @@ def exec_pipe(data, env):
         sys.stderr = tmp
 
 
+def e_stop(handle):
+    """
+    This decorator is used to execute an event handle
+    and stop propagation of the event through event classes.
+
+    Let us say there is a handle on:
+
+        <Key-u>
+
+    Such an event is on mode -1, if there is a handle on the same
+    event on mode NORMAL then both handles would be executed in case
+    an exception occurs in the -1 handle. 
+
+    It happens because the 'break' value is not propagated to the tkinter event loop.
+    """
+
+    def wrapper(*args, **kwargs):
+       try:
+           handle(*args, **kwargs)
+       except Exception:
+            debug()
+       return 'break'
+    return wrapper
+
+def consume_iter(iterator, time=1):
+    """
+    This function receives an iterator that is consumed from tkinter update
+    function. It is a way to have python code executed asynchronously.  Some
+    plugins would perform heavy operations that could block tkinter mainloop,
+    these plugins should write code that can be executed asynchronously using  
+    iterators.
+
+    Note: Some plugins like syntax highlighting would use this technique
+    to highlight code. 
+    """
+
+    def cave():
+        from vyapp.app import root
+        try:
+            next(iterator)
+        except Exception:
+            pass
+        else:    
+            root.after(time, cave)
+
+    cave()
+
+

@@ -118,15 +118,13 @@ class Ysnippet(object):
         root.status.set_msg('Snippet title:')
         ask = Ask()
 
-        if ask.data: 
-            self.store(ask.data)
+        self.store(ask.data)
 
     def get_pattern(self, event):
         root.status.set_msg('Snippet pattern:')
         ask = Ask()
 
-        if ask.data: 
-            self.find(ask.data)
+        self.find(ask.data)
 
     def store(self, data):
         """

@@ -52,8 +52,6 @@ from untwisted.iofile import Stdout, Stdin, LOAD, CLOSE
 from vyapp.plugins import Command
 from untwisted.network import Device
 from vyapp.plugins import ENV
-from vyapp.ask import Ask
-
 from subprocess import Popen, PIPE, STDOUT
 from os import environ, setsid, killpg
 from vyapp.plugins.spawn.base_spawn import BaseSpawn

@@ -49,7 +49,6 @@ class Stdout:
         This method is called to write data to the AreaVi widget.
         """
 
-        index0 = self.area.index('(CODE_MARK)')
         self.area.insert('(CODE_MARK)', data)
         self.area.see('insert')
 

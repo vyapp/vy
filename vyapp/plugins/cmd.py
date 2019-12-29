@@ -28,10 +28,11 @@ Description: Open an input box in order to type inline python code to be execute
 
 from vyapp.plugins import Command
 from traceback import print_exc as debug
-from vyapp.tools import exec_pipe
+from vyapp.tools import exec_pipe, e_stop
 from vyapp.ask import Ask
 from vyapp.plugins import ENV
 from vyapp.app import root
+import re
 import sys
 
 class Cmd:
@@ -43,18 +44,20 @@ class Cmd:
         ('NORMAL', '<Key-semicolon>', self.exec_region),
         (-1, '<Alt-z>',  self.set_target))
         
+    @e_stop
     def exec_cmd(self, event):
         ask = Ask()
         Command.set_target(self.area)
-        sys.stdout.write('\nLine executed:\n%s\n>>>\n' % ask.data)
+        sys.stdout.write('(cmd) Executed code:\n>>> %s\n' % ask.data)
     
         data = ask.data.encode('utf-8')
         exec_pipe(data, ENV)
-        return 'break'
     
     def exec_region(self, event):
         data = self.area.join_ranges('sel')
-        sys.stdout.write('\nRegion executed:\n%s\n>>>\n' % data)
+        fmtdata = re.sub(r'^|\n', '\n>>> ', data)
+        fmtdata = '(cmd) Executed code:\n%s\n' % fmtdata
+        sys.stdout.write(fmtdata)
     
         data = data.encode('utf-8')
         exec_pipe(data, ENV)
