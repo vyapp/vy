@@ -42,6 +42,11 @@ The plugins are documented: the documentation can be accessed from vy by droppin
 Features/Plugins
 ================
 
+- **Python PDB Debugger**
+
+- **Golang Delve Debugger**
+    * https://github.com/go-delve/delve
+
 - **Debuggers (Python, Delve)**
 
 - **Rope Refactoring Tools**
@@ -131,17 +136,3 @@ Documentation
 
 [Wiki](https://github.com/iogf/vy/wiki)
 
-Donors
-======
-
-Christian Chapman (i.am.christian.chapman@gmail.com) 
-
-I thank Christian too much for his help. It will keep vy work for a long long time.
-
-Nikita Aizikovskyi (nikita.aizikovskyi@gmail.com)
-
-I thank Nikita who has donated money. Nikita also sings my poems.
-
-Yuri Brandão
-
-A great friend who is also a passionate developer.

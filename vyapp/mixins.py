@@ -50,12 +50,12 @@ class DAP:
         self.kill_process()
         event.widget.chmode('NORMAL')
 
-    def start_debug(self, event):
+    def run(self, event):
         """
         To be implemented.
         """
 
-    def start_debug_args(self, event):
+    def run_args(self, event):
         """
         To be implemented.
         """
@@ -63,7 +63,6 @@ class DAP:
     def kill_process(self):
         if self.expect:
             self.expect.terminate()
-        self.clear_breakpoints_map()
 
     def install_handles(self, device):
         """
@@ -75,37 +74,7 @@ class DAP:
 
             self.handle_line
     
-        A given breakpoint was removed:
-
-            self.handle_deleted_breakpoint 
-
-        A breakpoint was added:
-
-            self.handle_breakpoint.
         """
-
-    def clear_breakpoints_map(self):
-        """
-        It deletes all added breakpoint tags.
-        It is useful when restarting pdb as a different process.
-        """
-
-        items = self.map_index.items()
-        for index, (filename, line) in items:
-            self.del_breakpoint(filename, index)
-
-        self.map_index.clear()
-        self.map_line.clear()
-
-    def get_breakpoint_name(self, filename, line):
-        filename = abspath(filename)
-        return self.map_line[(filename, line)]
-
-    def del_breakpoint(self, filename, index):
-        filename = abspath(filename)
-        widgets = AreaVi.get_opened_files(root)
-        area    = widgets.get(filename)
-        if area: area.tag_delete('_breakpoint_%s' % index)
 
     def handle_line(self, device, filename, line):
         """
@@ -117,29 +86,11 @@ class DAP:
         area = wids.get(filename)
 
         if area: root.note.set_line(area, line)
+        area.tag_delete('(DebuggerBP)')
+        area.tag_add('(DebuggerBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
+        area.tag_config('(DebuggerBP)', **self.setup)
+        root.status.set_msg('Debugger  stopped at: %s:%s' % (filename, line))
     
-    def handle_deleted_breakpoint(self, device, index):
-        """
-        When a break point is removed.
-        """
-
-        filename, line = self.map_index[index]
-        self.del_breakpoint(filename, index)
-
-    def handle_breakpoint(self, device, index, filename, line):
-        """
-        When a break point is added.
-        """
-        filename = abspath(filename)
-        self.map_index[index]           = (filename, line)
-        self.map_line[(filename, line)] = index
-
-        map  = AreaVi.get_opened_files(root)
-        area = map[filename]
-        NAME = '_breakpoint_%s' % index
-
-        area.tag_add(NAME, '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config(NAME, **self.setup)
 
     def send(self, data):
         """

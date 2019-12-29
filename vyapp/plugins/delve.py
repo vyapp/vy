@@ -33,6 +33,10 @@ Event: <Key-b>
 Description: Set a break point at the cursor line.
 
 Mode: GOLANG
+Event: <Key-r>
+Description: Restart the process.
+
+Mode: GOLANG
 Event: <Control-C>
 Description: Clear all break points.
 
@@ -40,13 +44,17 @@ Mode: GOLANG
 Event: <Control-c>
 Description: Remove break point that is set at the cursor line.
 
-Mode: PYTHON
+Mode: GOLANG
 Event: <Key-p>
 Description: Evaluate selected text.
 
-Mode: PYTHON
+Mode: GOLANG
 Event: <Key-m>
 Description: Send a Delve command to be executed.
+
+Mode: PYTHON
+Event? <Key-x>
+Description: Ask for expression to be sent/evaluated.
 
 Mode: GOLANG
 Event: <Key-Q>
@@ -59,6 +67,7 @@ from untwisted.expect import Expect, LOAD, CLOSE
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.regutils import RegexEvent
+from re import findall
 from vyapp.mixins import DAP
 from vyapp.ask import Ask
 from vyapp.areavi import AreaVi
@@ -68,16 +77,15 @@ import sys
 import os
 
 class Delve(DAP):
-    setup={'background':'blue', 'foreground':'yellow'}
-    encoding='utf8'
-
     def __call__(self, area):
         self.area = area
         
         area.install('delve', 
-        ('GOLANG', '<Key-p>', self.send_print),
-        ('GOLANG', '<Key-1>', self.start_debug), 
-        ('GOLANG', '<Key-2>', self.start_debug_args), 
+        ('GOLANG', '<Key-p>', self.evaluate_selection),
+        ('GOLANG', '<Key-1>', self.run), 
+        ('GOLANG', '<Key-r>', self.send_restart), 
+        ('GOLANG', '<Key-x>', self.evaluate_expression), 
+        ('GOLANG', '<Key-2>', self.run_args), 
         ('GOLANG', '<Key-Q>', self.quit_db), 
         ('GOLANG', '<Key-c>', self.send_continue), 
         ('GOLANG', '<Key-m>', self.send_dcmd), 
@@ -85,44 +93,43 @@ class Delve(DAP):
         ('GOLANG', '<Control-c>', self.remove_breakpoint),
         ('GOLANG', '<Key-b>', self.send_break))
 
+    def evaluate_expression(self, event):
+        ask  = Ask()
+        if not ask.data: return
+
+        self.send("print %s\r\n" % ask.data)
+        root.status.set_msg('Delve: sent expression!')
+
+    def send_restart(self, event):
+        self.send('restart\r\n')
+        root.status.set_msg('Delve: sent restart!')
+
     def send_dcmd(self, event):
         ask  = Ask()
         self.send('%s\r\n' % ask.data)
         root.status.set_msg('Delve: sent cmd!')
 
-    def send_print(self, event):
+    def evaluate_selection(self, event):
         data = event.widget.join_ranges('sel', sep='\r\n')
-        self.send('print %s\r\n' % data)
+        self.send('print %s' % data)
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve: Selected text evaluated !')
 
     def install_handles(self, device):
         Terminator(device, delim=b'\n')
-        # Breakpoint 1 set at 0x4aa3b8 for main.feedSeq() ./problem-10.go:8
-        # > main.feedSeq() ./problem-10.go:8 (hits goroutine(1):1 total:1) (PC: 0x4aa3b8)
-        # > [ler5] main.feedSeq() ./problem-10.go:9 (hits goroutine(1):1 total:1) (PC: 0x4aa3e6)
-        # Breakpoint delvebreak10 cleared at 0x4aa400 for main.feedSeq() ./.go/src/problem-10/problem-10.go:1
 
         regstr0 = '\> [^ ]* ?[^ ]+ ([^ ]+):([0-9]+).+'
-        regstr1 = 'Breakpoint ([^ ]+) cleared at [^ ]+ for [^ ]+ .+\:[0-9]+'
-        regstr2 = 'Breakpoint ([a-zA-Z0-9]+) set at [^ ]+ for [^ ]+ (.+)\:([0-9]+)'
-
         RegexEvent(device, regstr0, 'LINE', self.encoding)
-        RegexEvent(device, regstr1, 'DELETED_BREAKPOINT', self.encoding)
-        RegexEvent(device, regstr2, 'BREAKPOINT', self.encoding)
-
         xmap(device, 'LINE', self.handle_line)
-        xmap(device, 'DELETED_BREAKPOINT', self.handle_deleted_breakpoint)
-        xmap(device, 'BREAKPOINT', self.handle_breakpoint)
 
-    def start_debug(self, event):
+    def run(self, event):
         self.kill_process()
 
         self.create_process(['dlv', 'debug', event.widget.filename])
         root.status.set_msg('Delve debug started !')
         event.widget.chmode('NORMAL')
 
-    def start_debug_args(self, event):
+    def run_args(self, event):
         ask  = Ask()
 
         if not ask.data: return
@@ -136,10 +143,13 @@ class Delve(DAP):
 
     def send_break(self, event):
         line, col = event.widget.indexref('insert')
-        self.send('break %s %s:%s\r\n' % ('delvebreak%s' % line, 
-        event.widget.filename, line))
-        event.widget.chmode('NORMAL')
 
+        # Make sure the name will be unique for removing it later.
+        bname = findall('[a-zA-Z]+', event.widget.filename)
+        bname = '%s%s' % (''.join(bname), line)
+        self.send('break %s %s:%s\r\n' % (bname, event.widget.filename, line))
+
+        event.widget.chmode('NORMAL')
         root.status.set_msg('Delve: Sent breakpoint !')
 
     def send(self, data):
@@ -155,7 +165,6 @@ class Delve(DAP):
 
     def dump_clear_all(self, event):
         self.send('clearall\r\n')
-        # self.clear_breakpoints_map()
 
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve cleared breakpoints!')
@@ -164,10 +173,11 @@ class Delve(DAP):
         """
         """
 
-        name = self.get_breakpoint_name(event.widget.filename, 
-        str(event.widget.indexref('insert')[0]))
+        line, col = event.widget.indexref('insert')
+        bname = findall('[a-zA-Z]+', event.widget.filename)
+        bname = '%s%s' % (''.join(bname), line)
+        self.send('clear %s\r\n' % bname)
 
-        self.send('clear %s\r\n' % name)
         event.widget.chmode('NORMAL')
         root.status.set_msg('Delve: Remove breakpoint sent!')
 
