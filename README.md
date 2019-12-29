@@ -47,6 +47,8 @@ Features/Plugins
 - **Golang Delve Debugger**
     * https://github.com/go-delve/delve
 
+- **Nodejs inspect Debugger**
+
 - **Debuggers (Python, Delve)**
 
 - **Rope Refactoring Tools**
