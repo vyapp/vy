@@ -25,7 +25,7 @@ Description: Put the cursor on the previous possible match.
 """
 
 from vyapp.ask import Get
-from itertools import permutations, product, groupby
+from itertools import groupby
 from re import escape
 from vyapp.app import root
 

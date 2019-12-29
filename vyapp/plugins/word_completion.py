@@ -18,10 +18,7 @@ completion.
 """
 
 from vyapp.completion import CompletionWindow, Option
-from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
 from vyapp.app import root
-import sys
 
 class WordCompletionWindow(CompletionWindow):
     """

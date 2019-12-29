@@ -36,7 +36,7 @@ using the same keys as defined in text_spots plugin.
 """
 
 from subprocess import Popen, STDOUT, PIPE
-from os.path import exists, dirname, join, relpath
+from os.path import relpath
 from vyapp.widgets import LinePicker
 from vyapp.plugins import Command
 from vyapp.tools import get_project_root
@@ -52,13 +52,18 @@ class PythonChecker(object):
     def  __init__(self, area):
         self.area = area
         area.install('snakerr', ('PYTHON', '<Control-h>', self.check_module),
-        ('PYTHON', '<Key-h>', lambda event: self.options.display()),
+        ('PYTHON', '<Key-h>', self.display_errors),
         ('PYTHON', '<Key-H>', self.check_all))
 
     @classmethod
     def c_path(cls, path):
         printd('Snakerr - Setting Pyflakes path = ', cls.path)
         cls.path = path
+
+    def display_errors(self, event=None):
+        root.status.set_msg('Pyflakes previous errors!')
+        self.options.display()
+        self.area.chmode('NORMAL')
 
     def check_all(self, event=None):
         path  = get_project_root(self.area.filename)

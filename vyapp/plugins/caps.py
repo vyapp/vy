@@ -15,8 +15,6 @@ Description: Turn the selected text into upper case.
 """
 
 from vyapp.plugins import Command
-from vyapp.areavi import AreaVi
-from vyapp.app import root
 
 @Command()
 def lower(area):

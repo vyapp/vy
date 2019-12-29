@@ -37,8 +37,6 @@ from vyapp.areavi import AreaVi
 from re import findall, escape
 from vyapp.base import printd
 from vyapp.app import root
-from vyapp.ask import Ask
-from os.path import join
 
 class Fstmt(object):
     options = LinePicker()

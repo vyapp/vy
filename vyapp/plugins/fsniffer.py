@@ -33,7 +33,7 @@ from subprocess import Popen, STDOUT, PIPE
 from vyapp.widgets import LinePicker
 from vyapp.ask import Get
 from vyapp.app import root
-from os.path import join, basename
+from os.path import basename
 
 
 class FSniffer(object):
