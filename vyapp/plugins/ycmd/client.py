@@ -4,9 +4,6 @@ Overview
 
 This plugin does autocompletion using ycmd.
 
-Install
-=======
-
 
 Key-Commands
 ============
@@ -24,6 +21,10 @@ Commands
 Command: lycm(path=None)
 Description: Create a .ycm_extra_conf.py in the specified folder path. When
 path is not specified it creates in the user home dir.
+
+Command: dycm()
+Description: Ask ycmd to print debug information. It is mostly useful when setting up
+config for some completion engines.
 
 """
 
