@@ -96,8 +96,3 @@ class Ask(InputBox):
     __repr__ = __str__
 
 
-
-
-
-
-

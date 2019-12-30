@@ -1,5 +1,5 @@
 from vyapp.widgets import FloatingWindow, MatchBox, Echo
-from vyapp.tools import match_sub_pattern
+from vyapp.regutils import match_sub_pattern
 from tkinter import LEFT, BOTH, Text, SCROLL
 
 class Option(object):

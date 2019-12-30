@@ -29,7 +29,10 @@ def build_regex(data, delim='.+'):
     pattern = pattern + escape(data[-1])
     return pattern
 
-
-
-
-
+def match_sub_pattern(pattern, lst):
+    # pattern = buffer(pattern)
+    for indi in lst:
+        for indj in range(0, len(pattern)):
+                if indi.startswith(pattern[indj:]):
+                    yield indi, indj
+                    

@@ -1,11 +1,9 @@
 """
-This module implements the App class widget which is the most important vy
-editor's widgets.
 """
 
 from os.path import expanduser, join, exists, dirname
 from vyapp.statusbar import StatusBar
-from vyapp.core import NoteVi
+from vyapp.notebook import NoteVi
 from vyapp.plugins import ENV
 from shutil import copyfile
 from tkinter import Tk, Grid

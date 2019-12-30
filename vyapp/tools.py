@@ -23,14 +23,6 @@ def findline(filename, line, col=0):
     finally:
         root.note.set_line(area, line)
 
-def match_sub_pattern(pattern, lst):
-    # pattern = buffer(pattern)
-    for indi in lst:
-        for indj in range(0, len(pattern)):
-                if indi.startswith(pattern[indj:]):
-                    yield indi, indj
-                    
-
 def error(handle):
     def shell(*args, **kwargs):
         try:
@@ -57,33 +49,8 @@ def get_project_root(path):
         path = tmp
 
 
-def execute(handle, *args, **kwargs):
-    """
-    It executes handle and avoids throwing a exception but it prints the exception.
-
-    Example:
-
-    def func(a, b):
-        return a/b
-
-    # It wouldnt throw an exception.
-    r = execute(func, 1, 0)
-
-    # It would print None.
-    print r
-
-    """
-
-    try:
-        val = handle(*args, **kwargs)
-    except Exception:
-        debug()
-    else:
-        return val
-
 def exec_quiet(handle, *args, **kwargs):
     """
-    Like exe.execute but doesnt print the exception.
     """
 
     try:
@@ -106,7 +73,6 @@ def exec_pipe(data, env):
     Note: It is mostly used to execute python code from vy.
     """
 
-    import sys
     # It has to be set before because
     # if some data code catches an exception
     # then prints use print_exc it will go to
