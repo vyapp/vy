@@ -12,7 +12,7 @@ Key-Commands
 Namespace: jsdebugger
 
 Mode: JAVASCRIPT
-Event? <Key-1>
+Event: <Key-1>
 Description: It starts debugging the opened  application with no command line arguments.
 
 Mode: JAVASCRIPT
@@ -20,7 +20,7 @@ Event: <Key-2>
 Description: It starts the application with command line arguments that use shlex module to split the arguments.
 
 Mode: JAVASCRIPT
-Event? <Key-c>
+Event: <Key-c>
 Description: Send a (c)ontinue to the debug process.
 Continue execution, only stop when a breakpoint is encountered.
 

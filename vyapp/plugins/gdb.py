@@ -19,7 +19,7 @@ Example:
     gcc -g filename.c -o filename.out
 
 Mode: C
-Event? <Key-c>
+Event: <Key-c>
 Description: Send a (c)ontinue to the debug process.
 Continue execution, only stop when a breakpoint is encountered.
 

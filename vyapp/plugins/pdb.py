@@ -12,7 +12,7 @@ Key-Commands
 Namespace: pdb
 
 Mode: PYTHON
-Event? <Key-1>
+Event: <Key-1>
 Description: It starts debugging the opened python application with 
 no command line arguments.
 
@@ -22,11 +22,11 @@ Description: It starts the python application with command line arguments
 that use shlex module to split the arguments.
 
 Mode: PYTHON
-Event? <Key-x>
+Event: <Key-x>
 Description: Ask for expression to be sent/evaluated.
 
 Mode: PYTHON
-Event? <Key-c>
+Event: <Key-c>
 Description: Send a (c)ontinue to the debug process.
 Continue execution, only stop when a breakpoint is encountered.
 
