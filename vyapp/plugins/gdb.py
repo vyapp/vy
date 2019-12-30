@@ -12,7 +12,7 @@ Key-Commands
 Namespace: GDB
 
 Mode: C
-Event? <Key-1>
+Event: <Key-1>
 Description: Ask for a compiled file to be debugged. It is necessary to have it compiled with -g flag.
 Example:
 
