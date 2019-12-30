@@ -4,8 +4,7 @@ This module implements basic input data scheme.
 
 from tkinter import *
 from vyapp.app import root
-from vyapp.areavi import DataEvent, IdleEvent
-import string
+from vyapp.mixins import DataEvent, IdleEvent
 
 class AskCancel(Exception):
     pass

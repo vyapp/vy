@@ -63,7 +63,7 @@ from vyapp.regutils import RegexEvent
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.ask import Ask
-from vyapp.mixins import DAP
+from vyapp.dap import DAP
 from vyapp.app import root
 import shlex
 

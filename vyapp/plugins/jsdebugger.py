@@ -59,7 +59,7 @@ from untwisted.expect import Expect, LOAD, CLOSE
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.regutils import RegexEvent
-from vyapp.mixins import DAP
+from vyapp.dap import DAP
 from vyapp.ask import Ask
 from vyapp.app import root
 import shlex
