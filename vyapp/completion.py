@@ -1,6 +1,7 @@
-from vyapp.widgets import FloatingWindow, MatchBox, Echo
+from vyapp.widgets import FloatingWindow, MatchBox
 from vyapp.regutils import match_sub_pattern
 from tkinter import LEFT, BOTH, Text, SCROLL
+from vyapp.mixins import Echo
 
 class Option(object):
     def __init__(self, name, type='', doc=''):

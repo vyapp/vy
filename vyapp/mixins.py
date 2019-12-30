@@ -100,3 +100,27 @@ class DAP:
             self.expect.send(data.encode(self.encoding))
 
         """
+
+class Echo:
+    """
+
+    """
+
+    def __init__(self, area):
+        self.area = area
+        self.bind('<BackSpace>', self.on_backspace)
+        self.bind('<Key>', self.dispatch)
+
+    def dispatch(self, event):
+        if event.char:  
+            self.on_char(event.char)
+
+    def on_char(self, char):
+        self.area.insert('insert', char)
+
+    def on_backspace(self, event):
+        self.area.delete('insert -1c', 'insert')
+        self.on_delete(event)
+
+    def on_delete(self, event):
+        pass
