@@ -179,6 +179,6 @@ class Delve(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('(delve) Sent clear !')
 
-delve     = Delve()
+delve   = Delve()
 install = delve
 

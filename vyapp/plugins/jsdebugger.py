@@ -161,7 +161,6 @@ class JSDebugger(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('JSDebugger: Remove breakpoint sent!')
 
-delve     = JSDebugger()
-install = delve
+install = JSDebugger()
 
 
