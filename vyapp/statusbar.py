@@ -2,7 +2,7 @@
 This module implements the vy statusbar widget.
 """
 
-from tkinter import *
+from tkinter import SUNKEN, W, Frame, X, Label
 
 class StatusBar(Frame):
     """

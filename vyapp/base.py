@@ -4,11 +4,11 @@ editor's widgets.
 """
 
 from os.path import expanduser, join, exists, dirname
-from vyapp.statusbar import *
+from vyapp.statusbar import StatusBar
 from vyapp.core import NoteVi
 from vyapp.plugins import ENV
 from shutil import copyfile
-from tkinter import Tk
+from tkinter import Tk, Grid
 from os import mkdir
 import sys
 
