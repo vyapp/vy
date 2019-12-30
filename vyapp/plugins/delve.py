@@ -52,7 +52,7 @@ Mode: GOLANG
 Event: <Key-m>
 Description: Send a Delve command to be executed.
 
-Mode: PYTHON
+Mode: GOLANG
 Event? <Key-x>
 Description: Ask for expression to be sent/evaluated.
 
