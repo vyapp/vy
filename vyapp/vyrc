@@ -42,6 +42,9 @@ autoload(vyapp.plugins.builtin_modes)
 import vyapp.plugins.python_mode
 autoload(vyapp.plugins.python_mode)
 
+import vyapp.plugins.ruby_mode
+autoload(vyapp.plugins.ruby_mode)
+
 import vyapp.plugins.golang_mode
 autoload(vyapp.plugins.golang_mode)
 
