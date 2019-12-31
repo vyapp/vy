@@ -22,9 +22,6 @@ class DAP:
     def __init__(self):
         self.expect  = None
 
-        self.map_index = dict()
-        self.map_line  = dict()
-
     def create_process(self, args):
         self.expect = Expect(*args)
 
@@ -34,15 +31,25 @@ class DAP:
         xmap(self.expect, LOAD, lambda con, 
         data: sys.stdout.write(data.decode(self.area.charset)))
 
-        xmap(self.expect, CLOSE, self.on_close)
-        self.install_handles(self.expect)
-        root.protocol("WM_DELETE_WINDOW", self.on_quit)
+        # The expect has to be passed here otherwise when 
+        # starting the new one gets terminated.
 
-    def on_close(self, expect):
-        self.expect.terminate()
+        xmap(self.expect, CLOSE, self.on_bkpipe)
+
+        self.install_handles(self.expect)
+        root.protocol("WM_DELETE_WINDOW", self.on_tk_quit)
+
+    def on_bkpipe(self, expect):
+        """
+        On broken pipe.
+        """
+        expect.terminate()
         root.status.set_msg('Debugger: CLOSED!')
 
-    def on_quit(self):
+    def on_tk_quit(self):
+        """
+        Necessary otherwise the thread hangs.
+        """
         self.expect.terminate()
         root.destroy()
 

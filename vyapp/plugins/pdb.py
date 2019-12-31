@@ -55,6 +55,10 @@ Event: <Key-m>
 Description: Send a PDB command to be executed.
 
 Mode: PYTHON
+Event: <Key-r>
+Description: Send restart.
+
+Mode: PYTHON
 Event: <Key-Q>
 Description: Terminate the process.
 
@@ -76,6 +80,7 @@ class Pdb(DAP):
         ('PYTHON', '<Key-x>', self.evaluate_expression),
         ('PYTHON', '<Key-1>', self.run), 
         ('PYTHON', '<Key-2>', self.run_args), 
+        ('PYTHON', '<Key-r>', self.send_restart), 
         ('PYTHON', '<Key-m>', self.send_dcmd), 
         ('PYTHON', '<Key-Q>', self.quit_db), 
         ('PYTHON', '<Key-c>', self.send_continue), 
@@ -114,6 +119,13 @@ class Pdb(DAP):
 
         self.send('continue\r\n')
         root.status.set_msg('(pdb) Command continue sent !')
+
+    def send_restart(self, event):
+        """
+        """
+
+        self.send('restart\r\n')
+        root.status.set_msg('(pdb) Sent restart !')
 
     def evaluate_selection(self, event):
         data = event.widget.join_ranges('sel', sep='\r\n')
