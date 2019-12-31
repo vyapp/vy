@@ -5,28 +5,6 @@ Overview
 This module implements command search tools. It is possible to execute python
 functions to highlight patterns of text and replace patterns.
 
-Commands
-========
-
-Command: sel(regex, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
-             elide=None, nolinestop=None):
-Description: Highlight patterns in the AreaVi instance that has focus.
-regex     = The pattern to be searched.
-index     = The starting index of the search.
-stopindex = The stop index of the search.
-
-Command: gsub(regex, data, index='1.0', stopindex='end', exact=None, regexp=True, nocase=None, 
-             elide=None, nolinestop=None):
-
-Description: Replace all occurrences of a given pattern for data.
-regex = The pattern to be searched.
-data  = The replacement for the pattern.
-
-Command: get(index, stopindex)
-Description: Get the text between index and stopindex from an AreaVi instance
-that was set as target for commands.
-index     = The start index.
-stopindex = The stopindex.
 """
 
 from vyapp.plugins import Command
@@ -35,6 +13,17 @@ from vyapp.areavi import AreaVi
 @Command()
 def find(area, regex, handle, *args, **kwargs):
     """
+    Execute handle for each one of the regex matches. The handle
+    receives:
+
+        def handle(chunk, start, end):
+            pass
+
+    The kwargs argument accepts:
+
+    index='1.0', stopindex='end', forwards=None, 
+    backwards=False, exact=False, regexp=True, nocase=False, elide=False, 
+    nolinestop=False
     """
     seq = area.find(regex, *args, **kwargs)    
     for ind in seq:
@@ -43,21 +32,51 @@ def find(area, regex, handle, *args, **kwargs):
 @Command()
 def sniff(area, regex, handle, *args, **kwargs):
     """
+    For each regex match in the areavi it calls handle with:
+
+    def handle(chunk, start, end):
+        pass
+
+    The kwargs argument accepts:
+
+    index='1.0', stopindex='end', forwards=None, 
+    backwards=False, exact=False, regexp=True, nocase=False, elide=False, 
+    nolinestop=False
+
     """
     seq = area.collect('sel', regex, *args, **kwargs) 
     for ind in seq:
         handle(*ind)
 
 @Command()
-def sel(area, *args, **kwargs):
+def sel(area, regex, *args, **kwargs):
     """
+    Add selection to all regex matches in the AreaVi instance.
+
+    The kwargs argument accepts:
+
+    index='1.0', stopindex='end', forwards=None, 
+    backwards=False, exact=False, regexp=True, nocase=False, elide=False, 
+    nolinestop=False
     """
     area.select_matches('sel', 
     area.find(*args, **kwargs))
 
 @Command()
-def gsub(area, *args, **kwargs):
+def gsub(area, regex, data, *args, **kwargs):
     """
+    It replaces all regex matches for data. The data argument may be a callable
+    object. When it is a callable object it looks like:
+
+    def handle(chunk, start, end):
+        pass
+
+    The kwargs argument accepts:
+
+    index='1.0', stopindex='end', forwards=None, 
+    backwards=False, exact=False, regexp=True, nocase=False, elide=False, 
+    nolinestop=False
+
     """
     area.replace_all(*args, **kwargs)
 
@@ -75,7 +94,15 @@ def split(area, *args, **kwargs):
     area.split(*args, **kwargs))
 
 @Command()
-def lsub(area, *args):
+def lsub(area, regex, data, *args):
     """
+    Replae text in a selected region of an AreaVi instance.
+
+    The kwargs argument accepts:
+
+    index='1.0', stopindex='end', forwards=None, 
+    backwards=False, exact=False, regexp=True, nocase=False, elide=False, 
+    nolinestop=False
+
     """
     area.replace_ranges('sel', *args)
