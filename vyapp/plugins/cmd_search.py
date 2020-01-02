@@ -60,7 +60,7 @@ def sel(area, regex, *args, **kwargs):
     nolinestop=False
     """
     area.select_matches('sel', 
-    area.find(*args, **kwargs))
+    area.find(regex, *args, **kwargs))
 
 @Command()
 def gsub(area, regex, data, *args, **kwargs):
@@ -78,7 +78,7 @@ def gsub(area, regex, data, *args, **kwargs):
     nolinestop=False
 
     """
-    area.replace_all(*args, **kwargs)
+    area.replace_all(regex, data, *args, **kwargs)
 
 @Command()
 def get(area, *args):
@@ -105,4 +105,4 @@ def lsub(area, regex, data, *args):
     nolinestop=False
 
     """
-    area.replace_ranges('sel', *args)
+    area.replace_ranges('sel', regex, data, *args)

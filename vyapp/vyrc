@@ -447,8 +447,8 @@ from vyapp.plugins import line_strips
 
 # Create github gists easily. You need to get a 
 # personal access token first. 
-from vyapp.plugins.gists import GistCreate
-GistCreate('access_token')
+# from vyapp.plugins.gists import GistCreate
+# GistCreate('access_token')
 
 # Implement lower and upper functions.
 from vyapp.plugins import caps
