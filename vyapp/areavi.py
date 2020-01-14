@@ -2,38 +2,11 @@
 
 """
 
+from vyapp.mixins import DataEvent, IdleEvent
 from tkinter import *
-import string
 import os
 
-class DataEvent(object):
-    def __init__(self, widget):
-        self.widget = widget
-        self.widget.bind('<Key>', self.dispatch_data, add=True)
-
-    def dispatch_data(self, event):
-        if event.char:
-            self.widget.event_generate('<<Data>>')
-
-class IdleEvent(object):
-    def __init__(self, widget):
-        self.widget.bind('<<Data>>', self.dispatch_idle, add=True)
-        self.widget  = widget
-        self.timeout = 400
-        self.funcid  = ''
-
-    def dispatch_idle(self, event):
-        # Make sure self.funcid is initialized before calling after_cancel.
-        # The idea here it is to have <<idle>> spawned once when the user
-        # stopped typing.
-
-        if self.funcid:
-            self.widget.after_cancel(self.funcid)
-        self.funcid = self.widget.after(self.timeout, 
-        lambda: self.widget.event_generate('<<Idle>>'))
-
 class AreaVi(Text, DataEvent, IdleEvent):
-    ACTIVE = None
     INPUT  = None
     # Plugins should commonly use self.project
     # if it fails then use HOME.
@@ -66,10 +39,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         self.mark_set('(CURSOR_LAST_COL)', '1.0')
 
-        # def cave(event):
-            # AreaVi.ACTIVE = event.widget
-        # self.hook(-1, '<FocusIn>', cave)
-        AreaVi.ACTIVE = self
         self.charset  = 'utf-8'
         self.map      = {}
         self.db       = {}
@@ -95,19 +64,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
     def update_map(self, namespace, map):
         scheme = self.map.setdefault(namespace, {})
         scheme.update(map)
-
-    def active(self):
-        """
-        It is used to create a model of target for plugins
-        defining python functions to access the AreaVi instance that was
-        set as target.
-        
-        Plugins that expose python functions to be executed from vy
-        should access AreaVi.ACTIVE when having to manipulate some AreaVi
-        instance content.
-        """
-
-        AreaVi.ACTIVE = self
 
     def chmode(self, id):
         """
@@ -243,7 +199,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def reset_assoc_data(self):
         for ind in self.db.keys():
-            self.tag_remove(ind, '1.0', 'end')
+            self.tag_delete(ind)
         self.db.clear()
 
     def tags_config(self, config):
@@ -278,12 +234,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
         for indi, indj in args:
             self.tag_add(name, indi, indj)
 
-    def indref(self, index='insert'):
+    def indexref(self, index='insert'):
         """
         This is a short hand function. It is used to convert a Text index
         into two integers like:
 
-        a, b = area.indref('insert')
+        a, b = area.indexref('insert')
 
         Now, a and b can be manipulated
         as numbers.
@@ -301,7 +257,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.mark_set('insert', '%s.%s' % (line, col))
         self.see('insert')
 
-    def indint(self, index):
+    def indexsplit(self, index):
         """ 
         Just a shorthand for:
         
@@ -310,15 +266,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         a, b = index.split('.')
-        return int(a), int(b)
-
-    def indcur(self):
-        """
-        It returns two integers that corresponds to the cursor
-        position line and col.
-        """
-
-        a, b  = self.indref('insert')
         return int(a), int(b)
 
     def seecur(self, index):
@@ -345,8 +292,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         is_end = self.compare('insert linestart', '!=', 'end -1l linestart')
         if not is_end: return
 
-        a, b = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
+        a, b = self.indexref('(CURSOR_LAST_COL)')
+        c, d = self.indexref()
         self.setcur(c + 1, b)        
     
     def up(self):   
@@ -357,8 +304,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         is_start = self.compare('insert linestart', '!=', '1.0')
 
         if not is_start: return
-        a, b = self.indref('(CURSOR_LAST_COL)')
-        c, d = self.indcur()
+        a, b = self.indexref('(CURSOR_LAST_COL)')
+        c, d = self.indexref()
         self.setcur(c - 1, b)
     
     def left(self):
@@ -430,7 +377,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         try:
-            self.tag_remove('sel', 'sel.first', 'sel.last')
+            self.tag_remove('sel', 
+                'sel.first', 'sel.last')
         except Exception:
             pass
 

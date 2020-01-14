@@ -4,9 +4,6 @@ Overview
 
 This plugin does autocompletion using ycmd.
 
-Install
-=======
-
 
 Key-Commands
 ============
@@ -25,6 +22,10 @@ Command: lycm(path=None)
 Description: Create a .ycm_extra_conf.py in the specified folder path. When
 path is not specified it creates in the user home dir.
 
+Command: dycm()
+Description: Ask ycmd to print debug information. It is mostly useful when setting up
+config for some completion engines.
+
 """
 
 from vyapp.completion import CompletionWindow, Option
@@ -34,7 +35,7 @@ from vyapp.widgets import LinePicker
 from tempfile import NamedTemporaryFile
 from subprocess import Popen, PIPE
 from shutil import copyfile
-from vyapp.plugins import ENV
+from vyapp.plugins import Command, ENV
 from vyapp.app import root
 from vyapp.base import printd
 from vyapp.areavi import AreaVi
@@ -314,7 +315,7 @@ class YcmdWindow(CompletionWindow):
 
     def __init__(self, area, server, *args, **kwargs):
         source    = area.get('1.0', 'end')
-        line, col = area.indcur()
+        line, col = area.indexref()
     
         data = {area.filename: 
         {'filetypes': [FILETYPES[area.extension]], 'contents': source}}
@@ -432,16 +433,19 @@ class YcmdCompletion:
 
     @classmethod
     def dycm(cls):
-        data = {AreaVi.ACTIVE.filename:  
-        {'filetypes': [FILETYPES[AreaVi.ACTIVE.extension]], 
-        'contents': AreaVi.ACTIVE.get('1.0', 'end')}}
+        """
+        """
+        data = {Command.area.filename:  
+        {'filetypes': [FILETYPES[Command.area.extension]], 
+        'contents': Command.area.get('1.0', 'end')}}
 
-        cls.server.debug_info(1, 1, AreaVi.ACTIVE.filename, data)
+        cls.server.debug_info(1, 1, Command.area.filename, data)
 
     @classmethod
     def lycm(cls, path=None):
         """
         """
+
         home = expanduser('~')
         path = path if path else join(home, '.ycm_extra_conf.py')
 
@@ -466,7 +470,4 @@ def init_ycm(path):
 
 ENV['init_ycm'] = init_ycm
 install = YcmdCompletion
-
-
-
 

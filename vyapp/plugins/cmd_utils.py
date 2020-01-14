@@ -18,30 +18,26 @@ Description: Switch modes for an AreaVi instance.
 
 """
 
-from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
+from vyapp.plugins import Command
 
-def cpsel(sep='\n'):
+@Command()
+def cpsel(area, sep='\n'):
     """
     Copy the selected region to the clipboard.
     """
 
-    AreaVi.ACTIVE.cpsel(sep)
+    area.cpsel(sep)
 
-def ctsel(sep='\n'):
+@Command()
+def ctsel(area, sep='\n'):
     """
     Cut the selected region to the clipboard.
     """
-    AreaVi.ACTIVE.ctsel(sep)
+    area.ctsel(sep)
 
-def chmode(id):
+@Command()
+def chmode(area, id):
     """
     Switch modes for an AreaVi instance set as target.
     """
-    AreaVi.ACTIVE.chmode(id)
-
-ENV['cpsel']  = cpsel
-ENV['ctsel']  = ctsel
-ENV['chmode'] = chmode
-
-
+    area.chmode(id)

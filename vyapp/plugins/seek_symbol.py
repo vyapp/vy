@@ -52,7 +52,7 @@ def get_char(num):
     else:
         return char
 
-class SeekSymbol(object):
+class SeekSymbol:
     def __init__(self, area):
         area.add_mode('JUMP_BACK')
         area.add_mode('JUMP_NEXT')

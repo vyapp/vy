@@ -1,6 +1,7 @@
-from vyapp.widgets import FloatingWindow, MatchBox, Echo
-from vyapp.tools import match_sub_pattern
+from vyapp.widgets import FloatingWindow, MatchBox
+from vyapp.regutils import match_sub_pattern
 from tkinter import LEFT, BOTH, Text, SCROLL
+from vyapp.mixins import Echo
 
 class Option(object):
     def __init__(self, name, type='', doc=''):
@@ -13,6 +14,7 @@ class Option(object):
 
 class CompleteBox(MatchBox, Echo):
     """
+    Abstraction of a complete box widget to be used anywhere.
     """
 
     def __init__(self, area, completions, *args, **kwargs):
@@ -29,45 +31,60 @@ class CompleteBox(MatchBox, Echo):
         self.master.destroy())
 
         # Shortcut.
-        self.bind('<Alt-p>', lambda event: 
-        event.widget.event_generate('<Key-Down>'))
-        self.bind('<Alt-o>', lambda event: 
-        event.widget.event_generate('<Key-Up>'))
+        lba0 = lambda e: e.widget.event_generate('<Key-Down>')
+        lba1 = lambda e: e.widget.event_generate('<Key-Up>')
 
+        self.bind('<Alt-p>', lba0)
+        self.bind('<Alt-o>', lba1)
         self.index = self.calc_index()
 
     def calc_index(self):
-        pattern = str(self.area.get(
-        '%s linestart' % self.master.start_index, 
-        '%s lineend' % self.master.start_index)).lower()
+        """
+        Calculate the correct starting index to be swaped.
+        Consider the example below:
+            ls = []
+            ls.app<Complete>
 
-        seq = match_sub_pattern(pattern,
-        [ind.lower() for ind in self.get(0, 'end')])
-        line, col = self.area.indint(self.master.start_index)
+        The correct starting index would be 2 not 5.
+        """
+
+        start     = '%s linestart' % self.master.start_index
+        end       = '%s lineend' % self.master.start_index
+        pattern   = str(self.area.get(start, end))
+        pattern   = pattern.lower()
+        lst       = [ind.lower() for ind in self.get(0, 'end')]
+        seq       = match_sub_pattern(pattern, lst)
+        line, col = self.area.indexsplit(self.master.start_index)
 
         _, index = next(seq, (None, col))
         return '%s.%s' % (line, index)
 
     def on_delete(self, event):
-        m, n = self.area.indint(self.master.start_index)
-        x, y = self.area.indcur()
-        if x != m or (m == x and y < n): 
-            self.master.destroy()
+        m, n = self.area.indexsplit(self.master.start_index)
+        x, y = self.area.indexref()
+        if x != m or (m == x and y < n): self.master.destroy()
 
     def complete(self, event):
+        """
+        Grab the selected item and swap it with the areavi cursor
+        string. It completes the cursor word.
+        """
+
         self.area.swap(self.get(
         self.curselection()), self.index, 'insert')
         self.master.destroy()
 
     def selection_docs(self):
+        """
+        Grab the item docs and return it.
+        """
+
         item, = self.curselection()
         return self.completions[item].docstring()
 
     def on_char(self, char):
         super(CompleteBox, self).on_char(char)
-
-        self.selection_item(self.area.get(
-        self.index, 'insert'))
+        self.selection_item(self.area.get(self.index, 'insert'))
 
     def feed(self):
         for ind in self.completions:
@@ -81,22 +98,20 @@ class FloatingText(FloatingWindow):
         self.text.insert('1.0', data)
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
         self.text.focus_set()
-        self.text.bind('<FocusOut>', lambda event: self.destroy(), add=True)
 
 class CompletionWindow(FloatingWindow):
     def __init__(self, area, completions, *args, **kwargs):
         FloatingWindow.__init__(self, area, *args, **kwargs)
-        self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
-
-
         self.box = CompleteBox(area, completions, self)
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
 
-        self.text = Text(master=self, blockcursor=True, insertbackground='black', )
+        self.text = Text(master=self, 
+        blockcursor=True, insertbackground='black', )
+
         # self.text.bindtags((self.text,  '.'))
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
-
         self.text.pack_forget()
+        self.update()
 
         # We need this otherwise it propagates the event
         # and the window gets destroyed in the wrong situation.
@@ -116,15 +131,20 @@ class CompletionWindow(FloatingWindow):
     def options_window(self, event):
         self.text.pack_forget()
         self.box.pack(side=LEFT, fill=BOTH, expand=True)
+        self.update()
+
         self.box.focus_set()
         return 'break'
 
     def docs_window(self):
         docs = self.box.selection_docs()
         self.box.pack_forget()
+
         self.text.delete('1.0', 'end')
         self.text.insert('1.0', docs)
+
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
         self.text.focus_set()
+        self.update()
 
 

@@ -36,11 +36,10 @@ using the same keys as defined in text_spots plugin.
 """
 
 from subprocess import Popen, STDOUT, PIPE
-from os.path import exists, dirname, join, relpath
+from os.path import relpath
 from vyapp.widgets import LinePicker
-from vyapp.areavi import AreaVi
+from vyapp.plugins import Command
 from vyapp.tools import get_project_root
-from vyapp.plugins import ENV
 from vyapp.app import root
 from vyapp.base import printd
 from re import findall
@@ -53,13 +52,18 @@ class PythonChecker(object):
     def  __init__(self, area):
         self.area = area
         area.install('snakerr', ('PYTHON', '<Control-h>', self.check_module),
-        ('PYTHON', '<Key-h>', lambda event: self.options.display()),
+        ('PYTHON', '<Key-h>', self.display_errors),
         ('PYTHON', '<Key-H>', self.check_all))
 
     @classmethod
     def c_path(cls, path):
         printd('Snakerr - Setting Pyflakes path = ', cls.path)
         cls.path = path
+
+    def display_errors(self, event=None):
+        root.status.set_msg('Pyflakes previous errors!')
+        self.options.display()
+        self.area.chmode('NORMAL')
 
     def check_all(self, event=None):
         path  = get_project_root(self.area.filename)
@@ -95,10 +99,10 @@ class PythonChecker(object):
         if ranges:
             self.options(ranges)
         
-install = PythonChecker
-def py_errors():
-    python_checker = PythonChecker(AreaVi.ACTIVE)
+@Command()
+def py_errors(area):
+    python_checker = PythonChecker(area)
     python_checker.check_all()
 
-ENV['py_errors'] = py_errors
+install = PythonChecker
 

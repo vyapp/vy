@@ -24,7 +24,7 @@ class Home(object):
         root.status.set_msg('Set home dir!')
         ask = Ask(self.area.filename)
 
-        AreaVi.HOME = ask.data if ask.data else ''
+        AreaVi.HOME = ask.data 
         root.status.set_msg('AreaVi HOME: %s' % AreaVi.HOME)
 
 install = Home

@@ -10,17 +10,6 @@ from os.path import abspath
 import sys
 
     
-def set_line(area, line, col=0):
-    """
-    This function receives an AreaVi widget instance and a line number
-    then sets the focus to the AreaVi widget and the cursor at line.
-    """
-
-    sys.stderr.write(area.filename + '\n')
-    root.note.select(area.master.master.master)
-    area.focus()
-    area.setcur(line, col)
-
 def findline(filename, line, col=0):
     files    = AreaVi.get_opened_files(root)
     filename = abspath(filename)
@@ -32,15 +21,7 @@ def findline(filename, line, col=0):
     else:
         pass
     finally:
-        set_line(area, line)
-
-def match_sub_pattern(pattern, lst):
-    # pattern = buffer(pattern)
-    for indi in lst:
-        for indj in range(0, len(pattern)):
-                if indi.startswith(pattern[indj:]):
-                    yield indi, indj
-                    
+        root.note.set_line(area, line)
 
 def error(handle):
     def shell(*args, **kwargs):
@@ -68,33 +49,8 @@ def get_project_root(path):
         path = tmp
 
 
-def execute(handle, *args, **kwargs):
-    """
-    It executes handle and avoids throwing a exception but it prints the exception.
-
-    Example:
-
-    def func(a, b):
-        return a/b
-
-    # It wouldnt throw an exception.
-    r = execute(func, 1, 0)
-
-    # It would print None.
-    print r
-
-    """
-
-    try:
-        val = handle(*args, **kwargs)
-    except Exception:
-        debug()
-    else:
-        return val
-
 def exec_quiet(handle, *args, **kwargs):
     """
-    Like exe.execute but doesnt print the exception.
     """
 
     try:
@@ -117,7 +73,6 @@ def exec_pipe(data, env):
     Note: It is mostly used to execute python code from vy.
     """
 
-    import sys
     # It has to be set before because
     # if some data code catches an exception
     # then prints use print_exc it will go to
@@ -133,4 +88,53 @@ def exec_pipe(data, env):
         debug()
     finally:
         sys.stderr = tmp
+
+
+def e_stop(handle):
+    """
+    This decorator is used to execute an event handle
+    and stop propagation of the event through event classes.
+
+    Let us say there is a handle on:
+
+        <Key-u>
+
+    Such an event is on mode -1, if there is a handle on the same
+    event on mode NORMAL then both handles would be executed in case
+    an exception occurs in the -1 handle. 
+
+    It happens because the 'break' value is not propagated to the tkinter event loop.
+    """
+
+    def wrapper(*args, **kwargs):
+       try:
+           handle(*args, **kwargs)
+       except Exception:
+            debug()
+       return 'break'
+    return wrapper
+
+def consume_iter(iterator, time=1):
+    """
+    This function receives an iterator that is consumed from tkinter update
+    function. It is a way to have python code executed asynchronously.  Some
+    plugins would perform heavy operations that could block tkinter mainloop,
+    these plugins should write code that can be executed asynchronously using  
+    iterators.
+
+    Note: Some plugins like syntax highlighting would use this technique
+    to highlight code. 
+    """
+
+    def cave():
+        from vyapp.app import root
+        try:
+            next(iterator)
+        except Exception:
+            pass
+        else:    
+            root.after(time, cave)
+
+    cave()
+
 

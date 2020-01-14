@@ -17,23 +17,17 @@ Description: Adjust an AreaVi widget text encoding.
 name = The name of the encoding.
 """
 
-from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
+from vyapp.plugins import Command
 from vyapp.app import root
 
-def decode(name):
+@Command()
+def decode(area, name):
     try:
-        AreaVi.ACTIVE.decode(name)
+        area.decode(name)
     except UnicodeDecodeError:
         root.status.set_msg('Failed! Charset %s' % name)
-    
-def charset(name):
-    AreaVi.ACTIVE.charset = name
+
+@Command()
+def charset(area, name):
+    area.charset = name
     root.status.set_msg('Charset %s set.' % name)
-
-ENV['decode']  = decode
-ENV['charset'] = charset
-
-
-
-

@@ -9,11 +9,11 @@ Key-Commands
 
 Namespace: inline-comment
 
-Mode: ALPHA
+Mode: EXTRA
 Event: <Key-e>
 Description: Add inline comments to a selected block of text.
 
-Mode: ALPHA
+Mode: EXTRA
 Event: <Key-r>
 Description: Remove inline comments from a selected block of text.
 
@@ -61,17 +61,6 @@ def rm_inline_comment(area):
 
 def install(area):
     area.install('inline-comment',
-    ('ALPHA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
-    ('ALPHA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
-
-
-
-
-
-
-
-
-
-
-
+    ('EXTRA', '<Key-r>', lambda event: rm_inline_comment(event.widget)),
+    ('EXTRA', '<Key-e>', lambda event: add_inline_comment(event.widget)))
 

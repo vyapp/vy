@@ -29,8 +29,7 @@ Description: Same as the keycommand <Key-h>.
 
 from subprocess import Popen, STDOUT, PIPE
 from vyapp.widgets import LinePicker
-from vyapp.areavi import AreaVi
-from vyapp.plugins import ENV
+from vyapp.plugins import Command
 from vyapp.app import root
 from re import findall
 import sys
@@ -69,9 +68,9 @@ def install(area):
     picker       = lambda event: html_checker.check()
     area.install('tidy', ('HTML', '<Key-h>', picker))
 
-def html_errors():
-    html_checker = HtmlChecker(AreaVi.ACTIVE)
+@Command()
+def html_errors(area):
+    html_checker = HtmlChecker(area)
     html_checker.check()
 
-ENV['html_errors'] = html_errors
 

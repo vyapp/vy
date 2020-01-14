@@ -7,7 +7,7 @@ Quickly edit your vyrc file.
 Key-Commands
 ============
 
-Mode: ALPHA
+Mode: EXTRA
 Event: <Alt-v>
 Description: Load your ~/.vy/vyrc file in the current
 AreaVi instance.
@@ -21,7 +21,7 @@ def loadrc(event):
     event.widget.chmode('NORMAL')
 
 def install(area):
-    area.install('editrc', ('ALPHA', '<Key-v>', loadrc))
+    area.install('editrc', ('EXTRA', '<Key-v>', loadrc))
 
 
 

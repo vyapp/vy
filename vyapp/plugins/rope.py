@@ -33,9 +33,9 @@ class PythonRefactor(object):
     def __init__(self, area):
         self.area  = area
         self.files = None
-        area.install('rope', ('PYTHON', '<Key-R>', error(self.get_rename_data)),
+        area.install('rope', ('PYTHON', '<Key-R>', self.rename),
         ('PYTHON', '<Key-A>', self.static_analysis),
-        ('PYTHON', '<Key-M>', error(self.get_move_data)))
+        ('PYTHON', '<Key-M>', self.move))
 
     def get_root_path(self):
         if self.area.project:
@@ -50,14 +50,12 @@ class PythonRefactor(object):
         libutils.analyze_module(project, mod)
         project.close()
 
-    def get_move_data(self, event):
+    @error
+    def move(self, event):
+        """
+        """
         ask = Ask()
-        if ask.data:
-            self.move(ask.data)
 
-    def move(self, name):
-        """
-        """
         tmp0    = self.area.get('1.0', 'insert')
         offset  = len(tmp0)
 
@@ -67,7 +65,7 @@ class PythonRefactor(object):
         project = Project(path)
         mod     = path_to_resource(project, self.area.filename)
         mover   = create_move(project, mod, offset)
-        destin  = path_to_resource(project, name)
+        destin  = path_to_resource(project, ask.data)
         changes = mover.get_changes(destin)
         project.do(changes)
 
@@ -113,19 +111,17 @@ class PythonRefactor(object):
         if instance:
             instance.load_data(new.real_path)
 
-    def get_rename_data(self, event):
-        ask = Ask()
-        if ask.data:
-            self.rename(ask.data)
-
+    @error
     def rename(self, name):
+        ask = Ask()
+
         tmp0    = self.area.get('1.0', 'insert')
         offset  = len(tmp0)
         path    = self.get_root_path()
         project = Project(path)
         mod     = path_to_resource(project, self.area.filename)
         renamer = Rename(project, mod, offset)
-        changes = renamer.get_changes(name)
+        changes = renamer.get_changes(ask.data)
         project.do(changes)
 
         self.update_instances(changes)

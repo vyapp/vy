@@ -38,6 +38,7 @@ using the same keys as defined in text_spots plugin.
 
 """
 
+from vyapp.plugins import Command
 from subprocess import Popen, STDOUT, PIPE
 from os.path import relpath
 from vyapp.widgets import LinePicker
@@ -96,9 +97,8 @@ class PythonAnalysis:
             self.options(ranges)
         
 install = PythonAnalysis
-
-def py_analysis():
-    python_analysis = PythonAnalysis(AreaVi.ACTIVE)
+@Command()
+def py_analysis(area):
+    python_analysis = PythonAnalysis(area)
     python_analysis.check_all()
-ENV['py_analysis'] = py_analysis
 

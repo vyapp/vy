@@ -21,8 +21,8 @@ Description: Send the cursor line to the process and insert a line down.
 from untwisted.expect import Expect, LOAD, CLOSE
 from vyapp.plugins.spawn.base_spawn import BaseSpawn
 from untwisted.network import xmap
+from vyapp.plugins import Command
 from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
 from vyapp.app import root
 from os import environ 
 
@@ -62,14 +62,14 @@ class Spawn(BaseSpawn):
 class HSpawn(Spawn):
     def __init__(self, cmd):
         Spawn.__init__(self, cmd)
-        BaseSpawn.__init__(self, cmd, AreaVi.ACTIVE, 
-        AreaVi.ACTIVE.master.master.create())
+        BaseSpawn.__init__(self, cmd, Command.area, 
+        Command.area.master.master.create())
 
 class VSpawn(Spawn):
     def __init__(self, cmd):
         Spawn.__init__(self, cmd)
-        BaseSpawn.__init__(self, cmd, AreaVi.ACTIVE, 
-        AreaVi.ACTIVE.master.master.master.create())
+        BaseSpawn.__init__(self, cmd, Command.area, 
+        Command.area.master.master.master.create())
 
 ENV['hspawn'] = HSpawn
 ENV['vspawn'] = VSpawn

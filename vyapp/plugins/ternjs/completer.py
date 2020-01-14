@@ -18,9 +18,8 @@ completion.
 
 from vyapp.completion import CompletionWindow, Option
 from os.path import expanduser, join, exists, dirname
+from vyapp.plugins import Command
 from subprocess import Popen, PIPE
-from vyapp.areavi import AreaVi
-from vyapp.plugins import ENV
 from shutil import copyfile
 from os import getcwd
 import json
@@ -39,13 +38,12 @@ class JavascriptCompletionWindow(CompletionWindow):
     def __init__(self, area, *args, **kwargs):
         # If ~/.tern-port doesn't exist then run the server.
         source      = area.get('1.0', 'end')
-        line, col   = area.indcur()
+        line, col   = area.indexref()
 
         if not exists(join(expanduser('~'), '.tern-port')): 
             self.run_server()
 
         completions = self.completions(source, line - 1, col, area.filename)
-
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
         self.bind('<F1>', lambda event: 
         sys.stdout.write('/*%s*/\n%s\n' % ('*' * 80, 
@@ -105,11 +103,10 @@ class JavascriptCompletion(object):
         (-1, '<<LoadData>>', remove_trigger), 
         (-1, '<<SaveData>>', remove_trigger))
 
-active_completion = lambda :AreaVi.ACTIVE.hook('javascript-completion', 
-'INSERT', '<Control-Key-period>', 
-
-lambda event: JavascriptCompletionWindow(event.widget), add=False)
-ENV['active_javascript_completion'] = active_completion
-
 install = JavascriptCompletion
+@Command()
+def acj(area):
+    area.hook('javascript-completion', 'INSERT', '<Control-Key-period>', 
+    lambda event: JavascriptCompletionWindow(event.widget), add=False)
+
 

@@ -1,28 +1,38 @@
-from re import sub
+"""
+Overview
+========
 
-from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
+This module implements two commands to strip chars off selected
+regions of text.
+
+Commands
+========
+
+Command: def strip(area, chars=' '):
+Description: 
+
+Command: def rstrip(area, chars=' '):
+Description: 
+
+"""
+
+from vyapp.plugins import Command
 from re import escape
 
-def strip(chars=' '):
+@Command()
+def strip(area, chars=' '):
     """
     Strip chars off the beginning of all selected lines.
     if chars is not given it removes spaces.
     """
 
-    AreaVi.ACTIVE.replace_ranges('sel', 
-    '^[%s]+' % escape(chars), '')
+    area.replace_ranges('sel', '^[%s]+' % escape(chars), '')
 
-def rstrip(chars=' '):
+@Command()
+def rstrip(area, chars=' '):
     """
-    Strip chars off the beginning of all selected lines.
+    Strip chars off the end of all selected lines.
     if chars is not given it removes spaces.
     """
 
-    AreaVi.ACTIVE.replace_ranges('sel', 
-    '[%s]+$' % escape(chars), '')
-
-ENV['strip']  = strip
-ENV['rstrip'] = rstrip
-
-
+    area.replace_ranges('sel', '[%s]+$' % escape(chars), '')

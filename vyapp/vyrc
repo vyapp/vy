@@ -33,49 +33,52 @@ from vyapp.plugins import untwisted
 ##############################################################################
 # Basic core modes.
 
-import vyapp.plugins.builtin_modes
-autoload(vyapp.plugins.builtin_modes)
+from vyapp.plugins import builtin_modes
+autoload(builtin_modes)
 
 ##############################################################################
 # Extra/programming language modes.
 
-import vyapp.plugins.python_mode
-autoload(vyapp.plugins.python_mode)
+from vyapp.plugins import python_mode
+autoload(python_mode)
 
-import vyapp.plugins.golang_mode
-autoload(vyapp.plugins.golang_mode)
+from vyapp.plugins import ruby_mode
+autoload(ruby_mode)
 
-import vyapp.plugins.html_mode
-autoload(vyapp.plugins.html_mode)
+from vyapp.plugins import golang_mode
+autoload(golang_mode)
 
-import vyapp.plugins.c_mode
-autoload(vyapp.plugins.c_mode)
+from vyapp.plugins import html_mode
+autoload(html_mode)
 
-import vyapp.plugins.javascript_mode
-autoload(vyapp.plugins.javascript_mode)
+from vyapp.plugins import c_mode
+autoload(c_mode)
 
-import vyapp.plugins.cplusplus_mode
-autoload(vyapp.plugins.cplusplus_mode)
+from vyapp.plugins import javascript_mode
+autoload(javascript_mode)
+
+from vyapp.plugins import cplusplus_mode
+autoload(cplusplus_mode)
 
 ##############################################################################
 # Core plugins.
 
 # Update statusbar cursor line/col.
-import vyapp.plugins.cursor_status
-autoload(vyapp.plugins.cursor_status)
+from vyapp.plugins import cursor_status
+autoload(cursor_status)
 
 # Update areavi filename on tabs, window title.
-import vyapp.plugins.io_status
-autoload(vyapp.plugins.io_status)
+from vyapp.plugins import io_status
+autoload(io_status)
 
 # Pinned modes.
-import vyapp.plugins.mode_shortcut
-autoload(vyapp.plugins.mode_shortcut)
+from vyapp.plugins import mode_shortcut
+autoload(mode_shortcut)
 
 # Used to associate ranges of text with 
 # info/data.
-import vyapp.plugins.assoc
-autoload(vyapp.plugins.assoc)
+from vyapp.plugins import assoc
+autoload(assoc)
 
 # Used to set your AreaVi project attribute
 # automatically based on .git, .svn, .hg dirs.
@@ -92,50 +95,46 @@ from vyapp.plugins import home
 autoload(home)
 
 # Provide anchors for text.
-import vyapp.plugins.anchors
-autoload(vyapp.plugins.anchors)
+from vyapp.plugins import anchors
+autoload(anchors)
 
 # Implement keycommands to select special sequences of chars.
 # Like sel from start/end.
-import vyapp.plugins.data_sel
-autoload(vyapp.plugins.data_sel)
-
-# Implement keycommand to remove selection from chars.
-import vyapp.plugins.clear_sel
-autoload(vyapp.plugins.clear_sel)
+from vyapp.plugins import data_sel
+autoload(data_sel)
 
 # Quickly switch focus between tabs by
 # using lazy search pattern.
-import vyapp.plugins.tab_search
-autoload(vyapp.plugins.tab_search)
+from vyapp.plugins import tab_search
+autoload(tab_search)
 
 # The word_search plugin.
-import vyapp.plugins.word_search
-autoload(vyapp.plugins.word_search)
+from vyapp.plugins import word_search
+autoload(word_search)
 
 # Shifting blocks of code.
-import vyapp.plugins.shift
-autoload(vyapp.plugins.shift)
+from vyapp.plugins import shift
+autoload(shift)
 
 # Used to quickly jump to the end/start of the file.
-import vyapp.plugins.text_jumps
-autoload(vyapp.plugins.text_jumps)
+from vyapp.plugins import text_jumps
+autoload(text_jumps)
 
 # Used to deal with panes.
-import vyapp.plugins.splits
-autoload(vyapp.plugins.splits)
+from vyapp.plugins import splits
+autoload(splits)
 
 # Used to deal with tabs.
-import vyapp.plugins.tabs
-autoload(vyapp.plugins.tabs)
+from vyapp.plugins import tabs
+autoload(tabs)
 
 # Implement keycommands to undo/redo operations.
-import vyapp.plugins.undo
-autoload(vyapp.plugins.undo)
+from vyapp.plugins import undo
+autoload(undo)
 
 # It implements keycomands to move the cursor up, down, left, right.
-import vyapp.plugins.main_jumps
-autoload(vyapp.plugins.main_jumps)
+from vyapp.plugins import main_jumps
+autoload(main_jumps)
 
 # The quick_search plugin implements incremental search.
 # The matching regions can have their appearance customized with
@@ -145,39 +144,44 @@ QuickSearch.c_appearance(background='yellow', foreground='black')
 autocall(QuickSearch)
 
 # Used to jump quickly to chars.
-import vyapp.plugins.seek_symbol
-autoload(vyapp.plugins.seek_symbol)
+from vyapp.plugins import seek_symbol
+autoload(seek_symbol)
 
 # This plugin implements keycommands to scroll lines.
-import vyapp.plugins.line_scroll
-autoload(vyapp.plugins.line_scroll)
+from vyapp.plugins import line_scroll
+autoload(line_scroll)
 
 # This plugin implements keycommands to scroll pages.
-import vyapp.plugins.page_scroll
-autoload(vyapp.plugins.page_scroll)
+from vyapp.plugins import page_scroll
+autoload(page_scroll)
 
 # Used to select the text between pairs of (), [], {} when 
 # the cursor is placed over one of the (), {}, [].
-import vyapp.plugins.pair_sel
-autoload(vyapp.plugins.pair_sel)
+from vyapp.plugins import pair_sel
+autoload(pair_sel)
 
 # Implement keycommands to insert a line up/down.
-import vyapp.plugins.line_feed
-autoload(vyapp.plugins.line_feed)
+from vyapp.plugins import line_feed
+autoload(line_feed)
 
 # Used to put the cursor on a given line.col.
-import vyapp.plugins.line_index
-autoload(vyapp.plugins.line_index)
+from vyapp.plugins import line_index
+autoload(line_index)
 
 # Implement keycommands to control where data is written 
 # to sys.stdout is going to be echoed.
-import vyapp.plugins.outputs
-autoload(vyapp.plugins.outputs)
+from vyapp.plugins import outputs
+autoload(outputs)
+
+# Display sys.stdout log. It is useful when using python
+# pdb to debug applications.
+from vyapp.plugins import syslog
+autoload(syslog)
 
 # Used to execute python code on the fly, things like python functions
 # to substitute text, format stuff etc, load plugins.
-import vyapp.plugins.cmd
-autoload(vyapp.plugins.cmd)
+from vyapp.plugins import cmd
+autoload(cmd)
 
 # Used to search for text/format text with regex.
 # The class attribute TAGCONF holds default styling 
@@ -187,50 +191,49 @@ Find.c_appearance(background='green', foreground='white')
 autocall(Find)
 
 # It implements ways of opening/saving files.
-import vyapp.plugins.io
-autoload(vyapp.plugins.io)
+from vyapp.plugins import io
+autoload(io)
 
 # Implement key-commands to delete selected text, lines, chars.
-import vyapp.plugins.data_del
-autoload(vyapp.plugins.data_del)
+from vyapp.plugins import data_del
+autoload(data_del)
 
 # Used to highlight pairs of character like () {} [].
 # It is useful when playing with lisp things.
-import vyapp.plugins.match_sym_pair
-autoload(vyapp.plugins.match_sym_pair)
+from vyapp.plugins import match_sym_pair
+autoload(match_sym_pair)
 
 # Used to complete words when Control-q is issued on insert mode.
-import vyapp.plugins.word_completion
-autoload(vyapp.plugins.word_completion)
+from vyapp.plugins import word_completion
+autoload(word_completion)
 
 # Implements key-commands to copy/cut/paste text.
-import vyapp.plugins.clipboard
-autoload(vyapp.plugins.clipboard)
+from vyapp.plugins import clipboard
+autoload(clipboard)
 
 # Used to remember an important position of the 
 # text and quickly switch back to it.
-import vyapp.plugins.quick_jumps
-autoload(vyapp.plugins.quick_jumps)
+from vyapp.plugins import quick_jumps
+autoload(quick_jumps)
 
 # This plugin is used to place the cursor over 
 # the next occurrence of the symbols passed to 
 # symbol_jumps install function.
-import vyapp.plugins.symbol_jumps
-autoload(vyapp.plugins.symbol_jumps, 
-('(', ')', '.', '[', ']', '{', '}', ',', ':', ';', "'", '"'))
+from vyapp.plugins import symbol_jumps
+autoload(symbol_jumps, ('(', ')', '[', ']', '{', '}'))
 
 # text_spots plugin is used to mark lines then quickly
 # go to the previous or next mark.
-import vyapp.plugins.text_spots
-autoload(vyapp.plugins.text_spots)
+from vyapp.plugins import text_spots
+autoload(text_spots)
 
 # range_sel plugin implemets selection commannds.
-import vyapp.plugins.range_sel
-autoload(vyapp.plugins.range_sel)
+from vyapp.plugins import range_sel
+autoload(range_sel)
 
 # block_selection plugin implemets selection commannds.
-import vyapp.plugins.block_sel
-autoload(vyapp.plugins.block_sel)
+from vyapp.plugins import block_sel
+autoload(block_sel)
 
 ##############################################################################
 # Extra plugins.
@@ -253,9 +256,14 @@ autoload(vyapp.plugins.block_sel)
 # from vyapp.plugins import fsniffer
 # autoload(fsniffer)
 
+# Like fsniffer but works with files and drop results
+# on the current AreaVi instance.
+# from vyapp.plugins import fsearch
+# autoload(fsearch)
+
 # The ysnippet plugin.
-import vyapp.plugins.ysnippet
-autoload(vyapp.plugins.ysnippet)
+from vyapp.plugins import ysnippet
+autoload(ysnippet)
 
 # The mc filenamanager.
 # Configure your color scheme with 
@@ -265,9 +273,13 @@ autoload(vyapp.plugins.ysnippet)
 # file={'foreground': 'yellow'})
 # autocall(Mc)
 
+# Open files using xdg_open.
+# from vyapp.plugins import xdg_open
+# autoload(xdg_open)
+
 # Drop/Read data from a bash process.
-# import vyapp.plugins.ibash
-# autoload(vyapp.plugins.ibash)
+# from vyapp.plugins import ibash
+# autoload(ibash)
 
 # Python syntax checker through pyflakes.
 # Use the classmethod c_path to set pyflakes path.
@@ -289,17 +301,17 @@ autocall(PythonAnalysis)
 
 # Download html from the clipboard url in the active AreaVi
 # instance.
-import vyapp.plugins.urls
-autoload(vyapp.plugins.urls)
+from vyapp.plugins import urls
+autoload(urls)
 
 # This plugin implements a keycommand to quickly load the user vyrc file
 # into the current AreaVi instance.
-import vyapp.plugins.editrc
-autoload(vyapp.plugins.editrc)
+from vyapp.plugins import editrc
+autoload(editrc)
 
 # Python auto completion plugin using jedi.
-import vyapp.plugins.jedi
-autoload(vyapp.plugins.jedi)
+from vyapp.plugins import jedi
+autoload(jedi)
 
 # You may need to setup tidy path here depending on your installation.
 # But if tidy is available in the environment then no need to uncomment this line.
@@ -313,12 +325,12 @@ autoload(vyapp.plugins.jedi)
 # autoload(client)
 
 # Refactorying tools.
-import vyapp.plugins.rope
-autoload(vyapp.plugins.rope)
+from vyapp.plugins import rope
+autoload(rope)
 
 # Select a JSON data and format it.
-import vyapp.plugins.jsonfmt
-autoload(vyapp.plugins.jsonfmt)
+from vyapp.plugins import jsonfmt
+autoload(jsonfmt)
 
 # from vyapp.plugins.ternjs.completer import JavascriptCompletion 
 # JavascriptCompletion.PATH = 'tern'
@@ -348,104 +360,110 @@ autoload(spacing)
 
 # This plugin implements keys to comment pieces of text inside 
 # programming language files.
-import vyapp.plugins.inline_comment
-autoload(vyapp.plugins.inline_comment)
+from vyapp.plugins import inline_comment
+autoload(inline_comment)
 
 # Used to debug python applications. The python argument 
 # specifies the interpreter path.
-# import vyapp.plugins.pdb.unix_platform
-# autoload(vyapp.plugins.pdb.unix_platform, python='python2')
+# from vyapp.plugins import pdb
+# autoload(pdb, python='python3')
 
-# import vyapp.plugins.pdb.cross_platform
-# autoload(vyapp.plugins.pdb.cross_platform, python='python2')
+# Used to debug golang applications.
+# from vyapp.plugins import delve
+# autoload(delve)
 
 # This plugin highlights links when files are opened.
-import vyapp.plugins.hlink
-autoload(vyapp.plugins.hlink)
+from vyapp.plugins import hlink
+autoload(hlink)
 
 # It implementes some features like a key command
 # to copy to the clipboard the name of the actual opened file.
-import vyapp.plugins.clip_path
-autoload(vyapp.plugins.clip_path)
+from vyapp.plugins import clip_path
+autoload(clip_path)
 
 ##############################################################################
 # Syntax plugin is used to highlight code.
 # It uses python pygments styles to highlight code :)
 # Check out more pygments styles.
 # Note: When uncommenting a theme dont forget to comment the previously used one.
-import vyapp.plugins.syntax.spider
+from vyapp.plugins.syntax import spider
 
 # from pygments.styles.emacs import EmacsStyle
-# autoload(vyapp.plugins.syntax.spider, EmacsStyle)
+# autoload(spider, EmacsStyle)
 
 # from pygments.styles.murphy import MurphyStyle
-# autoload(vyapp.plugins.syntax.spider, MurphyStyle)
+# autoload(spider, MurphyStyle)
 
 # from pygments.styles.abap import AbapStyle
-# autoload(vyapp.plugins.syntax.spider, AbapStyle)
+# autoload(spider, AbapStyle)
 
 # from pygments.styles.borland import BorlandStyle
-# autoload(vyapp.plugins.syntax.spider, BorlandStyle)
+# autoload(spider, BorlandStyle)
 
 # from pygments.styles.fruity import FruityStyle
-# autoload(vyapp.plugins.syntax.spider, FruityStyle)
+# autoload(spider, FruityStyle)
 
 # from pygments.styles.colorful import ColorfulStyle
-# autoload(vyapp.plugins.syntax.spider, ColorfulStyle)
+# autoload(spider, ColorfulStyle)
 
 # from pygments.styles.tango import TangoStyle
-# autoload(vyapp.plugins.syntax.spider, TangoStyle)
+# autoload(spider, TangoStyle)
 
 # from pygments.styles.trac import TracStyle
-# autoload(vyapp.plugins.syntax.spider, TracStyle)
+# autoload(spider, TracStyle)
 
 # from pygments.styles.igor import IgorStyle
-# autoload(vyapp.plugins.syntax.spider, IgorStyle)
+# autoload(spider, IgorStyle)
 
 # from pygments.styles.paraiso_dark import ParaisoDarkStyle
-# autoload(vyapp.plugins.syntax.spider, ParaisoDarkStyle)
+# autoload(spider, ParaisoDarkStyle)
 
 # from pygments.styles.vim import VimStyle
-# autoload(vyapp.plugins.syntax.spider, VimStyle)
+# autoload(spider, VimStyle)
 
 from vyapp.plugins.syntax.styles.vy import VyStyle
-autoload(vyapp.plugins.syntax.spider, VyStyle)
+autoload(spider, VyStyle)
 
 ##############################################################################
 # Core command plugins.
 
 # Implement commands for common key-commands.
-import vyapp.plugins.cmd_utils
+from vyapp.plugins import cmd_utils
 
 # Plugin tools.
-import vyapp.plugins.plugin_tools
+from vyapp.plugins import plugin_tools
 
 # Saving, opening files from vy python command line.
-import vyapp.plugins.iocmd
+from vyapp.plugins import iocmd
 
 # Find, replace, highlight patterns from vy python command line.
-import vyapp.plugins.cmd_search
+from vyapp.plugins import cmd_search
 
 # Strip spaces from the beginning of lines.
-import vyapp.plugins.line_strips
+from vyapp.plugins import line_strips
 
 ##############################################################################
 # Extra command plugins.
+
+# Create github gists easily. You need to get a 
+# personal access token first. 
+# from vyapp.plugins.gists import GistCreate
+# GistCreate('access_token')
 
 # Implement lower and upper functions.
 from vyapp.plugins import caps
 
 # Count words.
-import vyapp.plugins.count_words
+from vyapp.plugins import count_words
 
 # Managing file encodings.
-import vyapp.plugins.codec
+from vyapp.plugins import codec
 
 # Spawning processes.
-# import vyapp.plugins.spawn.unix_platform
+# from vyapp.plugins.spawn import unix_platform
 
 # Spawning processes cross_platform.
-# import vyapp.plugins.spawn.cross_platform
+# from vyapp.plugins.spawn import cross_platform
 
 ##############################################################################
 # Setup area settings, like default background, foreground, font style etc.

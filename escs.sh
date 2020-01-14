@@ -10,6 +10,12 @@ git clone git@github.com:iogf/vy.wiki.git vy.wiki-code
 cd /home/tau/projects/vy.wiki-code/
 git pull
 ##############################################################################
+# create development branch for wiki.
+cd /home/tau/projects/vy.wiki-code/
+git branch -a
+git checkout -b development
+git push --set-upstream origin development
+##############################################################################
 # push wiki docs.
 cd /home/tau/projects/vy.wiki-code/
 git status
@@ -92,7 +98,7 @@ cd ~/projects/vy-code
 sudo bash -i
 pip2 install -r requirements.txt
 ##############################################################################
-# install, vy. 
+# install vy. 
 cd ~/projects/vy-code
 sudo bash -i
 python setup.py install
@@ -170,13 +176,18 @@ ls
 git submodule update --init --recursive
 ls
 
-# typescript is for tsserver. clang is for c-family completion.
-pacman -S clang cmake gcc-c++ make python3-devel typescript python3-dev
+# Install ycmd-git.
+cd ~/bin/
+git clone git@github.com:ycm-core/ycmd.git ycmd-code
+cd ycmd-code
+ls
+git submodule update --init --recursive
 
-# Compiling ycmd with all features. The --cs-completer, -go-completer are 
-# flags to install the necessary tools.
-python3 install.py --all --cs-completer -go-completer --rust-completer --java-completer --clang-completer
+python3 build.py --all
 
-
+mkdir build
+cd build
+cmake ../cpp -DUSE_PYTHON2=OFF -DUSE_LIBCLANG_COMPLETER=ON
+make VERBOSE=1
 
 

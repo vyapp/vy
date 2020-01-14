@@ -30,7 +30,7 @@ Event: <Key-p>
 Description: Place the cursor at the end of the line.
 
 Mode: NORMAL
-Event: <Key-bracketright> 
+Event: <Key-braceleft> 
 Description: Place the cursor at the beginning of the next word.
 
 
@@ -46,7 +46,7 @@ class TextJumps:
         ('NORMAL', '<Key-2>', self.text_end), 
         ('NORMAL', '<Key-o>', self.line_start),
         ('NORMAL', '<Key-p>', self.line_end), 
-        ('NORMAL', '<Key-bracketright>', self.next_word),
+        ('NORMAL', '<Key-braceleft>', self.next_word),
         ('NORMAL', '<Key-braceright>', self.prev_word))
         self.area = area
 

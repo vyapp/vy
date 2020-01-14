@@ -10,19 +10,19 @@ Key-Commands
 Namespace: undo
 
 Mode: NORMAL
-Event: <Key-comma> 
+Event: <Key-bracketright> 
 Description: Do undo.
 
 Mode: NORMAL
-Event: <Key-period> 
+Event: <Key-bracketleft> 
 Description: Do redo.
 """
 
 class Undo:
     def __init__(self, area):
         area.install('undo', 
-        ('NORMAL', '<Key-comma>', lambda event: event.widget.edit_undo()),
-        ('NORMAL', '<Key-period>', lambda event: event.widget.edit_redo()))
+        ('NORMAL', '<Key-bracketright>', lambda event: event.widget.edit_undo()),
+        ('NORMAL', '<Key-bracketleft>', lambda event: event.widget.edit_redo()))
 
 install = Undo
 

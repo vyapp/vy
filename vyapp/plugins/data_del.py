@@ -21,7 +21,7 @@ Description: Delete a line where the cursor is on.
 
 
 Mode: NORMAL
-Event: <Key-z> 
+Event: <Control-x> 
 Description: Delete a char from the cursor position.
 
 """
@@ -31,7 +31,7 @@ class DataDel:
         area.install('data-del', 
         ('NORMAL', '<Key-d>', self.del_sel),
         ('NORMAL', '<Key-x>', self.del_line),
-        ('NORMAL', '<Key-z>', self.del_char))
+        ('NORMAL', '<Control-x>', self.del_char))
         self.area = area
 
     def del_line(self, event):

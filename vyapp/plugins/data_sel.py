@@ -21,12 +21,13 @@ Description: Add selection from the cursor position to the beginning of the line
 Mode: NORMAL
 Event: <Control-p> 
 Description: Add selection from the cursor position to the end of the line.
+
 Mode: NORMAL
-Event: <Key-bracketleft> 
+Event: <Key-period> 
 Description: Add selection to a word where the cursor is placed on.
 
 Mode: NORMAL
-Event: <Control-bracketleft>
+Event: <Control-period>
 Description: Select a sequence of non blank chars that is over
 the cursor.
 
@@ -48,8 +49,8 @@ Description: Add selection from the beginning to the end of the file.
 class DataSel:
     def __init__(self, area):
         area.install('data-sel', 
-        ('NORMAL', '<Control-bracketleft>', self.sel_seq),
-        ('NORMAL', '<Key-bracketleft>', self.sel_word), 
+        ('NORMAL', '<Control-period>', self.sel_seq),
+        ('NORMAL', '<Key-period>', self.sel_word), 
         ('NORMAL', '<Control-Key-1>', self.sel_text_start),
         ('NORMAL', '<Control-Key-2>', self.sel_text_end),
         ('NORMAL', '<Control-a>', self.sel_all), 

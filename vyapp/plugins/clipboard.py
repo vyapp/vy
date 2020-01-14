@@ -91,7 +91,7 @@ class Clipboard:
     def ptsel_block(self, event):
         data      = self.area.clipboard_get()
         data      = data.split('\n')
-        line, col = self.area.indcur()
+        line, col = self.area.indexref()
 
         self.area.edit_separator()
         for ind in range(0, len(data)):

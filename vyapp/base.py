@@ -1,14 +1,12 @@
 """
-This module implements the App class widget which is the most important vy
-editor's widgets.
 """
 
 from os.path import expanduser, join, exists, dirname
-from vyapp.statusbar import *
-from vyapp.core import NoteVi
+from vyapp.statusbar import StatusBar
+from vyapp.notebook import NoteVi
 from vyapp.plugins import ENV
 from shutil import copyfile
-from tkinter import Tk
+from tkinter import Tk, Grid
 from os import mkdir
 import sys
 
@@ -34,9 +32,11 @@ class App(Tk):
         """
 
         Tk.__init__(self, *args, **kwargs)
+        self.note   = None
+        self.status = None
         self.title('Vy')
         self.create_widgets()
-    
+        
     def create_vyrc(self):
         self.dir = join(expanduser('~'), '.vy')
         self.rc  = join(self.dir, 'vyrc')

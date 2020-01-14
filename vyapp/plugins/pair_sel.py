@@ -11,12 +11,12 @@ Key-Commands
 Namespace: sym-pair-sel
 
 Mode: NORMAL
-Event: <Key-slash> 
+Event: <Key-comma> 
 Description: Select text between pairs of ( ) [] {} when the cursor
 is placed over one of these characters.
 
 Mode: NORMAL
-Event: <Control-Key-slash> 
+Event: <Control-comma> 
 Description: Select text between pairs of ( ) [] {} including the pairs when the cursor
 is placed over one of these characters.
 """
@@ -24,8 +24,8 @@ is placed over one of these characters.
 class PairSel:
     def __init__(self, area, max=2500):
         area.install('pair-sel', 
-        ('NORMAL', '<Key-slash>', self.sel_data),
-        ('NORMAL', '<Control-Key-slash>', self.sel_pair),)
+        ('NORMAL', '<Key-comma>', self.sel_data),
+        ('NORMAL', '<Control-comma>', self.sel_pair),)
         self.max = max
         self.area = area
     

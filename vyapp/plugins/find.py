@@ -15,7 +15,7 @@ Event: <Alt-slash>
 Description: Set a search pattern.
 
 Mode: Get
-Event: <Alt-bracketright>
+Event: <Alt-q>
 Description: Set a replacement pattern.
 
 Mode: Get
@@ -36,7 +36,7 @@ Description: Replace the next matched pattern for the previously
 set replacement.
 
 Mode: Get
-Event: <Alt-slash>
+Event: <Alt-n>
 Description: Highligh all matched patterns inside a selected 
 region of text.
 
@@ -46,11 +46,11 @@ Description: Replace all matched patterns inside a selected region
 of text for the previously set replacement.
 """
 
-from vyapp.ask import Get, Ask
+from vyapp.ask import Get
 from vyapp.base import printd
 from vyapp.app import root
 
-class Find(object):
+class Find:
     confs = {
         'background':'green', 'foreground':'white'
     }
@@ -84,10 +84,10 @@ class Find(object):
         root.status.set_msg('Set replacement: %s' % self.data)
 
         get = Get(events={
-        '<Alt-bracketright>': self.set_data,
+        '<Alt-q>': self.set_data,
         '<Alt-o>': self.up, '<Escape>': self.cancel, 
         '<Alt-p>': self.down, '<Return>': self.cancel,
-        '<Alt-slash>':  self.pick_selection_matches,
+        '<Alt-n>':  self.pick_selection_matches,
         '<Alt-period>': self.replace_on_cursor,
         '<Alt-semicolon>': self.replace_on_selection, 
         '<Alt-comma>': self.replace_all_matches, 

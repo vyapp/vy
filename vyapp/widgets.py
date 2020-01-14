@@ -1,5 +1,5 @@
 from tkinter import Listbox, Toplevel,  BOTH, END, TOP, ACTIVE, Text, LEFT, SCROLL
-from os.path import exists, dirname, join, relpath
+from os.path import relpath
 from vyapp.tools import findline
 from vyapp.areavi import AreaVi
 from vyapp.app import root
@@ -30,29 +30,6 @@ class MatchBox(Listbox):
         self.selection_set(index)
         self.see(index)
 
-class Echo(object):
-    """
-
-    """
-
-    def __init__(self, area):
-        self.area = area
-        self.bind('<BackSpace>', self.on_backspace)
-        self.bind('<Key>', self.dispatch)
-
-    def dispatch(self, event):
-        if event.char:  self.on_char(event.char)
-
-    def on_char(self, char):
-        self.area.insert('insert', char)
-
-    def on_backspace(self, event):
-        self.area.delete('insert -1c', 'insert')
-        self.on_delete(event)
-
-    def on_delete(self, event):
-        pass
-
 class FloatingWindow(Toplevel):
     """
     """
@@ -62,7 +39,13 @@ class FloatingWindow(Toplevel):
         self.area = area
         self.wm_overrideredirect(1)
         self.wm_geometry("+10000+10000")
-        self.bind('<Configure>', lambda event: self.update())
+        self.area.bind('<Configure>', lambda event: self.destroy(), add=True)
+        self.bind('<FocusOut>', lambda event: self.destroy(), add=True)
+
+        # Note: One of the possibilities it would be making the
+        # floating window be updated whenever a key is pressed.
+        # It would change the window position accordingly.
+        self.start_index = self.area.index('insert')
         self.update()
 
     def update(self):
@@ -70,7 +53,6 @@ class FloatingWindow(Toplevel):
 
         rootx               = self.area.winfo_rootx()
         rooty               = self.area.winfo_rooty()
-        self.start_index    = self.area.index('insert')
         x, y, width, height = self.area.bbox('insert')
         info                = self.area.dlineinfo('insert')
         line_x              = info[0]
@@ -94,16 +76,29 @@ class FloatingWindow(Toplevel):
 
     def calculate_vertical_position(self, y, rooty, 
         line_height, win_height, area_height):
-        if rooty + y + win_height + line_height > rooty + area_height:
-            return rooty + y - win_height
-        else:
-            return rooty + y + line_height
 
-    def calculate_horizontal_position(self, x, rootx, win_width, area_width):
-        if x + rootx + win_width > rootx + area_width:
-            return rootx + area_width - win_width
+        vpos0 = rooty + y - win_height
+        vpos1 = rooty + y + line_height
+        m     = rooty + y + win_height + line_height 
+        n     = rooty + area_height
+
+        if m > n and vpos0 > root.winfo_rooty():
+           return vpos0
         else:
-            return rootx + x
+            return vpos1
+
+    def calculate_horizontal_position(self, x, 
+        rootx, win_width, area_width):
+
+        hpos0 = rootx + x - win_width
+        hpos1 = rootx + x
+        m     = x + rootx + win_width
+        n     = rootx + area_width
+
+        if m > n and hpos0 > root.winfo_rootx():
+            return hpos0
+        else:
+            return hpos1
 
     def destroy(self):
         self.area.focus_set()
@@ -248,6 +243,4 @@ class LinePicker(OptionWindow):
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
         self.close()
-
-
 
