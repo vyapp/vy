@@ -136,6 +136,5 @@ your ~/.vy directory before a new installation in order to upgrade to a new vers
 Documentation
 =============
 
-[Wiki](https://github.com/iogf/vy/wiki)
-
+### [Smoking Snake Book](https://github.com/iogf/vy/wiki)
 
