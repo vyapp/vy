@@ -51,8 +51,6 @@ Features/Plugins
 
 - **Nodejs inspect Debugger**
 
-- **Debuggers (Python, Delve)**
-
 - **Rope Refactoring Tools**
     * https://github.com/python-rope/rope
 
