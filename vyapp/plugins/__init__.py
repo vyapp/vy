@@ -1,5 +1,4 @@
-from functools import wraps, update_wrapper
-from vyapp.areavi import AreaVi
+from functools import wraps
 
 # ENV is a dict holding plugins objects, like functions, classes etc.
 # Plugins should install their handles in ENV.

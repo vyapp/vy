@@ -34,8 +34,7 @@ Description: It changes the focus right from a tab.
 
 from vyapp.app import root
 from tkinter.messagebox import *
-from tkinter.filedialog import askopenfilename, asksaveasfilename
-from vyapp.areavi import AreaVi
+from tkinter.filedialog import askopenfilename
 
 def load_tab():
     """

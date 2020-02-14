@@ -10,9 +10,7 @@ a vy project file.
 """
 
 from os.path import exists, dirname, join
-from vyapp.app import root
 from vyapp.base import printd
-from vyapp.ask import Ask
 
 def get_sentinel_file(path, *args):
     """

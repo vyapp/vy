@@ -19,7 +19,6 @@ Description: Remove inline comments from a selected block of text.
 
 """
 
-from re import escape
 import os.path
 
 DEFAULT = '#'

@@ -27,7 +27,6 @@ Description: Open an input box in order to type inline python code to be execute
 """
 
 from vyapp.plugins import Command
-from traceback import print_exc as debug
 from vyapp.tools import exec_pipe, e_stop
 from vyapp.ask import Ask
 from vyapp.plugins import ENV

@@ -2,10 +2,8 @@
     :)
 """
 
-from vyapp.plugins.syntax.tools import *
 from vyapp.plugins.syntax.keys import PRECEDENCE_TABLE, DEFAULT
 from pygments.lexers import get_lexer_for_filename, guess_lexer
-from re import search
 
 class Spider:
     def  __init__(self, area, theme, max=10):

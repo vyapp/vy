@@ -15,7 +15,8 @@ Event: <Control-q>
 Description: Shows an input text field to insert a Line.Col value to place the cursor at that position.
 
 """
-from vyapp.ask import *
+from vyapp.ask import Ask
+from tkinter import TclError
 
 def go_to_pos(area):
     ask = Ask()

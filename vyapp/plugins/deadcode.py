@@ -42,8 +42,6 @@ from vyapp.plugins import Command
 from subprocess import Popen, STDOUT, PIPE
 from os.path import relpath
 from vyapp.widgets import LinePicker
-from vyapp.areavi import AreaVi
-from vyapp.plugins import ENV
 from vyapp.tools import get_project_root
 from vyapp.base import printd
 from vyapp.app import root

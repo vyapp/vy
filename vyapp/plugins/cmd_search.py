@@ -8,7 +8,6 @@ functions to highlight patterns of text and replace patterns.
 """
 
 from vyapp.plugins import Command
-from vyapp.areavi import AreaVi
 
 @Command()
 def find(area, regex, handle, *args, **kwargs):

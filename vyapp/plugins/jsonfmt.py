@@ -17,8 +17,6 @@ Description: Format the selected JSON data then switch to NORMAL mode.
 
 """
 
-from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
 from subprocess import Popen, PIPE
 from vyapp.app import root
 
@@ -44,10 +42,5 @@ class FmtJSON:
             self.area.swap(output, start, end)
 
         self.area.chmode('NORMAL')
-
-    def fmt_data(self, start, end, data):
-        self.area.delete(start, end)
-        self.area.insert(start, output)
-        
 
 install = FmtJSON

@@ -60,20 +60,14 @@ Description: Terminate the process.
 
 """
 
-from subprocess import Popen, PIPE, STDOUT
 from tkinter.filedialog import askopenfilename
-from untwisted.expect import Expect, LOAD, CLOSE
 from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.regutils import RegexEvent
-from re import findall
 from vyapp.dap import DAP
 from vyapp.ask import Ask
-from vyapp.areavi import AreaVi
 from vyapp.app import root
 import shlex
-import sys
-import os
 
 class GDB(DAP):
     def __call__(self, area):

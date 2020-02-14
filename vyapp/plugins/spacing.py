@@ -17,8 +17,6 @@ Description: Insert a tab/space based on the programming file type.
 
 from vyapp.plugins import Command
 from os.path import splitext
-from vyapp.plugins import ENV
-from vyapp.areavi import AreaVi
 from vyapp.app import root
 
 class Tab:

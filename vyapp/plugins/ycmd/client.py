@@ -33,12 +33,11 @@ from os.path import expanduser, join, exists, dirname
 from base64 import b64encode, b64decode
 from vyapp.widgets import LinePicker
 from tempfile import NamedTemporaryFile
-from subprocess import Popen, PIPE
+from subprocess import Popen
 from shutil import copyfile
 from vyapp.plugins import Command, ENV
 from vyapp.app import root
 from vyapp.base import printd
-from vyapp.areavi import AreaVi
 import atexit
 import requests
 import random
