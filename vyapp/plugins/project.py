@@ -27,7 +27,7 @@ def get_sentinel_file(path, *args):
             elif tmp == dirname(tmp):
                 return ''
             
-class Project(object):
+class Project:
     sentinels = ('.git', '.svn', '.hg', '._')
 
     def  __init__(self, area):

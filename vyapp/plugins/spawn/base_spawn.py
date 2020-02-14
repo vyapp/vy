@@ -2,7 +2,7 @@ from untwisted.event import LOAD, CLOSE
 from vyapp.app import root
 import signal
 
-class BaseSpawn(object):
+class BaseSpawn:
     def __init__(self, cmd, input, output):
         self.cmd    = cmd
         self.input  = input

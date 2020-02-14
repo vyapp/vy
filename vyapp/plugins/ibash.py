@@ -44,7 +44,7 @@ from os import environ, setsid, killpg
 from vyapp.plugins import ENV
 import sys
 
-class Process(object):
+class Process:
     def __call__(self, area):
         area.install('ibash', 
         ('NORMAL', '<Control-F9>', lambda event: self.dump_region(event.widget)),

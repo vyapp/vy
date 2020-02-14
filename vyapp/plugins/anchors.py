@@ -7,7 +7,7 @@ Namespace: anchors
 
 """
 
-class Anchors(object):
+class Anchors:
     def __init__(self, area):
         area.add_mode('ANCHORS')
         self.area  = area

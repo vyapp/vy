@@ -38,7 +38,7 @@ from re import findall, escape
 from vyapp.base import printd
 from vyapp.app import root
 
-class Fstmt(object):
+class Fstmt:
     options = LinePicker()
     path    = 'ag'
 

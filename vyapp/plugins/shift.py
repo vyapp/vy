@@ -19,7 +19,7 @@ Description: Shift to the left.
 
 """
 
-class Shift(object):
+class Shift:
     def __init__(self, area):
         area.install('shift', 
         ('NORMAL', '<Key-greater>', self.sel_right),

@@ -18,7 +18,7 @@ from vyapp.regutils import build_regex
 from vyapp.base import printd
 from vyapp.app import root
 
-class QuickSearch(object):
+class QuickSearch:
     confs = {
         'background':'yellow', 'foreground':'black'
     }

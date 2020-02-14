@@ -83,7 +83,7 @@ class JavascriptCompletionWindow(CompletionWindow):
         data = json.loads(data)
         return [Option(**ind) for ind in data['completions']]
 
-class JavascriptCompletion(object):
+class JavascriptCompletion:
     PATH = 'tern'
     PORT = 1234
 

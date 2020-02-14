@@ -12,7 +12,7 @@ Namespace: tab-search
 from vyapp.ask import Get
 from vyapp.app import root
 
-class TabSearch(object):
+class TabSearch:
     def __init__(self, area):
         self.area = area
 

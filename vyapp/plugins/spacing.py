@@ -21,7 +21,7 @@ from vyapp.plugins import ENV
 from vyapp.areavi import AreaVi
 from vyapp.app import root
 
-class Tab(object):
+class Tab:
     scheme = {}
 
     def __init__(self, area):

@@ -6,37 +6,36 @@ This plugin implements a mechanism to highligh pairs of ( ) [ ] { }.
 
 
 """
+from vyapp.areavi import AreaVi
+from vyapp.app import root
 
-class MatchSymPair(object):
-    def __init__(self, area, setup={'background':'pink', 
-            'foreground':'black'}, max=1500, timeout=500):
-        self.max     = max
-        self.timeout = timeout
-        self.area    = area
+class MatchSymPair:
+    setup={'background':'pink', 
+   'foreground':'black'}
+    max=1500
+    timeout=700
 
-        area.tag_config('(paren)', **setup)
-        area.tag_config('(bracket)', **setup)
-        area.tag_config('(brace)', **setup)
+    def __call__(self, area):
+        area.tag_config('(paren)', **self.setup)
+        area.tag_config('(bracket)', **self.setup)
+        area.tag_config('(brace)', **self.setup)
 
+    def __init__(self):
+        # root.bind('<<Started>>', self.install_handles, once=True)
+        root.after_idle(self.install_handles)
+
+    def install_handles(self):
         self.blink('(paren)', ('(', ')'))
         self.blink('(bracket)', ('[', ']'))
         self.blink('(brace)', ('{', '}'))
     
     def blink(self, name, args):
-        self.area.after(self.timeout, self.blink, name, args)
-        index = self.area.case_pair('insert', self.max, *args)
+        root.after(self.timeout, self.blink, name, args)
+        index = AreaVi.INPUT.case_pair('insert', self.max, *args)
 
-        self.area.tag_remove(name, '1.0', 'end')
+        AreaVi.INPUT.tag_remove(name, '1.0', 'end')
         if not index: return
-        self.area.tag_add(name, 'insert', 'insert +1c')
-        self.area.tag_add(name, index, '%s +1c' % index)
+        AreaVi.INPUT.tag_add(name, 'insert', 'insert +1c')
+        AreaVi.INPUT.tag_add(name, index, '%s +1c' % index)
 
-
-
-install = MatchSymPair
-
-
-
-
-
-
+install = MatchSymPair()

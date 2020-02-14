@@ -20,7 +20,7 @@ Description:
 
 """
 
-class QuickJumps(object):
+class QuickJumps:
     def __init__(self, area):
         self.area  = area
         area.install('quick-jumps', ('NORMAL', '<Key-space>', lambda event: self.area.mark_set('(PREV_POSITION)', 'insert')),

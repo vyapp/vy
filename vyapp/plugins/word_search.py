@@ -29,7 +29,7 @@ from itertools import groupby
 from re import escape
 from vyapp.app import root
 
-class WordSearch(object):
+class WordSearch:
     def __init__(self, area, setup={'background':'yellow', 'foreground':'black'}):
         self.area = area
         area.tag_configure('(ISEARCH_MATCH)', **setup)

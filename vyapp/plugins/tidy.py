@@ -34,7 +34,7 @@ from vyapp.app import root
 from re import findall
 import sys
 
-class HtmlChecker(object):
+class HtmlChecker:
     PATH = 'tidy'
 
     def  __init__(self, area):

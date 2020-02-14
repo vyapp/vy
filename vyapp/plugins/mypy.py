@@ -44,7 +44,7 @@ from vyapp.base import printd
 from re import findall
 import sys
 
-class StaticChecker(object):
+class StaticChecker:
     options = LinePicker()
     path    = 'mypy'
 

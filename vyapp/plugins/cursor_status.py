@@ -1,6 +1,6 @@
 from vyapp.app import root
 
-class CursorStatus(object):
+class CursorStatus:
     def __init__(self, area, timeout=1000):
         self.area    = area
         self.timeout = timeout

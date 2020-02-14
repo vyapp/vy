@@ -9,7 +9,7 @@ from vyapp.mixins import DataEvent, IdleEvent
 class AskCancel(Exception):
     pass
 
-class InputBox(object):
+class InputBox:
     def __init__(self, default_data=''):
         self.default_data = default_data
 
