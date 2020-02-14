@@ -33,7 +33,7 @@ Description: It changes the focus right from a tab.
 """
 
 from vyapp.app import root
-from tkinter.messagebox import *
+# from tkinter.messagebox import *
 from tkinter.filedialog import askopenfilename
 
 def load_tab():

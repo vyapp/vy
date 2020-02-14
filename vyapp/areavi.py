@@ -3,7 +3,7 @@
 """
 
 from vyapp.mixins import DataEvent, IdleEvent
-from tkinter import *
+from tkinter import Text, IntVar
 import os
 
 class AreaVi(Text, DataEvent, IdleEvent):

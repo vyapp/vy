@@ -2,7 +2,8 @@
 This module implements basic input data scheme.
 """
 
-from tkinter import *
+# from tkinter import *
+from tkinter import Frame, Entry, BOTH
 from vyapp.app import root
 from vyapp.mixins import DataEvent, IdleEvent
 

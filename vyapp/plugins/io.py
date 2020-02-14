@@ -36,7 +36,7 @@ Description: Save and quit.
 
 """
 
-from tkinter.messagebox import *
+# from tkinter.messagebox import *
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from vyapp.app import root
 from vyapp.ask import Ask
