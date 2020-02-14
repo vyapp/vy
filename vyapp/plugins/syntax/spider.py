@@ -1,9 +1,10 @@
 """
     :)
 """
-
+from vyapp.plugins.syntax.tools import get_tokens_unprocessed_matrix, matrix_step
 from vyapp.plugins.syntax.keys import PRECEDENCE_TABLE, DEFAULT
 from pygments.lexers import get_lexer_for_filename, guess_lexer
+
 
 class Spider:
     def  __init__(self, area, theme, max=10):
