@@ -104,14 +104,3 @@ def install(area):
                  (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
-
-
-
-
-
-
-
-
-
-
-

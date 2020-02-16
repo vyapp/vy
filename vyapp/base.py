@@ -56,7 +56,6 @@ class App(Tk):
         self.status.grid(row=2, sticky='we')
         Grid.rowconfigure(self, 0, weight=1)
         Grid.columnconfigure(self, 0, weight=1)
-        self.event_generate('<<Started>>')
 
 class Debug:
     def write(self, *args):
