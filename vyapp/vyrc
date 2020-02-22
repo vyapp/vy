@@ -200,8 +200,10 @@ autoload(data_del)
 
 # Used to highlight pairs of character like () {} [].
 # It is useful when playing with lisp things.
-from vyapp.plugins import match_sym_pair
-autoload(match_sym_pair)
+from vyapp.plugins import blink_pair
+autoload(blink_pair, '(', ')')
+autoload(blink_pair, '[', ']')
+autoload(blink_pair, '{', '}')
 
 # Used to complete words when Control-q is issued on insert mode.
 from vyapp.plugins import word_completion
