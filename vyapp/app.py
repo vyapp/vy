@@ -50,4 +50,5 @@ else:
 # attempting to load a non existing file.
 if not args.verbose: 
     sys.stderr = Debug()
+root.event_generate('<<Started>>')
 

@@ -30,7 +30,7 @@ from vyapp.ask import Get
 from vyapp.app import root
 
 
-class FSearch(object):
+class FSearch:
     def __init__(self, area):
         self.area   = area
         self.output = ''

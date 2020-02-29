@@ -2,14 +2,15 @@
 This module implements basic input data scheme.
 """
 
-from tkinter import *
+# from tkinter import *
+from tkinter import Frame, Entry, BOTH
 from vyapp.app import root
 from vyapp.mixins import DataEvent, IdleEvent
 
 class AskCancel(Exception):
     pass
 
-class InputBox(object):
+class InputBox:
     def __init__(self, default_data=''):
         self.default_data = default_data
 

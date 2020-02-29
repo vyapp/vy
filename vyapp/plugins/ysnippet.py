@@ -91,7 +91,7 @@ class SnippetPicker(OptionWindow):
         # Otherwise it gets messed up.
         del self.options[index]
 
-class Ysnippet(object):
+class Ysnippet:
     nocas   = True
     db_name = join(expanduser('~'), '.ysnippet.db')
     conn    = sqlite3.connect(db_name)

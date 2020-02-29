@@ -58,7 +58,7 @@ Description: Create a dir over the cursor path.
 
 """
 
-from subprocess import check_output, check_call, Popen
+from subprocess import check_output, check_call
 from os.path import expanduser, dirname, join
 from vyapp.base import printd
 from vyapp.tools import error

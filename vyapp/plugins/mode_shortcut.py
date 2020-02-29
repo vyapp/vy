@@ -22,7 +22,7 @@ Description: Switch to the previous pinned mode.
 
 from vyapp.app import root
 
-class ModeShortcut(object):
+class ModeShortcut:
     target_id  = 'NORMAL'
 
     def __init__(self, area):

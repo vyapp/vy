@@ -51,7 +51,7 @@ class GolangCompletionWindow(CompletionWindow):
         return [Option(ind['name'], 'Type:%s' % ind['type'], 
         'Class:%s' % ind['class']) for ind in data[1]]
 
-class GolangCompletion(object):
+class GolangCompletion:
     PATH = 'gocode'
 
     def __init__(self, area):

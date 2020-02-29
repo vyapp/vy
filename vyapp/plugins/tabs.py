@@ -33,9 +33,8 @@ Description: It changes the focus right from a tab.
 """
 
 from vyapp.app import root
-from tkinter.messagebox import *
-from tkinter.filedialog import askopenfilename, asksaveasfilename
-from vyapp.areavi import AreaVi
+# from tkinter.messagebox import *
+from tkinter.filedialog import askopenfilename
 
 def load_tab():
     """
@@ -105,14 +104,3 @@ def install(area):
                  (-1, '<Alt-x>', lambda event: remove_tab()),
                  (-1, '<Alt-o>', lambda event: select_left()),
                  (-1, '<Alt-p>', lambda event: select_right()))
-
-
-
-
-
-
-
-
-
-
-

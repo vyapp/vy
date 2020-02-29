@@ -34,17 +34,15 @@ Command: py_static()
 
 from vyapp.plugins import Command
 from subprocess import Popen, STDOUT, PIPE
-from os.path import exists, dirname, join, relpath
+from os.path import relpath
 from vyapp.widgets import LinePicker
-from vyapp.areavi import AreaVi
 from vyapp.tools import get_project_root
-from vyapp.plugins import ENV
 from vyapp.app import root
 from vyapp.base import printd
 from re import findall
 import sys
 
-class StaticChecker(object):
+class StaticChecker:
     options = LinePicker()
     path    = 'mypy'
 

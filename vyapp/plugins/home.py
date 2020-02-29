@@ -10,7 +10,7 @@ from vyapp.areavi import AreaVi
 from vyapp.app import root
 from vyapp.ask import Ask
 
-class Home(object):
+class Home:
     def  __init__(self, area):
         self.area = area
         area.install('home', 

@@ -57,11 +57,11 @@ class App(Tk):
         Grid.rowconfigure(self, 0, weight=1)
         Grid.columnconfigure(self, 0, weight=1)
 
-class Debug(object):
+class Debug:
     def write(self, *args):
         pass
 
-    def flush(object):
+    def flush(self):
         """
         It seems python calls this method before exiting
         if it doesnt exist then python3 ends up with an error

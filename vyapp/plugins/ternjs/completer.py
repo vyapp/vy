@@ -21,7 +21,6 @@ from os.path import expanduser, join, exists, dirname
 from vyapp.plugins import Command
 from subprocess import Popen, PIPE
 from shutil import copyfile
-from os import getcwd
 import json
 import requests
 import sys
@@ -83,7 +82,7 @@ class JavascriptCompletionWindow(CompletionWindow):
         data = json.loads(data)
         return [Option(**ind) for ind in data['completions']]
 
-class JavascriptCompletion(object):
+class JavascriptCompletion:
     PATH = 'tern'
     PORT = 1234
 

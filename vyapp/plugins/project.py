@@ -10,9 +10,7 @@ a vy project file.
 """
 
 from os.path import exists, dirname, join
-from vyapp.app import root
 from vyapp.base import printd
-from vyapp.ask import Ask
 
 def get_sentinel_file(path, *args):
     """
@@ -27,7 +25,7 @@ def get_sentinel_file(path, *args):
             elif tmp == dirname(tmp):
                 return ''
             
-class Project(object):
+class Project:
     sentinels = ('.git', '.svn', '.hg', '._')
 
     def  __init__(self, area):

@@ -29,7 +29,7 @@ from vyapp.app import root
 from rope.base import libutils
 from rope.refactor.move import create_move
 
-class PythonRefactor(object):
+class PythonRefactor:
     def __init__(self, area):
         self.area  = area
         self.files = None

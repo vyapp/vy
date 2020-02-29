@@ -39,7 +39,7 @@ Event: <Key-3>
 Description: Get the AreaVi instance that is focused in ALPHA mode.
 """
 
-class BuiltinModes(object):
+class BuiltinModes:
     def __init__(self, area):
         self.area = area
 

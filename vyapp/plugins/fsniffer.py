@@ -36,7 +36,7 @@ from vyapp.app import root
 from os.path import basename
 
 
-class FSniffer(object):
+class FSniffer:
     options = LinePicker()
     wide    = True
 

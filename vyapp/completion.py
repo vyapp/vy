@@ -3,7 +3,7 @@ from vyapp.regutils import match_sub_pattern
 from tkinter import LEFT, BOTH, Text, SCROLL
 from vyapp.mixins import Echo
 
-class Option(object):
+class Option:
     def __init__(self, name, type='', doc=''):
         self.name = name
         self.doc  = doc

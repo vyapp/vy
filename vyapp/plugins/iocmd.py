@@ -17,7 +17,6 @@ Description: Load the contents of filename into the AreaVi Command target.
 """
 
 from vyapp.plugins import Command
-from vyapp.areavi import AreaVi
 from vyapp.app import root
 
 @Command('s')

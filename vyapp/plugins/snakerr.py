@@ -45,7 +45,7 @@ from vyapp.base import printd
 from re import findall
 import sys
 
-class PythonChecker(object):
+class PythonChecker:
     options = LinePicker()
     path    = 'pyflakes'
 
