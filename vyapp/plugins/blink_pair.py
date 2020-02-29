@@ -15,31 +15,28 @@ class BlinkPair:
     max=1500
     timeout=1000
 
-    def __init__(self, area, lhs, lhr):
-        self.lhr  = lhr
-        self.lhs  = lhs
-        self.area = area
+    def __init__(self, area, *pairs):
+        self.pairs = pairs
+        self.area  = area
 
-        self.tname = '(blink%s)' % id(self)
-        self.area.tag_config(self.tname, **self.setup)
-
+        self.area.tag_config('(BLINK)', **self.setup)
         self.id = self.area.hook('blink-pair', '-1', 
-        '<FocusIn>', lambda e: self.blink())
+        '<FocusIn>', lambda e: self.scale())
 
         self.area.hook('blink-pair', '-1', '<FocusOut>', 
         lambda e: self.area.after_cancel(self.id))
         
-    def blink(self):
-        self.id = self.area.after(self.timeout, self.blink)
+    def scale(self):
+        self.id = self.area.after(self.timeout, self.scale)
+        index0  = 'insert -%sc' % self.max
+        index1  = 'insert +%sc' % self.max
 
-        index = self.area.case_pair('insert', 
-        self.max, self.lhs, self.lhr)
-
-        if self.area.tag_ranges(self.tname):
-            self.area.tag_remove(self.tname,     
-                'insert -%sc' % self.max, 'insert +%sc' % self.max)
-
-        if index: self.area.tag_add(self.tname, 
-            index, '%s +1c' % index)
+        if self.area.tag_ranges('(BLINK)'):
+            self.area.tag_remove('(BLINK)', index0, index1)
+        for lhs, lhr in self.pairs:
+            index = self.area.case_pair(
+                'insert', self.max, lhs, lhr)
+            if index: self.area.tag_add(
+                '(BLINK)', index, '%s +1c' % index)
 
 install = BlinkPair
