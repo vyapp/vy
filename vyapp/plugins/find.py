@@ -81,8 +81,6 @@ class Find:
         printd('Find - Setting confs = ', cls.confs)
 
     def start(self):
-        root.status.set_msg('Set replacement: %s' % self.data)
-
         get = Get(events={
         '<Alt-q>': self.set_data,
         '<Alt-o>': self.up, '<Escape>': self.cancel, 
