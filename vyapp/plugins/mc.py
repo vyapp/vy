@@ -106,7 +106,7 @@ class Mc:
         cls.confs['(MC-DIRECTORY)'] = dir
         cls.confs['(MC-FILE)']      = file
 
-        printd('Mc - Setting dir/file appearance confs = ', cls.confs)
+        printd('(Mc) Setting dir/file appearance confs = ', cls.confs)
 
     def list_clipboard(self):
         self.area.delete('1.0', 'end')
@@ -115,12 +115,12 @@ class Mc:
 
     def clear_clipboard(self):
         del Mc.clipboard[:]
-        root.status.set_msg('Cleared mc clipboard!')
+        root.status.set_msg('(Mc) Cleared mc clipboard!')
 
     def select(self):
         filename = self.area.get_line()
         Mc.clipboard.append('"%s"' % filename)
-        root.status.set_msg('Appended %s!' % filename)
+        root.status.set_msg('(Mc) Appended %s!' % filename)
 
     def down(self):
         ph = self.area.get_line()
@@ -160,7 +160,7 @@ class Mc:
         code   = check_call('cp -R %s "%s"' % (
             ' '.join(Mc.clipboard), destin), shell=1)
 
-        root.status.set_msg('Files copied!')
+        root.status.set_msg('(Mc) Files copied!')
         del Mc.clipboard[:]
         self.ls(self.ph)
 
@@ -169,40 +169,39 @@ class Mc:
         code   = check_call('mv %s "%s"' % (
             ' '.join(Mc.clipboard), destin), shell=1)
 
-        root.status.set_msg('Files moved!')
+        root.status.set_msg('(Mc) Files moved!')
         del Mc.clipboard[:]
         self.ls(self.ph)
 
     def rename(self):
-        path   = self.area.get_line()
+        path = self.area.get_line()
+
+        root.status.set_msg('(Mc) Rename file:')
         ask    = Ask()
         destin = join(dirname(path), ask.data)
         code   = check_call('mv "%s" %s' % (path, 
         destin), shell=1)
 
-        root.status.set_msg('File renamed!')
+        root.status.set_msg('(Mc) File renamed!')
         self.ls(self.ph)
 
     def rm(self):
         code = check_call('rm -fr %s' % ' '.join(Mc.clipboard), shell=1)
         del Mc.clipboard[:]
-        root.status.set_msg('Deleted files!')
+        root.status.set_msg('(Mc) Deleted files!')
         self.ls(self.ph)
 
     def create_dir(self):
-        root.status.set_msg('Type dir name:')
         path = self.area.get_line()
 
+        root.status.set_msg('(Mc) Type dir name:')
         ask  = Ask()
         path = join(path, ask.data)
         code = check_call('mkdir "%s"' % path, shell=1)
 
-        root.status.set_msg('Folder created!')
+        root.status.set_msg('(Mc) Folder created!')
         self.ls(self.ph)
 
 install = Mc
-
-
-
 
 
