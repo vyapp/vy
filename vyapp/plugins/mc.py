@@ -115,12 +115,12 @@ class Mc:
 
     def clear_clipboard(self):
         del Mc.clipboard[:]
-        root.status.set_msg('(Mc) Cleared mc clipboard!')
+        root.status.set_msg('Cleared mc clipboard!')
 
     def select(self):
         filename = self.area.get_line()
         Mc.clipboard.append('"%s"' % filename)
-        root.status.set_msg('(Mc) Appended %s!' % filename)
+        root.status.set_msg('Appended %s!' % filename)
 
     def down(self):
         ph = self.area.get_line()
@@ -160,7 +160,7 @@ class Mc:
         code   = check_call('cp -R %s "%s"' % (
             ' '.join(Mc.clipboard), destin), shell=1)
 
-        root.status.set_msg('(Mc) Files copied!')
+        root.status.set_msg('Files copied!')
         del Mc.clipboard[:]
         self.ls(self.ph)
 
@@ -169,7 +169,7 @@ class Mc:
         code   = check_call('mv %s "%s"' % (
             ' '.join(Mc.clipboard), destin), shell=1)
 
-        root.status.set_msg('(Mc) Files moved!')
+        root.status.set_msg('Files moved!')
         del Mc.clipboard[:]
         self.ls(self.ph)
 
@@ -182,24 +182,24 @@ class Mc:
         code   = check_call('mv "%s" %s' % (path, 
         destin), shell=1)
 
-        root.status.set_msg('(Mc) File renamed!')
+        root.status.set_msg('File renamed!')
         self.ls(self.ph)
 
     def rm(self):
         code = check_call('rm -fr %s' % ' '.join(Mc.clipboard), shell=1)
         del Mc.clipboard[:]
-        root.status.set_msg('(Mc) Deleted files!')
+        root.status.set_msg('Deleted files!')
         self.ls(self.ph)
 
     def create_dir(self):
         path = self.area.get_line()
 
-        root.status.set_msg('(Mc) Type dir name:')
+        root.status.set_msg('Type dir name:')
         ask  = Ask()
         path = join(path, ask.data)
         code = check_call('mkdir "%s"' % path, shell=1)
 
-        root.status.set_msg('(Mc) Folder created!')
+        root.status.set_msg('Folder created!')
         self.ls(self.ph)
 
 install = Mc
