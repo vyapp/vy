@@ -106,7 +106,7 @@ class Mc:
         cls.confs['(MC-DIRECTORY)'] = dir
         cls.confs['(MC-FILE)']      = file
 
-        printd('Mc - Setting dir/file appearance confs = ', cls.confs)
+        printd('(Mc) Setting dir/file appearance confs = ', cls.confs)
 
     def list_clipboard(self):
         self.area.delete('1.0', 'end')
@@ -174,7 +174,9 @@ class Mc:
         self.ls(self.ph)
 
     def rename(self):
-        path   = self.area.get_line()
+        path = self.area.get_line()
+
+        root.status.set_msg('(Mc) Rename file:')
         ask    = Ask()
         destin = join(dirname(path), ask.data)
         code   = check_call('mv "%s" %s' % (path, 
@@ -190,9 +192,9 @@ class Mc:
         self.ls(self.ph)
 
     def create_dir(self):
-        root.status.set_msg('Type dir name:')
         path = self.area.get_line()
 
+        root.status.set_msg('Type dir name:')
         ask  = Ask()
         path = join(path, ask.data)
         code = check_call('mkdir "%s"' % path, shell=1)
@@ -201,8 +203,5 @@ class Mc:
         self.ls(self.ph)
 
 install = Mc
-
-
-
 
 
