@@ -139,5 +139,5 @@ Documentation
 The vy docs may be outdated sometimes, i struggle to do my best to keep it all fine. There also
 exists many features which weren't documented yet.
 
-### [The Smoking Snake Book](https://github.com/iogf/vy/wiki)
+### [Vy Book](https://github.com/iogf/vy/wiki)
 
