@@ -10,7 +10,7 @@ Key-Commands
 Namespace: io
 
 Mode: NORMAL
-Event: <Control-d>
+Event: <Key-C>
 Description: It pops a file selection window to load the contents of a file.
 
 Mode: NORMAL
@@ -49,7 +49,7 @@ class IO:
         area.install('io', 
         ('NORMAL', '<Control-s>', self.save),
         ('NORMAL', '<Shift-S>', self.save_as),
-        ('NORMAL', '<Control-d>', self.ask_and_load),
+        ('NORMAL', '<Key-C>', self.ask_and_load),
         ('NORMAL', '<Key-N>', self.rename),
         ('NORMAL', '<Key-I>', self.load_path),
         ('NORMAL', '<Control-Escape>', self.save_quit))
