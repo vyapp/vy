@@ -16,7 +16,7 @@ Description: Delete selection of text.
 
 
 Mode: NORMAL
-Event: <Key-x> 
+Event: <Key-D> 
 Description: Delete a line where the cursor is on.
 
 
@@ -30,8 +30,8 @@ class DataDel:
     def __init__(self, area):
         area.install('data-del', 
         ('NORMAL', '<Key-d>', self.del_sel),
-        ('NORMAL', '<Key-x>', self.del_line),
-        ('NORMAL', '<Control-x>', self.del_char))
+        ('NORMAL', '<Key-D>', self.del_line),
+        ('NORMAL', '<Control-i>', self.del_char))
         self.area = area
 
     def del_line(self, event):
@@ -60,20 +60,4 @@ class DataDel:
         self.area.swap_ranges('sel', '', '1.0', 'end')
 
 install = DataDel        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

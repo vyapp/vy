@@ -14,7 +14,7 @@ class Home:
     def  __init__(self, area):
         self.area = area
         area.install('home', 
-        ('NORMAL', '<Key-X>', self.set_home))
+        ('NORMAL', '<Key-bar>', self.set_home))
 
     def set_home(self, event):
         """    
