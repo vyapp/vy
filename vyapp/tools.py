@@ -49,17 +49,6 @@ def get_project_root(path):
         path = tmp
 
 
-def exec_quiet(handle, *args, **kwargs):
-    """
-    """
-
-    try:
-        val = handle(*args, **kwargs)
-    except Exception:
-        pass
-    else:
-        return val
-
 def exec_pipe(data, env):
     """
     This function is used to execute python code and it sets 
