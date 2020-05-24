@@ -96,7 +96,7 @@ class DAP:
         area.tag_delete('(DebuggerBP)')
         area.tag_add('(DebuggerBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
         area.tag_config('(DebuggerBP)', **self.setup)
-        root.status.set_msg('Debugger  stopped at: %s:%s' % (filename, line))
+        root.status.set_msg('Debugger stopped at: %s:%s' % (filename, line))
     
 
     def send(self, data):

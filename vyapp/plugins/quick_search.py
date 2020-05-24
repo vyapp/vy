@@ -15,7 +15,7 @@ Namespace: quick-search
 
 from vyapp.ask import Get
 from vyapp.regutils import build_regex
-from vyapp.base import printd
+from vyapp.stderr import printd
 from vyapp.app import root
 
 class QuickSearch:

@@ -57,20 +57,3 @@ class App(Tk):
         Grid.rowconfigure(self, 0, weight=1)
         Grid.columnconfigure(self, 0, weight=1)
 
-class Debug:
-    def write(self, *args):
-        pass
-
-    def flush(self):
-        """
-        It seems python calls this method before exiting
-        if it doesnt exist then python3 ends up with an error
-        code non zero. It leads to issues when vy is invoked
-        from git for example.
-        """
-        pass
-
-def printd(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
-
-

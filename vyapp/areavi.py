@@ -3,6 +3,7 @@
 """
 
 from vyapp.mixins import DataEvent, IdleEvent
+from vyapp.stderr import printd
 from tkinter import Text, IntVar
 import os
 
@@ -131,7 +132,14 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         scheme = self.map.get(namespace, {})
         for id, seq in scheme.get((id, seq), ((id, seq), )):
-            self.bind_class('mode%s%s' % (self, id), seq, callback, add)
+            self.hook_class(id, seq, callback, add)
+
+    def hook_class(self, id, seq, callback, add=True):
+        modn = 'mode%s%s' % (self, id)
+        if self.bind_class(modn, seq):
+            printd('Warning: %s %s already binded!' % (id, seq))
+
+        self.bind_class(modn, seq, callback, add)
 
     def unhook(self, id, seq):
         """

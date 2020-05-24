@@ -3,9 +3,11 @@ This module exposes the vyapp.app.root attribute that is a variable pointing
 to the App class instance. The App class instance holds all vy editor's widgets.
 """
 
-from vyapp.base import App, Debug
+from vyapp.stderr import QUIET, logger
+from itertools import groupby
+from vyapp.base import App
 import argparse
-import itertools
+import logging
 import sys
 
 parser = argparse.ArgumentParser()
@@ -24,7 +26,7 @@ help='Show exceptions and messages.')
 
 args = parser.parse_args()
 
-lst = [list(g) for k, g in itertools.groupby(args.scheme, 
+lst = [list(g) for k, g in groupby(args.scheme, 
 lambda x: not x) if not k]
 
 print('Loading vyrc...')
@@ -34,10 +36,11 @@ print('Loading vyrc...')
 root = App()
 lst  = lst + [[[ind]] for ind in args.files]
 
-# It has to be called from here.
-# otherwise the plugins will not
-# be able to import vyapp.app.root
-# variable.
+if not args.verbose: 
+    logger.setLevel(logging.ERROR)
+
+# It has to be called from here otherwise the plugins will not
+# be able to import vyapp.app.root variable.
 root.create_vyrc()
 
 if not lst: 
@@ -45,10 +48,13 @@ if not lst:
 else: 
     root.note.load(*lst)
 
-# It first waits vyrc file to be loaded in order to set sys.stderr.
-# Otherwise errors when loading the vyrc file will be missed as well as when
-# attempting to load a non existing file.
-if not args.verbose: 
-    sys.stderr = Debug()
 root.event_generate('<<Started>>')
 
+def tk_xhook(exctype, value, tb):
+    logger.exception('', exc_info=(exctype, value, tb))
+root.report_callback_exception = tk_xhook
+
+if args.verbose: 
+    logger.setLevel(logging.DEBUG)
+else:
+    logger.setLevel(QUIET)

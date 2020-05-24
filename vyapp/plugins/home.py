@@ -21,7 +21,7 @@ class Home:
         Set the AreaVi home dir.
         """
 
-        root.status.set_msg('Set home dir!')
+        root.status.set_msg('Home dir:')
         ask = Ask(self.area.filename)
 
         AreaVi.HOME = ask.data 

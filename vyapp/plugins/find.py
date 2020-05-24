@@ -47,7 +47,7 @@ of text for the previously set replacement.
 """
 
 from vyapp.ask import Get
-from vyapp.base import printd
+from vyapp.stderr import printd
 from vyapp.app import root
 
 class Find:

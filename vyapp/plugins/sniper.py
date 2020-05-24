@@ -51,7 +51,7 @@ from vyapp.regutils import build_regex
 from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from vyapp.tools import error
-from vyapp.base import printd
+from vyapp.stderr import printd
 from vyapp.app import root
 from vyapp.ask import Get
 from re import findall

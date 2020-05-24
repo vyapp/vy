@@ -43,7 +43,7 @@ from subprocess import Popen, STDOUT, PIPE
 from os.path import relpath
 from vyapp.widgets import LinePicker
 from vyapp.tools import get_project_root
-from vyapp.base import printd
+from vyapp.stderr import printd
 from vyapp.app import root
 from re import findall
 import sys
