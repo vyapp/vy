@@ -201,9 +201,3 @@ class Sniper:
 
 install = Sniper
 
-
-
-
-
-
-

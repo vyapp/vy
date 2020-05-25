@@ -26,8 +26,9 @@ Description: Open an input box in order to type inline python code to be execute
 
 """
 
+from traceback import print_exc as debug
 from vyapp.plugins import Command
-from vyapp.tools import exec_pipe, e_stop
+from vyapp.tools import e_stop
 from vyapp.ask import Ask
 from vyapp.plugins import ENV
 from vyapp.app import root
@@ -47,10 +48,24 @@ class Cmd:
     def exec_cmd(self, event):
         ask = Ask()
         Command.set_target(self.area)
-        sys.stdout.write('(cmd) Executed code:\n>>> %s\n' % ask.data)
+        print('\n(cmd) Executed code:\n>>> %s\n' % ask.data)
     
         data = ask.data.encode('utf-8')
-        exec_pipe(data, ENV)
+        self.runcode(data, ENV)
+    
+    def runcode(self, data, env):
+        # It has to be set before because if some data code catches 
+        # an exception then prints use print_exc it will go to sys.__stderr__.
+        tmp        = sys.stderr
+        sys.stderr = sys.stdout
+    
+        try:
+            exec(data, env)
+        except Exception as e:
+            debug()
+            root.status.set_msg('Error: %s' % e)
+        finally:
+            sys.stderr = tmp
     
     def exec_region(self, event):
         data = self.area.join_ranges('sel')
@@ -59,7 +74,7 @@ class Cmd:
         sys.stdout.write(fmtdata)
     
         data = data.encode('utf-8')
-        exec_pipe(data, ENV)
+        self.runcode(data, ENV)
         self.area.clear_selection()
     
     def set_target(self, event):
@@ -68,5 +83,4 @@ class Cmd:
         root.status.set_msg('Set command target !')
         return 'break'
     
-
 install = Cmd

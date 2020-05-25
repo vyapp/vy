@@ -48,7 +48,6 @@ def get_project_root(path):
             return path
         path = tmp
 
-
 def exec_pipe(data, env):
     """
     This function is used to execute python code and it sets 
@@ -73,11 +72,11 @@ def exec_pipe(data, env):
     try:
     
         exec(data, env)
-    except Exception:
+    except Exception as e:
         debug()
+        root.status.set_msg('Error: %s' % e)
     finally:
         sys.stderr = tmp
-
 
 def e_stop(handle):
     """
