@@ -535,15 +535,42 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         index0 = index
-        for chk, index1, index2 in self.find(regex, index, stopindex, *args, **kwargs):
+        for chk, index1, index2 in self.find(regex, index, 
+            stopindex, *args, **kwargs):
+
             if self.compare(index1, '>', index0): 
                 yield(self.get(index0, index1), index0, index1)
             index0 = index2
         else:    
             yield(chk, index2, stopindex)
     
-    def find(self, regex, index='1.0', stopindex='end', forwards=None, 
-        backwards=False, exact=False, regexp=True, nocase=False, elide=False, 
+    def find_forwards(self, regex, index='1.0', stopindex='end', exact=False, 
+        regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
+        """
+        """
+
+        if not regex: 
+            raise TypeError('Regex should be non blank!')
+
+        while True:
+            match = self.isearch(regex, index, stopindex, None, None, 
+            exact, regexp, nocase, elide=elide, nolinestop=nolinestop)
+
+            if match: 
+                yield(match)
+            else:
+                break
+
+            # To avoid infinite loop when using '$' as regex.
+            if self.compare(match[2], '==', 'end'): 
+                break
+            elif self.compare(match[1], '==', match[2]):
+                index = '%s %s +1c' % (match[2], step)
+            else:
+                index = '%s %s' % (match[2], step)
+
+    def find(self, regex, index='1.0', stopindex='end', backwards=False, 
+        exact=False, regexp=True, nocase=False, elide=False, 
         nolinestop=False, step=''):
 
         """
@@ -567,28 +594,52 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
 
+        if backwards:
+            return self.find_backwards(regex, index, stopindex, 
+                exact, regexp, nocase, elide, nolinestop, step)
+        else:
+            return self.find_forwards(regex, index, stopindex, 
+                    exact, regexp, nocase, elide, nolinestop, step)
+
+    def find_backwards(self, regex, index='end', stopindex='1.0', exact=False, 
+        regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
+        """
+        """
+
         if not regex: 
             raise TypeError('Regex should be non blank!')
 
         while True:
-            match = self.isearch(regex, index, stopindex, 
-            forwards, backwards, exact, regexp, nocase, elide=elide, 
-            nolinestop=nolinestop)
+            match = self.isearch(regex, index, stopindex, None, True, 
+            exact, regexp, nocase, elide=elide, nolinestop=nolinestop)
 
-            if not match: break
-            index = '%s%s' % (match[2], step)
+            if match: 
+                yield(match)
+            else:
+                break
+            
+            # This one avoids infinite loop when using '^'
+            # as regex.
+            if self.compare(match[1], '==', '1.0'):
+                break
+            elif self.compare(match[1], '==', match[2]):
+                index = '%s %s -1c' % (match[1], step)
+            else:
+                index = '%s %s' % (match[1], step)
 
-            if self.compare(index, '<=', match[1]): 
-                index = '%s+1c' % match[2]
-            yield(match)
+    def isearch(self, pattern, index, stopindex='end', forwards=None,
+        backwards=None, exact=None, regexp=None, nocase=None,
+        count=None, elide=None, nolinestop=None):
 
-    def isearch(self, pattern, *args, **kwargs):
         """
         Just search shortcut, in the sense it return the matched chunk
         the initial position and the end position.
         """
         count = IntVar()
-        index = self.search(pattern, *args, count=count, **kwargs)
+        index = self.search(pattern, index, stopindex, 
+        forwards, backwards, exact, regexp, nocase, count=count,
+        elide=elide, nolinestop=nolinestop)
+
         if not index: return 
 
         len   = count.get()
@@ -597,7 +648,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         pos0  = self.index(index)
         pos1  = self.index('%s +%sc' % (index, len))
+
         return chunk, pos0, pos1
+
 
     def search(self, pattern, index, stopindex='end', forwards=None,
         backwards=None, exact=None, regexp=None, nocase=None,
@@ -674,7 +727,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         if not regex: 
             raise TypeError('Regex should be non blank!')
 
-        tmp = index
         count = IntVar()
 
         index = self.search(regex, index, stopindex, forwards=forwards, 
@@ -687,13 +739,14 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         if callable(data): 
             data = data(self.get(index, index0), index, index0)
+        
+        # Cause infinite loop in replace_all.
+        if len(data) == count.get() == 0:
+            raise TypeError('Bad formed regex!')
 
         self.delete(index, index0)
         self.insert(index, data)
         
-        # Does the replacement then if it can't be done anymore it returns None.
-        if self.compare(index0, '>=', 'end'): return
-
         return index, len(data)
 
     def replace_all(self, regex, data, index='1.0', stopindex='end', 
@@ -716,7 +769,11 @@ class AreaVi(Text, DataEvent, IdleEvent):
                 return self.index('(REP_STOPINDEX)')
             index, size = map
 
-            index = self.index('%s +%sc' % (index, size))
+            index  = self.index('%s +%sc' % (index, size))
+            if self.compare(index, '==', 'end'): break
+
+            if self.compare(index, '==', '%s lineend' % index):
+                index = '%s +1c' % index 
 
     def case_pair(self, index, max, start='(', end=')'):
         """
@@ -738,27 +795,16 @@ class AreaVi(Text, DataEvent, IdleEvent):
         # If we are searching fowards we don't need
         # to add 1c.
         index0 = '%s %s' % (index, '+1c' if dir else '')
-        size   = IntVar(0)
         count  = 0
 
-        while True:
-            index0 = self.search('\%s|\%s' % (start, end), 
-            index = index0, stopindex = '%s %s%sc' % (index, sign, max), 
-            count = size, backwards = dir, regexp = True) 
+        matches = self.find('\%s|\%s' % (start, end), 
+        index = index0, stopindex = '%s %s%sc' % (index, sign, max), 
+        backwards = dir, regexp = True) 
 
-            if not index0: return ''
-
-            char  = self.get(index0, '%s +1c' % index0)
-            count = count + (1 if char == start else -1)
-
+        for data, pos0, pos1 in matches:
+            count = count + (1 if data == start else -1)
             if not count: 
-                return index0
-
-            # When we are searching backwards we don't need
-            # to set a character back because index will point
-            # to the start of the match.
-            index0 = '%s %s' % (index0, '+1c' if not dir else '')
-                
+                return pos0
 
     def clear_data(self):
         """

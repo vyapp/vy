@@ -31,4 +31,3 @@ class BlinkPair:
                 self.area.tag_add('(BLINK)', index, '%s +1c' % index)
 
 install = BlinkPair
-root.bind('<<Started>>', lambda event: BlinkPair.scale())

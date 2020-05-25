@@ -31,7 +31,9 @@ def find(area, regex, handle, *args, **kwargs):
 @Command()
 def sniff(area, regex, handle, *args, **kwargs):
     """
-    For each regex match in the areavi it calls handle with:
+    Perform regex match in the selected text.
+
+    For each regex match in the selected regex it calls handle with:
 
     def handle(chunk, start, end):
         pass
