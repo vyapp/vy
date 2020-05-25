@@ -13,30 +13,22 @@ class BlinkPair:
     setup={'background':'pink', 
    'foreground':'black'}
     max=1500
-    timeout=2000
     pairs = ('(', ')'), ('[', ']'), ('{', '}')
 
     def __init__(self, area):
         area.tag_config('(BLINK)', **self.setup)
+        self.area = area
+        area.bind('<<Idle>>', self.blink, add=True)
 
-    @classmethod
-    def scale(cls):
-        loop = lambda: root.after(cls.timeout, cls.scale)
-        root.after_idle(loop)
-        area = root.focus_get()
-        if isinstance(area, AreaVi):
-            cls.blink(area)
+    def blink(self, event):
+        index0  = 'insert -%sc' % self.max
+        index1  = 'insert +%sc' % self.max
 
-    @classmethod
-    def blink(cls, area):
-        index0  = 'insert -%sc' % cls.max
-        index1  = 'insert +%sc' % cls.max
-
-        area.tag_remove('(BLINK)', index0, index1)
-        for lhs, lhr in cls.pairs:
-            index = area.case_pair('insert', cls.max, lhs, lhr)
+        self.area.tag_remove('(BLINK)', index0, index1)
+        for lhs, lhr in self.pairs:
+            index = self.area.case_pair('insert', self.max, lhs, lhr)
             if index: 
-                area.tag_add('(BLINK)', index, '%s +1c' % index)
+                self.area.tag_add('(BLINK)', index, '%s +1c' % index)
 
 install = BlinkPair
 root.bind('<<Started>>', lambda event: BlinkPair.scale())

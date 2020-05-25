@@ -578,10 +578,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             if not match: break
             index = '%s%s' % (match[2], step)
 
-            # If the two positions are equal it means
-            # regex is like $ or ^. It has to increase
-            # one char in order to find the next match.
-            # Otherwise we get endless loop.
             if self.compare(index, '<=', match[1]): 
                 index = '%s+1c' % match[2]
             yield(match)
@@ -722,32 +718,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
             index = self.index('%s +%sc' % (index, size))
 
-    def get_paren_search_dir(self, index, start, end):
-        """
-
-        """
-
-        char  = self.get(index, '%s +1c' % index)
-        if char == start:
-            return False
-        elif char == end:
-            return True
-        else:
-            return None
-
-    def get_paren_search_sign(self, index, start, end):
-        """
-
-        """
-
-        char  = self.get(index, '%s +1c' % index)
-        if char == start:
-            return '+'
-        elif char == end:
-            return '-'
-        else:
-            return None
-
     def case_pair(self, index, max, start='(', end=')'):
         """
         Once this method is called, it returns an index for the next
@@ -755,19 +725,21 @@ class AreaVi(Text, DataEvent, IdleEvent):
         isn't either '(' or ')'.
         """
 
-        dir = self.get_paren_search_dir(index, start, end)
+        char = self.get(index, '%s +1c' % index)
+        sign, dir = None, None
 
-        # If dir is None then there is no match.
-        if dir == None: return ''
-
-        sign  = self.get_paren_search_sign(index, start, end)
-        count = 0
+        if char == start:
+            sign, dir = '+', False
+        elif char == end:
+            sign, dir = '-', True
+        else:
+            return None
 
         # If we are searching fowards we don't need
         # to add 1c.
-
         index0 = '%s %s' % (index, '+1c' if dir else '')
-        size  = IntVar(0)
+        size   = IntVar(0)
+        count  = 0
 
         while True:
             index0 = self.search('\%s|\%s' % (start, end), 
