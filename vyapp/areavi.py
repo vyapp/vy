@@ -476,7 +476,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
             self.delete('%s.0' % ind, '%s.%s' % (ind, width)) 
     
 
-    def collect(self, name, regex, *args, **kwargs):
+    def collect(self, name, regex, index='1.0', stopindex='end', exact=False, 
+        regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
+
         """
         The code below would find for 'PATTERN' in all selected text of an
         AreaVi instance:
@@ -489,21 +491,18 @@ class AreaVi(Text, DataEvent, IdleEvent):
         map = self.tag_ranges(name)
 
         for indi in range(0, len(map) - 1, 2):
-            seq = self.find(regex, map[indi], 
-                map[indi + 1], *args, **kwargs)
+            seq = self.find(regex, map[indi], map[indi + 1], exact=None, 
+            regexp=True, nocase=None, elide=None, nolinestop=None)
 
             for indj in seq: 
                 yield indj
 
-    def replace_ranges(self, name, regex, data, forwards=None, backwards=False,
-        exact=False, regexp=True, nocase=False, elide=False, nolinestop=False):
+    def replace_ranges(self, name, regex, data, exact=False, regexp=True, 
+        nocase=False, elide=False, nolinestop=False):
 
         """
-        It replaces all occurrences of regex in the ranges that are mapped to tag name.
 
-        name     - Name of the tag.
-        regex    - The pattern.
-        data     - The data to replace.
+        It replaces all occurrences of regex in the ranges that are mapped to tag name.
         """
 
         while True:
@@ -553,8 +552,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
             raise TypeError('Regex should be non blank!')
 
         while True:
-            match = self.isearch(regex, index, stopindex, None, None, 
-            exact, regexp, nocase, elide=elide, nolinestop=nolinestop)
+            match = self.isearch(regex, index, stopindex, 
+            exact, regexp=regexp, nocase=nocase, elide=elide, 
+            nolinestop=nolinestop)
 
             if match: 
                 yield(match)
@@ -610,8 +610,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
             raise TypeError('Regex should be non blank!')
 
         while True:
-            match = self.isearch(regex, index, stopindex, None, True, 
-            exact, regexp, nocase, elide=elide, nolinestop=nolinestop)
+            match = self.isearch(regex, index, stopindex, 
+            backwards=True, exact=exact, regexp=regexp, nocase=nocase, 
+            elide=elide, nolinestop=nolinestop)
 
             if match: 
                 yield(match)
@@ -753,8 +754,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
         exact=None, regexp=True, nocase=None, elide=None, nolinestop=None):
 
         """
-        It is used to replace all occurrences of a given match in a range.
-        It accepts a callback function that determines what is replaced.
+        # It replaces all regex matches for data. The data argument may be a callable
+        object. When it is a callable object it looks like:
+    
+        def handle(chunk, start, end):
+            pass
+
         """
 
         # It avoids overlapping of replacements.

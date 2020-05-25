@@ -31,14 +31,3 @@ class Command:
     @classmethod
     def set_target(cls, area):
         cls.area = area
-
-# def command(name):
-    # def wrapper0(handle):
-        # nonlocal name
-        # name = name if name else handle.__name__
-        # @wraps(handle)
-        # def wrapper1(*args, **kwargs):
-            # handle(AreaVi.ACTIVE, *args, **kwargs)
-        # ENV[name] = wrapper1
-        # return wrapper1
-    # return wrapper0
