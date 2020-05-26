@@ -1054,5 +1054,13 @@ class AreaVi(Text, DataEvent, IdleEvent):
             for indj in it:
                 yield indi, indj
     
+    def tag_bounds(self, tag, index='insert'):
+        range0 = self.tag_nextrange(tag, index)
+        if range0:
+            if self.compare(range0[0], '<=', index):
+                return range0
 
-
+        range1 = self.tag_prevrange(tag, index)
+        if range1:
+            if self.compare(index, '<=', range1[1]):
+                return range1

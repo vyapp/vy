@@ -36,12 +36,16 @@ import re
 import sys
 
 class Cmd:
+    TAGCONF = {'background':'#313131'}
+
     def __init__(self, area):
         self.area = area
 
+        area.tag_configure('(CODE)', **Cmd.TAGCONF)
         area.install('cmd',
         (-1, '<Alt-semicolon>',  self.exec_cmd),
         ('NORMAL', '<Key-semicolon>', self.exec_region),
+        ('NORMAL', '<Key-colon>', self.toggle_code),
         (-1, '<Alt-z>',  self.set_target))
         
     @e_stop
@@ -52,7 +56,22 @@ class Cmd:
     
         data = ask.data.encode('utf-8')
         self.runcode(data, ENV)
-    
+
+    def toggle_code(self, event):
+        if not self.area.tag_ranges('sel'):
+            self.area.tag_remove('(CODE)', 
+                *self.area.tag_bounds('(CODE)', 'insert'))
+        else:
+            self.tag_code()
+
+    def tag_code(self):
+        print('oo')
+        index0 = self.area.index('sel.first')
+        index1 = self.area.index('sel.last')
+
+        self.area.clear_selection()
+        self.area.tag_add('(CODE)', index0, index1)
+
     def runcode(self, data, env):
         # It has to be set before because if some data code catches 
         # an exception then prints use print_exc it will go to sys.__stderr__.
@@ -66,9 +85,14 @@ class Cmd:
             root.status.set_msg('Error: %s' % e)
         finally:
             sys.stderr = tmp
-    
+
     def exec_region(self, event):
-        data = self.area.join_ranges('sel')
+        # data = self.area.join_ranges('sel')
+        range = self.area.tag_bounds('(CODE)', 'insert')
+        if range: 
+            self.fmtexec(self.area.get(*range))
+
+    def fmtexec(self, data):
         fmtdata = re.sub(r'^|\n', '\n>>> ', data)
         fmtdata = '(cmd) Executed code:\n%s\n' % fmtdata
         sys.stdout.write(fmtdata)
