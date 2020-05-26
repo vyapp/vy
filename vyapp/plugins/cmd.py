@@ -58,14 +58,15 @@ class Cmd:
         self.runcode(data, ENV)
 
     def toggle_code(self, event):
-        if not self.area.tag_ranges('sel'):
-            self.area.tag_remove('(CODE)', 
-                *self.area.tag_bounds('(CODE)', 'insert'))
-        else:
+        range = self.area.tag_bounds('(CODE)', 'insert')
+        selected = self.area.tag_ranges('sel')
+
+        if range and not selected:
+            self.area.tag_remove('(CODE)', *range)
+        elif selected:
             self.tag_code()
 
     def tag_code(self):
-        print('oo')
         index0 = self.area.index('sel.first')
         index1 = self.area.index('sel.last')
 
