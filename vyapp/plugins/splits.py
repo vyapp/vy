@@ -65,11 +65,15 @@ def remove_area(area):
     It removes the focused area.
     """
 
-    if len(area.master.master.master.panes()) == 1 and len(area.master.master.panes()) == 1: return
-    
+    vpanes = len(area.master.master.master.panes())
+    hpanes = len(area.master.master.panes())
+
+    if vpanes == 1 and hpanes == 1: return
     area.master.destroy()
 
-    if not area.master.master.panes(): area.master.master.destroy()
+    if not area.master.master.panes(): 
+        area.master.master.destroy()
+
     root.note.restore_area_focus()
     return 'break'
 
