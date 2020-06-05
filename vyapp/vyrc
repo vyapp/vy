@@ -120,6 +120,10 @@ autoload(shift)
 from vyapp.plugins import text_jumps
 autoload(text_jumps)
 
+# Switch focus from panes.
+from vyapp.plugins.pane_jumps import PaneJumps
+autocall(PaneJumps)
+
 # Used to deal with panes.
 from vyapp.plugins import splits
 autoload(splits)

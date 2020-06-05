@@ -14,7 +14,7 @@ class PaneResize:
     def __init__(self, area):
         self.area = area
         
-        area.install('splits', 
+        area.install('pane-resize', 
         ('EXTRA', '<Control-h>', self.dec_vsash),
         ('EXTRA', '<Control-l>', self.inc_vsash),
         ('EXTRA', '<Control-k>', self.dec_hsash),

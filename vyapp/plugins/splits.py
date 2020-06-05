@@ -73,77 +73,12 @@ def remove_area(area):
     root.note.restore_area_focus()
     return 'break'
 
-def go_left_area(area):
-    wids  = area.master.master.panes()
-    wids  = [str(item) for item in wids]
-    count = wids.index(str(area.master))
-    count = count - 1
-    wid   = area.nametowidget(wids[count])
-    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
-    
-    # as there is only one.
-    wid[0].focus_set()
-    return 'break'
-
-def go_right_area(area):
-    wids   = area.master.master.panes()
-    wids  = [str(item) for item in wids]
-    count = wids.index(str(area.master))
-    count = (count + 1) % len(wids)
-    wid   = area.nametowidget(wids[count])
-    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
-    
-    # as there is only one.
-    wid[0].focus_set()
-    return 'break'
-
-def go_down_area(area):
-    wids   = area.master.master.panes()
-    wids  = [str(item) for item in wids]
-    index = wids.index(str(area.master))
-
-    wids   = area.master.master.master.panes()
-    wids  = [str(item) for item in wids]
-    count = wids.index(str(area.master.master))
-    count = (count + 1) % len(wids)
-
-    wid   = area.nametowidget(wids[count])
-    size  = len(wid.panes())
-    wid   = area.nametowidget(wid.panes()[index if index < size else (size - 1)])
-
-    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
-
-    # as there is only one.
-    wid[0].focus_set()
-    return 'break'
-
-def go_up_area(area):
-    wids   = area.master.master.panes()
-    wids  = [str(item) for item in wids]
-    index = wids.index(str(area.master))
-
-    wids   = area.master.master.master.panes()
-    wids  = [str(item) for item in wids]
-    count = wids.index(str(area.master.master))
-    count = count - 1
-
-    wid   = area.nametowidget(wids[count])
-    size  = len(wid.panes())
-    wid   = area.nametowidget(wid.panes()[index if index < size else (size - 1)])
-    wid   = [ind for ind in wid.winfo_children() if isinstance(ind, AreaVi)]
-
-    # as there is only one.
-    wid[0].focus_set()
-    return 'break'
 
 def install(area):
-    area.install('splits', (-1, '<Alt-less>', lambda event: add_horizontal_area(event.widget)),
-                 (-1, '<Alt-greater>', lambda event: add_vertical_area(event.widget)),
-                 (-1, '<Alt-X>', lambda event: remove_area(event.widget)),
-                 (-1, '<Control-Alt-h>', lambda event: go_left_area(event.widget)),
-                 (-1, '<Control-Alt-l>', lambda event: go_right_area(event.widget)),
-                 (-1, '<Control-Alt-k>', lambda event: go_up_area(event.widget)),
-                 (-1, '<Control-Alt-j>', lambda event: go_down_area(event.widget)))
+    area.install('splits', 
+    (-1, '<Alt-less>', lambda event: add_horizontal_area(event.widget)),
+    (-1, '<Alt-greater>', lambda event: add_vertical_area(event.widget)),
+    (-1, '<Alt-X>', lambda event: remove_area(event.widget)))
 
 
 
