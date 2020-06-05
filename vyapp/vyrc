@@ -238,6 +238,10 @@ autoload(block_sel)
 ##############################################################################
 # Extra plugins.
 
+# Resize splits plugin.
+from vyapp.plugins import pane_resize
+autoload(pane_resize)
+
 # Used to perform searches in pre defined or git, svn, hg projects.
 # Use Sniper.c_dirs to set the folders where you usually search for data.
 # The Sniper.c_path is used to set your ag path.
