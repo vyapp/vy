@@ -17,7 +17,7 @@ parser.add_argument('-t', '--tab', dest='scheme',
 action='append_const', const=None, default=[], 
 help='Instantiate a new tab. Ex: -t -p file0 file1')
 
-parser.add_argument('-p', '--panel', 
+parser.add_argument('-p', '--pane', 
 action='append', dest='scheme', default=[], nargs='+',  
 help='Open files in vertical/horizontal ways -p file0 file1 -p file2')
 

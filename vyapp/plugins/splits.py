@@ -40,7 +40,6 @@ Description: Change focus one pane down.
 
 """
 
-from vyapp.areavi import AreaVi
 from vyapp.app import root
 
 def add_vertical_area(area):
@@ -48,16 +47,32 @@ def add_vertical_area(area):
     It opens a vertical area.
     """
 
-    area.master.master.master.create()
-    return 'break'
+    vpane = area.master.master.master
+    vpane.create()
 
+    wids  = vpane.panes()
+    height = root.winfo_height()//(len(wids) + 1)
+    root.update()
+
+    for ind in range(0, len(wids) - 1):
+        vpane.sash_place(ind,  0,  (ind + 1) * height)
+    return 'break'
 
 def add_horizontal_area(area):
     """
     It creates a new horizontal area.
     """
 
-    area.master.master.create()
+    hpane = area.master.master
+    hpane.create()
+
+    wids  = hpane.panes()
+    width = root.winfo_width()//(len(wids) + 1)
+    root.update()
+
+    for ind in range(0, len(wids) - 1):
+        hpane.sash_place(ind,  (ind + 1) * width,  0)
+
     return 'break'
 
 def remove_area(area):
@@ -80,15 +95,8 @@ def remove_area(area):
 
 def install(area):
     area.install('splits', 
+    (-1, '<Key-9>', lambda event: equal_size(event.widget)),
     (-1, '<Alt-less>', lambda event: add_horizontal_area(event.widget)),
     (-1, '<Alt-greater>', lambda event: add_vertical_area(event.widget)),
     (-1, '<Alt-X>', lambda event: remove_area(event.widget)))
-
-
-
-
-
-
-
-
 
