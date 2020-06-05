@@ -55,7 +55,7 @@ class Find:
         'background':'green', 'foreground':'white'
     }
 
-    opts  = {'nolinestop': False, 'regexp': True,
+    opts  = {'nolinestop': False, 'regexp': False,
     'nocase': True, 'exact': False,'elide': False}
 
     data  = ''
@@ -90,6 +90,8 @@ class Find:
         '<Alt-semicolon>': self.replace_on_selection, 
         '<Alt-comma>': self.replace_all_matches, 
         '<Control-n>': self.toggle_nocase_option,
+        '<Control-x>': self.toggle_regexp_option,
+
         '<Control-e>': self.toggle_exact_option,
         '<Control-i>': self.toggle_elide_option,
         '<Control-l>': self.toggle_nolinestop_option},
@@ -98,6 +100,10 @@ class Find:
     def toggle_nocase_option(self, wid):
         self.opts['nocase'] = False if self.opts['nocase'] else True
         root.status.set_msg('nocase=%s' % self.opts['nocase'])
+
+    def toggle_regexp_option(self, wid):
+        self.opts['regexp'] = False if self.opts['regexp'] else True
+        root.status.set_msg('regexp=%s' % self.opts['regexp'])
 
     def toggle_exact_option(self, wid):
         self.opts['exact'] = False if self.opts['exact'] else True
