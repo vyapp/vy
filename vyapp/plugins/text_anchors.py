@@ -7,6 +7,7 @@ Namespace: anchors
 
 """
 from vyapp.app import root
+from tkinter import TclError
 
 class Anchors:
     def __init__(self, area):
@@ -30,12 +31,19 @@ class Anchors:
 
     def drop(self, event):
         self.area.mark_set('(ANCHORS-%s)' % event.keysym, 'insert')
-        self.area.chmode('NORMAL')
         index = self.area.index('insert')
         root.status.set_msg('Droped: (%s) at %s' % (event.keysym, index))
+        self.area.chmode('NORMAL')
 
     def jump(self, event):
-        self.area.seecur('(ANCHORS-%s)' % event.keysym)
+        index = '(ANCHORS-%s)' % event.keysym
+
+        try:
+            self.area.seecur(index)
+        except TclError as error:
+            root.status.set_msg('Bad index: (%s)' % event.keysym)
+        else:
+            root.status.set_msg('Jumped: (%s)' % event.keysym)
         self.area.chmode('NORMAL')
 
 install = Anchors

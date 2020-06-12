@@ -95,8 +95,8 @@ from vyapp.plugins import home
 autoload(home)
 
 # Provide anchors for text.
-from vyapp.plugins import anchors
-autoload(anchors)
+from vyapp.plugins import text_anchors
+autoload(text_anchors)
 
 # Implement keycommands to select special sequences of chars.
 # Like sel from start/end.

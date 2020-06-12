@@ -2,7 +2,7 @@ class IdleEvent:
     def __init__(self, widget):
         self.widget.bind('<<Data>>', self.dispatch_idle, add=True)
         self.widget  = widget
-        self.timeout = 400
+        self.timeout = 1000
         self.funcid  = ''
 
     def dispatch_idle(self, event):
@@ -12,6 +12,7 @@ class IdleEvent:
 
         if self.funcid:
             self.widget.after_cancel(self.funcid)
+
         self.funcid = self.widget.after(self.timeout, 
         lambda: self.widget.event_generate('<<Idle>>'))
 
