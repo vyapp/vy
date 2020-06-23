@@ -56,6 +56,7 @@ class BuiltinModes:
         area.install('builtin-modes', 
         (-1, '<Escape>', self.switch_normal),
         (-1, '<Alt-n>', self.switch_extra),
+        # ('NORMAL', '<Key-cedilla>', self.switch_extra),
         ('NORMAL', '<Key-i>', self.switch_insert),
         ('NORMAL', '<Key-6>', self.switch_delta),
         ('NORMAL', '<Key-5>', self.switch_gamma),

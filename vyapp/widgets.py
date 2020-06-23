@@ -201,7 +201,7 @@ class LinePicker(OptionWindow):
     def __init__(self):
         OptionWindow.__init__(self)
         # super(OptionWindow, self).__init__()
-        self.listbox.bind('<Control-d>', 
+        self.listbox.bind('<Key-C>', 
         lambda event: self.on_current(), add=True)
 
         self.listbox.bind('<Alt-comma>', 

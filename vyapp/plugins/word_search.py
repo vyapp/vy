@@ -11,12 +11,12 @@ Key-Commands
 
 Namespace: word-search
 
-Mode: NORMAL
+Mode: EXTRA
 Event: <Key-M>
 Description: Ask for a pattern to search.
 
-Event: <Key-V> 
-Mode: NORMAL
+Event: <Key-m> 
+Mode: EXTRA
 Description: Display previous matches.
 
 """
@@ -34,12 +34,13 @@ class WordSearch:
         self.area = area
 
         area.install('word-search', 
-        ('NORMAL', '<Key-M>', self.match),
-        ('NORMAL', '<Key-V>', self.display_matches))
+        ('EXTRA', '<Key-M>', self.match),
+        ('EXTRA', '<Key-m>', self.display_matches))
 
     def display_matches(self, event):
         self.options.display()
         root.status.set_msg('Word Search matches!')
+        self.area.chmode('NORMAL')
 
     def match(self, event):
         """
@@ -60,6 +61,7 @@ class WordSearch:
             root.status.set_msg('No pattern found!')
         else:
             self.options(matches)
+        self.area.chmode('NORMAL')
 
     def match_regions(self, find, data):
         regions = []
