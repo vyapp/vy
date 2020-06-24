@@ -11,7 +11,7 @@ Key-Commands
 Namespace: clip-path
 
 Mode: EXTRA
-Event: <Key-u>
+Event: <Key-ampersand>
 Description: Copies the complete path of the file to the clipboard.
 
 """
@@ -25,7 +25,7 @@ def clip_ph(area):
     root.status.set_msg('File path copied to the clipboard.')
 
 def install(area):
-    area.install('clip-path', ('EXTRA', '<Key-u>', lambda event: clip_ph(event.widget)))
+    area.install('clip-path', ('EXTRA', '<Key-ampersand>', lambda event: clip_ph(event.widget)))
 
 
 

@@ -95,7 +95,6 @@ def remove_area(area):
 
 def install(area):
     area.install('splits', 
-    (-1, '<Key-9>', lambda event: equal_size(event.widget)),
     (-1, '<Alt-less>', lambda event: add_horizontal_area(event.widget)),
     (-1, '<Alt-greater>', lambda event: add_vertical_area(event.widget)),
     (-1, '<Alt-X>', lambda event: remove_area(event.widget)))

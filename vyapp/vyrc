@@ -15,17 +15,17 @@ from vyapp.plugins import untwisted
 ##############################################################################
 # Example remaping keys.
 
-# Use the function mapset to remap your keys. 
-# The 'line-index' stands for the plugin namespace.
-# The code below permits the code binded to <Control-q> in NORMAL mode
-# to work in NORMAL mode when <Key-g> event happens.
-# It may be interesting to call mapset close to the plugin
-# imports It is not necessary to be here but it has to be set
-# before the plugin is installed with autoload.
-
+# Custom keystroke schemes.
 # mapset('line-index', {
 # ('NORMAL', '<Control-q>'): (('NORMAL', '<Control-q>'), 
 # ('NORMAL', '<Key-g>'))})
+
+# Useful for keyboards that have ccedilla key.
+# It is handy to get in EXTRA mode quickly.
+#
+# mapset('builtin-modes', {
+# (-1, '<Alt-n>'): (('-1', '<Alt-n>'), 
+# ('NORMAL', '<Key-ccedilla>'))})
 
 # Note: Plugin namepaces should follow the pattern
 # plugin-name it means any '_' is replaced for '-'.
