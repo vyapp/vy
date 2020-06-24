@@ -21,7 +21,7 @@ Description: Delete a line where the cursor is on.
 
 
 Mode: NORMAL
-Event: <Control-x> 
+Event: <Control-i> 
 Description: Delete a char from the cursor position.
 
 """
