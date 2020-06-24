@@ -307,10 +307,11 @@ from vyapp.plugins.deadcode import PythonAnalysis
 PythonAnalysis.c_path('vulture')
 autocall(PythonAnalysis)
 
-# Download html from the clipboard url in the active AreaVi
-# instance.
-from vyapp.plugins import urls
-autoload(urls)
+# Download html from a clipboard URL and insert it in the
+# current AreaVi instance. It also can load current AreaVi HTML
+# content in the browser..
+from vyapp.plugins import urlsrc
+autoload(urlsrc)
 
 # This plugin implements a keycommand to quickly load the user vyrc file
 # into the current AreaVi instance.
