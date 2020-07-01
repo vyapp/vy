@@ -1,20 +1,21 @@
 class IdleEvent:
     def __init__(self, widget):
-        self.widget.bind('<<Data>>', self.dispatch_idle, add=True)
+        self.widget.bind('<<Data>>', self.on_data, add=True)
         self.widget  = widget
-        self.timeout = 1000
+        self.timeout = 1200
         self.funcid  = ''
 
-    def dispatch_idle(self, event):
+    def on_data(self, event):
         # Make sure self.funcid is initialized before calling after_cancel.
         # The idea here it is to have <<idle>> spawned once when the user
         # stopped typing.
 
         if self.funcid:
             self.widget.after_cancel(self.funcid)
+        self.funcid = self.widget.after(self.timeout, self.send_idle)
 
-        self.funcid = self.widget.after(self.timeout, 
-        lambda: self.widget.event_generate('<<Idle>>'))
+    def send_idle(self):
+        self.widget.event_generate('<<Idle>>')
 
 class Echo:
     """

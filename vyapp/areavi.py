@@ -799,11 +799,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         # If we are searching fowards we don't need
         # to add 1c.
-        index0 = '%s %s' % (index, '+1c' if dir else '')
-        count  = 0
+        index0    = '%s %s' % (index, '+1c' if dir else '')
+        stopindex = self.index('%s %s%sc' % (index, sign, max))
+        count     = 0
 
         matches = self.find('\%s|\%s' % (start, end), 
-        index = index0, stopindex = '%s %s%sc' % (index, sign, max), 
+        index = index0, stopindex = stopindex, 
         backwards = dir, regexp = True) 
 
         for data, pos0, pos1 in matches:

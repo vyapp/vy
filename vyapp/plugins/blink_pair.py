@@ -12,7 +12,7 @@ from vyapp.app import root
 class BlinkPair:
     setup={'background':'pink', 
    'foreground':'black'}
-    max=1500
+    max=1000
     pairs = ('(', ')'), ('[', ']'), ('{', '}')
 
     def __init__(self, area):
