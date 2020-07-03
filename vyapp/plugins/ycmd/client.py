@@ -37,7 +37,7 @@ from subprocess import Popen
 from shutil import copyfile
 from vyapp.plugins import Command, ENV
 from vyapp.app import root
-from vyapp.base import printd
+from vyapp.stderr import printd
 import atexit
 import requests
 import random
