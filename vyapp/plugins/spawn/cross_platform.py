@@ -20,7 +20,6 @@ Description: Send the cursor line to the process and insert a line down.
 
 from untwisted.expect import Expect, LOAD, CLOSE
 from vyapp.plugins.spawn.base_spawn import BaseSpawn
-from untwisted.network import xmap
 from vyapp.plugins import Command
 from vyapp.plugins import ENV
 from vyapp.app import root
@@ -38,8 +37,8 @@ class Spawn(BaseSpawn):
         # When call.terminnate is called it may happen of having still data to be
         # processed. It would attempt to write on an AreaVi instance that no more exist.
         # So, it executes quietly the AreaVi.append method.
-        xmap(self.expect, LOAD, lambda expect, data: self.output.append(data))
-        xmap(self.expect, CLOSE, self.handle_close)
+        self.expect.add_map(LOAD, lambda expect, data: self.output.append(data))
+        self.expect.add_map(CLOSE, self.handle_close)
         
     def dump_signal(self, num):
         self.expect.child.send_signal(num)

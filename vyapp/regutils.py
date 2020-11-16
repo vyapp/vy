@@ -1,4 +1,3 @@
-from untwisted.network import spawn, xmap
 from untwisted.splits import Terminator
 from re import search
 from re import split, escape
@@ -8,14 +7,14 @@ class RegexEvent:
         self.encoding = encoding
         self.regstr   = regstr
         self.event    = event
-        xmap(spin, Terminator.FOUND, self.handle_found)
+        spin.add_map(Terminator.FOUND, self.handle_found)
 
     def handle_found(self, spin, data):
         data  = data.decode(self.encoding)
         regex = search(self.regstr, data)
 
-        if regex: spawn(spin, 
-            self.event, *regex.groups())
+        if regex is not None: 
+            spin.drive(self.event, *regex.groups())
 
 def build_regex(data, delim='.+'):
     """

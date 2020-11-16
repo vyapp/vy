@@ -48,7 +48,9 @@ to work with other interpreters.
 
 """
 
-from untwisted.iofile import Stdout, Stdin, LOAD, CLOSE
+from untwisted.file_writer import FileWriter
+from untwisted.file_reader import FileReader
+from untwisted.event import LOAD, CLOSE
 from vyapp.plugins import Command
 from untwisted.network import Device
 from vyapp.plugins import ENV
@@ -70,8 +72,8 @@ class Spawn(BaseSpawn):
     def install_events(self):
         super(Spawn, self).install_events()
 
-        Stdout(self.stdout)
-        Stdin(self.stdin)
+        FileReader(self.stdout)
+        FileWriter(self.stdin)
 
         self.stdout.add_map(LOAD, lambda con, data: \
         self.output.append(data))

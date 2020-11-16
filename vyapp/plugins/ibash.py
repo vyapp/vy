@@ -35,9 +35,11 @@ Description: Restart the underlying bash process.
 """
 
 
-from untwisted.network import xmap, Device
+from untwisted.network import Device
 from vyapp.app import root
-from untwisted.iofile import Stdout, Stdin, lose, CLOSE, LOAD
+from untwisted.event import CLOSE, LOAD
+from untwisted.file_reader import FileReader
+from untwisted.file_writer import FileWriter
 from vyapp.stderr import printd
 from vyapp.ask import Ask
 from subprocess import Popen, PIPE, STDOUT
@@ -67,12 +69,12 @@ class Process:
         self.stdout = Device(self.child.stdout)
         self.stdin  = Device(self.child.stdin)
 
-        Stdout(self.stdout)
-        Stdin(self.stdin)
+        FileReader(self.stdout)
+        FileWriter(self.stdin)
 
-        xmap(self.stdout, LOAD, lambda con, data: sys.stdout.write(data.decode('utf8')))
-        xmap(self.stdin, CLOSE, lambda dev, err: lose(dev))
-        xmap(self.stdout, CLOSE, lambda dev, err: lose(dev))
+        self.stdout.add_map(LOAD, lambda con, data: sys.stdout.write(data.decode('utf8')))
+        self.stdin.add_map(CLOSE, lambda dev, err: lose(dev))
+        self.stdout.add_map(CLOSE, lambda dev, err: lose(dev))
 
     def restart(self):
         """
