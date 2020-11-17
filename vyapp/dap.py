@@ -1,5 +1,4 @@
 from untwisted.expect import Expect, LOAD, CLOSE
-from untwisted.wrappers import xmap
 from os.path import abspath
 from vyapp.areavi import AreaVi
 from vyapp.app import root
@@ -28,13 +27,13 @@ class DAP:
         # Note: The data has to be decoded using the area charset
         # because the area contents would be sometimes printed along
         # the debugging.
-        xmap(self.expect, LOAD, lambda con, 
+        self.expect.add_map(LOAD, lambda con, 
         data: sys.stdout.write(data.decode(self.area.charset)))
 
         # The expect has to be passed here otherwise when 
         # starting the new one gets terminated.
 
-        xmap(self.expect, CLOSE, self.on_bkpipe)
+        self.expect.add_map(CLOSE, self.on_bkpipe)
 
         self.install_handles(self.expect)
         root.protocol("WM_DELETE_WINDOW", self.on_tk_quit)

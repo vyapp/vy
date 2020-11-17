@@ -64,7 +64,6 @@ Description: Terminate the process.
 
 """
 from vyapp.regutils import RegexEvent
-from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.ask import Ask
 from vyapp.dap import DAP
@@ -139,7 +138,7 @@ class Pdb(DAP):
         regstr0 = '\> (.+)\(([0-9]+)\).+'
 
         RegexEvent(device, regstr0, 'LINE', self.encoding)
-        xmap(device, 'LINE', self.handle_line)
+        device.add_map('LINE', self.handle_line)
 
     def run(self, event):
         self.kill_process()
