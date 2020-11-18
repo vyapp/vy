@@ -62,7 +62,6 @@ Description: Terminate the process.
 
 """
 
-from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.regutils import RegexEvent
 from re import findall
@@ -114,12 +113,14 @@ class Delve(DAP):
 
         regstr0 = '\> [^ ]* ?[^ ]+ ([^ ]+):([0-9]+).+'
         RegexEvent(device, regstr0, 'LINE', self.encoding)
-        xmap(device, 'LINE', self.handle_line)
+        device.add_map('LINE', self.handle_line)
 
     def run(self, event):
         self.kill_process()
 
-        self.create_process(['dlv', 'debug', event.widget.filename])
+        self.create_process(['dlv', 'debug', 
+        '--allow-non-terminal-interactive', event.widget.filename])
+
         root.status.set_msg('(delve) Started !')
         event.widget.chmode('NORMAL')
 
@@ -127,9 +128,9 @@ class Delve(DAP):
         ask  = Ask()
 
         self.kill_process()
-
-        self.create_process(shlex.split('dlv debug %s %s' % (
-            event.widget.filename, ask.data)))
+        cmd = 'dlv debug --allow-non-terminal-interactive %s -- %s' % (
+            event.widget.filename, ask.data)
+        self.create_process(shlex.split(cmd))
         
         root.status.set_msg('(delve) Started: %s' % ask.data)
         event.widget.chmode('NORMAL')
