@@ -54,7 +54,6 @@ Description: Terminate the process.
 
 """
 
-from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.regutils import RegexEvent
 from vyapp.dap import DAP
@@ -105,12 +104,12 @@ class JSDebugger(DAP):
 
         regstr0 = 'break in (.+):([0-9]+)'
         RegexEvent(device, regstr0, 'LINE', self.encoding)
-        xmap(device, 'LINE', self.handle_line)
+        device.add_map('LINE', self.handle_line)
 
         # Should be case insensitive.
         regstr1 = 'Break on .+ in (.+):([0-9]+)'
         RegexEvent(device, regstr1, 'LINE', self.encoding)
-        xmap(device, 'LINE', self.handle_line)
+        device.add_map('LINE', self.handle_line)
 
     def run(self, event):
         self.kill_process()
