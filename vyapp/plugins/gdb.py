@@ -61,7 +61,6 @@ Description: Terminate the process.
 """
 
 from tkinter.filedialog import askopenfilename
-from untwisted.wrappers import xmap
 from untwisted.splits import Terminator
 from vyapp.regutils import RegexEvent
 from vyapp.dap import DAP
@@ -110,7 +109,7 @@ class GDB(DAP):
 
         regstr0 = '\032\032(.+):([0-9]+):[0-9]+:.+:.+'
         RegexEvent(device, regstr0, 'LINE', self.encoding)
-        xmap(device, 'LINE', self.handle_line)
+        device.add_map('LINE', self.handle_line)
 
     def ask_gdb_exec(self, event):
         root.status.set_msg('(GDB) Select a compiled file:')
