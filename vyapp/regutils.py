@@ -3,18 +3,18 @@ from re import search
 from re import split, escape
 
 class RegexEvent:
-    def __init__(self, spin, regstr, event, encoding='utf8'):
+    def __init__(self, ssock, regstr, event, encoding='utf8'):
         self.encoding = encoding
         self.regstr   = regstr
         self.event    = event
-        spin.add_map(Terminator.FOUND, self.handle_found)
+        ssock.add_map(Terminator.FOUND, self.handle_found)
 
-    def handle_found(self, spin, data):
+    def handle_found(self, ssock, data):
         data  = data.decode(self.encoding)
         regex = search(self.regstr, data)
 
         if regex is not None: 
-            spin.drive(self.event, *regex.groups())
+            ssock.drive(self.event, *regex.groups())
 
 def build_regex(data, delim='.+'):
     """
