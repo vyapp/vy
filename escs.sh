@@ -131,9 +131,10 @@ rm -fr dist
 rm MANIFEST
 ##############################################################################
 # upload to pypi/pip.
-cd ~/projects/vy-code
-python setup.py sdist register upload
-rm -fr dist
+cd ~/projects/untwisted-code
+python setup.py sdist 
+twine upload dist/*
+
 ##############################################################################
 # Install tern chrome extesion to get auto completion for javascript in the browser.
 

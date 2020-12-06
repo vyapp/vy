@@ -19,11 +19,12 @@ vyapp/notebook.py
 vyapp/panel.py
 vyapp/regutils.py
 vyapp/statusbar.py
+vyapp/stderr.py
+vyapp/stdout.py
 vyapp/tools.py
 vyapp/vyrc
 vyapp/widgets.py
 vyapp/plugins/__init__.py
-vyapp/plugins/anchors.py
 vyapp/plugins/assoc.py
 vyapp/plugins/blink_pair.py
 vyapp/plugins/block_sel.py
@@ -75,6 +76,8 @@ vyapp/plugins/mypy.py
 vyapp/plugins/outputs.py
 vyapp/plugins/page_scroll.py
 vyapp/plugins/pair_sel.py
+vyapp/plugins/pane_jumps.py
+vyapp/plugins/pane_resize.py
 vyapp/plugins/pdb.py
 vyapp/plugins/plugin_tools.py
 vyapp/plugins/project.py
@@ -95,12 +98,13 @@ vyapp/plugins/symbol_jumps.py
 vyapp/plugins/syslog.py
 vyapp/plugins/tab_search.py
 vyapp/plugins/tabs.py
+vyapp/plugins/text_anchors.py
 vyapp/plugins/text_jumps.py
 vyapp/plugins/text_spots.py
 vyapp/plugins/tidy.py
 vyapp/plugins/undo.py
 vyapp/plugins/untwisted.py
-vyapp/plugins/urls.py
+vyapp/plugins/urlsrc.py
 vyapp/plugins/word_completion.py
 vyapp/plugins/word_search.py
 vyapp/plugins/xdg_open.py

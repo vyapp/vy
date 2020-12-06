@@ -71,7 +71,7 @@ from vyapp.app import root
 import shlex
 
 class Pdb(DAP):
-    def __call__(self, area, python='python2'):
+    def __call__(self, area, python='python'):
         self.area = area
         
         area.install('pdb', 
@@ -86,6 +86,9 @@ class Pdb(DAP):
         ('PYTHON', '<Control-C>', self.dump_clear_all), 
         ('PYTHON', '<Control-c>', self.remove_breakpoint),
         ('PYTHON', '<Key-B>',  self.send_tbreak),
+        ('PYTHON', '<Key-s>',  self.send_step),
+        ('PYTHON', '<Key-S>',  self.set_auto_open),
+
         ('PYTHON', '<Key-b>', self.send_break))
 
         self.python = python
@@ -96,6 +99,10 @@ class Pdb(DAP):
         self.send("p %s\r\n" % ask.data)
         root.status.set_msg('(pdb) Sent expression!')
 
+    def set_auto_open(self, event):
+        self.auto_open = False if self.auto_open else True
+        root.status.set_msg('(pdb) Auto open files: %s!' % self.auto_open)
+
     def send(self, data):
         self.expect.send(data.encode(self.encoding))
         print('Pdb Cmd: ', data)
@@ -105,6 +112,10 @@ class Pdb(DAP):
         event.widget.indexref('insert')[0]))
         event.widget.chmode('NORMAL')
         root.status.set_msg('(pdb) Command break sent !')
+
+    def send_step(self, event):
+        self.send('step\r\n')
+        root.status.set_msg('(pdb) Command step sent !')
 
     def send_tbreak(self, event):
         self.send('tbreak %s:%s\r\n' % (event.widget.filename, 
