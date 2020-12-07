@@ -74,8 +74,22 @@ class JSDebugger(DAP):
         ('JAVASCRIPT', '<Key-Q>', self.quit_db), 
         ('JAVASCRIPT', '<Key-c>', self.send_continue), 
         ('JAVASCRIPT', '<Key-m>', self.send_dcmd), 
+        ('JAVASCRIPT', '<Key-s>',  self.send_step),
+        ('JAVASCRIPT', '<Key-S>',  self.set_auto_open),
         ('JAVASCRIPT', '<Control-c>', self.remove_breakpoint),
         ('JAVASCRIPT', '<Key-b>', self.send_break))
+
+    def __init__(self):
+        self.expect  = None
+        self.auto_open = False
+
+    def send_step(self, event):
+        self.send('step\r\n')
+        root.status.set_msg('JSDebugger: Command step sent !')
+
+    def set_auto_open(self, event):
+        self.auto_open = False if self.auto_open else True
+        root.status.set_msg('JSDebugger: Auto open files: %s!' % self.auto_open)
 
     def send_restart(self, event):
         self.send('restart\r\n')
@@ -115,7 +129,7 @@ class JSDebugger(DAP):
         self.kill_process()
 
         self.create_process(['node', 'inspect', event.widget.filename])
-        root.status.set_msg('JSDebugger debug started !')
+        root.status.set_msg('JSDebugger started !')
         event.widget.chmode('NORMAL')
 
     def run_args(self, event):
@@ -155,6 +169,17 @@ class JSDebugger(DAP):
         self.send('cb("%s", %s)\r\n' % (event.widget.filename, line))
         event.widget.chmode('NORMAL')
         root.status.set_msg('JSDebugger: Remove breakpoint sent!')
+
+    def handle_line(self, device, filename, line):
+        area = root.note.inspect_line(filename, line, self.auto_open)
+        if area is not None:
+            self.jsdebugger_bp(area, filename, line)
+
+    def jsdebugger_bp(self, area, filename, line):
+        area.tag_delete('(JSDebuggerBP)')
+        area.tag_add('(JSDebuggerBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
+        area.tag_config('(JSDebuggerBP)', **self.setup)
+        root.status.set_msg('JSDebuggerBP: stopped at: %s:%s' % (filename, line))
 
 install = JSDebugger()
 

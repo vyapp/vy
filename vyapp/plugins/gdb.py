@@ -80,8 +80,22 @@ class GDB(DAP):
         ('C', '<Key-Q>', self.quit_db), 
         ('C', '<Key-c>', self.send_continue), 
         ('C', '<Key-m>', self.send_dcmd), 
+        ('C', '<Key-s>',  self.send_step),
+        ('C', '<Key-S>',  self.set_auto_open),
         ('C', '<Control-c>', self.clear_breakpoint),
         ('C', '<Key-b>', self.send_break))
+
+    def __init__(self):
+        self.expect  = None
+        self.auto_open = False
+
+    def send_step(self, event):
+        self.send('step\r\n')
+        root.status.set_msg('(GDB) Command step sent !')
+
+    def set_auto_open(self, event):
+        self.auto_open = False if self.auto_open else True
+        root.status.set_msg('(GDB) Auto open files: %s!' % self.auto_open)
 
     def evaluate_expression(self, event):
         ask  = Ask()
@@ -153,7 +167,16 @@ class GDB(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('(GDB) Sent clear !')
 
+    def handle_line(self, device, filename, line):
+        area = root.note.inspect_line(filename, line, self.auto_open)
+        if area is not None:
+            self.gdb_bp(area, filename, line)
+
+    def gdb_bp(self, area, filename, line):
+        area.tag_delete('(GdbBP)')
+        area.tag_add('(GdbBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
+        area.tag_config('(GdbBP)', **self.setup)
+        root.status.set_msg('(Gdb) stopped at: %s:%s' % (filename, line))
+
 GDB   = GDB()
 install = GDB
-
-

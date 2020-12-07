@@ -93,6 +93,10 @@ class Pdb(DAP):
 
         self.python = python
 
+    def __init__(self):
+        self.expect  = None
+        self.auto_open = False
+
     def evaluate_expression(self, event):
         ask  = Ask()
 
@@ -189,6 +193,17 @@ class Pdb(DAP):
 
         self.send('%s\r\n' % ask.data)
         root.status.set_msg('(pdb) Sent cmd!')
+
+    def handle_line(self, device, filename, line):
+        area = root.note.inspect_line(filename, line, self.auto_open)
+        if area is not None:
+            self.pdb_bp(area, filename, line)
+
+    def pdb_bp(self, area, filename, line):
+        area.tag_delete('(PdbBP)')
+        area.tag_add('(PdbBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
+        area.tag_config('(PdbBP)', **self.setup)
+        root.status.set_msg('(pdb) stopped at: %s:%s' % (filename, line))
 
 pdb     = Pdb()
 install = pdb

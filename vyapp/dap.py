@@ -20,7 +20,6 @@ class DAP:
 
     def __init__(self):
         self.expect  = None
-        self.auto_open = False
 
     def create_process(self, args):
         self.expect = Expect(*args)
@@ -82,27 +81,6 @@ class DAP:
             self.handle_line
     
         """
-
-    def handle_line(self, device, filename, line):
-        """
-    
-        """
-        filename = abspath(filename)
-
-        wids = AreaVi.get_opened_files(root)
-        area = wids.get(filename)
-        if not area and self.auto_open:
-            area = root.note.open(filename)
-
-        if area: 
-            self.inspect_line(area, filename, line)
-   
-    def inspect_line(self, area, filename, line):
-        root.note.set_line(area, line)
-        area.tag_delete('(DebuggerBP)')
-        area.tag_add('(DebuggerBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config('(DebuggerBP)', **self.setup)
-        root.status.set_msg('Debugger stopped at: %s:%s' % (filename, line))
 
     def send(self, data):
         """
