@@ -1065,3 +1065,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         if range1:
             if self.compare(index, '<=', range1[1]):
                 return range1
+
+    def set_breakpoint(self, line, conf):
+        self.tag_delete('(DebuggerPB)')
+        self.tag_add('(DebuggerPB)', '%s.0 linestart' % line, '%s.0 lineend' % line)
+        self.tag_config('(DebuggerPB)', **conf)

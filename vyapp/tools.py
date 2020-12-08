@@ -10,19 +10,6 @@ from os.path import abspath
 import sys
 
     
-def findline(filename, line, col=0):
-    files    = AreaVi.get_opened_files(root)
-    filename = abspath(filename)
-
-    try:
-        area = files[filename]
-    except KeyError:
-        area = root.note.open(filename)
-    else:
-        pass
-    finally:
-        root.note.set_line(area, line)
-
 def error(handle):
     def shell(*args, **kwargs):
         try:

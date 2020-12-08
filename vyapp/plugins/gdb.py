@@ -118,12 +118,12 @@ class GDB(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('(GDB) Sent selection !')
 
-    def install_handles(self, device):
-        Terminator(device, delim=b'\n')
+    def install_handles(self, expect):
+        Terminator(expect, delim=b'\n')
 
         regstr0 = '\032\032(.+):([0-9]+):[0-9]+:.+:.+'
-        RegexEvent(device, regstr0, 'LINE', self.encoding)
-        device.add_map('LINE', self.handle_line)
+        RegexEvent(expect, regstr0, 'LINE', self.encoding)
+        expect.add_map('LINE', self.handle_line)
 
     def ask_gdb_exec(self, event):
         root.status.set_msg('(GDB) Select a compiled file:')
@@ -166,17 +166,6 @@ class GDB(DAP):
 
         event.widget.chmode('NORMAL')
         root.status.set_msg('(GDB) Sent clear !')
-
-    def handle_line(self, device, filename, line):
-        area = root.note.inspect_line(filename, line, self.auto_open)
-        if area is not None:
-            self.gdb_bp(area, filename, line)
-
-    def gdb_bp(self, area, filename, line):
-        area.tag_delete('(GdbBP)')
-        area.tag_add('(GdbBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config('(GdbBP)', **self.setup)
-        root.status.set_msg('(Gdb) stopped at: %s:%s' % (filename, line))
 
 GDB   = GDB()
 install = GDB

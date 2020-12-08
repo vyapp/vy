@@ -113,17 +113,17 @@ class JSDebugger(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('JSDebugger: Sent selection!')
 
-    def install_handles(self, device):
-        Terminator(device, delim=b'\n')
+    def install_handles(self, expect):
+        Terminator(expect, delim=b'\n')
 
         regstr0 = 'break in (.+):([0-9]+)'
-        RegexEvent(device, regstr0, 'LINE', self.encoding)
-        device.add_map('LINE', self.handle_line)
+        RegexEvent(expect, regstr0, 'LINE', self.encoding)
+        expect.add_map('LINE', self.handle_line)
 
         # Should be case insensitive.
         regstr1 = 'Break on .+ in (.+):([0-9]+)'
-        RegexEvent(device, regstr1, 'LINE', self.encoding)
-        device.add_map('LINE', self.handle_line)
+        RegexEvent(expect, regstr1, 'LINE', self.encoding)
+        expect.add_map('LINE', self.handle_line)
 
     def run(self, event):
         self.kill_process()
@@ -169,17 +169,6 @@ class JSDebugger(DAP):
         self.send('cb("%s", %s)\r\n' % (event.widget.filename, line))
         event.widget.chmode('NORMAL')
         root.status.set_msg('JSDebugger: Remove breakpoint sent!')
-
-    def handle_line(self, device, filename, line):
-        area = root.note.inspect_line(filename, line, self.auto_open)
-        if area is not None:
-            self.jsdebugger_bp(area, filename, line)
-
-    def jsdebugger_bp(self, area, filename, line):
-        area.tag_delete('(JSDebuggerBP)')
-        area.tag_add('(JSDebuggerBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config('(JSDebuggerBP)', **self.setup)
-        root.status.set_msg('JSDebuggerBP: stopped at: %s:%s' % (filename, line))
 
 install = JSDebugger()
 

@@ -15,11 +15,12 @@ class DAP:
     logic.
     """
     
-    setup={'background':'blue', 'foreground':'yellow'}
+    bp_appearece={'background':'blue', 'foreground':'yellow'}
     encoding='utf8'
 
     def __init__(self):
         self.expect  = None
+        self.auto_open = False
 
     def create_process(self, args):
         self.expect = Expect(*args)
@@ -70,7 +71,7 @@ class DAP:
         if self.expect:
             self.expect.terminate()
 
-    def install_handles(self, device):
+    def install_handles(self, expect):
         """
         This method is meant to be implemented. It is supposed to 
         extract necessary attributes from the underlying debugger output
@@ -90,3 +91,11 @@ class DAP:
             self.expect.send(data.encode(self.encoding))
 
         """
+        pass
+
+    def handle_line(self, expect, filename, line):
+        area = root.note.find_line(filename, line, self.auto_open)
+
+        if area is not None:
+            area.set_breakpoint(line, self.bp_appearece)
+        root.status.set_msg('Debugger stopped at: %s:%s' % (filename, line))

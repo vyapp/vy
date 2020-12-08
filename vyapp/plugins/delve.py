@@ -122,12 +122,12 @@ class Delve(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('(delve) Sent selection !')
 
-    def install_handles(self, device):
-        Terminator(device, delim=b'\n')
+    def install_handles(self, expect):
+        Terminator(expect, delim=b'\n')
 
         regstr0 = '\> [^ ]* ?[^ ]+ ([^ ]+):([0-9]+).+'
-        RegexEvent(device, regstr0, 'LINE', self.encoding)
-        device.add_map('LINE', self.handle_line)
+        RegexEvent(expect, regstr0, 'LINE', self.encoding)
+        expect.add_map('LINE', self.handle_line)
 
     def run(self, event):
         self.kill_process()
@@ -188,17 +188,6 @@ class Delve(DAP):
 
         event.widget.chmode('NORMAL')
         root.status.set_msg('(delve) Sent clear !')
-
-    def handle_line(self, device, filename, line):
-        area = root.note.inspect_line(filename, line, self.auto_open)
-        if area is not None:
-            self.delve_bp(area, filename, line)
-
-    def delve_bp(self, area, filename, line):
-        area.tag_delete('(DelveBP)')
-        area.tag_add('(DelveBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config('(DelveBP)', **self.setup)
-        root.status.set_msg('(Delve) stopped at: %s:%s' % (filename, line))
 
 delve   = Delve()
 install = delve

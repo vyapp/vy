@@ -93,10 +93,6 @@ class Pdb(DAP):
 
         self.python = python
 
-    def __init__(self):
-        self.expect  = None
-        self.auto_open = False
-
     def evaluate_expression(self, event):
         ask  = Ask()
 
@@ -147,13 +143,13 @@ class Pdb(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('(pdb) Sent text selection!')
 
-    def install_handles(self, device):
-        Terminator(device, delim=b'\n')
+    def install_handles(self, expect):
+        Terminator(expect, delim=b'\n')
 
         regstr0 = '\> (.+)\(([0-9]+)\).+'
 
-        RegexEvent(device, regstr0, 'LINE', self.encoding)
-        device.add_map('LINE', self.handle_line)
+        RegexEvent(expect, regstr0, 'LINE', self.encoding)
+        expect.add_map('LINE', self.handle_line)
 
     def run(self, event):
         self.kill_process()
@@ -193,17 +189,6 @@ class Pdb(DAP):
 
         self.send('%s\r\n' % ask.data)
         root.status.set_msg('(pdb) Sent cmd!')
-
-    def handle_line(self, device, filename, line):
-        area = root.note.inspect_line(filename, line, self.auto_open)
-        if area is not None:
-            self.pdb_bp(area, filename, line)
-
-    def pdb_bp(self, area, filename, line):
-        area.tag_delete('(PdbBP)')
-        area.tag_add('(PdbBP)', '%s.0 linestart' % line, '%s.0 lineend' % line)
-        area.tag_config('(PdbBP)', **self.setup)
-        root.status.set_msg('(pdb) stopped at: %s:%s' % (filename, line))
 
 pdb     = Pdb()
 install = pdb

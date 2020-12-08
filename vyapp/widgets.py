@@ -1,6 +1,5 @@
 from tkinter import Listbox, Toplevel,  BOTH, END, TOP, ACTIVE, Text, LEFT, SCROLL
 from os.path import relpath
-from vyapp.tools import findline
 from vyapp.areavi import AreaVi
 from vyapp.app import root
 
@@ -230,7 +229,7 @@ class LinePicker(OptionWindow):
 
     def on_tab(self):
         index = self.listbox.index(ACTIVE)
-        findline(*self.options[index][1])
+        root.note.find_line(*self.options[index][1], auto_open=True)
         self.close()
 
     def on_current(self):

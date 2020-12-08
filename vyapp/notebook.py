@@ -15,17 +15,6 @@ class NoteVi(Notebook):
         Notebook.__init__(self, *args, **kwargs)
         self.bindtags((self, '.', 'all'))
 
-    def set_line(self, area, line, col=0):
-        """
-        This function receives an AreaVi widget instance and a line number
-        then sets the focus to the AreaVi widget and the cursor at line.
-        """
-    
-        sys.stderr.write(area.filename + '\n')
-        self.select(area.master.master.master)
-        area.focus()
-        area.setcur(line, col)
-    
     def create(self, filename):
         """
         This method creates a new tab whose title is the string
@@ -116,18 +105,24 @@ class NoteVi(Notebook):
         self.select(*args)
         self.after(30, lambda : wid.focus_set())
 
-    def inspect_line(self, filename, line, auto_open=False):
-        """
-    
-        """
+    def find_area(self, filename, auto_open=False):
         filename = abspath(filename)
-
         wids = AreaVi.get_opened_files(self)
         area = wids.get(filename)
-        if not area and auto_open and exists(filename):
-            area = self.open(filename)
-
-        if area: 
-            self.set_line(area, line)
+        if area is None:
+            return self.open(filename)
         return area
+
+    def find_line(self, filename, line, col=0, auto_open=False):
+        """
+        """
+        area = self.find_area(filename, auto_open)
+        if area is not None:
+            self.focus_line(area, line)
+        return area
+
+    def focus_line(self, area, line):
+        self.select(area.master.master.master)
+        area.focus()
+        area.setcur(line, 0)
 
