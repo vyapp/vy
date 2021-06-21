@@ -12,7 +12,7 @@ Key-Commands
 Namespace: GDB
 
 Mode: C
-Event: <Key-1>
+Event: <Key-R>
 Description: Ask for a compiled file to be debugged. It is necessary to have it compiled with -g flag.
 Example:
 
@@ -74,7 +74,7 @@ class GDB(DAP):
         
         area.install('GDB', 
         ('C', '<Key-p>', self.evaluate_selection),
-        ('C', '<Key-1>', self.ask_gdb_exec), 
+        ('C', '<Key-R>', self.ask_gdb_exec), 
         ('C', '<Key-r>', self.run), 
         ('C', '<Key-x>', self.evaluate_expression), 
         ('C', '<Key-Q>', self.quit_db), 

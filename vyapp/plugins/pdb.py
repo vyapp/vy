@@ -12,12 +12,12 @@ Key-Commands
 Namespace: pdb
 
 Mode: PYTHON
-Event: <Key-1>
+Event: <Key-r>
 Description: It starts debugging the opened python application with 
 no command line arguments.
 
 Mode: PYTHON
-Event: <Key-2>
+Event: <Key-R>
 Description: It starts the python application with command line arguments 
 that use shlex module to split the arguments.
 
@@ -55,7 +55,7 @@ Event: <Key-m>
 Description: Send a PDB command to be executed.
 
 Mode: PYTHON
-Event: <Key-r>
+Event: <Control-r>
 Description: Send restart.
 
 Mode: PYTHON
@@ -77,9 +77,9 @@ class Pdb(DAP):
         area.install('pdb', 
         ('PYTHON', '<Key-p>', self.evaluate_selection),
         ('PYTHON', '<Key-x>', self.evaluate_expression),
-        ('PYTHON', '<Key-1>', self.run), 
-        ('PYTHON', '<Key-2>', self.run_args), 
-        ('PYTHON', '<Key-r>', self.send_restart), 
+        ('PYTHON', '<Key-r>', self.run), 
+        ('PYTHON', '<Control-R>', self.run_args), 
+        ('PYTHON', '<Control-r>', self.send_restart), 
         ('PYTHON', '<Key-m>', self.send_dcmd), 
         ('PYTHON', '<Key-Q>', self.quit_db), 
         ('PYTHON', '<Key-c>', self.send_continue), 

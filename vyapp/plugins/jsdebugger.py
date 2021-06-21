@@ -12,11 +12,11 @@ Key-Commands
 Namespace: jsdebugger
 
 Mode: JAVASCRIPT
-Event: <Key-1>
+Event: <Key-r>
 Description: It starts debugging the opened  application with no command line arguments.
 
 Mode: JAVASCRIPT
-Event: <Key-2>
+Event: <Key-R>
 Description: It starts the application with command line arguments that use shlex module to split the arguments.
 
 Mode: JAVASCRIPT
@@ -45,7 +45,7 @@ Event: <Key-m>
 Description: Send a JSDebugger command to be executed.
 
 Mode: JAVASCRIPT
-Event: <Key-r>
+Event: <Control-r>
 Description: Send restart command.
 
 Mode: JAVASCRIPT
@@ -67,10 +67,10 @@ class JSDebugger(DAP):
         
         area.install('jsdebugger', 
         ('JAVASCRIPT', '<Key-p>', self.evaluate_selection),
-        ('JAVASCRIPT', '<Key-r>', self.send_restart),
+        ('JAVASCRIPT', '<Control-r>', self.send_restart),
         ('JAVASCRIPT', '<Key-x>', self.send_exec),
-        ('JAVASCRIPT', '<Key-1>', self.run), 
-        ('JAVASCRIPT', '<Key-2>', self.run_args), 
+        ('JAVASCRIPT', '<Key-r>', self.run), 
+        ('JAVASCRIPT', '<Key-R>', self.run_args), 
         ('JAVASCRIPT', '<Key-Q>', self.quit_db), 
         ('JAVASCRIPT', '<Key-c>', self.send_continue), 
         ('JAVASCRIPT', '<Key-m>', self.send_dcmd), 

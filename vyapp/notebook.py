@@ -1,5 +1,5 @@
 from vyapp.panel import PanedVerticalWindow
-from os.path import abspath
+from os.path import abspath, exists
 from vyapp.areavi import AreaVi
 from tkinter.ttk import Notebook
 from os.path import exists
@@ -110,12 +110,14 @@ class NoteVi(Notebook):
         wids = AreaVi.get_opened_files(self)
         area = wids.get(filename)
         if area is None:
-            return self.open(filename)
+            if exists(filename) and auto_open:
+                return self.open(filename)
         return area
 
     def find_line(self, filename, line, col=0, auto_open=False):
         """
         """
+
         area = self.find_area(filename, auto_open)
         if area is not None:
             self.focus_line(area, line)

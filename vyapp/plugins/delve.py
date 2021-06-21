@@ -16,11 +16,11 @@ Key-Commands
 Namespace: delve
 
 Mode: GOLANG
-Event: <Key-1>
+Event: <Key-r>
 Description: It starts debugging the opened  application with no command line arguments.
 
 Mode: GOLANG
-Event: <Key-2>
+Event: <Key-R>
 Description: It starts the application with command line arguments that use shlex module to split the arguments.
 
 Mode: GOLANG
@@ -33,7 +33,7 @@ Event: <Key-b>
 Description: Set a break point at the cursor line.
 
 Mode: GOLANG
-Event: <Key-r>
+Event: <Control-r>
 Description: Restart the process.
 
 Mode: GOLANG
@@ -76,10 +76,10 @@ class Delve(DAP):
         
         area.install('delve', 
         ('GOLANG', '<Key-p>', self.evaluate_selection),
-        ('GOLANG', '<Key-1>', self.run), 
-        ('GOLANG', '<Key-r>', self.send_restart), 
+        ('GOLANG', '<Key-r>', self.run), 
+        ('GOLANG', '<Control-r>', self.send_restart), 
         ('GOLANG', '<Key-x>', self.evaluate_expression), 
-        ('GOLANG', '<Key-2>', self.run_args), 
+        ('GOLANG', '<Key-R>', self.run_args), 
         ('GOLANG', '<Key-Q>', self.quit_db), 
         ('GOLANG', '<Key-c>', self.send_continue), 
         ('GOLANG', '<Key-m>', self.send_dcmd), 
