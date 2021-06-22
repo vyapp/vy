@@ -174,6 +174,7 @@ class Delve(DAP):
     def dump_clear_all(self, event):
         self.send('clearall\r\n')
 
+
         event.widget.chmode('NORMAL')
         root.status.set_msg('(delve) Sent clearall !')
 
@@ -188,6 +189,11 @@ class Delve(DAP):
 
         event.widget.chmode('NORMAL')
         root.status.set_msg('(delve) Sent clear !')
+
+    def quit_db(self, event):
+        self.kill_process()
+        event.widget.chmode('NORMAL')
+        sys.stdout.write('(delve) Sent quit!')
 
 delve   = Delve()
 install = delve

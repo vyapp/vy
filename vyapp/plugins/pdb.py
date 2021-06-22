@@ -69,6 +69,7 @@ from vyapp.ask import Ask
 from vyapp.dap import DAP
 from vyapp.app import root
 import shlex
+import sys
 
 class Pdb(DAP):
     def __call__(self, area, python='python'):
@@ -189,6 +190,11 @@ class Pdb(DAP):
 
         self.send('%s\r\n' % ask.data)
         root.status.set_msg('(pdb) Sent cmd!')
+
+    def quit_db(self, event):
+        self.kill_process()
+        event.widget.chmode('NORMAL')
+        sys.stdout.write('(pdb) Sent quit!')
 
 pdb     = Pdb()
 install = pdb

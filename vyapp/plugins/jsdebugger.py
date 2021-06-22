@@ -85,33 +85,33 @@ class JSDebugger(DAP):
 
     def send_step(self, event):
         self.send('step\r\n')
-        root.status.set_msg('JSDebugger: Command step sent !')
+        root.status.set_msg('(JSDebugger) Command step sent !')
 
     def set_auto_open(self, event):
         self.auto_open = False if self.auto_open else True
-        root.status.set_msg('JSDebugger: Auto open files: %s!' % self.auto_open)
+        root.status.set_msg('(JSDebugger) Auto open files: %s!' % self.auto_open)
 
     def send_restart(self, event):
         self.send('restart\r\n')
-        root.status.set_msg('JSDebugger: sent restart!')
+        root.status.set_msg('(JSDebugger) sent restart!')
 
     def send_dcmd(self, event):
         ask  = Ask()
     
         self.send('%s\r\n' % ask.data)
-        root.status.set_msg('JSDebugger: sent cmd!')
+        root.status.set_msg('(JSDebugger) sent cmd!')
 
     def send_exec(self, event):
         ask  = Ask()
 
         self.send("exec('%s')\r\n" % ask.data)
-        root.status.set_msg('JSDebugger: sent exec cmd!')
+        root.status.set_msg('(JSDebugger) sent exec cmd!')
 
     def evaluate_selection(self, event):
         data = event.widget.join_ranges('sel')
         self.send("exec('%s')\r\n" % data)
         event.widget.chmode('NORMAL')
-        root.status.set_msg('JSDebugger: Sent selection!')
+        root.status.set_msg('(JSDebugger) Sent selection!')
 
     def install_handles(self, expect):
         Terminator(expect, delim=b'\n')
@@ -129,7 +129,7 @@ class JSDebugger(DAP):
         self.kill_process()
 
         self.create_process(['node', 'inspect', event.widget.filename])
-        root.status.set_msg('JSDebugger started !')
+        root.status.set_msg('(JSDebugger) Started !')
         event.widget.chmode('NORMAL')
 
     def run_args(self, event):
@@ -140,7 +140,7 @@ class JSDebugger(DAP):
         self.create_process(shlex.split('node inspect %s %s' % (
             event.widget.filename, ask.data)))
         
-        root.status.set_msg('JSDebugger debug started: %s' % ask.data)
+        root.status.set_msg('(JSDebugger) Started with args %s' % ask.data)
         event.widget.chmode('NORMAL')
 
     def send_break(self, event):
@@ -148,7 +148,7 @@ class JSDebugger(DAP):
         self.send('sb("%s", %s)\r\n' % ( event.widget.filename, line))
         event.widget.chmode('NORMAL')
 
-        root.status.set_msg('JSDebugger: Sent breakpoint !')
+        root.status.set_msg('(JSDebugger) Sent breakpoint !')
 
     def send(self, data):
         self.expect.send(data.encode(self.encoding))
@@ -159,7 +159,7 @@ class JSDebugger(DAP):
         """
 
         self.send('cont\r\n')
-        root.status.set_msg('Continue sent to JSDebugger !')
+        root.status.set_msg('(JSDebugger) Continue sent !')
 
     def remove_breakpoint(self, event):
         """
@@ -168,7 +168,12 @@ class JSDebugger(DAP):
         line, col = event.widget.indexref('insert')
         self.send('cb("%s", %s)\r\n' % (event.widget.filename, line))
         event.widget.chmode('NORMAL')
-        root.status.set_msg('JSDebugger: Remove breakpoint sent!')
+        root.status.set_msg('(JSDebugger) Remove breakpoint sent!')
+
+    def quit_db(self, event):
+        self.kill_process()
+        event.widget.chmode('NORMAL')
+        sys.stdout.write('(JSDebugger) Sent quit!')
 
 install = JSDebugger()
 

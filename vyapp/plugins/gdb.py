@@ -167,5 +167,10 @@ class GDB(DAP):
         event.widget.chmode('NORMAL')
         root.status.set_msg('(GDB) Sent clear !')
 
+    def quit_db(self, event):
+        self.kill_process()
+        event.widget.chmode('NORMAL')
+        sys.stdout.write('(GDB) Sent quit!')
+
 GDB   = GDB()
 install = GDB
