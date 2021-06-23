@@ -241,5 +241,6 @@ class LinePicker(OptionWindow):
         if not AreaVi.INPUT.filename in filename:
             AreaVi.INPUT.load_data(filename)
         AreaVi.INPUT.setcur(line, 0)
+
         self.close()
 

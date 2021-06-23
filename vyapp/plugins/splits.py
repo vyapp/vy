@@ -22,22 +22,6 @@ Mode: Global
 Event: <Alt-X> 
 Description: Remove a pane.
 
-Mode: Global
-Event: <Control-Alt-h>
-Description: Change focus one pane left.
-
-Mode: Global
-Event: <Control-Alt-l>
-Description: Change focus one pane right.
-
-Mode: Global
-Event: <Control-Alt-k>
-Description: Change focus one pane up.
-
-Mode: Global
-Event: <Control-Alt-j>
-Description: Change focus one pane down.
-
 """
 
 from vyapp.app import root

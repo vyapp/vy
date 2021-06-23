@@ -109,6 +109,7 @@ class NoteVi(Notebook):
         filename = abspath(filename)
         wids = AreaVi.get_opened_files(self)
         area = wids.get(filename)
+
         if area is None:
             if exists(filename) and auto_open:
                 return self.open(filename)

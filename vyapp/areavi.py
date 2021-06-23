@@ -35,7 +35,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.default_filename = default_filename
 
         # The file's path and name.
-        self.filename  = default_filename
+        self.filename  = os.path.abspath(default_filename)
         self.extension = os.path.splitext(self.filename)
 
         self.mark_set('(CURSOR_LAST_COL)', '1.0')
@@ -828,7 +828,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         
         filename - Name of the file.
         """
-        self.filename     = os.path.abspath(filename)        
+        self.filename     = os.path.abspath(filename)
         _, self.extension = os.path.splitext(self.filename)
 
         self.event_generate('<<Pre-LoadData>>')
