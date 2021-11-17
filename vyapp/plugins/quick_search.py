@@ -29,8 +29,8 @@ class QuickSearch:
         area.tag_config('(SEARCH_MATCH)', self.confs)
 
         area.install('quick-search',
-        ('NORMAL', '<Key-q>', self.start_backwards),
-        ('NORMAL', '<Key-a>', self.start_forwards))
+        (-1, '<Alt-k>', self.start_backwards),
+        (-1, '<Alt-j>', self.start_forwards))
 
     @classmethod
     def c_appearance(cls, **confs):
@@ -57,6 +57,7 @@ class QuickSearch:
         '<Destroy>': lambda wid: self.area.tag_remove(
         '(SEARCH_MATCH)', '1.0', 'end'),
         '<Escape>':  lambda wid: True})
+        return 'break'
 
     def start_backwards(self, event):
         self.index     = self.area.index('insert')
@@ -71,6 +72,7 @@ class QuickSearch:
         '<Destroy>': lambda wid: self.area.tag_remove(
         '(SEARCH_MATCH)', '1.0', 'end'),
         '<Escape>':  lambda wid: True})
+        return 'break'
 
     def update(self, wid):
         """

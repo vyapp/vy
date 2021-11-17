@@ -79,8 +79,18 @@ class Sniper:
         self.area = area
 
         area.install('sniper', 
-        ('NORMAL', '<Key-b>', lambda event: self.options.display()),
-        ('NORMAL', '<Key-B>', lambda event: Get(events = {
+        (-1, '<Alt-s>', self.display_matches),
+        (-1, '<Alt-r>', self.find_matches))
+
+        if not self.dirs:
+            printd('Sniper - Sniper.dirs is not set.')
+
+    def display_matches(self, event):
+        self.options.display()
+        return 'break'
+
+    def find_matches(self, event):
+        wid = Get(events = {
         '<Return>':self.find, 
         '<Control-i>':self.set_ignore_regex, 
         '<Control-x>':self.set_type_lax, 
@@ -90,11 +100,9 @@ class Sniper:
         '<Control-s>':self.set_nocase, 
         '<Control-w>':self.set_wide, 
         '<Control-m>':self.set_multiline, 
-        '<Escape>':  lambda wid: True})))
-
-        if not self.dirs:
-            printd('Sniper - Sniper.dirs is not set.')
-
+        '<Escape>':  lambda wid: True})
+        return 'break'
+        
     @classmethod
     def c_path(cls, path='ag'):
         """

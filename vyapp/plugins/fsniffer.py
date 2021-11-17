@@ -13,8 +13,7 @@ Mode: NORMAL
 Event: <Alt-y>
 Description: Ask for a filename pattern to be located using unix locate command.
 
-
-Mode: INPUT
+Mode: NORMAL
 Event: <Alt-t>
 Description: Display possible file matches on a line picker widget. 
 
@@ -43,11 +42,20 @@ class FSniffer:
     def __init__(self, area):
         self.area = area
         area.install('fsniffer', 
-        ('NORMAL', '<Alt-t>', lambda e: self.options.display()), 
-        ('NORMAL', '<Alt-y>', lambda event: Get(events={'<Return>' : self.find,
-        '<Control-w>':self.set_wide, '<<Idle>>': self.update_pattern,
-        '<Escape>': lambda wid: True})))
+        (-1, '<Alt-t>', self.display_matches ), 
+        (-1, '<Alt-y>', self.find_matches))
     
+    def display_matches(self, event):
+        self.options.display()
+        return 'break'
+
+    def find_matches(self, event):
+        Get(events={'<Return>' : self.find,
+        '<Control-w>':self.set_wide, 
+        '<<Idle>>': self.update_pattern,
+        '<Escape>': lambda wid: True})
+        return 'break'
+
     @classmethod
     def set_wide(cls, event):
         FSniffer.wide = False if FSniffer.wide else True
@@ -99,13 +107,7 @@ class FSniffer:
             if ranges]
 
         ranges = [(ind, '0', basename(ind)) for ind in ranges]
-
         self.options(ranges)
 
 install = FSniffer
-
-
-
-
-
 

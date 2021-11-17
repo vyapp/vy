@@ -35,6 +35,10 @@ Event: <Key-E>
 Description: Rename the file/folder whose path is under the cursor.
 
 Mode: NORMAL
+Event: <Key-I>
+Description: Dump the contents of a file whose path is under the cursor line.
+
+Mode: NORMAL
 Event: <Key-Y> 
 Description: Copy all the clipboard files/folders recursively
 to the destin which is the path under the cursor.
@@ -91,9 +95,11 @@ class Mc:
         ('NORMAL', '<Key-F>', lambda e: self.info()),
         ('NORMAL', '<Key-E>', lambda e: self.rename()),
         ('NORMAL', '<Control-E>', lambda e: self.create_dir()),
+        ('NORMAL', '<Key-I>', self.load_path),
         ('NORMAL', '<Key-J>', lambda e:self.ls(self.ph)))
 
-        area.tags_config(self.confs)
+        for indi, indj in self.confs.items():
+            self.area.tag_config(indi, **indj)
 
     @classmethod
     def c_appearance(cls, dir, file):
@@ -201,6 +207,15 @@ class Mc:
 
         root.status.set_msg('Folder created!')
         self.ls(self.ph)
+
+    def load_path(self, event):
+        """
+        Dump the contents of the file whose path is under the cursor.
+        """
+    
+        filename = self.area.get_line()
+        root.note.load([[filename]])
+    
 
 install = Mc
 

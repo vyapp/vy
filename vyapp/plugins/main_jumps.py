@@ -31,16 +31,30 @@ Description: Move the cursor one character right.
 
 """
 
+class MainJumps:
+    def __init__(self, area):
+        self.area = area
 
-def install(area):
-    area.install('main-jumps', ('NORMAL', '<Key-j>', lambda event: event.widget.down()),
-                 ('NORMAL', '<Key-k>', lambda event: event.widget.up()),
-                 ('NORMAL', '<Key-h>', lambda event: event.widget.left()),
-                 ('NORMAL', '<Key-l>', lambda event: event.widget.right()))
+        area.install('main-jumps', 
+        (-1, '<Alt-a>', self.down),
+        (-1, '<Alt-e>', self.up),
+        (-1, '<Alt-n>', self.left),
+        (-1, '<Alt-m>', self.right))
+    
+    def down(self, event):
+        event.widget.down()
+        return 'break'
 
+    def up(self, event):
+        event.widget.up()
+        return 'break'
 
+    def left(self, event):
+        event.widget.left()
+        return 'break'
 
+    def right(self, event):
+        event.widget.right()
+        return 'break'
 
-
-
-
+install = MainJumps

@@ -66,6 +66,12 @@ class AreaVi(Text, DataEvent, IdleEvent):
         scheme = self.map.setdefault(namespace, {})
         scheme.update(map)
 
+    def rsmode(self):
+        """
+        Restore its previous mode.
+        """
+        pass
+
     def chmode(self, id):
         """
         This function is used to change the AreaVi instance's mode.
@@ -77,14 +83,16 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         It would make area be in INSERT mode.
         """
-        opt     = self.setup[id]
+        opt = self.setup[id]
         self.id = id
 
         mode0 = 'mode%s-1' % self
         mode1 = 'mode%s%s' % (self, id)
 
-        if opt: self.bindtags((mode0, mode1, self, 'Text', '.'))
-        else: self.bindtags((mode0, mode1, self, '.'))
+        if opt is True: 
+            self.bindtags((mode0, mode1, self, 'Text', '.'))
+        else: 
+            self.bindtags((mode0, mode1, self, '.'))
 
         self.event_generate('<<Chmode>>')
         self.event_generate('<<Chmode-%s>>' % id)
@@ -97,7 +105,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         def install(area):
             area.add_mode('MODE')
 
-        The code above would add a mode named MODE to the AreaVi instance.
+        The above code would add a mode named MODE to the AreaVi instance.
 
         def install(area):
             area.add_mode('TYPING', opt=True)
@@ -136,9 +144,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def hook_class(self, id, seq, callback, add=True):
         modn = 'mode%s%s' % (self, id)
+
         if self.bind_class(modn, seq):
             printd('Warning: %s %s already binded!' % (id, seq))
-
         self.bind_class(modn, seq, callback, add)
 
     def unhook(self, id, seq):
@@ -210,62 +218,17 @@ class AreaVi(Text, DataEvent, IdleEvent):
             self.tag_delete(ind)
         self.db.clear()
 
-    def tags_config(self, config):
-        for indi, indj in config.items():
-            self.tag_config(indi, **indj)
-
-    def tag_swap(self, name, index0, index1, *args):
-        """
-        It removes a given tag from index0 to index1 and re adds
-        the tag to the ranges of text delimited in args.
-
-        Example:
-
-        DATA_X = 'It is black.\n'
-        DATA_Y = 'It is blue.\n'
-        text = Text()
-        text.pack()
-        text.insert('1.0', DATA_X)
-        text.insert('2.0', DATA_Y)
-        text.tag_add('X', '1.0', '1.0 lineend')
-        text.tag_add('Y', '2.0', '2.0 lineend')
-        text.tag_config('X', background='black')
-        text.tag_config('Y', foreground='blue')
-        text.tag_update(text, 'X', '1.0', 'end', ('2.0', '2.0 lineend'))
-
-        It removes the X tag from '1.0' to 'end' then adds
-        the X tag to the range '2.0' '2.0 lineend'. 
-        """
-
-        self.tag_remove(name, index0, index1)
-
-        for indi, indj in args:
-            self.tag_add(name, indi, indj)
-
-    def indexref(self, index='insert'):
-        """
-        This is a short hand function. It is used to convert a Text index
-        into two integers like:
-
-        a, b = area.indexref('insert')
-
-        Now, a and b can be manipulated
-        as numbers.
-        """
-
-        a, b  = self.index(index).split('.')
-        return int(a), int(b)
-
     def setcur(self, line, col='0'):
         """
         It is used to set the cursor position at a given index using line 
         and col. 
         """
 
+
         self.mark_set('insert', '%s.%s' % (line, col))
         self.see('insert')
 
-    def indexsplit(self, index):
+    def indexsplit(self, index='insert'):
         """ 
         Just a shorthand for:
         
@@ -273,20 +236,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         a, b = int(a), int(b)
         """
 
+        index = self.index(index)
         a, b = index.split('.')
         return int(a), int(b)
-
-    def seecur(self, index):
-        """
-        Just a shorthand for:
-
-        area.mark_set('insert', index)
-        area.see('insert')
-        """
-
-        self.mark_set('insert', index)
-        self.see('insert')
-
 
     def down(self):
         """  
@@ -300,8 +252,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         is_end = self.compare('insert linestart', '!=', 'end -1l linestart')
         if not is_end: return
 
-        a, b = self.indexref('(CURSOR_LAST_COL)')
-        c, d = self.indexref()
+        a, b = self.indexsplit('(CURSOR_LAST_COL)')
+        c, d = self.indexsplit()
         self.setcur(c + 1, b)        
     
     def up(self):   
@@ -312,8 +264,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         is_start = self.compare('insert linestart', '!=', '1.0')
 
         if not is_start: return
-        a, b = self.indexref('(CURSOR_LAST_COL)')
-        c, d = self.indexref()
+        a, b = self.indexsplit('(CURSOR_LAST_COL)')
+        c, d = self.indexsplit()
         self.setcur(c - 1, b)
     
     def left(self):
@@ -412,18 +364,49 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.edit_separator()
         self.swap_ranges('sel', '', '1.0', 'end')
 
-    def toggle_range(self, name, index0, index1):
+    def tag_contains(self, name, index0, index1):
         """
-        Toggle tag name in the range defined by index0 and index1.
-        It means it adds a tag name to the range index0 and index1 if there is no
-        tag mapped to that range otherwise it removes the tag name from the range.
+        """ 
+
+        ranges = self.tag_ranges(name)
+        for ind in range(0, len(ranges) - 1, 2):
+            if self.slc_contains(index0, index1, ranges[ind].string, 
+                                ranges[ind + 1].string):
+                return ranges[ind].string, ranges[ind + 1].string
+
+    def index_in(self, index, index0, index1):
+        """
+        It returns True if index0 <= index <= index1 otherwise
+        it returns False.
+        """
+
+        index2 = self.min(index0, index1)
+        index3 = self.max(index0, index1)
+
+        r1 = self.compare(index2, '<=', index)
+        r2 = self.compare(index3, '>=', index)
+
+        return r1 and r2
+
+    def slc_contains(self, index0, index1, index2, index3):
+        """
+        It returns True if index2 <= index0 <= index1 <= index2 otherwise
+        it returns False.
+        """
+
+        r1 = self.index_in(index0, index2, index3)
+        r2 = self.index_in(index1, index2, index3)
+        return r1 and r2
+
+    def tag_toggle(self, name, index0, index1):
+        """
         """
 
         index2 = index0
         index0 = self.min(index0, index1)
         index1 = self.max(index2, index1)
 
-        map = self.is_tag_range(name, index0, index1)
+        map = self.tag_contains(name, index0, index1)
         if map:
             self.tag_remove(name, index0, index1)
         else:
@@ -447,35 +430,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return self.get('%s linestart' % index, 
         '%s lineend' % index)
 
-    def shift_right(self, srow, erow, width, char=' '):
-        """
-        Given a start row and a end row it shifts
-        a block of text to the right.
-        
-        This is specially useful when working with
-        source code files.
-        """
-
-        self.edit_separator()
-        for ind in range(srow, erow + 1):
-            self.insert('%s.0' % ind, width * char) 
-    
-
-    def shift_left(self, srow, erow, width):
-        """
-        Given a start row and a end row it shifts
-        a block of text to the left.
-
-
-        This is specially useful when working with
-        source code files.
-        """
-
-        self.edit_separator()
-        for ind in range(srow, erow + 1):
-            self.delete('%s.0' % ind, '%s.%s' % (ind, width)) 
-    
-
     def collect(self, name, regex, index='1.0', stopindex='end', exact=False, 
         regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
 
@@ -489,10 +443,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
         
         # It should be built on top of nextrange.
         map = self.tag_ranges(name)
-
         for indi in range(0, len(map) - 1, 2):
-            seq = self.find(regex, map[indi], map[indi + 1], exact=None, 
-            regexp=True, nocase=None, elide=None, nolinestop=None)
+            seq = self.find(regex, map[indi], map[indi + 1], 
+                exact=exact, regexp=regexp, nocase=nocase, 
+                    elide=nocase, nolinestop=nolinestop)
 
             for indj in seq: 
                 yield indj
@@ -529,7 +483,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         It tokenizes the contents of an AreaVi widget based on a regex.
         The *args, **kwargs are the same passed to AreaVi.find method.
 
-        for token, index0, index1 in area.tokenize(PATTERN):
+        for token, index0, index1 in area.split(PATTERN):
             pass
         """
 
@@ -553,8 +507,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         while True:
             match = self.isearch(regex, index, stopindex, 
-            exact, regexp=regexp, nocase=nocase, elide=elide, 
-            nolinestop=nolinestop)
+                exact, regexp=regexp, nocase=nocase, elide=elide, 
+                    nolinestop=nolinestop)
 
             if match: 
                 yield(match)
@@ -574,23 +528,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         nolinestop=False, step=''):
 
         """
-        It returns an iterator of matches. It is based on the Text.search method.
-
-        for match, index0, index1 in area.find('pattern'):
-            passs
-
-        The step parameter is used to add a distance between
-        each one of the matches.
-
-        area.find('c+', step='+1l linestart') 
-
-        In the example below:
-
-        cc1 cc2 cc3
-        cc4 cc5 cc6
-        cc7 cc8 cc9
-
-        Would match cc1, cc4, cc7.
         """
 
 
@@ -834,8 +771,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.event_generate('<<Pre-LoadData>>')
         self.event_generate('<<Pre-LoadData/*%s>>' % self.extension)
 
-        fd            = open(self.filename, 'rb')
-        data          = fd.read()
+        fd   = open(self.filename, 'rb')
+        data = fd.read()
         fd.close()
 
         try:
@@ -887,50 +824,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.filename = filename
         self.save_data()
 
-
-    def is_tag_range(self, name, index0, index1):
-        """
-        Consider:
-        
-        area.tag_add('tag', '2.0', '5.0')
-
-        # It returns True.
-        area.is_tag_range('tag', '2.0', '3.0')
-
-        # It returns False.
-        area.is_tag_range('tag', '1.0', '2.0')
-        """ 
-
-        ranges = self.tag_ranges(name)
-        for ind in range(0, len(ranges) - 1, 2):
-            if self.is_subrange(index0, index1, ranges[ind].string, 
-                                ranges[ind + 1].string):
-                return ranges[ind].string, ranges[ind + 1].string
-
-    def is_in_range(self, index, index0, index1):
-        """
-        It returns True if index0 <= index <= index1 otherwise
-        it returns False.
-        """
-
-        index2 = self.min(index0, index1)
-        index3 = self.max(index0, index1)
-
-        r1     = self.compare(index2, '<=', index)
-        r2     = self.compare(index3, '>=', index)
-
-        return r1 and r2
-
-    def is_subrange(self, index0, index1, index2, index3):
-        """
-        It returns True if index2 <= index0 <= index1 <= index2 otherwise
-        it returns False.
-        """
-
-        r1 = self.is_in_range(index0, index2, index3)
-        r2 = self.is_in_range(index1, index2, index3)
-        return r1 and r2
-
     def swap(self, data, index0, index1):
         """
         Swap the text in the range index0, index1 for data.
@@ -941,14 +834,14 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def swap_ranges(self, name, data, index0='1.0', index1='end'):
         """
-        It swaps ranges of text that are mapped to a tag name for data between index0
-        and index1.
         """
 
         while True:
             range = self.tag_nextrange(name, index0, index1)
-            if not range: break
-            self.swap(data, *range)
+            if range: 
+                self.swap(data, *range)
+            else:
+                break
 
     def join_ranges(self, name, sep=''):
         """     

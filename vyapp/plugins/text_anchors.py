@@ -39,11 +39,12 @@ class Anchors:
         index = '(ANCHORS-%s)' % event.keysym
 
         try:
-            self.area.seecur(index)
+            self.area.mark_set('insert', index)
         except TclError as error:
             root.status.set_msg('Bad index: (%s)' % event.keysym)
         else:
             root.status.set_msg('Jumped: (%s)' % event.keysym)
+        self.area.see('insert')
         self.area.chmode('NORMAL')
 
 install = Anchors

@@ -26,60 +26,65 @@ Description: Remove a pane.
 
 from vyapp.app import root
 
-def add_vertical_area(area):
-    """
-    It opens a vertical area.
-    """
+class Splits:
+    def __init__(self, area):
+        self.area = area
 
-    vpane = area.master.master.master
-    vpane.create()
+        area.install('splits', 
+        (-1, '<Alt-V>',  self.add_horizontal_area),
+        (-1, '<Alt-C>', self.add_vertical_area),
+        (-1, '<Alt-X>', self.remove_area))
+    
+    def add_vertical_area(self, event):
+        """
+        It opens a vertical area.
+        """
+    
+        vpane = self.area.master.master.master
+        vpane.create()
+    
+        wids  = vpane.panes()
+        height = root.winfo_height()//(len(wids) + 1)
+        root.update()
+    
+        for ind in range(0, len(wids) - 1):
+            vpane.sash_place(ind,  0,  (ind + 1) * height)
+        # self.area.chmode('EXTRA')
+        return 'break'
 
-    wids  = vpane.panes()
-    height = root.winfo_height()//(len(wids) + 1)
-    root.update()
-
-    for ind in range(0, len(wids) - 1):
-        vpane.sash_place(ind,  0,  (ind + 1) * height)
-    return 'break'
-
-def add_horizontal_area(area):
-    """
-    It creates a new horizontal area.
-    """
-
-    hpane = area.master.master
-    hpane.create()
-
-    wids  = hpane.panes()
-    width = root.winfo_width()//(len(wids) + 1)
-    root.update()
-
-    for ind in range(0, len(wids) - 1):
-        hpane.sash_place(ind,  (ind + 1) * width,  0)
-
-    return 'break'
-
-def remove_area(area):
-    """
-    It removes the focused area.
-    """
-
-    vpanes = len(area.master.master.master.panes())
-    hpanes = len(area.master.master.panes())
-
-    if vpanes == 1 and hpanes == 1: return
-    area.master.destroy()
-
-    if not area.master.master.panes(): 
-        area.master.master.destroy()
-
-    root.note.restore_area_focus()
-    return 'break'
-
-
-def install(area):
-    area.install('splits', 
-    (-1, '<Alt-less>', lambda event: add_horizontal_area(event.widget)),
-    (-1, '<Alt-greater>', lambda event: add_vertical_area(event.widget)),
-    (-1, '<Alt-X>', lambda event: remove_area(event.widget)))
-
+    def add_horizontal_area(self, event):
+        """
+        It creates a new horizontal area.
+        """
+    
+        hpane = self.area.master.master
+        hpane.create()
+    
+        wids  = hpane.panes()
+        width = root.winfo_width()//(len(wids) + 1)
+        root.update()
+    
+        for ind in range(0, len(wids) - 1):
+            hpane.sash_place(ind,  (ind + 1) * width,  0)
+        # self.area.chmode('EXTRA')
+        return 'break'
+    
+    def remove_area(self, event):
+        """
+        It removes the focused area.
+        """
+    
+        vpanes = len(self.area.master.master.master.panes())
+        hpanes = len(self.area.master.master.panes())
+    
+        if vpanes == 1 and hpanes == 1: return
+        self.area.master.destroy()
+    
+        if not self.area.master.master.panes(): 
+            self.area.master.master.destroy()
+    
+        root.note.restore_area_focus()
+        # self.area.chmode('EXTRA')
+        return 'break'
+    
+install = Splits

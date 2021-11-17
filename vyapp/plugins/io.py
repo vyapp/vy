@@ -9,30 +9,22 @@ Key-Commands
 
 Namespace: io
 
-Mode: NORMAL
-Event: <Key-C>
+Mode: EXTRA
+Event: <Key-c>
 Description: It pops a file selection window to load the contents of a file.
 
-Mode: NORMAL
-Event: <Control-s>
+Mode: EXTRA
+Event: <Key-s>
 Description: It saves the content of the AreaVi instance into the opened file.
 
-Mode: NORMAL
-Event: <Shift-S>
+Mode: EXTRA
+Event: <Key-a>
 Description: It pops a save file dialog to save the contents of the active AreaVi
 instance with a different filename.
 
-Mode: NORMAL
-Event: <Key-I>
-Description: Dump the contents of a file whose path is under the cursor line.
-
-Mode: NORMAL
-Event: <Key-N>
+Mode: EXTRA
+Event: <Key-n>
 Description: Rename the current AreaVi file.
-
-Mode: NORMAL
-Event: <Control-Escape>
-Description: Save and quit.
 
 """
 
@@ -47,12 +39,10 @@ class IO:
         self.area = area
 
         area.install('io', 
-        ('NORMAL', '<Control-s>', self.save),
-        ('NORMAL', '<Shift-S>', self.save_as),
-        ('NORMAL', '<Key-C>', self.ask_and_load),
-        ('NORMAL', '<Key-N>', self.rename),
-        ('NORMAL', '<Key-I>', self.load_path),
-        ('NORMAL', '<Control-Escape>', self.save_quit))
+        (-1, '<Alt-S>', self.save),
+        (-1, '<Alt-A>', self.save_as),
+        (-1, '<Alt-D>', self.ask_and_load),
+        ('EXTRA', '<Key-n>', self.rename))
     
     def save_as(self, event):
         """
@@ -63,7 +53,7 @@ class IO:
         filename = asksaveasfilename()
     
         if not filename: 
-            return
+            return 'break'
 
         try:
             self.area.save_data_as(filename)
@@ -71,20 +61,9 @@ class IO:
             root.status.set_msg('It failed to save data.')
         else:
             root.status.set_msg('Data saved.')
-            
-    
-    def save_quit(self, event):
-        """
-        It saves the contents of the text area then quits.
-        """
-    
-        try:
-            self.area.save_data()
-        except Exception:
-            root.status.set_msg('It failed to save data.')
-        else:
-            self.area.quit()
-    
+        self.area.chmode('NORMAL')
+        return 'break'
+        
     def ask_and_load(self, event):
         """
         It pops a askopenfilename to find a file to drop
@@ -97,7 +76,7 @@ class IO:
         # the text area when one presses cancel.
     
         if not filename: 
-            return
+            return 'break'
     
         try:
             self.area.load_data(filename)
@@ -105,6 +84,7 @@ class IO:
             root.status.set_msg('It failed to load.')
         else:
             root.status.set_msg('File loaded.')
+        return 'break'
     
     
     def save(self, event):
@@ -119,6 +99,8 @@ class IO:
             root.status.set_msg('It failed to save data.')
         else:
             root.status.set_msg('Data saved.')
+        self.area.chmode('NORMAL')
+        return 'break'
     
     def rename(self, event):
         """
@@ -138,14 +120,8 @@ class IO:
         else:
             self.area.filename = dst
             root.status.set_msg('File renamed')
-    
-    def load_path(self, event):
-        """
-        Dump the contents of the file whose path is under the cursor.
-        """
-    
-        filename = self.area.get_line()
-        root.note.load([[filename]])
+        self.area.chmode('NORMAL')
+        return 'break'
     
 
 install = IO

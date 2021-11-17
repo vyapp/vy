@@ -27,9 +27,9 @@ class PythonCompletionWindow(CompletionWindow):
 
     def __init__(self, area, *args, **kwargs):
         source      = area.get('1.0', 'end')
-        line, col   = area.indexref()
-        script      = Script(source, line, col, area.filename)
-        completions = script.completions()
+        line, col   = area.indexsplit()
+        script      = Script(source, path=area.filename)
+        completions = script.complete(line, col)
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
 
 def install(area):

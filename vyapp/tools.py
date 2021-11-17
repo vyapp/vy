@@ -35,36 +35,6 @@ def get_project_root(path):
             return path
         path = tmp
 
-def exec_pipe(data, env):
-    """
-    This function is used to execute python code and it sets 
-    the sys.stderr to sys.stdout so exceptions would be printed on sys.stdout. 
-    After the code being executed then sys.stderr is restored to its 
-    default value.
-
-    The data argument is python code to be executed and env is a dictionary where
-    the code will be executed.
-
-    Note: It is mostly used to execute python code from vy.
-    """
-
-    # It has to be set before because
-    # if some data code catches an exception
-    # then prints use print_exc it will go to
-    # sys.__stderr__.
-
-    tmp        = sys.stderr
-    sys.stderr = sys.stdout
-
-    try:
-    
-        exec(data, env)
-    except Exception as e:
-        debug()
-        root.status.set_msg('Error: %s' % e)
-    finally:
-        sys.stderr = tmp
-
 def e_stop(handle):
     """
     This decorator is used to execute an event handle

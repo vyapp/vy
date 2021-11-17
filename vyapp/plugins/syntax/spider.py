@@ -85,7 +85,7 @@ class Spider:
         Add the token'tag to each range of text.
         """
 
-        count, offset = self.area.indexref(index)
+        count, offset = self.area.indexsplit(index)
         tokens        = get_tokens_unprocessed_matrix(count, offset, 
         self.area.get(index, stopindex), self.lexer)
 

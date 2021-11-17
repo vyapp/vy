@@ -36,7 +36,7 @@ class BuiltinModes:
 
         area.install('builtin-modes', 
         (-1, '<Escape>', self.switch_normal),
-        (-1, '<Alt-n>', self.switch_extra),
+        (-1, '<Alt-v>', self.switch_extra),
         ('NORMAL', '<Key-i>', self.switch_insert))
     
     def switch_normal(self, event):

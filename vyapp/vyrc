@@ -13,18 +13,18 @@ from vyapp.plugins import autoload, autocall, mapset
 
 from vyapp.plugins import untwisted
 ##############################################################################
-# Example remaping keys.
+# Default shortcuts.
 
+from vyapp.plugins import default_shortcuts
+
+##############################################################################
 # Custom keystroke schemes.
-# mapset('line-index', {
-# ('NORMAL', '<Control-q>'): (('NORMAL', '<Control-q>'), 
-# ('NORMAL', '<Key-g>'))})
 
 # Useful for keyboards that have ccedilla key.
 # It is handy to get in EXTRA mode quickly.
 #
 # mapset('builtin-modes', {
-# (-1, '<Alt-n>'): (('-1', '<Alt-n>'), 
+# (-1, '<Alt-v>'): (('-1', '<Alt-v>'), 
 # ('NORMAL', '<Key-ccedilla>'))})
 
 # Note: Plugin namepaces should follow the pattern
@@ -70,10 +70,6 @@ autoload(cursor_status)
 # Update areavi filename on tabs, window title.
 from vyapp.plugins import io_status
 autoload(io_status)
-
-# Pinned modes.
-from vyapp.plugins import mode_shortcut
-autoload(mode_shortcut)
 
 # Used to associate ranges of text with 
 # info/data.
@@ -147,10 +143,6 @@ from vyapp.plugins.quick_search import QuickSearch
 QuickSearch.c_appearance(background='yellow', foreground='black')
 autocall(QuickSearch)
 
-# Used to jump quickly to chars.
-from vyapp.plugins import seek_symbol
-autoload(seek_symbol)
-
 # This plugin implements keycommands to scroll lines.
 from vyapp.plugins import line_scroll
 autoload(line_scroll)
@@ -214,11 +206,6 @@ autoload(word_completion)
 # Implements key-commands to copy/cut/paste text.
 from vyapp.plugins import clipboard
 autoload(clipboard)
-
-# Used to remember an important position of the 
-# text and quickly switch back to it.
-from vyapp.plugins import quick_jumps
-autoload(quick_jumps)
 
 # This plugin is used to place the cursor over 
 # the next occurrence of the symbols passed to 

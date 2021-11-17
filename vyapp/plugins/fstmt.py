@@ -40,7 +40,7 @@ from vyapp.app import root
 
 class Fstmt:
     options = LinePicker()
-    path    = 'ag'
+    path = 'ag'
 
     def  __init__(self, area):
         self.area    = area

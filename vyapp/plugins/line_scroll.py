@@ -23,8 +23,8 @@ from tkinter import SCROLL
 class LineScroll:
     def __init__(self, area):
         area.install('line-scroll', 
-        ('NORMAL', '<Key-w>', self.scroll_up),
-        ('NORMAL', '<Key-s>', self.scroll_down))
+        (-1, '<Alt-period>', self.scroll_up),
+        (-1, '<Alt-comma>', self.scroll_down))
 
         self.area = area
 
@@ -41,6 +41,7 @@ class LineScroll:
 
         if not is_visible:
             self.area.mark_set('insert', 'insert -1l')
+        return 'break'
 
     def scroll_down(self, event):
         """
@@ -52,5 +53,6 @@ class LineScroll:
 
         if not is_visible:
             self.area.mark_set('insert', 'insert +1l')
+        return 'break'
 
 install = LineScroll

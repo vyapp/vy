@@ -42,6 +42,7 @@ class Cmd:
         self.area = area
 
         area.tag_configure('(CODE)', **Cmd.TAGCONF)
+        # Has to use spots tag as code tag.
         area.install('cmd',
         (-1, '<Alt-semicolon>',  self.exec_cmd),
         ('NORMAL', '<Key-semicolon>', self.exec_region),
@@ -76,7 +77,7 @@ class Cmd:
     def runcode(self, data, env):
         # It has to be set before because if some data code catches 
         # an exception then prints use print_exc it will go to sys.__stderr__.
-        tmp        = sys.stderr
+        tmp = sys.stderr
         sys.stderr = sys.stdout
     
         try:
@@ -92,6 +93,7 @@ class Cmd:
         range = self.area.tag_bounds('(CODE)', 'insert')
         if range: 
             self.fmtexec(self.area.get(*range))
+        return 'break'
 
     def fmtexec(self, data):
         fmtdata = re.sub(r'^|\n', '\n>>> ', data)

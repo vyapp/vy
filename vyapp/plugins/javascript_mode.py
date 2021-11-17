@@ -10,8 +10,8 @@ Key-Commands
 Namespace: javascript-mode
 
 Mode: NORMAL
-Event: <Key-exclam>
-Description: Switch to PYTHON mode.
+Event: <Key-percent>
+Description: Switch to JAVASCRIPT mode.
 """
 
 def javascript_mode(area):

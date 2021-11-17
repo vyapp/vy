@@ -17,10 +17,10 @@ class PaneJumps:
         self.area = area
 
         area.install('splits', 
-        (-1, '<Control-Alt-h>', self.jump_left),
-        (-1, '<Control-Alt-l>', self.jump_right),
-        (-1, '<Control-Alt-k>', self.jump_up),
-        (-1, '<Control-Alt-j>', self.jump_down))
+        (-1, '<Alt-H>', self.jump_left),
+        (-1, '<Alt-L>', self.jump_right),
+        (-1, '<Alt-K>', self.jump_up),
+        (-1, '<Alt-J>', self.jump_down))
 
     def jump_left(self, event):
         wids  = self.area.master.master.panes()

@@ -75,15 +75,15 @@ class BlockSel:
         It adds or removes block selection one line down.  
         """
 
-        a, b  = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d  = self.area.indexref()
+        a, b  = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d  = self.area.indexsplit()
 
         index = self.area.index('(BLOCK_SEL_MARK)')
         self.rmblock(index, '%s.%s' % (c, b))
         self.area.down()
 
-        a, b   = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d = self.area.indexref()
+        a, b   = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d = self.area.indexsplit()
 
         self.addblock(index, '%s.%s' % (c, b))
 
@@ -92,15 +92,15 @@ class BlockSel:
         It adds or removes block selection one line up.  
         """
 
-        a, b   = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d   = self.area.indexref()
+        a, b   = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d   = self.area.indexsplit()
         index  = self.area.index('(BLOCK_SEL_MARK)')
 
         self.rmblock(index, '%s.%s' % (c, b))
         self.area.up()
 
-        a, b = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d = self.area.indexref()
+        a, b = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d = self.area.indexsplit()
 
         self.addblock(index, '%s.%s' % (c, b))
 
@@ -109,15 +109,15 @@ class BlockSel:
         It adds block selection to the left.
         """
 
-        a, b   = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d   = self.area.indexref()
+        a, b   = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d   = self.area.indexsplit()
 
         index = self.area.index('(BLOCK_SEL_MARK)')
         self.rmblock(index, '%s.%s' % (c, b))
         self.area.left()
 
-        a, b   = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d = self.area.indexref()
+        a, b   = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d = self.area.indexsplit()
 
         self.addblock(index, '%s.%s' % (c, b))
 
@@ -126,15 +126,15 @@ class BlockSel:
         It adds/removes block selection to the right.
         """
 
-        a, b   = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d   = self.area.indexref()
+        a, b   = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d   = self.area.indexsplit()
 
         index = self.area.index('(BLOCK_SEL_MARK)')
         self.rmblock(index, '%s.%s' % (c, b))
         self.area.right()
 
-        a, b   = self.area.indexref('(CURSOR_LAST_COL)')
-        c, d = self.area.indexref()
+        a, b   = self.area.indexsplit('(CURSOR_LAST_COL)')
+        c, d = self.area.indexsplit()
 
         self.addblock(index, '%s.%s' % (c, b))
 

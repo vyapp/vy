@@ -10,38 +10,33 @@ Key-Commands
 
 Namespace: line-index
 
-Mode: NORMAL
-Event: <Control-q>
+Mode: EXTRA
+Event: <Key-q>
 Description: Shows an input text field to insert a Line.Col value to place the cursor at that position.
 
 """
 from vyapp.ask import Ask
 from tkinter import TclError
+from vyapp.app import root
 
-def go_to_pos(area):
-    ask = Ask()
+class LineIndex:
+    def __init__(self, area):
+        self.area = area
+        area.install('line-index', 
+        ('EXTRA', '<Key-q>', self.set_pos))
 
-    try:
-        area.seecur(ask.data)
-    except TclError:
-        pass
+    def set_pos(self, area):
+        root.status.set_msg('Jump Line/Line.Col:')
 
-    try:
-        area.setcur(ask.data)
-    except TclError:
-        pass
-
-install = lambda area: area.install('line-index', 
-('NORMAL', '<Control-q>', lambda event: go_to_pos(event.widget)))
-
-
-
-
-
-
-
-
-
-
-
+        ask = Ask()
+        vals = ask.data.split('.')
+        
+        try:
+            self.area.setcur(*vals)
+        except TclError as e:
+            root.status.set_msg('Failed: %s' % e)
+        else:
+            root.status.set_msg('Jumped to: %s' % ask.data)
+    
+install = LineIndex
 

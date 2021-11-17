@@ -138,7 +138,7 @@ class GDB(DAP):
         root.status.set_msg('(GDB) Started: %s' % filename)
 
     def send_break(self, event):
-        line, col = event.widget.indexref('insert')
+        line, col = event.widget.indexsplit('insert')
 
         # Make sure the name will be unique for removing it later.
         self.send('break %s:%s\r\n' % (event.widget.filename, line))
@@ -161,7 +161,7 @@ class GDB(DAP):
         """
         """
 
-        line, col = event.widget.indexref('insert')
+        line, col = event.widget.indexsplit('insert')
         self.send('clear %s:%s\r\n' % (event.widget.filename, line))
 
         event.widget.chmode('NORMAL')

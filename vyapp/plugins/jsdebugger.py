@@ -144,7 +144,7 @@ class JSDebugger(DAP):
         event.widget.chmode('NORMAL')
 
     def send_break(self, event):
-        line, col = event.widget.indexref('insert')
+        line, col = event.widget.indexsplit('insert')
         self.send('sb("%s", %s)\r\n' % ( event.widget.filename, line))
         event.widget.chmode('NORMAL')
 
@@ -165,7 +165,7 @@ class JSDebugger(DAP):
         """
         """
 
-        line, col = event.widget.indexref('insert')
+        line, col = event.widget.indexsplit('insert')
         self.send('cb("%s", %s)\r\n' % (event.widget.filename, line))
         event.widget.chmode('NORMAL')
         root.status.set_msg('(JSDebugger) Remove breakpoint sent!')

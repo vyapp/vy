@@ -150,7 +150,7 @@ class Delve(DAP):
         event.widget.chmode('NORMAL')
 
     def send_break(self, event):
-        line, col = event.widget.indexref('insert')
+        line, col = event.widget.indexsplit('insert')
 
         # Make sure the name will be unique for removing it later.
         bname = findall('[a-zA-Z]+', event.widget.filename)
@@ -182,7 +182,7 @@ class Delve(DAP):
         """
         """
 
-        line, col = event.widget.indexref('insert')
+        line, col = event.widget.indexsplit('insert')
         bname = findall('[a-zA-Z]+', event.widget.filename)
         bname = '%s%s' % (''.join(bname), line)
         self.send('clear %s\r\n' % bname)

@@ -80,7 +80,7 @@ class SnippetPicker(OptionWindow):
         self.close()
 
     def delete(self, event):
-        index   = self.listbox.index(ACTIVE)
+        index  = self.listbox.index(ACTIVE)
         values = (self.options[index][1][0],)
 
         self.cur.execute('''DELETE FROM snippet where id=?''', values)
@@ -92,7 +92,6 @@ class SnippetPicker(OptionWindow):
         del self.options[index]
 
 class Ysnippet:
-    nocas   = True
     db_name = join(expanduser('~'), '.ysnippet.db')
     conn    = sqlite3.connect(db_name)
     cur     = conn.cursor()
@@ -100,9 +99,7 @@ class Ysnippet:
 
     def __init__(self, area):
         """
-
         """
-
         self.area = area
 
         area.install('ysnippet',

@@ -48,21 +48,28 @@ class CompleteBox(MatchBox, Echo):
         The correct starting index would be 2 not 5.
         """
 
-        start     = '%s linestart' % self.master.start_index
-        end       = '%s lineend' % self.master.start_index
-        pattern   = str(self.area.get(start, end))
-        pattern   = pattern.lower()
-        lst       = [ind.lower() for ind in self.get(0, 'end')]
-        seq       = match_sub_pattern(pattern, lst)
-        line, col = self.area.indexsplit(self.master.start_index)
+        start = '%s linestart' % self.master.start_index
+        end   = '%s lineend' % self.master.start_index
+
+        pattern = str(self.area.get(start, end))
+        pattern = pattern.lower()
+
+        lst = [ind.lower() for ind in self.get(0, 'end')]
+        seq = match_sub_pattern(pattern, lst)
+
+        line, col = self.master.start_index.split('.')
+        line, col = int(line), int(col)
 
         _, index = next(seq, (None, col))
         return '%s.%s' % (line, index)
 
     def on_delete(self, event):
-        m, n = self.area.indexsplit(self.master.start_index)
-        x, y = self.area.indexref()
-        if x != m or (m == x and y < n): self.master.destroy()
+        m, n = self.master.start_index.split('.')
+        m, n = int(m), int(n)
+
+        x, y = self.area.indexsplit('insert')
+        if x != m or (m == x and y < n): 
+            self.master.destroy()
 
     def complete(self, event):
         """

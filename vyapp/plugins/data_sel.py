@@ -51,9 +51,8 @@ class DataSel:
         area.install('data-sel', 
         ('NORMAL', '<Control-period>', self.sel_seq),
         ('NORMAL', '<Key-period>', self.sel_word), 
-        ('NORMAL', '<Control-Key-1>', self.sel_text_start),
-        ('NORMAL', '<Control-Key-2>', self.sel_text_end),
-        ('NORMAL', '<Control-a>', self.sel_all), 
+        ('NORMAL', '<Control-s>', self.sel_text_start),
+        ('NORMAL', '<Control-c>', self.sel_text_end),
         ('NORMAL', '<Key-f>', self.sel_line),
         ('NORMAL', '<Control-o>', self.sel_line_start),
         ('NORMAL', '<Control-p>', self.sel_line_end))
@@ -74,13 +73,6 @@ class DataSel:
 
         index1, index2 = self.area.get_word_range()
         self.area.tag_add('sel', index1, index2)
-
-    def sel_all(self, event):
-        """
-        It selects all text.
-        """
-
-        self.area.tag_add('sel', '1.0', 'end')
 
     def sel_text_start(self, event):
         """
@@ -128,7 +120,7 @@ class DataSel:
         Toggle line selection.
         """
 
-        self.area.toggle_range('sel', 
+        self.area.tag_toggle('sel', 
         'insert linestart', 'insert +1l linestart')
 
 install = DataSel

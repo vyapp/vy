@@ -110,7 +110,7 @@ class Pdb(DAP):
 
     def send_break(self, event):
         self.send('break %s:%s\r\n' % (event.widget.filename, 
-        event.widget.indexref('insert')[0]))
+        event.widget.indexsplit('insert')[0]))
         event.widget.chmode('NORMAL')
         root.status.set_msg('(pdb) Command break sent !')
 
@@ -120,7 +120,7 @@ class Pdb(DAP):
 
     def send_tbreak(self, event):
         self.send('tbreak %s:%s\r\n' % (event.widget.filename, 
-        event.widget.indexref('insert')[0]))
+        event.widget.indexsplit('insert')[0]))
         event.widget.chmode('NORMAL')
         root.status.set_msg('(pdb) Command tbreak sent !')
 
@@ -180,7 +180,7 @@ class Pdb(DAP):
     def remove_breakpoint(self, event):
         """
         """
-        line, col = event.widget.indexref('insert')
+        line, col = event.widget.indexsplit('insert')
         self.send('clear %s:%s\r\n' % (event.widget.filename, line))
         event.widget.chmode('NORMAL')
         root.status.set_msg('(pdb) Command clear sent!')

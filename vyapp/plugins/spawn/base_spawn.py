@@ -12,11 +12,11 @@ class BaseSpawn:
         """
 
         """
-        self.input.hook('spawn', 'NORMAL', '<Control-c>', 
-        lambda event: self.dump_signal(signal.SIGINT), add=False)
-
-        self.input.hook('spawn', 'NORMAL', '<Control-backslash>', 
-        lambda event: self.dump_signal(signal.SIGQUIT), add=False)
+        # self.input.hook('spawn', 'NORMAL', '<Control-c>', 
+        # lambda event: self.dump_signal(signal.SIGINT), add=False)
+# 
+        # self.input.hook('spawn', 'NORMAL', '<Control-backslash>', 
+        # lambda event: self.dump_signal(signal.SIGQUIT), add=False)
 
         # When one of the AreaVi instances are destroyed then
         # the process is killed.
