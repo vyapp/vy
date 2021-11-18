@@ -1,0 +1,37 @@
+{
+  "filepath_completion_use_working_dir": 0,
+  "auto_trigger": 1,
+  "min_num_of_chars_for_completion": 2,
+  "min_num_identifier_candidate_chars": 0,
+  "semantic_triggers": {},
+  "filetype_specific_completion_to_disable": {
+    "gitcommit": 1
+  },
+  "collect_identifiers_from_comments_and_strings": 0,
+  "max_num_identifier_candidates": 10,
+  "max_num_candidates": 50,
+  "extra_conf_globlist": [],
+  "global_ycm_extra_conf": "",
+  "confirm_extra_conf": 1,
+  "max_diagnostics_to_display": 30,
+  "filepath_blacklist": {
+    "html": 1,
+    "jsx": 1,
+    "xml": 1
+  },
+  "auto_start_csharp_server": 1,
+  "auto_stop_csharp_server": 1,
+  "use_ultisnips_completer": 1,
+  "csharp_server_port": 0,
+  "hmac_secret": "",
+  "server_keep_logfiles": 0,
+  "python_binary_path": "",
+  "language_server": [],
+  "java_jdtls_use_clean_workspace": 1,
+  "java_jdtls_workspace_root_path": "",
+  "java_jdtls_extension_path": [],
+  "use_clangd": 1,
+  "clangd_binary_path": "",
+  "clangd_args": [],
+  "clangd_uses_ycmd_caching": 1
+}

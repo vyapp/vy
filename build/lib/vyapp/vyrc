@@ -1,0 +1,478 @@
+##############################################################################
+# User plugin space.
+
+import sys
+from os.path import expanduser, join
+sys.path.append(join(expanduser('~'), '.vy'))
+##############################################################################
+# Functions used to load the plugins.
+from vyapp.plugins import autoload, autocall, mapset
+##############################################################################
+# Install untwisted reactor into tkinter. 
+# Plugins like ibash, spawn wouldn't work without this import.
+
+from vyapp.plugins import untwisted
+##############################################################################
+# Default shortcuts.
+
+from vyapp.plugins import default_shortcuts
+
+##############################################################################
+# Custom keystroke schemes.
+
+# Useful for keyboards that have ccedilla key.
+# It is handy to get in EXTRA mode quickly.
+#
+# mapset('builtin-modes', {
+# (-1, '<Alt-v>'): (('-1', '<Alt-v>'), 
+# ('NORMAL', '<Key-ccedilla>'))})
+
+# Note: Plugin namepaces should follow the pattern
+# plugin-name it means any '_' is replaced for '-'.
+
+##############################################################################
+# Basic core modes.
+
+from vyapp.plugins import builtin_modes
+autoload(builtin_modes)
+
+##############################################################################
+# Extra/programming language modes.
+
+from vyapp.plugins import python_mode
+autoload(python_mode)
+
+from vyapp.plugins import ruby_mode
+autoload(ruby_mode)
+
+from vyapp.plugins import golang_mode
+autoload(golang_mode)
+
+from vyapp.plugins import html_mode
+autoload(html_mode)
+
+from vyapp.plugins import c_mode
+autoload(c_mode)
+
+from vyapp.plugins import javascript_mode
+autoload(javascript_mode)
+
+from vyapp.plugins import cplusplus_mode
+autoload(cplusplus_mode)
+
+##############################################################################
+# Core plugins.
+
+# Update statusbar cursor line/col.
+from vyapp.plugins import cursor_status
+autoload(cursor_status)
+
+# Update areavi filename on tabs, window title.
+from vyapp.plugins import io_status
+autoload(io_status)
+
+# Used to associate ranges of text with 
+# info/data.
+from vyapp.plugins import assoc
+autoload(assoc)
+
+# Used to set your AreaVi project attribute
+# automatically based on .git, .svn, .hg dirs.
+# Where ._ is used by vy to identify a root project.
+# The project attribute is used by other plugins to perform
+# useful operations related to development.
+from vyapp.plugins.project import Project
+Project.c_sentinels('.git', '.svn', '.hg', '._')
+autocall(Project)
+
+# Implement a keycommand to set the AreaVi.HOME
+# directory.
+from vyapp.plugins import home
+autoload(home)
+
+# Provide anchors for text.
+from vyapp.plugins import text_anchors
+autoload(text_anchors)
+
+# Implement keycommands to select special sequences of chars.
+# Like sel from start/end.
+from vyapp.plugins import data_sel
+autoload(data_sel)
+
+# Quickly switch focus between tabs by
+# using lazy search pattern.
+from vyapp.plugins import tab_search
+autoload(tab_search)
+
+# The word_search plugin.
+from vyapp.plugins import word_search
+autoload(word_search)
+
+# Shifting blocks of code.
+from vyapp.plugins import shift
+autoload(shift)
+
+# Used to quickly jump to the end/start of the file.
+from vyapp.plugins import text_jumps
+autoload(text_jumps)
+
+# Switch focus from panes.
+from vyapp.plugins.pane_jumps import PaneJumps
+autocall(PaneJumps)
+
+# Used to deal with panes.
+from vyapp.plugins import splits
+autoload(splits)
+
+# Used to deal with tabs.
+from vyapp.plugins import tabs
+autoload(tabs)
+
+# Implement keycommands to undo/redo operations.
+from vyapp.plugins import undo
+autoload(undo)
+
+# It implements keycomands to move the cursor up, down, left, right.
+from vyapp.plugins import main_jumps
+autoload(main_jumps)
+
+# The quick_search plugin implements incremental search.
+# The matching regions can have their appearance customized with
+# the QuickSearch.c_appearance method.
+from vyapp.plugins.quick_search import QuickSearch
+QuickSearch.c_appearance(background='yellow', foreground='black')
+autocall(QuickSearch)
+
+# This plugin implements keycommands to scroll lines.
+from vyapp.plugins import line_scroll
+autoload(line_scroll)
+
+# This plugin implements keycommands to scroll pages.
+from vyapp.plugins import page_scroll
+autoload(page_scroll)
+
+# Used to select the text between pairs of (), [], {} when 
+# the cursor is placed over one of the (), {}, [].
+from vyapp.plugins import pair_sel
+autoload(pair_sel)
+
+# Implement keycommands to insert a line up/down.
+from vyapp.plugins import line_feed
+autoload(line_feed)
+
+# Used to put the cursor on a given line.col.
+from vyapp.plugins import line_index
+autoload(line_index)
+
+# Implement keycommands to control where data is written 
+# to sys.stdout is going to be echoed.
+from vyapp.plugins import outputs
+autoload(outputs)
+
+# Display sys.stdout log. It is useful when using python
+# pdb to debug applications.
+from vyapp.plugins import syslog
+autoload(syslog)
+
+# Used to execute python code on the fly, things like python functions
+# to substitute text, format stuff etc, load plugins.
+from vyapp.plugins import cmd
+autoload(cmd)
+
+# Used to search for text/format text with regex.
+# The class attribute TAGCONF holds default styling 
+# for the tag '(CATCHED)' That's added on matching patterns.
+from vyapp.plugins.find import Find
+Find.c_appearance(background='green', foreground='white')
+autocall(Find)
+
+# It implements ways of opening/saving files.
+from vyapp.plugins import io
+autoload(io)
+
+# Implement key-commands to delete selected text, lines, chars.
+from vyapp.plugins import data_del
+autoload(data_del)
+
+# Used to highlight pairs of character like () {} [].
+# It is useful when playing with lisp things.
+from vyapp.plugins import blink_pair
+autoload(blink_pair)
+
+# Used to complete words when Control-q is issued on insert mode.
+from vyapp.plugins import word_completion
+autoload(word_completion)
+
+# Implements key-commands to copy/cut/paste text.
+from vyapp.plugins import clipboard
+autoload(clipboard)
+
+# This plugin is used to place the cursor over 
+# the next occurrence of the symbols passed to 
+# symbol_jumps install function.
+from vyapp.plugins import symbol_jumps
+autoload(symbol_jumps, ('(', ')', '[', ']', '{', '}'))
+
+# text_spots plugin is used to mark lines then quickly
+# go to the previous or next mark.
+from vyapp.plugins import text_spots
+autoload(text_spots)
+
+# range_sel plugin implemets selection commannds.
+from vyapp.plugins import range_sel
+autoload(range_sel)
+
+# block_selection plugin implemets selection commannds.
+from vyapp.plugins import block_sel
+autoload(block_sel)
+
+##############################################################################
+# Extra plugins.
+
+# Resize splits plugin.
+from vyapp.plugins import pane_resize
+autoload(pane_resize)
+
+# Used to perform searches in pre defined or git, svn, hg projects.
+# Use Sniper.c_dirs to set the folders where you usually search for data.
+# The Sniper.c_path is used to set your ag path.
+# from vyapp.plugins.sniper import Sniper
+# Sniper.c_dirs('/home/user/projects')
+# Sniper.c_path('ag')
+# autocall(Sniper)
+
+# Uncomment and set the path to silver search in case 
+# it is not available in the environment.
+# from vyapp.plugins.fstmt import Fstmt
+# Fstmt.c_path('ag')
+# autocall(Fstmt)
+
+# A wrap around unix locate command.
+# from vyapp.plugins import fsniffer
+# autoload(fsniffer)
+
+# Like fsniffer but works with files and drop results
+# on the current AreaVi instance.
+# from vyapp.plugins import fsearch
+# autoload(fsearch)
+
+# The ysnippet plugin.
+from vyapp.plugins import ysnippet
+autoload(ysnippet)
+
+# The mc filenamanager.
+# Configure your color scheme with 
+# Mc.c_appearance method..
+# from vyapp.plugins.mc import Mc
+# Mc.c_appearance(dir={'foreground': 'red'}, 
+# file={'foreground': 'yellow'})
+# autocall(Mc)
+
+# Open files using xdg_open.
+# from vyapp.plugins import xdg_open
+# autoload(xdg_open)
+
+# Drop/Read data from a bash process.
+# from vyapp.plugins import ibash
+# autoload(ibash)
+
+# Python syntax checker through pyflakes.
+# Use the classmethod c_path to set pyflakes path.
+from vyapp.plugins.snakerr import PythonChecker
+PythonChecker.c_path('pyflakes')
+autocall(PythonChecker)
+
+# Python static analysis with mypy.
+from vyapp.plugins.mypy import StaticChecker
+StaticChecker.c_path('mypy')
+autocall(StaticChecker)
+
+# Python analysis through vulture.
+# The path to vulture executable. No need to set it
+# if vulture is on your env path.
+from vyapp.plugins.deadcode import PythonAnalysis
+PythonAnalysis.c_path('vulture')
+autocall(PythonAnalysis)
+
+# Download html from a clipboard URL and insert it in the
+# current AreaVi instance. It also can load current AreaVi HTML
+# content in the browser..
+from vyapp.plugins import urlsrc
+autoload(urlsrc)
+
+# This plugin implements a keycommand to quickly load the user vyrc file
+# into the current AreaVi instance.
+from vyapp.plugins import editrc
+autoload(editrc)
+
+# Python auto completion plugin using jedi.
+from vyapp.plugins import jedi
+autoload(jedi)
+
+# You may need to setup tidy path here depending on your installation.
+# But if tidy is available in the environment then no need to uncomment this line.
+# from  vyapp.plugins import tidy
+# tidy.HtmlChecker.PATH = '/path/to/tidy'
+# autoload(tidy)
+
+# Auto completion using ycmd.
+# from vyapp.plugins.ycmd import client
+# client.YcmdCompletion.setup('/path/to/ycmd')
+# autoload(client)
+
+# Refactorying tools.
+from vyapp.plugins import rope
+autoload(rope)
+
+# Select a JSON data and format it.
+from vyapp.plugins import jsonfmt
+autoload(jsonfmt)
+
+# from vyapp.plugins.ternjs.completer import JavascriptCompletion 
+# JavascriptCompletion.PATH = 'tern'
+# JavascriptCompletion.PORT = 1234
+# autocall(JavascriptCompletion)
+
+# Golang auto completion with gocode engine. Don't mix it
+# with ycmd plugin.
+# from vyapp.plugins.gohints import GolangCompletion
+# GolangCompletion.PATH ='/path/to/gocode'
+# autocall(GolangCompletion)
+
+# Used to insert tab, spaces.
+# The default size/char in case the file has no 
+# extension or it is not specified it is ''. When there is no '':(size, char)
+# then it uses (4, ' ') as indentation.
+from vyapp.plugins import spacing
+spacing.Tab.set_scheme({
+'.rb': (2, ' '),
+'.c' : (4, ' '),
+'.cpp' : (4, ' '),
+'.java' : (4, ' '),
+'.go':(1, '\t'),
+'.py': (4, ' '),
+'':(4, ' '), })
+autoload(spacing)
+
+# This plugin implements keys to comment pieces of text inside 
+# programming language files.
+from vyapp.plugins import inline_comment
+autoload(inline_comment)
+
+# Used to debug python applications. The python argument 
+# specifies the interpreter path.
+# from vyapp.plugins import pdb
+# autoload(pdb, python='python3')
+
+# Used to debug golang applications.
+# from vyapp.plugins import delve
+# autoload(delve)
+
+# This plugin highlights links when files are opened.
+from vyapp.plugins import hlink
+autoload(hlink)
+
+# It implementes some features like a key command
+# to copy to the clipboard the name of the actual opened file.
+from vyapp.plugins import clip_path
+autoload(clip_path)
+
+##############################################################################
+# Syntax plugin is used to highlight code.
+# It uses python pygments styles to highlight code :)
+# Check out more pygments styles.
+# Note: When uncommenting a theme dont forget to comment the previously used one.
+from vyapp.plugins.syntax import spider
+
+# from pygments.styles.emacs import EmacsStyle
+# autoload(spider, EmacsStyle)
+
+# from pygments.styles.murphy import MurphyStyle
+# autoload(spider, MurphyStyle)
+
+# from pygments.styles.abap import AbapStyle
+# autoload(spider, AbapStyle)
+
+# from pygments.styles.borland import BorlandStyle
+# autoload(spider, BorlandStyle)
+
+# from pygments.styles.fruity import FruityStyle
+# autoload(spider, FruityStyle)
+
+# from pygments.styles.colorful import ColorfulStyle
+# autoload(spider, ColorfulStyle)
+
+# from pygments.styles.tango import TangoStyle
+# autoload(spider, TangoStyle)
+
+# from pygments.styles.trac import TracStyle
+# autoload(spider, TracStyle)
+
+# from pygments.styles.igor import IgorStyle
+# autoload(spider, IgorStyle)
+
+# from pygments.styles.paraiso_dark import ParaisoDarkStyle
+# autoload(spider, ParaisoDarkStyle)
+
+# from pygments.styles.vim import VimStyle
+# autoload(spider, VimStyle)
+
+from vyapp.plugins.syntax.styles.vy import VyStyle
+autoload(spider, VyStyle)
+
+##############################################################################
+# Core command plugins.
+
+# Implement commands for common key-commands.
+from vyapp.plugins import cmd_utils
+
+# Plugin tools.
+from vyapp.plugins import plugin_tools
+
+# Saving, opening files from vy python command line.
+from vyapp.plugins import iocmd
+
+# Find, replace, highlight patterns from vy python command line.
+from vyapp.plugins import cmd_search
+
+# Strip spaces from the beginning of lines.
+from vyapp.plugins import line_strips
+
+##############################################################################
+# Extra command plugins.
+
+# Create github gists easily. You need to get a 
+# personal access token first. 
+# from vyapp.plugins.gists import GistCreate
+# GistCreate('access_token')
+
+# Implement lower and upper functions.
+from vyapp.plugins import caps
+
+# Count words.
+from vyapp.plugins import count_words
+
+# Managing file encodings.
+from vyapp.plugins import codec
+
+# Spawning processes.
+# from vyapp.plugins.spawn import unix_platform
+
+# Spawning processes cross_platform.
+# from vyapp.plugins.spawn import cross_platform
+
+##############################################################################
+# Setup area settings, like default background, foreground, font style etc.
+
+# Note: Plugins like syntax highlighting will define AreaVi instance settings 
+# like background and foreground. # It is possible to override these settings 
+# by uncommenting foreground and background arguments below. 
+
+# Handles like setup are the last ones.
+
+def setup(area):
+    area.config(blockcursor=True, insertbackground='red', 
+                # background='black', foreground='yellow', 
+                font=('Monospace', 8, 'bold'), undo=True)
+
+autocall(setup) 
