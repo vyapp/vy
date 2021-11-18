@@ -32,18 +32,13 @@ Description: Select a sequence of non blank chars that is over
 the cursor.
 
 Mode: NORMAL
-Event: <Control-Key-1> 
+Event: <Control-s> 
 Description: Add selection from the cursor positon to the beginning of the file.
 
 
 Mode: NORMAL
-Event: <Control-Key-2> 
+Event: <Control-c> 
 Description: Add selection from the cursor position to the end of the file.
-
-
-Mode: NORMAL
-Event: <Control-a> 
-Description: Add selection from the beginning to the end of the file.
 """
 
 class DataSel:

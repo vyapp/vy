@@ -13,11 +13,6 @@ from vyapp.plugins import autoload, autocall, mapset
 
 from vyapp.plugins import untwisted
 ##############################################################################
-# Default shortcuts.
-
-from vyapp.plugins import default_shortcuts
-
-##############################################################################
 # Custom keystroke schemes.
 
 # Useful for keyboards that have ccedilla key.
@@ -142,6 +137,10 @@ autoload(main_jumps)
 from vyapp.plugins.quick_search import QuickSearch
 QuickSearch.c_appearance(background='yellow', foreground='black')
 autocall(QuickSearch)
+
+# Used to jump quickly to chars.
+from vyapp.plugins import seek_symbol
+autoload(seek_symbol)
 
 # This plugin implements keycommands to scroll lines.
 from vyapp.plugins import line_scroll

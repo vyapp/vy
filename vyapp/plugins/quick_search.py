@@ -17,6 +17,7 @@ from vyapp.ask import Get
 from vyapp.regutils import build_regex
 from vyapp.stderr import printd
 from vyapp.app import root
+from tkinter import Listbox, Toplevel,  BOTH, END, TOP, ACTIVE, Text, LEFT, SCROLL
 
 class QuickSearch:
     confs = {
@@ -52,12 +53,19 @@ class QuickSearch:
         Get(events = {
         '<Alt-p>':self.search_down, 
         '<Alt-o>': self.search_up, 
+        '<Alt-s>': self.clear_pattern, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
-        '<Destroy>': lambda wid: self.area.tag_remove(
-        '(SEARCH_MATCH)', '1.0', 'end'),
-        '<Escape>':  lambda wid: True})
+        '<Escape>':  self.end_search})
         return 'break'
+
+    def end_search(self, wid):
+        self.area.tag_remove('(SEARCH_MATCH)', '1.0', 'end')
+        return True
+
+    def clear_pattern(self, wid):
+        wid.delete(0, END)
+        self.index = self.area.index('insert')
 
     def start_backwards(self, event):
         self.index     = self.area.index('insert')
@@ -67,11 +75,10 @@ class QuickSearch:
         Get(events = {
         '<Alt-p>':self.search_down, 
         '<Alt-o>': self.search_up, 
+        '<Alt-s>': self.clear_pattern, 
         '<<Data>>': self.update, 
         '<BackSpace>': self.update,
-        '<Destroy>': lambda wid: self.area.tag_remove(
-        '(SEARCH_MATCH)', '1.0', 'end'),
-        '<Escape>':  lambda wid: True})
+        '<Escape>':  self.end_search})
         return 'break'
 
     def update(self, wid):
@@ -100,13 +107,9 @@ class QuickSearch:
         """
         data    = wid.get()
         pattern = build_regex(data)
-        self.area.ipick('(SEARCH_MATCH)', pattern, nocase=self.nocase, 
-        stopindex='end', index='insert')
+        self.area.ipick('(SEARCH_MATCH)', pattern, 
+        nocase=self.nocase, stopindex='end', index='insert')
 
 
 install = QuickSearch
-
-
-
-
 

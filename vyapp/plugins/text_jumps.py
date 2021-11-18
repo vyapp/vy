@@ -42,9 +42,17 @@ class TextJumps:
     def __init__(self, area):
         area.install('text-jumps', 
         (-1, '<Alt-g>', self.text_start),
+        ('NORMAL', '<Key-s>', self.text_start),
+
         (-1, '<Alt-b>', self.text_end), 
+        ('NORMAL', '<Key-c>', self.text_end), 
+
         (-1, '<Alt-d>', self.line_start),
+        ('NORMAL', '<Key-o>', self.line_start),
+
         (-1, '<Alt-f>', self.line_end), 
+        ('NORMAL', '<Key-p>', self.line_end), 
+
         (-1, '<Alt-l>', self.next_word),
         (-1, '<Alt-h>', self.prev_word))
         self.area = area

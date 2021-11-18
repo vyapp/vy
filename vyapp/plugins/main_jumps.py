@@ -37,9 +37,13 @@ class MainJumps:
 
         area.install('main-jumps', 
         (-1, '<Alt-a>', self.down),
+        ('NORMAL', '<Key-j>', self.down),
         (-1, '<Alt-e>', self.up),
+        ('NORMAL', '<Key-k>', self.up),
         (-1, '<Alt-n>', self.left),
-        (-1, '<Alt-m>', self.right))
+        ('NORMAL', '<Key-h>', self.left),
+        (-1, '<Alt-m>', self.right),
+        ('NORMAL', '<Key-l>', self.right))
     
     def down(self, event):
         event.widget.down()

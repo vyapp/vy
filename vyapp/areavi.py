@@ -86,13 +86,13 @@ class AreaVi(Text, DataEvent, IdleEvent):
         opt = self.setup[id]
         self.id = id
 
-        mode0 = 'mode%s-1' % self
-        mode1 = 'mode%s%s' % (self, id)
+        master = 'mode%s-1' % self
+        slave = 'mode%s%s' % (self, id)
 
         if opt is True: 
-            self.bindtags((mode0, mode1, self, 'Text', '.'))
+            self.bindtags((master, slave, self, 'Text', '.'))
         else: 
-            self.bindtags((mode0, mode1, self, '.'))
+            self.bindtags((master, slave, self, '.'))
 
         self.event_generate('<<Chmode>>')
         self.event_generate('<<Chmode-%s>>' % id)
@@ -717,7 +717,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             if self.compare(index, '==', '%s lineend' % index):
                 index = '%s +1c' % index 
 
-    def case_pair(self, index, max, start='(', end=')'):
+    def pair(self, index, max, start='(', end=')'):
         """
         Once this method is called, it returns an index for the next
         matching parenthesis or None if the char over the cursor

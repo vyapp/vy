@@ -26,7 +26,7 @@ class BlinkPair:
 
         self.area.tag_remove('(BLINK)', index0, index1)
         for lhs, lhr in self.pairs:
-            index = self.area.case_pair('insert', self.max, lhs, lhr)
+            index = self.area.pair('insert', self.max, lhs, lhr)
             if index: 
                 self.area.tag_add('(BLINK)', index, '%s +1c' % index)
 

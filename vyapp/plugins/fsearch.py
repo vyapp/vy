@@ -15,7 +15,7 @@ Namespace: fsearch
 
 Mode: NORMAL
 Event: <Key-W>
-Description: Insert locale command output in the current AreaVi instance.
+Description: Insert locate command output in the current AreaVi instance.
 
 
 Mode: NORMAL
