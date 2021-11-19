@@ -46,7 +46,7 @@ class Spawn(BaseSpawn):
     def terminate_process(self):
         # Exceptions should be written to sys.stdout for default.
         self.expect.terminate()
-        root.status.set_msg('Killed process!')
+        root.status.set_msg('(spawn) Killed process!')
 
     def dump_line(self):
         data = self.input.get('insert linestart', 'insert +1l linestart')
@@ -55,7 +55,7 @@ class Spawn(BaseSpawn):
         self.input.down()
 
     def handle_close(self, expect):
-        root.status.set_msg('Killed process!')
+        root.status.set_msg('(spawn) Killed process!')
         expect.destroy()
 
 class HSpawn(Spawn):

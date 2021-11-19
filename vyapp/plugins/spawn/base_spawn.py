@@ -1,4 +1,6 @@
 from vyapp.app import root
+from vyapp.plugins import ENV
+
 import signal
 
 class BaseSpawn:
@@ -14,9 +16,13 @@ class BaseSpawn:
         """
         # self.input.hook('spawn', 'NORMAL', '<Control-c>', 
         # lambda event: self.dump_signal(signal.SIGINT), add=False)
-# 
+        sigint = lambda: self.dump_signal(signal.SIGINT)
+        ENV['sigint'] = sigint
+
         # self.input.hook('spawn', 'NORMAL', '<Control-backslash>', 
         # lambda event: self.dump_signal(signal.SIGQUIT), add=False)
+        sigquit = lambda: self.dump_signal(signal.SIGQUIT)
+        ENV['sigquit'] = sigquit
 
         # When one of the AreaVi instances are destroyed then
         # the process is killed.
@@ -33,7 +39,7 @@ class BaseSpawn:
         self.input.hook('spawn', 'INSERT', '<F1>', 
         lambda event: self.dump_line(), add=False)
 
-        root.status.set_msg('%s -> %s' % (self.input.filename, 
+        root.status.set_msg('(spawn) %s -> %s' % (self.input.filename, 
         self.output.filename))
 
     def dump_signal(self, num):

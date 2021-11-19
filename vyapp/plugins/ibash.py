@@ -50,10 +50,10 @@ import sys
 class Process:
     def __call__(self, area):
         area.install('ibash', 
-        ('NORMAL', '<Control-F9>', lambda event: self.dump_region(event.widget)),
-        ('NORMAL', '<Shift-Return>', lambda event: self.dump_line(event.widget)),
-        ('NORMAL', '<F9>', lambda event: self.ask_data_and_dump(event.widget)),
-        ('NORMAL', '<Control-C>', self.dump_signal))
+        ('NORMAL', '<Control-F1>', lambda event: self.dump_region(event.widget)),
+        ('NORMAL', '<F1>', lambda event: self.dump_line(event.widget)))
+
+        ENV['dsignal'] = self.dump_signal
         ENV['lsh'] = self.restart
 
     def __init__(self, cmd=['bash', '-i']):
@@ -104,26 +104,10 @@ class Process:
         area.down()
         root.status.set_msg('(ibash) Executed line!')
 
-    def ask_data_and_dump(self, area):
-        root.status.set_msg('(ibash) Type a command:')
-        ask = Ask()
-
-        self.stdin.dump(b'%s\n' %  ask.data.encode('utf-8'))
-        root.status.set_msg('(ibash) Executed command!')
-
-    def dump_signal(self, event):
-        root.status.set_msg('(ibash) Signal number SIGINT(2)/SIGQUIT(3):')
-        ask    = Ask()
-        signal = None
-
-        try:
-            signal = int(ask.data)
-        except ValueError as e:
-            root.status.set_msg('(ibash) Invalid signal')
-        killpg(self.child.pid, signal)
+    def dump_signal(self, num):
+        root.status.set_msg('(ibash) Sent signal.')
+        killpg(self.child.pid, num)
 
 process = Process()
 install = process
-
-
 

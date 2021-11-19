@@ -86,7 +86,7 @@ class Spawn(BaseSpawn):
 
     def terminate_process(self):
         self.child.kill()
-        root.status.set_msg('Killed process!')
+        root.status.set_msg('(spawn) Killed process!')
 
     def dump_line(self):
         data = self.input.get('insert linestart', 'insert +1l linestart')
@@ -95,7 +95,7 @@ class Spawn(BaseSpawn):
         self.input.down()
 
     def handle_close(self, dev, err):
-        root.status.set_msg('Killed process!')
+        root.status.set_msg('(spawn) Killed process!')
         self.stdout.destroy()
         self.stdin.destroy()
 
