@@ -466,13 +466,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
             self.replace_all(regex, data, map[0], map[1], 
                     exact, regexp, nocase, elide, nolinestop)
 
-    def select_matches(self, name, matches):
-        """"
-        """
-
-        for _, index0, index1 in matches:
-            self.tag_add(name, index0, index1)
-
     def split(self, regex, index='1.0', stopindex='end', *args, **kwargs):
         """
         It tokenizes the contents of an AreaVi widget based on a regex.

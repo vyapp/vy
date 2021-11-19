@@ -66,8 +66,10 @@ def sel(area, regex, index='1.0', stopindex='end', exact=False,
 def split(area, *args, **kwargs):
     """
     """
-    area.select_matches('sel', 
-    area.split(*args, **kwargs))
+
+    matches = area.split(*args, **kwargs)
+    for _, index0, index1 in matches:
+        area.tag_add('sel', index0, index1)
 
 @Command()
 def lsub(area, regex, data, exact=False, regexp=True, 

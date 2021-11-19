@@ -139,8 +139,9 @@ class Find:
 
     def pick_selection_matches(self, wid):
         regex = wid.get()
-        self.area.select_matches('(CATCHED)', 
-        self.area.tag_xmatch('sel', regex, **self.opts))
+        matches = self.area.tag_xmatch('sel', regex, **self.opts)
+        for _, index0, index1 in matches:
+            self.area.tag_add('(CATCHED)', index0, index1)
 
     def replace_on_cursor(self, wid):
         regex = wid.get()
