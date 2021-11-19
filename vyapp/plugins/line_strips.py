@@ -26,7 +26,7 @@ def strip(area, chars=' '):
     if chars is not given it removes spaces.
     """
 
-    area.replace_ranges('sel', '^[%s]+' % escape(chars), '')
+    area.tag_xsub('sel', '^[%s]+' % escape(chars), '')
 
 @Command()
 def rstrip(area, chars=' '):
@@ -35,4 +35,4 @@ def rstrip(area, chars=' '):
     if chars is not given it removes spaces.
     """
 
-    area.replace_ranges('sel', '[%s]+$' % escape(chars), '')
+    area.tag_xsub('sel', '[%s]+$' % escape(chars), '')

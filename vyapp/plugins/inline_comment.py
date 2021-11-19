@@ -49,7 +49,7 @@ class Clipboard:
         """
     
         comment = table.get(os.path.splitext(self.area.filename)[1], self.default)
-        self.area.replace_ranges('sel', '^ *|^\t*', 
+        self.area.tag_xsub('sel', '^ *|^\t*', 
         lambda data, index0, index1: '%s%s ' % (data, comment))
         self.area.clear_selection()
         self.area.chmode('NORMAL')
@@ -60,7 +60,7 @@ class Clipboard:
         """
     
         comment = table.get(os.path.splitext(self.area.filename)[1], self.default)
-        self.area.replace_ranges('sel', '^ *%s ?|^\t*%s ?' % (comment, comment), 
+        self.area.tag_xsub('sel', '^ *%s ?|^\t*%s ?' % (comment, comment), 
         lambda data, index0, index1: data.replace(
             '%s ' % comment, '').replace(comment, ''))
         self.area.clear_selection()

@@ -78,7 +78,7 @@ def lsub(area, regex, data, exact=False, regexp=True,
 
     """
 
-    area.replace_ranges('sel', regex, data, exact=False, 
+    area.tag_xsub('sel', regex, data, exact=False, 
     regexp=True, nocase=False, elide=False, nolinestop=False)
 
 Command('gsub')(AreaVi.replace_all)

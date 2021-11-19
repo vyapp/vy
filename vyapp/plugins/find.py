@@ -151,7 +151,7 @@ class Find:
 
     def replace_on_selection(self, wid):
         regex = wid.get()
-        self.area.replace_ranges('sel', regex, Find.data, **self.opts)
+        self.area.tag_xsub('sel', regex, Find.data, **self.opts)
 
     def replace_all_matches(self, wid):
         regex = wid.get()

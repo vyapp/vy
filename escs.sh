@@ -24,7 +24,7 @@ git commit -a
 git push
 
 ##############################################################################
-# delete, remove, clean, *.pyc files, vy, vyapp.
+# Remove pyc files.
 cd /home/tau/projects/vy-code/
 find . -name "*.pyc" -exec rm -f {} \;
 ##############################################################################

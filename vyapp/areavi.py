@@ -430,8 +430,9 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return self.get('%s linestart' % index, 
         '%s lineend' % index)
 
-    def collect(self, name, regex, index='1.0', stopindex='end', exact=False, 
-        regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
+    def collect(self, name, regex, index='1.0', 
+        stopindex='end', exact=False, regexp=True, nocase=False, 
+        elide=False, nolinestop=False, step=''):
 
         """
         The code below would find for 'PATTERN' in all selected text of an
@@ -447,16 +448,15 @@ class AreaVi(Text, DataEvent, IdleEvent):
             seq = self.find(regex, map[indi], map[indi + 1], 
                 exact=exact, regexp=regexp, nocase=nocase, 
                     elide=nocase, nolinestop=nolinestop)
-
             for indj in seq: 
                 yield indj
 
-    def replace_ranges(self, name, regex, data, exact=False, regexp=True, 
-        nocase=False, elide=False, nolinestop=False):
+    def tag_xsub(self, name, regex, data, exact=False, 
+        regexp=True, nocase=False, elide=False, nolinestop=False):
 
         """
-
-        It replaces all occurrences of regex in the ranges that are mapped to tag name.
+        It replaces all occurrences of regex in the ranges 
+        that are mapped to tag name.
         """
 
         while True:
