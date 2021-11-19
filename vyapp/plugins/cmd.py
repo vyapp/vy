@@ -24,6 +24,14 @@ Mode: Global
 Event: <Alt-semicolon>
 Description: Open an input box in order to type inline python code to be executed.
 
+Mode: EXTRA
+Event: <Key-x>
+Description: Select a region to be executed as python code. The region will be shaded.
+
+Mode: EXTRA
+Event: <Key-X>
+Description: Unselect a region. It no longer can be executed as python code.
+
 """
 
 from traceback import print_exc as debug
@@ -42,12 +50,12 @@ class Cmd:
         self.area = area
 
         area.tag_configure('(CODE)', **Cmd.TAGCONF)
-        # Has to use spots tag as code tag.
         area.install('cmd',
         (-1, '<Alt-semicolon>',  self.exec_cmd),
-        ('NORMAL', '<Key-semicolon>', self.exec_region),
-        ('NORMAL', '<Key-colon>', self.toggle_code),
-        (-1, '<Alt-z>',  self.set_target))
+        (-1, '<Alt-z>',  self.set_target),
+        ('EXTRA', '<Key-semicolon>', self.exec_region),
+        ('EXTRA', '<Key-x>', self.select_code),
+        ('EXTRA', '<Key-X>', self.unselect_code))
         
     @e_stop
     def exec_cmd(self, event):
@@ -58,25 +66,26 @@ class Cmd:
         data = ask.data.encode('utf-8')
         self.runcode(data, ENV)
 
-    def toggle_code(self, event):
+    def select_code(self, event):
         range = self.area.tag_bounds('(CODE)', 'insert')
-        selected = self.area.tag_ranges('sel')
-
-        if range and not selected:
-            self.area.tag_remove('(CODE)', *range)
-        elif selected:
-            self.tag_code()
-
-    def tag_code(self):
         index0 = self.area.index('sel.first')
         index1 = self.area.index('sel.last')
 
         self.area.clear_selection()
         self.area.tag_add('(CODE)', index0, index1)
+        self.area.chmode('NORMAL')
+
+    def unselect_code(self, event):
+        range = self.area.tag_bounds('(CODE)', 'insert')
+        if range is not None:
+            self.area.tag_remove('(CODE)', *range)
+        self.area.chmode('NORMAL')
 
     def runcode(self, data, env):
-        # It has to be set before because if some data code catches 
-        # an exception then prints use print_exc it will go to sys.__stderr__.
+        """
+        """
+
+        # Avoid exception going to sys.stderr.
         tmp = sys.stderr
         sys.stderr = sys.stdout
     
@@ -89,11 +98,9 @@ class Cmd:
             sys.stderr = tmp
 
     def exec_region(self, event):
-        # data = self.area.join_ranges('sel')
         range = self.area.tag_bounds('(CODE)', 'insert')
         if range: 
             self.fmtexec(self.area.get(*range))
-        return 'break'
 
     def fmtexec(self, data):
         fmtdata = re.sub(r'^|\n', '\n>>> ', data)
@@ -102,7 +109,6 @@ class Cmd:
     
         data = data.encode('utf-8')
         self.runcode(data, ENV)
-        self.area.clear_selection()
     
     def set_target(self, event):
         Command.set_target(self.area)
