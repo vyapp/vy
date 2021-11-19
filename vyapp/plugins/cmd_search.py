@@ -43,7 +43,7 @@ def sniff(area, regex, handle, index='1.0', stopindex='end', exact=False,
 
     """
 
-    seq = area.collect('sel', regex, index, stopindex, 
+    seq = area.tag_xmatch('sel', regex, index, stopindex, 
     exact, regexp, nocase, elide, nolinestop, step)
 
     for ind in seq:

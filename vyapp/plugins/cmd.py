@@ -53,7 +53,7 @@ class Cmd:
         area.install('cmd',
         (-1, '<Alt-semicolon>',  self.exec_cmd),
         (-1, '<Alt-z>',  self.set_target),
-        ('EXTRA', '<Key-semicolon>', self.exec_region),
+        ('NORMAL', '<Key-semicolon>', self.exec_region),
         ('EXTRA', '<Key-x>', self.select_code),
         ('EXTRA', '<Key-X>', self.unselect_code))
         

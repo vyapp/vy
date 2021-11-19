@@ -140,7 +140,7 @@ class Find:
     def pick_selection_matches(self, wid):
         regex = wid.get()
         self.area.select_matches('(CATCHED)', 
-        self.area.collect('sel', regex, **self.opts))
+        self.area.tag_xmatch('sel', regex, **self.opts))
 
     def replace_on_cursor(self, wid):
         regex = wid.get()

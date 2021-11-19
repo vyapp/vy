@@ -430,7 +430,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return self.get('%s linestart' % index, 
         '%s lineend' % index)
 
-    def collect(self, name, regex, index='1.0', 
+    def tag_xmatch(self, name, regex, index='1.0', 
         stopindex='end', exact=False, regexp=True, nocase=False, 
         elide=False, nolinestop=False, step=''):
 
@@ -438,7 +438,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         The code below would find for 'PATTERN' in all selected text of an
         AreaVi instance:
         
-        for data, pos0, pos1 in area.collect('sel', 'PATTERN'):
+        for data, pos0, pos1 in area.tag_xmatch('sel', 'PATTERN'):
             pass
         """
         
@@ -468,11 +468,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def select_matches(self, name, matches):
         """"
-        It adds a tag to the match ranges from either AreaVi.find or
-        AreaVi.collect.
-    
-        name - The tag to be added.
-        map  - An iterator from AreaVi.find or AreaVi.collect.
         """
 
         for _, index0, index1 in matches:
@@ -617,20 +612,24 @@ class AreaVi(Text, DataEvent, IdleEvent):
         return str(self.tk.call(tuple(args)))
 
     def ipick(self, name, regex, index='insert', stopindex='end', 
-        verbose=False, backwards=None, exact=None, regexp=True, 
-        nocase=None, elide=None, nolinestop=None):
+        verbose=False, backwards=False, exact=False, regexp=True, 
+        nocase=False, elide=False, nolinestop=False):
 
         """
         """
 
         # Force to do a search from index.
-        if verbose: self.tag_remove(name, '1.0', 'end')
+        if verbose is True: 
+            self.tag_remove(name, '1.0', 'end')
+        if backwards is False: 
+            ranges = self.tag_nextrange(name, index, 'end')
+        else: 
+            ranges = self.tag_prevrange(name, index, '1.0')
 
-        if not backwards: ranges = self.tag_nextrange(name, index, 'end')
-        else: ranges = self.tag_prevrange(name, index, '1.0')
-
-        if ranges: index0, index1 = ranges[:2]
-        else: index0 = index1 = index
+        if ranges: 
+            index0, index1 = ranges[:2]
+        else: 
+            index0 = index1 = index
 
         index = self.isearch(regex, index=index0 if backwards else index1, 
         stopindex=stopindex, backwards=backwards, exact=exact, regexp=regexp, 
@@ -701,7 +700,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         # It avoids overlapping of replacements.
         self.mark_set('(REP_STOPINDEX)', stopindex)
-
         while True:
             map = self.replace(regex, data, index, 
                 '(REP_STOPINDEX)', exact=exact, nocase=nocase, 
