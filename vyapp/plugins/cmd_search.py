@@ -76,12 +76,23 @@ def lsub(area, regex, data, exact=False, regexp=True,
     nocase=False, elide=False, nolinestop=False, step=''):
 
     """
-    Replae text in a selected region of an AreaVi instance.
+    Replace text in a selected region of an AreaVi instance.
 
+    Note: The search for regex will be performed along all ranges
+    that correspond to the selected text. 
+
+    The length of such matches may be longer than its 
+    corresponding selected ranges.
+
+    Consider regex as '.+' and as a selected region 'abc' a text 'abcdefg'.
+    When invoking lsub with '.+' it will replace 'abcdefg' for data.
+
+    In case it is used '.' as regex in the above scheme 
+    it will replace only 'abc' for the specified data.
     """
 
-    area.tag_xsub('sel', regex, data, exact=False, 
-    regexp=True, nocase=False, elide=False, nolinestop=False)
+    area.tag_xsub('sel', regex, data, exact=exact, 
+    regexp=regex, nocase=nocase, elide=elide, nolinestop=nolinestop)
 
 Command('gsub')(AreaVi.replace_all)
 Command('get')(AreaVi.get)

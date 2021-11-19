@@ -476,14 +476,13 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
 
         index0 = index
-        for chk, index1, index2 in self.find(regex, index, 
-            stopindex, *args, **kwargs):
-
-            if self.compare(index1, '>', index0): 
-                yield(self.get(index0, index1), index0, index1)
+        matches = self.find(regex, index, stopindex, *args, **kwargs)
+        for chk, index1, index2 in matches:
+            yield(self.get(index0, index1), index0, index1)
             index0 = index2
-        else:    
-            yield(chk, index2, stopindex)
+
+        token = self.get(index0, stopindex)
+        yield(token, index0, stopindex)
     
     def find_forwards(self, regex, index='1.0', stopindex='end', exact=False, 
         regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
@@ -663,7 +662,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         backwards=backwards, exact=exact, nocase=nocase,  nolinestop=nolinestop, 
         regexp=regexp, elide=elide, count=count)
             
-        if not index:  return
+        if not index:  
+            return None
 
         index0 = self.index('%s +%sc' % (index, count.get()))
 
