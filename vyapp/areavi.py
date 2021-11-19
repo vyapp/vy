@@ -459,12 +459,17 @@ class AreaVi(Text, DataEvent, IdleEvent):
         that are mapped to tag name.
         """
 
+        count = 0
         while True:
             map = self.tag_nextrange(name, '1.0', 'end')
-            if not map: break
+            if map == (): 
+                return count
+
             self.tag_remove(name, *map)
-            self.replace_all(regex, data, map[0], map[1], 
+            inc = self.replace_all(regex, data, map[0], map[1], 
                     exact, regexp, nocase, elide, nolinestop)
+            count = count + inc
+        return count
 
     def split(self, regex, index='1.0', stopindex='end', *args, **kwargs):
         """
@@ -683,15 +688,10 @@ class AreaVi(Text, DataEvent, IdleEvent):
         exact=None, regexp=True, nocase=None, elide=None, nolinestop=None):
 
         """
-        # It replaces all regex matches for data. The data argument may be a callable
-        object. When it is a callable object it looks like:
-    
-        def handle(chunk, start, end):
-            pass
-
         """
 
         # It avoids overlapping of replacements.
+        count = 0
         self.mark_set('(REP_STOPINDEX)', stopindex)
         while True:
             map = self.replace(regex, data, index, 
@@ -699,7 +699,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
                     nolinestop=nolinestop, regexp=regexp, elide=elide)
 
             if not map: 
-                return self.index('(REP_STOPINDEX)')
+                return count
             index, size = map
 
             index  = self.index('%s +%sc' % (index, size))
@@ -707,6 +707,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
             if self.compare(index, '==', '%s lineend' % index):
                 index = '%s +1c' % index 
+            count = count + 1
+        return count
 
     def pair(self, index, max, start='(', end=')'):
         """

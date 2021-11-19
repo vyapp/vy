@@ -152,7 +152,8 @@ class Find:
 
     def replace_on_selection(self, wid):
         regex = wid.get()
-        self.area.tag_xsub('sel', regex, Find.data, **self.opts)
+        count = self.area.tag_xsub('sel', regex, Find.data, **self.opts)
+        root.status.set_msg('Replacements count: %s' % count)
 
     def replace_all_matches(self, wid):
         regex = wid.get()
