@@ -435,11 +435,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         elide=False, nolinestop=False, step=''):
 
         """
-        The code below would find for 'PATTERN' in all selected text of an
-        AreaVi instance:
-        
-        for data, pos0, pos1 in area.tag_xmatch('sel', 'PATTERN'):
-            pass
         """
         
         # It should be built on top of nextrange.
@@ -453,10 +448,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def tag_xsub(self, name, regex, data, exact=False, 
         regexp=True, nocase=False, elide=False, nolinestop=False):
-
         """
-        It replaces all occurrences of regex in the ranges 
-        that are mapped to tag name.
         """
 
         count = 0
@@ -825,12 +817,13 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def tag_xswap(self, name, data, index='1.0', stopindex='end'):
         """
-        This method swaps the text in each one of the ranges that corresponds
-        to tag name for data between index and stopindex.
+        This method swaps the text in each one of the ranges that 
+        corresponds to tag name for data between index and stopindex.
         """
 
         count = 0
         self.mark_set('(TAG-XSWAP)', index)
+
         while True:
             range = self.tag_nextrange(
                 name, '(TAG-XSWAP)', stopindex)
@@ -843,27 +836,15 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def tag_xjoin(self, name, sep=''):
         """     
-        Join ranges of text that corresponds to tag in name. The ranges
+        Join ranges of text that corresponds to tag name. The ranges
         are joined using sep.
         """
 
         data = ''
-    
-        for ind in self.get_ranges(name):
-            data = data + ind + sep
-        return data
-
-
-    def get_ranges(self, name):
-        """
-        It returns an iterator whose elements are ranges of text that
-        corresponds to the ranges of the tag name.
-        """
-
         ranges = self.tag_ranges(name)
         for ind in range(0, len(ranges) - 1, 2):
-            data = self.get(ranges[ind], ranges[ind + 1])
-            yield(data)
+            data += self.get(ranges[ind], ranges[ind + 1]) + sep
+        return data
 
     def tag_prev_occur(self, tag_names, index0, index1, default):
         """
@@ -872,7 +853,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         for ind in tag_names:
             pos = self.tag_prevrange(ind, index0, index1)
-            if pos: return pos[1]
+            if pos != (): 
+                return pos[1]
         return default
     
     def tag_next_occur(self, tag_names, index0, index1, default):
@@ -882,7 +864,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         for ind in tag_names:
             pos = self.tag_nextrange(ind, index0, index1)
-            if pos: return pos[0]
+            if pos != (): 
+                return pos[0]
         return default
     
     @staticmethod

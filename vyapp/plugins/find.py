@@ -85,9 +85,9 @@ class Find:
         '<Alt-q>': self.set_data,
         '<Alt-o>': self.up, '<Escape>': self.cancel, 
         '<Alt-p>': self.down, '<Return>': self.cancel,
-        '<Alt-n>':  self.pick_selection_matches,
-        '<Alt-period>': self.replace_on_cursor,
-        '<Alt-semicolon>': self.replace_on_selection, 
+        '<Alt-n>':  self.pick_selmatches,
+        '<Alt-period>': self.sub_xcursor,
+        '<Alt-semicolon>': self.sub_xselection, 
         '<Alt-comma>': self.replace_all_matches, 
         '<Control-n>': self.toggle_nocase_option,
         '<Control-x>': self.toggle_regexp_option,
@@ -137,27 +137,46 @@ class Find:
         index = self.area.ipick('(CATCHED)', regex, 
         index='insert', stopindex='end', **self.opts)
 
-    def pick_selection_matches(self, wid):
-        regex = wid.get()
+    def pick_selmatches(self, wid):
+        """
+        Highligh matched patterns inside selected text.
+        """
+
+        regex   = wid.get()
         matches = self.area.tag_xmatch('sel', regex, **self.opts)
         for _, index0, index1 in matches:
             self.area.tag_add('(CATCHED)', index0, index1)
 
-    def replace_on_cursor(self, wid):
+        count = len(self.area.tag_ranges('(CATCHED)'))
+        root.status.set_msg('Found: %s' % count)
+
+    def sub_xcursor(self, wid):
+        """
+        Replace matched text data under the cursor.
+        """
+
         regex = wid.get()
         # As there is just one range for catched due to ipick
         # mapping just one per call.
         index = self.area.tag_nextrange('(CATCHED)', '1.0')
         self.area.replace(regex, Find.data, index[0], **self.opts)
 
-    def replace_on_selection(self, wid):
+    def sub_xselection(self, wid):
+        """
+        Replace matched text for data inside selected regions.
+        """
         regex = wid.get()
         count = self.area.tag_xsub('sel', regex, Find.data, **self.opts)
-        root.status.set_msg('Replacements count: %s' % count)
+        root.status.set_msg('Replaced matches: %s' % count)
 
     def replace_all_matches(self, wid):
+        """
+        Replace all matches along the whole text for data.
+        """
         regex = wid.get()
-        self.area.replace_all(regex, Find.data, '1.0', 'end', **self.opts)
+        count = self.area.replace_all(regex, 
+            Find.data, '1.0', 'end', **self.opts)
+        root.status.set_msg('Replaced matches: %s' % count)
 
 install = Find
 
