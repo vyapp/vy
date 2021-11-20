@@ -362,7 +362,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.clipboard_clear()
         self.clipboard_append(data)
         self.edit_separator()
-        self.swap_ranges('sel', '', '1.0', 'end')
+        self.tag_xswap('sel', '', '1.0', 'end')
 
     def tag_contains(self, name, index0, index1):
         """
@@ -464,8 +464,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
             map = self.tag_nextrange(name, '1.0', 'end')
             if map == (): 
                 return count
-
             self.tag_remove(name, *map)
+
             inc = self.replace_all(regex, data, map[0], map[1], 
                     exact, regexp, nocase, elide, nolinestop)
             count = count + inc
@@ -632,7 +632,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         stopindex=stopindex, backwards=backwards, exact=exact, regexp=regexp, 
         nocase=nocase, elide=elide, nolinestop=nolinestop)
 
-        if not index: return
+        if not index: 
+            return None
         _, start, end = index
 
         self.mark_set('insert', start if backwards else end)
@@ -712,9 +713,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def pair(self, index, max, start='(', end=')'):
         """
-        Once this method is called, it returns an index for the next
-        matching parenthesis or None if the char over the cursor
-        isn't either '(' or ')'.
         """
 
         char = self.get(index, '%s +1c' % index)
@@ -825,20 +823,28 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.delete(index0, index1)
         self.insert(index0, data)
 
-    def swap_ranges(self, name, data, index0='1.0', index1='end'):
+    def tag_xswap(self, name, data, index='1.0', stopindex='end'):
         """
+        This method swaps the text in each one of the ranges that corresponds
+        to tag name for data between index and stopindex.
         """
 
+        count = 0
+        self.mark_set('(TAG-XSWAP)', index)
         while True:
-            range = self.tag_nextrange(name, index0, index1)
-            if range: 
-                self.swap(data, *range)
-            else:
-                break
+            range = self.tag_nextrange(
+                    name, '(TAG-XSWAP)', stopindex)
+            if len(range) == 0: 
+                return count
+
+            self.mark_set('(TAG-XSWAP)', range[1])
+            self.swap(data, *range)
+            count = count + 1
 
     def join_ranges(self, name, sep=''):
         """     
-        Join ranges of text that corresponds to a tag defined by name using a seperator.
+        Join ranges of text that corresponds to tag in name. The ranges
+        are joined using sep.
         """
 
         data = ''

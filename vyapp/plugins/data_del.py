@@ -57,7 +57,7 @@ class DataDel:
         It deletes all selected text.
         """
         self.area.edit_separator()
-        self.area.swap_ranges('sel', '', '1.0', 'end')
+        self.area.tag_xswap('sel', '', '1.0', 'end')
 
 install = DataDel        
 
