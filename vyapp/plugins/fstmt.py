@@ -56,7 +56,7 @@ class Fstmt:
         printd('Fstmt - Setting ag path = ', path)
 
     def catch_pattern(self):
-        pattern = self.area.join_ranges('sel')
+        pattern = self.area.tag_xjoin('sel')
         pattern = pattern if pattern else self.area.get(
         *self.area.get_word_range())
 

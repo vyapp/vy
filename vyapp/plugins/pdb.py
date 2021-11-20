@@ -139,7 +139,7 @@ class Pdb(DAP):
         root.status.set_msg('(pdb) Sent restart !')
 
     def evaluate_selection(self, event):
-        data = event.widget.join_ranges('sel', sep='\r\n')
+        data = event.widget.tag_xjoin('sel', sep='\r\n')
         self.send('p %s' % data)
         event.widget.chmode('NORMAL')
         root.status.set_msg('(pdb) Sent text selection!')

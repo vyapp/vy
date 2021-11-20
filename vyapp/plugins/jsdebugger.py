@@ -108,7 +108,7 @@ class JSDebugger(DAP):
         root.status.set_msg('(JSDebugger) sent exec cmd!')
 
     def evaluate_selection(self, event):
-        data = event.widget.join_ranges('sel')
+        data = event.widget.tag_xjoin('sel')
         self.send("exec('%s')\r\n" % data)
         event.widget.chmode('NORMAL')
         root.status.set_msg('(JSDebugger) Sent selection!')

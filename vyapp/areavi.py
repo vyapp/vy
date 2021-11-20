@@ -347,7 +347,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         Copy selected text to the clipboard.
         """
 
-        data = self.join_ranges('sel', sep)
+        data = self.tag_xjoin('sel', sep)
         self.clipboard_clear()
         self.clipboard_append(data)
         self.tag_remove('sel', 'sel.first', 'sel.last')
@@ -358,7 +358,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         It cuts the selected text.
         """
 
-        data = self.join_ranges('sel', sep)
+        data = self.tag_xjoin('sel', sep)
         self.clipboard_clear()
         self.clipboard_append(data)
         self.edit_separator()
@@ -833,7 +833,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.mark_set('(TAG-XSWAP)', index)
         while True:
             range = self.tag_nextrange(
-                    name, '(TAG-XSWAP)', stopindex)
+                name, '(TAG-XSWAP)', stopindex)
             if len(range) == 0: 
                 return count
 
@@ -841,7 +841,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
             self.swap(data, *range)
             count = count + 1
 
-    def join_ranges(self, name, sep=''):
+    def tag_xjoin(self, name, sep=''):
         """     
         Join ranges of text that corresponds to tag in name. The ranges
         are joined using sep.

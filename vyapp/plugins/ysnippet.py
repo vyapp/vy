@@ -129,7 +129,7 @@ class Ysnippet:
         a field @(id)
         """
 
-        values = (data, self.area.join_ranges('sel', '\n'))
+        values = (data, self.area.tag_xjoin('sel', '\n'))
 
         self.area.tag_remove('sel', 'sel.first', 'sel.last')
         

@@ -92,7 +92,7 @@ class Process:
         self.stdin.dump('%s\t\t' % data)
 
     def dump_region(self, area):
-        data = area.join_ranges('sel')
+        data = area.tag_xjoin('sel')
         data = data.encode('utf-8')
         self.stdin.dump(data)
         root.status.set_msg('(ibash) Executed region!')

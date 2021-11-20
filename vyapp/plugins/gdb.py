@@ -113,7 +113,7 @@ class GDB(DAP):
         root.status.set_msg('(GDB) Sent cmd!')
 
     def evaluate_selection(self, event):
-        data = event.widget.join_ranges('sel', sep='\r\n')
+        data = event.widget.tag_xjoin('sel', sep='\r\n')
         self.send('print %s' % data)
         event.widget.chmode('NORMAL')
         root.status.set_msg('(GDB) Sent selection !')
