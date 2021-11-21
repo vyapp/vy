@@ -3,6 +3,7 @@
 """
 
 from vyapp.mixins import DataEvent, IdleEvent
+from tkinter import TclError
 from vyapp.stderr import printd
 from tkinter import Text, IntVar
 import os
@@ -432,19 +433,17 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def tag_xmatch(self, name, regex, index='1.0', 
         stopindex='end', exact=False, regexp=True, nocase=False, 
-        elide=False, nolinestop=False, step=''):
+        elide=False, nolinestop=False):
 
         """
         """
         
-        # It should be built on top of nextrange.
         map = self.tag_ranges(name)
         for indi in range(0, len(map) - 1, 2):
             seq = self.find(regex, map[indi], map[indi + 1], 
                 exact=exact, regexp=regexp, nocase=nocase, 
-                    elide=nocase, nolinestop=nolinestop)
-            for indj in seq: 
-                yield indj
+                    elide=elide, nolinestop=nolinestop)
+            yield from seq
 
     def tag_xsub(self, name, regex, data, exact=False, 
         regexp=True, nocase=False, elide=False, nolinestop=False):
@@ -465,11 +464,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def split(self, regex, index='1.0', stopindex='end', *args, **kwargs):
         """
-        It tokenizes the contents of an AreaVi widget based on a regex.
-        The *args, **kwargs are the same passed to AreaVi.find method.
-
-        for token, index0, index1 in area.split(PATTERN):
-            pass
         """
 
         index0 = index
@@ -481,80 +475,45 @@ class AreaVi(Text, DataEvent, IdleEvent):
         token = self.get(index0, stopindex)
         yield(token, index0, stopindex)
     
-    def find_forwards(self, regex, index='1.0', stopindex='end', exact=False, 
-        regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
-        """
-        """
+    def find(self, regex, index='1.0', stopindex='end', 
+        backwards=False, exact=False, regexp=True, nocase=False, 
+        elide=False, nolinestop=False, step=''):
 
+        """
+        """
         if not regex: 
-            raise TypeError('Regex should be non blank!')
+            raise TclError('Regex is blank!')
+        self.mark_set('(FIND-POS)', index)
 
         while True:
-            match = self.isearch(regex, index, stopindex, 
-                exact, regexp=regexp, nocase=nocase, elide=elide, 
-                    nolinestop=nolinestop)
+            count = IntVar()
+            index = self.search(regex, '(FIND-POS)', stopindex, 
+                None, backwards, exact, regexp, nocase, count=count,
+                    elide=elide, nolinestop=nolinestop)
 
-            if match: 
-                yield(match)
-            else:
-                break
+            if not index: 
+                return None
+            len  = count.get()
+            pos0 = self.index(index)
+            pos1 = self.index('%s +%sc' % (index, len))
+            data = self.get(pos0, pos1)
 
-            # To avoid infinite loop when using '$' as regex.
-            if self.compare(match[2], '==', 'end'): 
-                break
-            elif self.compare(match[1], '==', match[2]):
-                index = '%s %s +1c' % (match[2], step)
-            else:
-                index = '%s %s' % (match[2], step)
+            self.mark_set('(FIND-POS)', 
+            index if len and backwards else (
+                pos1 if len else (('%s -1c'  
+                    if backwards else '%s +1c') % pos1)))
 
-    def find(self, regex, index='1.0', stopindex='end', backwards=False, 
-        exact=False, regexp=True, nocase=False, elide=False, 
-        nolinestop=False, step=''):
-
-        """
-        """
-
-
-        if backwards:
-            return self.find_backwards(regex, index, stopindex, 
-                exact, regexp, nocase, elide, nolinestop, step)
-        else:
-            return self.find_forwards(regex, index, stopindex, 
-                    exact, regexp, nocase, elide, nolinestop, step)
-
-    def find_backwards(self, regex, index='end', stopindex='1.0', exact=False, 
-        regexp=True, nocase=False, elide=False, nolinestop=False, step=''):
-        """
-        """
-
-        if not regex: 
-            raise TypeError('Regex should be non blank!')
-
-        while True:
-            match = self.isearch(regex, index, stopindex, 
-            backwards=True, exact=exact, regexp=regexp, nocase=nocase, 
-            elide=elide, nolinestop=nolinestop)
-
-            if match: 
-                yield(match)
-            else:
-                break
-            
-            # This one avoids infinite loop when using '^'
-            # as regex.
-            if self.compare(match[1], '==', '1.0'):
-                break
-            elif self.compare(match[1], '==', match[2]):
-                index = '%s %s -1c' % (match[1], step)
-            else:
-                index = '%s %s' % (match[1], step)
+            if step != '':
+                self.mark_set('(FIND-POS)',
+                    '%s %s' % (self.index('(FIND-POS)'), step))
+            yield(data, pos0, pos1)
 
     def isearch(self, pattern, index, stopindex='end', forwards=None,
         backwards=None, exact=None, regexp=None, nocase=None,
         count=None, elide=None, nolinestop=None):
 
         """
-        Just search shortcut, in the sense it return the matched chunk
+        Just AreaVi.search shortcut, in the sense it return the matched chunk
         the initial position and the end position.
         """
         count = IntVar()
@@ -640,16 +599,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         nocase=None, elide=None, nolinestop=None):
 
         """
-        It is used to replace occurrences of a given match.
-        It is possible to use a callback function to return what is replaced 
-        as well.
-
-        If the replacement cant be performed anymore it just returns None otherwise
-        it returns the index and length of the replacement.
-
-        Like:
-        index, length
-
         """
         if not regex: 
             raise TypeError('Regex should be non blank!')
@@ -668,10 +617,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
         if callable(data): 
             data = data(self.get(index, index0), index, index0)
         
-        # Cause infinite loop in replace_all.
-        if len(data) == count.get() == 0:
-            raise TypeError('Bad formed regex!')
-
         self.delete(index, index0)
         self.insert(index, data)
         
@@ -679,32 +624,25 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def replace_all(self, regex, data, index='1.0', stopindex='end', 
         exact=None, regexp=True, nocase=None, elide=None, nolinestop=None):
-
         """
         """
+        matches = self.find(regex, index, stopindex, exact=exact, 
+        regexp=regexp, nocase=nocase, elide=elide, nolinestop=nolinestop)
 
-        # It avoids overlapping of replacements.
         count = 0
-        self.mark_set('(REP_STOPINDEX)', stopindex)
-        while True:
-            map = self.replace(regex, data, index, 
-                '(REP_STOPINDEX)', exact=exact, nocase=nocase, 
-                    nolinestop=nolinestop, regexp=regexp, elide=elide)
-
-            if not map: 
-                return count
-            index, size = map
-
-            index  = self.index('%s +%sc' % (index, size))
-            if self.compare(index, '==', 'end'): break
-
-            if self.compare(index, '==', '%s lineend' % index):
-                index = '%s +1c' % index 
+        for xstr, pos0, pos1 in matches:
+            if callable(data):
+                self.swap(data(xstr), pos0, pos1)
+            else:
+                self.swap(data, pos0, pos1)
             count = count + 1
         return count
 
     def pair(self, index, max, start='(', end=')'):
         """
+        Once this method is called, it returns an index for the next
+        matching parenthesis or None if the char over the cursor
+        isn't either '(' or ')'.
         """
 
         char = self.get(index, '%s +1c' % index)
@@ -729,6 +667,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         for data, pos0, pos1 in matches:
             count = count + (1 if data == start else -1)
+            print(data)
             if not count: 
                 return pos0
 

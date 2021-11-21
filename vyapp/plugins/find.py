@@ -88,7 +88,7 @@ class Find:
         '<Alt-n>':  self.pick_selmatches,
         '<Alt-period>': self.sub_xcursor,
         '<Alt-semicolon>': self.sub_xselection, 
-        '<Alt-comma>': self.replace_all_matches, 
+        '<Alt-comma>': self.sub_all_matches, 
         '<Control-n>': self.toggle_nocase_option,
         '<Control-x>': self.toggle_regexp_option,
 
@@ -141,9 +141,10 @@ class Find:
         """
         Highligh matched patterns inside selected text.
         """
-
+        self.area.tag_remove('(CATCHED)', '1.0', 'end')
         regex   = wid.get()
         matches = self.area.tag_xmatch('sel', regex, **self.opts)
+        
         for _, index0, index1 in matches:
             self.area.tag_add('(CATCHED)', index0, index1)
 
@@ -169,7 +170,7 @@ class Find:
         count = self.area.tag_xsub('sel', regex, Find.data, **self.opts)
         root.status.set_msg('Replaced matches: %s' % count)
 
-    def replace_all_matches(self, wid):
+    def sub_all_matches(self, wid):
         """
         Replace all matches along the whole text for data.
         """
@@ -179,7 +180,5 @@ class Find:
         root.status.set_msg('Replaced matches: %s' % count)
 
 install = Find
-
-
 
 
