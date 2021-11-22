@@ -3,6 +3,7 @@
 """
 
 from vyapp.mixins import DataEvent, IdleEvent
+from re import escape
 from tkinter import TclError
 from vyapp.stderr import printd
 from tkinter import Text, IntVar
@@ -644,10 +645,11 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         sign  = '-' if backwards else '+'
         count = 0
-        stopindex = '%s %s%sc' % (index, sign, max)
-        regex = '\%s|\%s' % (lhs, rhs)
+        regex = '|'.join((escape(lhs), escape(rhs)))
 
-        matches = self.find(regex, index, stopindex, backwards, regexp=True)
+        matches = self.find(regex, index, 
+        '%s %s%sc' % (index, sign, max), backwards, regexp=True)
+
         for data, pos0, pos1 in matches:
             count = count + (1 if data == lhs else -1)
             if count == 0: 
