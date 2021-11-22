@@ -27,8 +27,8 @@ class SeekSymbol:
         area.add_mode('JUMP_NEXT')
 
         area.install('seek-symbol', 
-        ('NORMAL', '<Key-w>', self.next_mode),
-        ('NORMAL', '<Key-a>', self.back_mode),
+        ('NORMAL', '<Key-period>', self.next_mode),
+        ('NORMAL', '<Key-comma>', self.back_mode),
         ('JUMP_BACK', '<Tab>', self.sel_data),
         ('JUMP_BACK', '<Key>', self.jump_back),
         ('JUMP_BACK', '<Return>', self.switch_insert),

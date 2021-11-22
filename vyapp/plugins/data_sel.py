@@ -23,13 +23,12 @@ Event: <Control-p>
 Description: Add selection from the cursor position to the end of the line.
 
 Mode: NORMAL
-Event: <Key-period> 
+Event: <Key-w> 
 Description: Add selection to a word where the cursor is placed on.
 
 Mode: NORMAL
-Event: <Control-period>
-Description: Select a sequence of non blank chars that is over
-the cursor.
+Event: <Control-w>
+Description: Select a sequence of non blank chars that is over the cursor.
 
 Mode: NORMAL
 Event: <Control-s> 
@@ -44,8 +43,8 @@ Description: Add selection from the cursor position to the end of the file.
 class DataSel:
     def __init__(self, area):
         area.install('data-sel', 
-        ('NORMAL', '<Control-period>', self.sel_seq),
-        ('NORMAL', '<Key-period>', self.sel_word), 
+        ('NORMAL', '<Control-w>', self.sel_seq),
+        ('NORMAL', '<Key-w>', self.sel_word), 
         ('NORMAL', '<Control-s>', self.sel_text_start),
         ('NORMAL', '<Control-c>', self.sel_text_end),
         ('NORMAL', '<Key-f>', self.sel_line),

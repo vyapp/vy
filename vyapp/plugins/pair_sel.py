@@ -37,8 +37,8 @@ class PairSel:
     MAX = 2500
     def __init__(self, area):
         area.install('pair-sel', 
-        ('NORMAL', '<Key-comma>', self.sel_inner),
-        ('NORMAL', '<Control-comma>', self.sel_all))
+        ('NORMAL', '<Key-a>', self.sel_inner),
+        ('NORMAL', '<Control-a>', self.sel_all))
         self.area = area
     
     def sel_inner(self, event):

@@ -14,12 +14,12 @@ Key-Commands
 Namespace: fsearch
 
 Mode: NORMAL
-Event: <Key-W>
+Event: <Key-Q>
 Description: Insert locate command output in the current AreaVi instance.
 
 
 Mode: NORMAL
-Event: <Control-w>
+Event: <Control-q>
 Description: Ask for a filename pattern to be located using unix locate command.
 
 """
@@ -36,8 +36,8 @@ class FSearch:
         self.output = ''
 
         area.install('fsearch', 
-        ('NORMAL', '<Key-W>', self.display),
-        ('NORMAL', '<Control-w>',  lambda event: Get(events={
+        ('NORMAL', '<Key-Q>', self.display),
+        ('NORMAL', '<Control-q>',  lambda event: Get(events={
         '<Return>' : self.find, '<<Idle>>': self.update_pattern,
         '<Escape>': lambda wid: True})))
 

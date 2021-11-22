@@ -10,12 +10,12 @@ Key-Commands
 Namespace: page-scroll
 
 Mode: NORMAL
-Event: <Key-Q> 
+Event: <Key-S> 
 Description: Scroll a page up.
 
 
 Mode: NORMAL
-Event: <Key-A> 
+Event: <Key-C> 
 Description: Scroll one page down.
 
 """
@@ -24,8 +24,8 @@ from tkinter import SCROLL
 class PageScroll:
     def __init__(self, area):
         area.install('page-scroll', 
-        ('NORMAL', '<Key-Q>', self.scroll_up),
-        ('NORMAL', '<Key-A>', self.scroll_down))
+        ('NORMAL', '<Key-S>', self.scroll_up),
+        ('NORMAL', '<Key-C>', self.scroll_down))
 
         self.area = area
 
