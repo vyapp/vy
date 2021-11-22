@@ -633,7 +633,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
         for xstr, pos0, pos1 in matches:
             if callable(data):
-                self.swap(data(xstr), pos0, pos1)
+                self.swap(data(xstr, pos0, pos1), pos0, pos1)
             else:
                 self.swap(data, pos0, pos1)
             count = count + 1
