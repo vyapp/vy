@@ -628,8 +628,8 @@ class AreaVi(Text, DataEvent, IdleEvent):
         """
         matches = self.find(regex, index, stopindex, exact=exact, 
         regexp=regexp, nocase=nocase, elide=elide, nolinestop=nolinestop)
-
         count = 0
+
         for xstr, pos0, pos1 in matches:
             if callable(data):
                 self.swap(data(xstr), pos0, pos1)
@@ -638,38 +638,20 @@ class AreaVi(Text, DataEvent, IdleEvent):
             count = count + 1
         return count
 
-    def pair(self, index, max, start='(', end=')'):
+    def pair(self, lhs, rhs, index, max, backwards=False):
         """
-        Once this method is called, it returns an index for the next
-        matching parenthesis or None if the char over the cursor
-        isn't either '(' or ')'.
         """
 
-        char = self.get(index, '%s +1c' % index)
-        sign, dir = None, None
+        sign  = '-' if backwards else '+'
+        count = 0
+        stopindex = '%s %s%sc' % (index, sign, max)
+        regex = '\%s|\%s' % (lhs, rhs)
 
-        if char == start:
-            sign, dir = '+', False
-        elif char == end:
-            sign, dir = '-', True
-        else:
-            return None
-
-        # If we are searching fowards we don't need
-        # to add 1c.
-        index0    = '%s %s' % (index, '+1c' if dir else '')
-        stopindex = self.index('%s %s%sc' % (index, sign, max))
-        count     = 0
-
-        matches = self.find('\%s|\%s' % (start, end), 
-        index = index0, stopindex = stopindex, 
-        backwards = dir, regexp = True) 
-
+        matches = self.find(regex, index, stopindex, backwards, regexp=True)
         for data, pos0, pos1 in matches:
-            count = count + (1 if data == start else -1)
-            print(data)
-            if not count: 
-                return pos0
+            count = count + (1 if data == lhs else -1)
+            if count == 0: 
+                return pos0, pos1
 
     def clear_data(self):
         """

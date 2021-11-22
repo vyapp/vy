@@ -22,43 +22,52 @@ including the pairs when the cursor is placed over one of these characters.
 """
 
 class PairSel:
-    def __init__(self, area, max=2500):
+    lhs = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    }
+
+    rhs = {
+        ')': '(',
+        ']': '[',
+        '}': '{'
+    }
+
+    MAX = 2500
+    def __init__(self, area):
         area.install('pair-sel', 
-        ('NORMAL', '<Key-comma>', self.sel_inner_data),
-        ('NORMAL', '<Control-comma>', self.sel_pair))
-        self.max  = max
+        ('NORMAL', '<Key-comma>', self.sel_inner),
+        ('NORMAL', '<Control-comma>', self.sel_all))
         self.area = area
     
-    def match_pair(self):
-        pairs = (('(', ')'), ('[', ']'), ('{', '}'))
-        for lhs, rhs in pairs:
-            index = self.area.pair('insert', self.max, lhs, rhs)
-            if index is not None: 
-                return index
-
-    def sel_inner_data(self, event):
-        index = self.match_pair()
-
-        if not index: 
-            return None
-        min = self.area.min(index, 'insert')
-        max = self.area.max(index, 'insert')
-        min = '%s +1c' % min
-
-        self.area.tag_add('sel', min, max)
-
-    def sel_pair(self, event):
+    def sel_inner(self, event):
         """
+        Select inner text between pair tokens.
         """
-        index = self.match_pair()
-        if not index: 
-            return None
 
-        min = self.area.min(index, 'insert')
-        max = self.area.max(index, 'insert')
-        max = '%s +1c' % max
+        token = self.area.get('insert', 'insert +1c')
+        if token in self.lhs:
+            self.area.tag_add('sel', 'insert +1c', 
+                self.area.pair(token,self.lhs[token], 
+                    'insert', self.MAX)[0])
+        elif token in self.rhs:
+            self.area.tag_add('sel', self.area.pair(self.rhs[token], 
+                token, 'insert +1c', 
+                    self.MAX, True)[1], 'insert')
 
-        self.area.tag_add('sel', min, max)
+    def sel_all(self, event):
+        """
+        Select text between pair tokens also the tokens.
+        """
+
+        token = self.area.get('insert', 'insert +1c')
+        if token in self.lhs:
+            self.area.tag_add('sel', 'insert', self.area.pair(
+                token,self.lhs[token], 'insert', self.MAX)[1])
+        elif token in self.rhs:
+            self.area.tag_add('sel', self.area.pair(self.rhs[token], 
+                token, 'insert +1c', self.MAX, True)[0], 'insert +1c')
 
 install = PairSel
 
