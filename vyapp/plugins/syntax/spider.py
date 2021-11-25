@@ -1,69 +1,106 @@
 """
     :)
 """
-from vyapp.plugins.syntax.tools import get_tokens_unprocessed_matrix
+from vyapp.plugins.syntax.tools import get_tokens_matrix
+from pygments.lexers import get_lexer_for_filename, guess_lexer, guess_lexer_for_filename
 from vyapp.plugins.syntax.keys import PRECEDENCE_TABLE, DEFAULT
-from pygments.lexers import get_lexer_for_filename, guess_lexer
+from pygments.formatter import Formatter
+from pygments.filter import Filter
+from pygments.token import Token
+from itertools import groupby
 
+class JoinTType(Filter):
+    def __init__(self, **options):
+        Filter.__init__(self, **options)
+
+    def filter(self, lexer, stream):
+        groups = groupby(stream, lambda ind: ind[0])
+        for ttype, seq in groups:
+            yield ttype, ''.join(map(lambda ind: ind[1], seq))
+
+class TkTxtFormatter(Formatter):
+    def __init__(self, **options):
+        Formatter.__init__(self, **options)
+
+    def format(self, tokens, area):
+        for (index0, index1), ttype, value in tokens:
+            index0, index1 = '%s.%s' % index0,  '%s.%s' % index1
+            tokname = self.has_tokstyle(ttype)
+            area.tag_add(str(tokname), index0, index1)
+            area.tag_add('Token.SStr', index0, index1)
+            if '\n' in value:
+                area.tag_add('Token.MStr', index0, index1)
+
+    def has_tokstyle(self, token):
+        ttype = token
+        while ttype not in self.style.styles:
+            ttype = ttype.parent
+            if ttype is None:
+                return None
+        return ttype
 
 class Spider:
-    def  __init__(self, area, theme, max=10):
-        self.area          = area
-        self.max           = max
-        self.theme         = theme
-        self.styles        = theme.styles
-        self.default_style = getattr(theme, 'default_style', '#957C8B')
-        self.default_style = self.default_style if self.default_style else '#957C8B'
+    def  __init__(self, area, style, max=10):
+        self.area  = area
+        self.max   = max
+        self.style = style
 
-        self.default_background = theme.background_color \
-        if theme.background_color else 'black'
-        self.lexer = None
-        area.configure(background = self.default_background)
-        area.configure(foreground = self.default_style)
+        area.install('syntax', 
+        (-1, '<<LoadData>>', self.update_all),
+        (-1, '<<SaveData>>', self.update_all),
+        (-1, '<Escape>', self.update))
 
-        for ind in self.styles.keys():
-            self.set_token_style(ind)
+        if style.background_color:
+            self.area.configure(background=style.background_color)
+        default_style = getattr(style, 'default_style')
 
-        area.install('syntax', (-1, '<<LoadData>>', 
-        lambda event: self.update_all()),
-        (-1, '<<SaveData>>', lambda event: self.update_all()),
-        (-1, '<Escape>', lambda event: self.update()))
+        if default_style:
+            self.area.configure(foreground=default_style)
 
-    def set_lexer(self):
+        for tokname, tokstyle in self.style:
+            self.conf_tokstyle(str(tokname), tokstyle)
+        self.formatter = TkTxtFormatter(style=style)
+
+    def conf_tokstyle(self, tokname, tokstyle):
+        foreground = tokstyle.get('color')
+        background = tokstyle.get('bgcolor')
+        underline  = tokstyle.get('underline')
+
+        if not foreground is None:
+            self.area.tag_config(tokname, foreground='#%s' % foreground)
+        if not background is None:
+            self.area.tag_config(tokname, background='#%s' % background)
+        if not underline is None:
+            self.area.tag_config(tokname, underline=underline)
+        self.area.tag_lower(tokname, 'sel')
+
+    def update_all(self, event):
         """
-        Try to detect the lexer by filename if it fails
-        then try to guess the lex by shebang statement.
-        
-        The shebang statement should be placed in the first
-        20 lines of the file.
         """
+        data = self.area.get('1.0', 'end')
+        lexer = guess_lexer_for_filename(self.area.filename, 
+        data[0:20], stripnl=False, stripall=False, tabsize=False)
 
-        try:
-            self.lexer = get_lexer_for_filename(self.area.filename, '')
-        except Exception as e:
-            self.lexer = guess_lexer(self.area.get('1.0', '20.0'))
+        tokens = get_tokens_matrix(1, 0, data, lexer)
+        lexer.add_filter(JoinTType())
+        self.formatter.format(tokens, self.area)
 
-    def update_all(self):
+    def update(self, event):
         """
-        Colorize all text in the widget.
         """
-
-        # When it need to update all the text
-        # just save the lexer for later usage.
-        self.set_lexer()
-        self.tag_tokens('1.0', 'end')
-
-    def update(self):
-        """
-        Update a small range of the text. It is mostly called 
-        when Escape is pressed.
-        """
-
-        TAG_KEYS_PRECEDENCE = PRECEDENCE_TABLE.get(
-        tuple(self.lexer.aliases), DEFAULT)
 
         index0 = self.area.index('@0,0')
         index0 = self.area.index('%s -%sl' % (index0, self.max))
+
+        lexer  = guess_lexer_for_filename(self.area.filename, 
+        self.area.get('insert -10l', 'insert +10l'), stripnl=False, 
+        stripall=False, tabsize=False)
+
+        lexer.add_filter(JoinTType())
+
+        TAG_KEYS_PRECEDENCE = PRECEDENCE_TABLE.get(
+        tuple(lexer.aliases), DEFAULT)
+
         index0 = self.area.tag_next_occur(TAG_KEYS_PRECEDENCE, 
         index0, 'insert', '1.0')
 
@@ -76,48 +113,13 @@ class Spider:
         index2 = self.area.tag_prev_occur(TAG_KEYS_PRECEDENCE, 
         index2, 'insert', 'end')
 
-        for ind in self.styles.keys():
-            self.area.tag_remove(str(ind), index0, index2)
-        self.tag_tokens(index0, index2)
+        for ttype, tokstyle in self.style.styles.items():
+            self.area.tag_remove(str(ttype), index0, index2)
+        data = self.area.get(index0, index2)
 
-    def tag_tokens(self, index, stopindex):
-        """
-        Add the token'tag to each range of text.
-        """
-
-        count, offset = self.area.indexsplit(index)
-        tokens        = get_tokens_unprocessed_matrix(count, offset, 
-        self.area.get(index, stopindex), self.lexer)
-
-        for ((srow, scol), (erow, ecol)), token, value in tokens:
-            self.area.tag_add(str(token), '%s.%s' % (srow, 
-                 scol), '%s.%s' % (erow, ecol))
-
-    def set_token_style(self, token):
-        """
-        Configure the tag which maps to the token in the
-        AreaVi. 
-        
-        If there is no such a definition of token
-        in styles dict then it defaults to self.background 
-        and self.default_style.
-        """
-
-        tag  = str(token)
-        conf = self.theme.style_for_token(token)
-
-        self.area.tag_configure(tag, 
-        foreground='#%s' % conf['color'] if conf['color'] \
-        else self.default_style, 
-        background='#%s' % conf['bgcolor'] if conf['bgcolor'] else \
-        self.default_background, 
-        underline=conf['underline'])
-
-        # Note: It may be interesting to redefine
-        # tag_configure in AreaVi and implement it there.
-        self.area.tag_lower(tag, 'sel')
+        line, col = self.area.indexsplit(index0)
+        tokens = get_tokens_matrix(line, col, data, lexer)
+        self.formatter.format(tokens, self.area)
 
 install = Spider
-
-
 

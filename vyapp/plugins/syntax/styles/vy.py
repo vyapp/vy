@@ -74,17 +74,3 @@ class VyStyle(Style):
         Error:                     "#FF0000"
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-

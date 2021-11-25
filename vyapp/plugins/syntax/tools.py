@@ -7,7 +7,8 @@ def thread_colorize(area, lexer, theme, index, stopindex):
 
 def matrix_step(map):
     count, offset = 0, 0
-    for pos, token, value in map:
+    pos = 0
+    for token, value in map:
         srow   = count 
         scol   = pos - offset
         n      = value.count('\n')
@@ -16,11 +17,12 @@ def matrix_step(map):
         m      = value.rfind('\n') 
         offset = pos + m + 1 if m >= 0 else offset
         ecol   = len(value) - (m + 1) if m >= 0 else scol + len(value)
+        pos = pos + len(value)
         yield(((srow, scol), (erow, ecol)), token, value)
 
 
-def get_tokens_unprocessed_matrix(count, offset, data, lexer):
-    map = matrix_step(lexer.get_tokens_unprocessed(data))
+def get_tokens_matrix(count, offset, data, lexer):
+    map = matrix_step(lexer.get_tokens(data))
 
     for ((srow, scol), (erow, ecol)), token, value in map:
         if '\n' in value: 
