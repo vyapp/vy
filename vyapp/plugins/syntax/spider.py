@@ -5,7 +5,7 @@ from vyapp.plugins.syntax.tools import get_tokens_matrix
 from vyapp.plugins.syntax.styles.vy import VyStyle
 from pygments.util import ClassNotFound 
 from pygments.lexers import get_lexer_for_filename as get_lexer
-from pygments.lexers import guess_lexer
+from pygments.lexers import guess_lexer, guess_lexer_for_filename
 from pygments.formatter import Formatter
 from vyapp.stderr import printd
 from pygments.filter import Filter
@@ -39,6 +39,10 @@ def findlexer(filename, text, **opts):
         pass
     else:
         return lexer
+
+    if not text:
+        return None
+
     try:
         lexer = guess_lexer(text, **opts)
     except ClassNotFound as e:
@@ -75,6 +79,8 @@ class TkTxtFormatter(Formatter):
 
 class Spider:
     style = VyStyle
+    guesslex = True
+
     def  __init__(self, area, max=10):
         self.area  = area
         self.max   = max
@@ -103,6 +109,10 @@ class Spider:
         """
         cls.style = style
 
+    @classmethod
+    def c_guesslex(self, value):
+        self.guesslex = value
+
     def conf_tokstyle(self, tokname, tokstyle):
         foreground = tokstyle.get('color')
         background = tokstyle.get('bgcolor')
@@ -120,11 +130,15 @@ class Spider:
         """
         Colorize the whole text.
         """
-        data = self.area.get('1.0', 'end')
+
+        printd("Syntax - Detecting lexer.")
         self.lexer = findlexer(self.area.filename, 
-        data, stripnl=False, stripall=False, tabsize=False)
+        self.area.get('1.0', '1.0 +258c') if self.guesslex else None, 
+        stripnl=False, stripall=False, tabsize=False)
 
         printd("Syntax - Detected lexer:", self.lexer)
+        data = self.area.get('1.0', 'end')
+
         # Attempt to add the filter. If no lexer is set then raises
         # an exception.
         self.lexer.add_filter(JoinTType())
