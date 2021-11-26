@@ -374,45 +374,26 @@ autoload(clip_path)
 ##############################################################################
 # Syntax plugin is used to highlight code.
 # It uses python pygments styles to highlight code :)
-# Check out more pygments styles.
 # Note: When uncommenting a theme dont forget to comment the previously used one.
-from vyapp.plugins.syntax import spider
+from vyapp.plugins.syntax.spider import Spider
 
+# Check out more pygments styles.
 # from pygments.styles.emacs import EmacsStyle
-# autoload(spider, EmacsStyle)
-
 # from pygments.styles.murphy import MurphyStyle
-# autoload(spider, MurphyStyle)
-
 # from pygments.styles.abap import AbapStyle
-# autoload(spider, AbapStyle)
-
 # from pygments.styles.borland import BorlandStyle
-# autoload(spider, BorlandStyle)
-
 # from pygments.styles.fruity import FruityStyle
-# autoload(spider, FruityStyle)
-
 # from pygments.styles.colorful import ColorfulStyle
-# autoload(spider, ColorfulStyle)
-
 # from pygments.styles.tango import TangoStyle
-# autoload(spider, TangoStyle)
-
 # from pygments.styles.trac import TracStyle
-# autoload(spider, TracStyle)
-
 # from pygments.styles.igor import IgorStyle
-# autoload(spider, IgorStyle)
-
 # from pygments.styles.paraiso_dark import ParaisoDarkStyle
-# autoload(spider, ParaisoDarkStyle)
-
 # from pygments.styles.vim import VimStyle
-# autoload(spider, VimStyle)
 
-from vyapp.plugins.syntax.styles.vy import VyStyle
-autoload(spider, VyStyle)
+# Import and configure VyStyle to highligh code.
+from vyapp.plugins.syntax.default_style import VyStyle
+Spider.c_style(VyStyle)
+autocall(Spider)
 
 ##############################################################################
 # Core command plugins.
