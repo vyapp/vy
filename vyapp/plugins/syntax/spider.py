@@ -3,11 +3,35 @@
 """
 from vyapp.plugins.syntax.tools import get_tokens_matrix
 from pygments.lexers import get_lexer_for_filename, guess_lexer, guess_lexer_for_filename
-from vyapp.plugins.syntax.keys import PRECEDENCE_TABLE, DEFAULT
 from pygments.formatter import Formatter
 from pygments.filter import Filter
 from pygments.token import Token
 from itertools import groupby
+
+DEFAULT = (
+    'Token.Name.Tag',
+    'Token.Comment.Multiline',
+    'Token.Literal.String.Doc',
+    'Token.Literal.String.Heredoc',
+    'Token.Literal.String.Regex',
+    'Token.Literal.String.Symbol',
+    'Token.Literal.String',
+    'Token.Literal.String.Other',
+    'Token.Literal.String.Single',
+    'Token.Comment.Preproc',
+    'Token.Comment',
+    'Token.Comment.Single',
+    'Token.Comment.Special',
+    'Token.Literal.String.Double',
+    'Token.Literal.String.Backtick',
+    'Token.Literal.String.Char',
+    'Token.Literal.Number.Float',
+    'Token.Punctuation',
+    'Token.Operator',
+    'Token.Name',
+    'Token.Keyword',
+    'Token.Text',
+)
 
 class JoinTType(Filter):
     def __init__(self, **options):
@@ -27,9 +51,6 @@ class TkTxtFormatter(Formatter):
             index0, index1 = '%s.%s' % index0,  '%s.%s' % index1
             tokname = self.has_tokstyle(ttype)
             area.tag_add(str(tokname), index0, index1)
-            area.tag_add('Token.SStr', index0, index1)
-            if '\n' in value:
-                area.tag_add('Token.MStr', index0, index1)
 
     def has_tokstyle(self, token):
         ttype = token
@@ -89,35 +110,27 @@ class Spider:
         """
         """
 
-        index0 = self.area.index('@0,0')
-        index0 = self.area.index('%s -%sl' % (index0, self.max))
-
-        lexer  = guess_lexer_for_filename(self.area.filename, 
+        lexer = guess_lexer_for_filename(self.area.filename, 
         self.area.get('insert -10l', 'insert +10l'), stripnl=False, 
         stripall=False, tabsize=False)
-
         lexer.add_filter(JoinTType())
 
-        TAG_KEYS_PRECEDENCE = PRECEDENCE_TABLE.get(
-        tuple(lexer.aliases), DEFAULT)
+        index0 = self.area.index('@0,0')
+        index1 = self.area.index('%s -%sl' % (index0, self.max))
+        index2 = self.area.tag_prev_occur(DEFAULT, index0, index1, '1.0')
 
-        index0 = self.area.tag_next_occur(TAG_KEYS_PRECEDENCE, 
-        index0, 'insert', '1.0')
-
-        index1 = '@%s,%s' % (self.area.winfo_height(), 
-        self.area.winfo_width())
-
-        index2 = self.area.index(index1)
-        index2 = self.area.index('%s +%sl' % (index1, self.max))
-
-        index2 = self.area.tag_prev_occur(TAG_KEYS_PRECEDENCE, 
-        index2, 'insert', 'end')
+        index3 = '@%s,%s' % (self.area.winfo_height(), self.area.winfo_width())
+        index4 = self.area.index(index3)
+        index5 = self.area.index('%s +%sl' % (index4, self.max))
+        index6 = self.area.tag_next_occur(DEFAULT, index4, index5, 'end')
+        index2 = self.area.index('%s -1l' % index2)
+        index6 = self.area.index('%s +1l' % index6)
 
         for ttype, tokstyle in self.style.styles.items():
-            self.area.tag_remove(str(ttype), index0, index2)
-        data = self.area.get(index0, index2)
+            self.area.tag_remove(str(ttype), index2, index6)
+        data = self.area.get(index2, index6)
 
-        line, col = self.area.indexsplit(index0)
+        line, col = self.area.indexsplit(index2)
         tokens = get_tokens_matrix(line, col, data, lexer)
         self.formatter.format(tokens, self.area)
 

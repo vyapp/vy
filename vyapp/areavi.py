@@ -777,7 +777,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         for ind in tag_names:
             pos = self.tag_prevrange(ind, index0, index1)
             if pos != (): 
-                return pos[1]
+                return pos[0]
         return default
     
     def tag_next_occur(self, tag_names, index0, index1, default):
@@ -788,7 +788,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         for ind in tag_names:
             pos = self.tag_nextrange(ind, index0, index1)
             if pos != (): 
-                return pos[0]
+                return pos[1]
         return default
     
     @staticmethod
