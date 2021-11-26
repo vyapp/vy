@@ -7,6 +7,7 @@ from pygments.util import ClassNotFound
 from pygments.lexers import get_lexer_for_filename as get_lexer
 from pygments.lexers import guess_lexer
 from pygments.formatter import Formatter
+from vyapp.stderr import printd
 from pygments.filter import Filter
 from pygments.token import Token
 from itertools import groupby
@@ -123,8 +124,10 @@ class Spider:
         self.lexer = findlexer(self.area.filename, 
         data, stripnl=False, stripall=False, tabsize=False)
 
+        printd("Syntax - Detected lexer:", self.lexer)
+        # Attempt to add the filter. If no lexer is set then raises
+        # an exception.
         self.lexer.add_filter(JoinTType())
-
         tokens = get_tokens_matrix(1, 0, data, self.lexer)
         self.formatter.format(tokens, self.area)
 
