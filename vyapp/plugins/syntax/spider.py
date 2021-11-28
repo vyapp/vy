@@ -14,15 +14,14 @@ from itertools import groupby
 
 TK_ORDER = ('Token.Name.Tag', 'Token.Comment.Multiline',
 'Token.Literal.String.Doc','Token.Literal.String.Heredoc',
+'Token.Literal.String.Double', 'Token.Literal.String.Single', 
 'Token.Literal.String.Regex', 'Token.Literal.String.Symbol',
-'Token.Literal.String', 'Token.Literal.String.Other',
-'Token.Literal.String.Single', 'Token.Comment.Preproc',
-'Token.Comment', 'Token.Comment.Single',
-'Token.Comment.Special', 'Token.Literal.String.Double',
+'Token.Literal.String.Other', 'Token.Literal.String', 
+'Token.Comment.Preproc', 'Token.Comment.Single', 
+'Token.Comment.Special', 'Token.Comment', 
 'Token.Literal.String.Backtick', 'Token.Literal.String.Char',
-'Token.Literal.Number.Float', 'Token.Punctuation',
-'Token.Operator', 'Token.Name', 'Token.Keyword',
-'Token.Text',
+'Token.Punctuation', 'Token.Operator', 'Token.Name', 
+'Token.Keyword', 'Token.Literal.Number', 'Token.Text',
 )
 
 def findlexer(filename, text, **opts):
@@ -73,8 +72,8 @@ class Spider:
     guesslex = True
 
     def  __init__(self, area, max=10):
-        self.area  = area
-        self.max   = max
+        self.area = area
+        self.max  = max
 
         area.install('syntax', 
         (-1, '<<LoadData>>', self.update_all),
