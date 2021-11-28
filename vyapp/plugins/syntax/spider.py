@@ -33,22 +33,13 @@ def findlexer(filename, text, **opts):
     When get_lexer_for_filename fails it uses the value in text
     to guess the lexer using pygments guess_lexer.
     """
-    try:
-        lexer = get_lexer(filename, **opts)
-    except ClassNotFound as e:
-        pass
-    else:
-        return lexer
-
-    if not text:
-        return None
 
     try:
-        lexer = guess_lexer(text, **opts)
-    except ClassNotFound as e:
-        return None
-    else:
-        return lexer
+        return get_lexer(filename, **opts)
+    except ClassNotFound as excpt:
+        if not text: 
+            raise excpt
+    return guess_lexer(text, **opts)
 
 class JoinTType(Filter):
     def __init__(self, **options):
