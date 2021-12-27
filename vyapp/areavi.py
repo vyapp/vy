@@ -186,9 +186,6 @@ class AreaVi(Text, DataEvent, IdleEvent):
 
     def append(self, data, *args):
         """
-        This method is used to insert data to the end of the AreaVi instance widget
-        and place the cursor at the end of the data that was appended. It makes the cursor
-        visible.
         """
 
         # This is sort of odd, it seems that

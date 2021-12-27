@@ -17,6 +17,7 @@ Description: Shows an input text field to insert a Line.Col value to place the c
 """
 from vyapp.ask import Ask
 from tkinter import TclError
+from vyapp.tools import e_stop
 from vyapp.app import root
 
 class LineIndex:
@@ -25,6 +26,7 @@ class LineIndex:
         area.install('line-index', 
         (-1, '<Alt-w>', self.set_pos))
 
+    @e_stop
     def set_pos(self, area):
         root.status.set_msg('Jump Line/Line.Col:')
 
