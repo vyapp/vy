@@ -2,35 +2,9 @@
 Overview
 ========
 
-It implements functionalities to execute python code that affects vy state. 
-
-With this plugin it is possible to drop the output to a given 
-Line.Col inside an AreaVi instance.
 
 Key-Commands
 ============
-
-Namespace: cmd
-
-Mode: Global
-Event: <Alt-z>
-Description: Set an AreaVi instance as target for commands.
-
-Mode: NORMAL
-Event: <Key-semicolon>
-Description: Executes a sequence of python code that is selected.
-
-Mode: Global
-Event: <Alt-semicolon>
-Description: Open an input box in order to type inline python code to be executed.
-
-Mode: EXTRA
-Event: <Key-x>
-Description: Select a region to be executed as python code. The region will be shaded.
-
-Mode: EXTRA
-Event: <Key-X>
-Description: Unselect a region. It no longer can be executed as python code.
 
 """
 

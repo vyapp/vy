@@ -13,18 +13,17 @@ from vyapp.plugins import autoload, autocall, mapset
 
 from vyapp.plugins import untwisted
 ##############################################################################
-# Custom keystroke schemes.
+# Custom keystroke schemes. Use mapset to remap plugin keystrokes. 
 
 # Useful for keyboards that have ccedilla key.
 # It is handy to get in EXTRA mode quickly.
-#
-# mapset('builtin-modes', {
+
+# from vyapp.plugins.builtin_modes import BuiltinModesNS
+# mapset(BuiltinModesNS, {
 # (-1, '<Alt-v>'): (('-1', '<Alt-v>'), 
 # ('NORMAL', '<Key-ccedilla>'))})
 
-# Note: Plugin namepaces should follow the pattern
-# plugin-name it means any '_' is replaced for '-'.
-
+# Note: BuiltinModesNS is builtin_modes's plugin namespace.
 ##############################################################################
 # Basic core modes.
 

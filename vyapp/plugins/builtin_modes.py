@@ -23,6 +23,10 @@ Event: <Key-i>
 Description: Get the focused AreaVi instance in INSERT mode.
 
 """
+from vyapp.plugins import Namespace
+
+class BuiltinModesNS(Namespace):
+    pass
 
 class BuiltinModes:
     def __init__(self, area):
@@ -34,7 +38,7 @@ class BuiltinModes:
         area.add_mode('INSERT', opt=True)
         area.add_mode('EXTRA')
 
-        area.install('builtin-modes', 
+        area.install(BuiltinModesNS, 
         (-1, '<Escape>', self.switch_normal),
         (-1, '<Alt-v>', self.switch_extra),
         ('NORMAL', '<Key-i>', self.switch_insert))

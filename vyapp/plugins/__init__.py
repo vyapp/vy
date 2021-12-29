@@ -15,6 +15,11 @@ def mapset(namespace, map):
     HANDLE.append((lambda area: 
     area.update_map(namespace, map), (), {}))
 
+class Namespace(tuple):
+    def __new__(self):
+        return tuple.__new__(Namespace, 
+            (Namespace.__module__, Namespace.__name__))
+
 class Command:
     area = None
     def __init__(self, name=None):
@@ -31,3 +36,4 @@ class Command:
     @classmethod
     def set_target(cls, area):
         cls.area = area
+
