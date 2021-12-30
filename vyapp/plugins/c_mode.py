@@ -20,10 +20,10 @@ class CModeNS(Namespace):
     pass
 
 def c_mode(area):
-    area.chmode('C')
+    area.chmode('C/C++')
 
 def install(area):
-    area.add_mode('C')
+    area.add_mode('C/C++')
     area.install(CModeNS, ('NORMAL', '<Key-dollar>', 
     lambda event: c_mode(area)))
 

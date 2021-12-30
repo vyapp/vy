@@ -51,9 +51,6 @@ autoload(c_mode)
 from vyapp.plugins import javascript_mode
 autoload(javascript_mode)
 
-from vyapp.plugins import cplusplus_mode
-autoload(cplusplus_mode)
-
 ##############################################################################
 # Core plugins.
 

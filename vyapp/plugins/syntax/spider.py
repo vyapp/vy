@@ -2,7 +2,6 @@
     :)
 """
 from vyapp.plugins.syntax.tools import get_tokens_matrix
-from vyapp.plugins.syntax.styles.vy import VyStyle
 from pygments.util import ClassNotFound 
 from pygments.lexers import get_lexer_for_filename as get_lexer
 from pygments.lexers import guess_lexer, guess_lexer_for_filename
@@ -68,7 +67,7 @@ class TkTxtFormatter(Formatter):
         return ttype
 
 class Spider:
-    style = VyStyle
+    style = None
     guesslex = True
 
     def  __init__(self, area, max=10):
