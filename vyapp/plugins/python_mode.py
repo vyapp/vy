@@ -14,11 +14,20 @@ Event: <Key-exclam>
 Description: Switch to PYTHON mode.
 """
 
-def python_mode(area):
-    area.chmode('PYTHON')
+from vyapp.plugins import Namespace
 
-def install(area):
-    area.add_mode('PYTHON')
-    area.install('python-mode', ('NORMAL', '<Key-exclam>', 
-    lambda event: python_mode(area)))
+class PythonModeNS(Namespace):
+    pass
+
+class PythonMode:
+    def __init__(self, area):
+        self.area = area
+        area.add_mode('PYTHON')
+        area.install(PythonModeNS, 
+        ('NORMAL', '<Key-exclam>', self.python_mode))
+
+    def python_mode(self, event):
+        self.area.chmode('PYTHON')
+
+install = PythonMode
 
