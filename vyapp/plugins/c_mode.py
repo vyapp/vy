@@ -14,12 +14,17 @@ Event: <Key-exclam>
 Description: Switch to C mode.
 """
 
+from vyapp.plugins import Namespace
+
+class CModeNS(Namespace):
+    pass
+
 def c_mode(area):
     area.chmode('C')
 
 def install(area):
     area.add_mode('C')
-    area.install('c-mode', ('NORMAL', '<Key-dollar>', 
+    area.install(CModeNS, ('NORMAL', '<Key-dollar>', 
     lambda event: c_mode(area)))
 
 
