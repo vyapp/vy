@@ -39,10 +39,14 @@ Mode: NORMAL
 Event: <Control-c> 
 Description: Add selection from the cursor position to the end of the file.
 """
+from vyapp.plugins import Namespace
+
+class DataSelNS(Namespace):
+    pass
 
 class DataSel:
     def __init__(self, area):
-        area.install('data-sel', 
+        area.install(DataSelNS, 
         ('NORMAL', '<Control-w>', self.sel_seq),
         ('NORMAL', '<Key-w>', self.sel_word), 
         ('NORMAL', '<Control-s>', self.sel_text_start),
