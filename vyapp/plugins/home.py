@@ -9,11 +9,15 @@ should use AreaVi.HOME as last resource of information.
 from vyapp.areavi import AreaVi
 from vyapp.app import root
 from vyapp.ask import Ask
+from vyapp.plugins import Namespace
+
+class HomeNS(Namespace):
+    pass
 
 class Home:
     def  __init__(self, area):
         self.area = area
-        area.install('home', 
+        area.install(HomeNS, 
         ('NORMAL', '<Key-bar>', self.set_home))
 
     def set_home(self, event):
