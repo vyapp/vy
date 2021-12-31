@@ -25,10 +25,14 @@ Event: <Control-i>
 Description: Delete a char from the cursor position.
 
 """
+from vyapp.plugins import Namespace
+
+class DataDelNS(Namespace):
+    pass
 
 class DataDel:
     def __init__(self, area):
-        area.install('data-del', 
+        area.install(DataDelNS, 
         ('NORMAL', '<Key-d>', self.del_sel),
         ('NORMAL', '<Key-D>', self.del_line),
         ('NORMAL', '<Control-i>', self.del_char))

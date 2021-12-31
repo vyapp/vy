@@ -38,6 +38,7 @@ using the same keys as defined in text_spots plugin.
 
 """
 
+from vyapp.plugins import Namespace
 from vyapp.plugins import Command
 from subprocess import Popen, STDOUT, PIPE
 from os.path import relpath
@@ -48,13 +49,17 @@ from vyapp.app import root
 from re import findall
 import sys
 
+class PythonAnalysisNS(Namespace):
+    pass
+
 class PythonAnalysis:
     options = LinePicker()
     path    = 'vulture'
 
     def  __init__(self, area):
         self.area = area
-        area.install('deadcode', ('PYTHON', '<Control-o>', self.check_module),
+        area.install(PythonAnalysisNS, 
+        ('PYTHON', '<Control-o>', self.check_module),
         ('PYTHON', '<Key-o>', lambda event: self.options.display()),
         ('PYTHON', '<Key-O>', self.check_all))
 
