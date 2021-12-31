@@ -29,13 +29,17 @@ from subprocess import Popen, STDOUT, PIPE
 from vyapp.ask import Get
 from vyapp.app import root
 
+from vyapp.plugins import Namespace
+
+class FSearchNS(Namespace):
+    pass
 
 class FSearch:
     def __init__(self, area):
         self.area   = area
         self.output = ''
 
-        area.install('fsearch', 
+        area.install(FSearchNS, 
         ('NORMAL', '<Key-Q>', self.display),
         ('NORMAL', '<Control-q>',  lambda event: Get(events={
         '<Return>' : self.find, '<<Idle>>': self.update_pattern,

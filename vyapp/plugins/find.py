@@ -49,6 +49,10 @@ of text for the previously set replacement.
 from vyapp.ask import Get
 from vyapp.stderr import printd
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class FindNS(Namespace):
+    pass
 
 class Find:
     confs = {
@@ -65,7 +69,7 @@ class Find:
         self.area  = area
         area.tag_config('(CATCHED)', self.confs)
 
-        area.install('find', ('NORMAL', 
+        area.install(FindNS, ('NORMAL', 
         '<Alt-slash>', lambda event: self.start()))
 
     @classmethod
