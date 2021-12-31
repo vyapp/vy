@@ -37,6 +37,10 @@ from vyapp.areavi import AreaVi
 from re import findall, escape
 from vyapp.stderr import printd
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class FstmtNS(Namespace):
+    pass
 
 class Fstmt:
     options = LinePicker()
@@ -45,7 +49,7 @@ class Fstmt:
     def  __init__(self, area):
         self.area    = area
 
-        area.install('fstmt', 
+        area.install(FstmtNS, 
         ('NORMAL', '<Key-z>', lambda event: self.options.display()),
         ('NORMAL', '<Control-z>', lambda event: self.picker('-i')),
         ('NORMAL', '<Key-Z>', lambda event: self.picker('-s')))

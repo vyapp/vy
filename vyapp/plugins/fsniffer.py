@@ -33,7 +33,10 @@ from vyapp.widgets import LinePicker
 from vyapp.ask import Get
 from vyapp.app import root
 from os.path import basename
+from vyapp.plugins import Namespace
 
+class FSnifferNS(Namespace):
+    pass
 
 class FSniffer:
     options = LinePicker()
@@ -41,7 +44,7 @@ class FSniffer:
 
     def __init__(self, area):
         self.area = area
-        area.install('fsniffer', 
+        area.install(FSnifferNS, 
         (-1, '<Alt-t>', self.display_matches ), 
         (-1, '<Alt-y>', self.find_matches))
     
