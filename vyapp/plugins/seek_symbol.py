@@ -12,6 +12,10 @@ Namespace: seek-symbol
 """
 
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class SeekSymbolNS(Namespace):
+    pass
 
 def get_char(num):
     try:
@@ -26,7 +30,7 @@ class SeekSymbol:
         area.add_mode('JUMP_BACK')
         area.add_mode('JUMP_NEXT')
 
-        area.install('seek-symbol', 
+        area.install(SeekSymbolNS, 
         ('NORMAL', '<Key-period>', self.next_mode),
         ('NORMAL', '<Key-comma>', self.back_mode),
         ('JUMP_BACK', '<Tab>', self.sel_data),

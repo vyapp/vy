@@ -17,26 +17,21 @@ Description: Copies the complete path of the file to the clipboard.
 """
 
 from vyapp.app import root
+from vyapp.plugins import Namespace
 
-def clip_ph(area):
-    """ Sends filename path to clipboard. """
-    area.clipboard_clear()
-    area.clipboard_append(area.filename)
-    root.status.set_msg('File path copied to the clipboard.')
+class ClipPathNS(Namespace):
+    pass
 
-def install(area):
-    area.install('clip-path', ('EXTRA', '<Key-ampersand>', lambda event: clip_ph(event.widget)))
+class ClipPath:
+    def __init__(self, area):
+        self.area = area
+        area.install(ClipPathNS, ('EXTRA', '<Key-ampersand>', 
+        self.clip_ph))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def clip_ph(self, event):
+        """ Sends filename path to clipboard. """
+        self.area.clipboard_clear()
+        self.area.clipboard_append(area.filename)
+        root.status.set_msg('File path copied to the clipboard.')
+    
+install = ClipPath
