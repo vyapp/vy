@@ -15,13 +15,17 @@ AreaVi instance.
 """
 
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class EditrcNS(Namespace):
+    pass
 
 def loadrc(event):
     event.widget.load_data(root.rc)
     event.widget.chmode('NORMAL')
 
 def install(area):
-    area.install('editrc', ('EXTRA', '<Key-v>', loadrc))
+    area.install(EditrcNS, ('EXTRA', '<Key-v>', loadrc))
 
 
 
