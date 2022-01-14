@@ -20,10 +20,14 @@ Description: Insert a line up then goes insert mode.
 
 
 """
+from vyapp.plugins import Namespace
+
+class LineFeedNS(Namespace):
+    pass
 
 class LineFeed:
     def __init__(self, area):
-        area.install('line-feed', 
+        area.install(LineFeedNS, 
         ('NORMAL', '<Key-m>', self.insert_down),
         ('NORMAL', '<Key-n>', self.insert_up))
 

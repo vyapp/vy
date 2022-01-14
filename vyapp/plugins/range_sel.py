@@ -35,10 +35,14 @@ Description: Drop a selection mark.
 """
 
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class RangeSelNS(Namespace):
+    pass
 
 class RangeSel:
     def __init__(self, area):
-        area.install('range-sel', 
+        area.install(RangeSelNS, 
         ('NORMAL', '<Control-k>', self.sel_up),
         ('NORMAL', '<Control-j>', self.sel_down),
         ('NORMAL', '<Control-h>', self.sel_left),

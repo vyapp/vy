@@ -8,11 +8,15 @@ It also updates the statusbar mode field.
 
 from vyapp.app import root
 from os.path import basename
+from vyapp.plugins import Namespace
+
+class IOStatusNS(Namespace):
+    pass
 
 class IOStatus:
     def __init__(self, area):
         self.area = area
-        area.install('io-status', 
+        area.install(IOStatusNS, 
         (-1, '<Escape>', self.clear_statusbar),
         (-1, '<<SaveData>>', self.update_title), 
         (-1, '<<LoadData>>', self.update_title),

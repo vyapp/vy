@@ -3,6 +3,5 @@ pyflakes
 untwisted==3.0.0
 jedi
 pygments
-future
 rope
 mypy
