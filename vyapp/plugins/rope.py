@@ -29,11 +29,16 @@ from vyapp.app import root
 from rope.base import libutils
 from rope.refactor.move import create_move
 
+from vyapp.plugins import Namespace
+
+class RopeNS(Namespace):
+    pass
+
 class PythonRefactor:
     def __init__(self, area):
         self.area  = area
         self.files = None
-        area.install('rope', ('PYTHON', '<Key-R>', self.rename),
+        area.install(RopeNS, ('PYTHON', '<Key-R>', self.rename),
         ('PYTHON', '<Key-A>', self.static_analysis),
         ('PYTHON', '<Key-M>', self.move))
 

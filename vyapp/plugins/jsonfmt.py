@@ -9,7 +9,7 @@ print any errors on the status bar.
 Key-Commands
 ============
 
-Namespace: jsonfmt
+Namespace: JSonFmtNS
 
 Mode: EXTRA
 Event: <Key-j>
@@ -19,11 +19,15 @@ Description: Format the selected JSON data then switch to NORMAL mode.
 
 from subprocess import Popen, PIPE
 from vyapp.app import root
+from vyapp.plugins import Namespace
 
-class FmtJSON:
-    def __init__(self, area, *args, **kwargs):
+class JSonFmtNS(Namespace):
+    pass
+
+class JSonFmtNS:
+    def __init__(self, area):
         self.area = area
-        area.install('fmtjson', ('EXTRA', '<Key-j>', self.run_printer))
+        area.install(JSonFmtNS, ('EXTRA', '<Key-j>', self.run_printer))
 
     def run_printer(self, event):
         start = self.area.index('sel.first')
@@ -43,4 +47,4 @@ class FmtJSON:
 
         self.area.chmode('NORMAL')
 
-install = FmtJSON
+install = JSonFmtNS

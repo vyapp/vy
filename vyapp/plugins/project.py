@@ -11,6 +11,10 @@ a vy project file.
 
 from os.path import exists, dirname, join
 from vyapp.stderr import printd
+from vyapp.plugins import Namespace
+
+class ProjectNS(Namespace):
+    pass
 
 def get_sentinel_file(path, *args):
     """
@@ -30,7 +34,7 @@ class Project:
 
     def  __init__(self, area):
         self.area  = area
-        area.install('fstmt', (-1, '<<LoadData>>', self.set_path),
+        area.install(ProjectNS, (-1, '<<LoadData>>', self.set_path),
         (-1, '<<SaveData>>', self.set_path))
 
     @classmethod

@@ -14,13 +14,21 @@ Event: <Key-exclam>
 Description: Switch to ruby mode.
 """
 
-def ruby_mode(area):
-    area.chmode('RUBY')
+from vyapp.plugins import Namespace
 
-def install(area):
-    area.add_mode('RUBY')
-    area.install('ruby-mode', ('NORMAL', '<Key-asterisk>', 
-    lambda event: ruby_mode(area)))
+class RubyModeNS(Namespace):
+    pass
+
+class RubyMode:
+    def __init__(self, area):
+        self.area = area
+        area.add_mode('RUBY')
+
+        area.install(RubyModeNS, ('NORMAL', 
+        '<Key-asterisk>', self.ruby_mode))
+
+    def ruby_mode(self, event):
+        self.area.chmode('RUBY')
 
 
-
+install = RubyMode

@@ -9,12 +9,16 @@ Commands
 
 """
 
+from vyapp.plugins import Namespace
+
+class PaneResizeNS(Namespace):
+    pass
 
 class PaneResize:
     def __init__(self, area):
         self.area = area
         
-        area.install('pane-resize', 
+        area.install(PaneResizeNS, 
         ('EXTRA', '<Control-h>', self.dec_vsash),
         ('EXTRA', '<Control-l>', self.inc_vsash),
         ('EXTRA', '<Control-k>', self.dec_hsash),

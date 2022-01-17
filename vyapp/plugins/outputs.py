@@ -34,6 +34,11 @@ a given AreaVi instance.
 from vyapp.app import root
 import sys
 
+from vyapp.plugins import Namespace
+
+class OutputsNS(Namespace):
+    pass
+
 class Stdout:    
     """
     This class is used to wrap an AreaVi widget to be 
@@ -132,7 +137,7 @@ class OutputController:
     def __init__(self, area):
         self.area = area
     
-        area.install('outputs', 
+        area.install(OutputsNS, 
         ('NORMAL', '<Tab>', self.add_output),
         ('NORMAL', '<Control-Tab>', self.rm_output),
         (-1, '<Alt-Tab>',  self.restore_output))
