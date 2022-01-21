@@ -34,11 +34,16 @@ from vyapp.app import root
 from vyapp.ask import Ask
 import os
 
+from vyapp.plugins import Namespace
+
+class IONS(Namespace):
+    pass
+
 class IO:
     def __init__(self, area):
         self.area = area
 
-        area.install('io', 
+        area.install(IONS, 
         (-1, '<Alt-S>', self.save),
         (-1, '<Alt-A>', self.save_as),
         (-1, '<Alt-D>', self.ask_and_load),
