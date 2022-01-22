@@ -865,3 +865,7 @@ class AreaVi(Text, DataEvent, IdleEvent):
         self.tag_delete('(DebuggerPB)')
         self.tag_add('(DebuggerPB)', '%s.0 linestart' % line, '%s.0 lineend' % line)
         self.tag_config('(DebuggerPB)', **conf)
+
+    def tags_config(self, config):
+        for indi, indj in config.items():
+            self.tag_config(indi, **indj)

@@ -1,5 +1,4 @@
 """
-    :)
 """
 from vyapp.plugins.syntax.tools import get_tokens_matrix
 from pygments.util import ClassNotFound 
