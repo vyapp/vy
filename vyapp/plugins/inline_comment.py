@@ -20,6 +20,10 @@ Description: Remove inline comments from a selected block of text.
 """
 
 import os.path
+from vyapp.plugins import Namespace
+
+class InlineCommentNS(Namespace):
+    pass
 
 table   = { 
     '.py'   :'#',
@@ -39,7 +43,7 @@ class Clipboard:
     def __init__(self, area):
         self.area = area
 
-        area.install('inline-comment',
+        area.install(InlineCommentNS,
         ('EXTRA', '<Key-C>', self.remove_comment),
         ('EXTRA', '<Key-c>', self.add_comment))
     
