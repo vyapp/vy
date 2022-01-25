@@ -37,7 +37,7 @@ table   = {
     '.rb' :'#',
 }
 
-class Clipboard:
+class InlineComment:
     default = '#'
 
     def __init__(self, area):
@@ -70,4 +70,4 @@ class Clipboard:
         self.area.clear_selection()
         self.area.chmode('NORMAL')
 
-install = Clipboard
+install = InlineComment
