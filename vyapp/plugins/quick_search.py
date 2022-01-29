@@ -18,6 +18,10 @@ from vyapp.regutils import build_regex
 from vyapp.stderr import printd
 from vyapp.app import root
 from tkinter import Listbox, Toplevel,  BOTH, END, TOP, ACTIVE, Text, LEFT, SCROLL
+from vyapp.plugins import Namespace
+
+class QuickSearchNS(Namespace):
+    pass
 
 class QuickSearch:
     confs = {
@@ -29,7 +33,7 @@ class QuickSearch:
         self.nocase = nocase
         area.tag_config('(SEARCH_MATCH)', self.confs)
 
-        area.install('quick-search',
+        area.install(QuickSearchNS,
         (-1, '<Alt-k>', self.start_backwards),
         (-1, '<Alt-j>', self.start_forwards))
 
