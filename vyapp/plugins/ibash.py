@@ -45,11 +45,15 @@ from vyapp.ask import Ask
 from subprocess import Popen, PIPE, STDOUT
 from os import environ, setsid, killpg
 from vyapp.plugins import ENV
+from vyapp.plugins import Namespace
 import sys
+
+class IBashNS(Namespace):
+    pass
 
 class Process:
     def __call__(self, area):
-        area.install('ibash', 
+        area.install(IBashNS, 
         ('NORMAL', '<Control-F1>', lambda event: self.dump_region(event.widget)),
         ('NORMAL', '<F1>', lambda event: self.dump_line(event.widget)))
 

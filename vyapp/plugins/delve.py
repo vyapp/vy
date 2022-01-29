@@ -68,13 +68,17 @@ from re import findall
 from vyapp.dap import DAP
 from vyapp.ask import Ask
 from vyapp.app import root
+from vyapp.plugins import Namespace
 import shlex
+
+class DelveNS(Namespace):
+    pass
 
 class Delve(DAP):
     def __call__(self, area):
         self.area = area
         
-        area.install('delve', 
+        area.install(DelveNS, 
         ('GOLANG', '<Key-p>', self.evaluate_selection),
         ('GOLANG', '<Key-r>', self.run), 
         ('GOLANG', '<Control-r>', self.send_restart), 

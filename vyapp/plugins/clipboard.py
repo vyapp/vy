@@ -71,10 +71,14 @@ Description: Cut selection and add to the clipboard with a separator \n.
 """
 
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class ClipboardNS(Namespace):
+    pass
 
 class Clipboard:
     def __init__(self, area):
-        area.install('clipboard', 
+        area.install(ClipboardNS, 
         ('NORMAL', '<Key-y>', self.copysel),
         ('NORMAL', '<Key-u>', self.cutsel),
         ('NORMAL', '<Key-t>', self.ptsel),

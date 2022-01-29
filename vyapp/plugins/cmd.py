@@ -14,8 +14,12 @@ from vyapp.tools import e_stop
 from vyapp.ask import Ask
 from vyapp.plugins import ENV
 from vyapp.app import root
+from vyapp.plugins import Namespace
 import re
 import sys
+
+class CmdNS(Namespace):
+    pass
 
 class Cmd:
     TAGCONF = {'background':'#313131'}
@@ -24,7 +28,7 @@ class Cmd:
         self.area = area
 
         area.tag_configure('(CODE)', **Cmd.TAGCONF)
-        area.install('cmd',
+        area.install(CmdNS,
         (-1, '<Alt-semicolon>',  self.exec_cmd),
         (-1, '<Alt-z>',  self.set_target),
         ('NORMAL', '<Key-semicolon>', self.exec_region),

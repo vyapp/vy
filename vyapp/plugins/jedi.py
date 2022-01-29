@@ -20,6 +20,10 @@ completion.
 from vyapp.completion import CompletionWindow
 from jedi import Script
 from vyapp.plugins import Command
+from vyapp.plugins import Namespace
+
+class JediNS(Namespace):
+    pass
 
 class PythonCompletionWindow(CompletionWindow):
     """
@@ -33,7 +37,7 @@ class PythonCompletionWindow(CompletionWindow):
         CompletionWindow.__init__(self, area, completions, *args, **kwargs)
 
 def install(area):
-    trigger = lambda event: area.hook('python-completion', 
+    trigger = lambda event: area.hook(JediNS, 
     'INSERT', '<Control-Key-period>', lambda event: PythonCompletionWindow(
     event.widget), add=False)
 
