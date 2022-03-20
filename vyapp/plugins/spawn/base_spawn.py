@@ -1,7 +1,11 @@
 from vyapp.app import root
 from vyapp.plugins import ENV
+from vyapp.plugins import Namespace
 
 import signal
+
+class SpawnNS(Namespace):
+    pass
 
 class BaseSpawn:
     def __init__(self, cmd, input, output):
@@ -27,16 +31,16 @@ class BaseSpawn:
         # When one of the AreaVi instances are destroyed then
         # the process is killed.
 
-        self.output.hook('spawn', -1, '<Destroy>', 
+        self.output.hook(SpawnNS, -1, '<Destroy>', 
         lambda event: self.terminate_process())
 
-        self.input.hook('spawn', -1, '<Destroy>', 
+        self.input.hook(SpawnNS, -1, '<Destroy>', 
         lambda event: self.terminate_process())
 
-        self.input.hook('spawn', 'NORMAL', '<F1>', 
+        self.input.hook(SpawnNS, 'NORMAL', '<F1>', 
         lambda event: self.dump_line(), add=False)
 
-        self.input.hook('spawn', 'INSERT', '<F1>', 
+        self.input.hook(SpawnNS, 'INSERT', '<F1>', 
         lambda event: self.dump_line(), add=False)
 
         root.status.set_msg('(spawn) %s -> %s' % (self.input.filename, 
