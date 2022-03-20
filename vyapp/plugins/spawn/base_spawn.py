@@ -57,3 +57,4 @@ class BaseSpawn:
 
     def handle_close(self, expect):
         pass
+
