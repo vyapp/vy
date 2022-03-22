@@ -19,10 +19,14 @@ Event: <Key-s>
 Description: Scroll one line down.
 """
 from tkinter import SCROLL
+from vyapp.plugins import Namespace
+
+class LineScrollNS(Namespace):
+    pass
 
 class LineScroll:
     def __init__(self, area):
-        area.install('line-scroll', 
+        area.install(LineScrollNS, 
         (-1, '<Alt-period>', self.scroll_up),
         (-1, '<Alt-comma>', self.scroll_down))
 

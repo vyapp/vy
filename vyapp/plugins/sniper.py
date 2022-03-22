@@ -48,6 +48,7 @@ Description: Set multiline search.
 
 from subprocess import Popen, STDOUT, PIPE
 from vyapp.regutils import build_regex
+from vyapp.plugins import Namespace
 from vyapp.widgets import LinePicker
 from vyapp.areavi import AreaVi
 from vyapp.tools import error
@@ -55,6 +56,9 @@ from vyapp.stderr import printd
 from vyapp.app import root
 from vyapp.ask import Get
 from re import findall
+
+class SniperNS(Namespace):
+    pass
 
 class Sniper:
     options = LinePicker()
@@ -78,7 +82,7 @@ class Sniper:
     def  __init__(self, area):
         self.area = area
 
-        area.install('sniper', 
+        area.install(SniperNS, 
         (-1, '<Alt-s>', self.display_matches),
         (-1, '<Alt-r>', self.find_matches))
 

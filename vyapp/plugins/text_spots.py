@@ -28,6 +28,10 @@ Event: <Control-B>
 Description: Remove all (SPOT) tags from the text.
 
 """
+from vyapp.plugins import Namespace
+
+class TextSpotsNS(Namespace):
+    pass
 
 class TextSpots:
     setup={'background':'green', 'foreground':'black'}
@@ -35,7 +39,7 @@ class TextSpots:
         self.area = area
 
         area.tag_configure('(SPOT)', **self.setup)
-        area.install('text-spots', ('NORMAL', '<Control-b>', self.add_spot),
+        area.install(TextSpotsNS, ('NORMAL', '<Control-b>', self.add_spot),
         ('NORMAL', '<Control-n>', self.back_spot),
         ('NORMAL', '<Control-B>', self.del_spots),
         ('NORMAL', '<Control-m>', self.next_spot))

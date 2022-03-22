@@ -8,6 +8,10 @@ Namespace: anchors
 """
 from vyapp.app import root
 from tkinter import TclError
+from vyapp.plugins import Namespace
+
+class TextAnchorsNS(Namespace):
+    pass
 
 class Anchors:
     def __init__(self, area):
@@ -15,7 +19,7 @@ class Anchors:
         area.add_mode('ANCHORS-DROP')
         self.area = area
 
-        area.install('anchors', 
+        area.install(TextAnchorsNS, 
         ('NORMAL', '<Key-x>', self.switch_jump),
         ('NORMAL', '<Key-X>', self.switch_drop),
         ('ANCHORS-DROP', '<Key>', self.drop),

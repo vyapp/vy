@@ -33,12 +33,16 @@ Description: Just display the previous search matches.
 
 from os.path import expanduser, join
 from vyapp.widgets import OptionWindow
+from vyapp.plugins import Namespace
 from vyapp.areavi import AreaVi
 from tkinter import ACTIVE
 from vyapp.ask import Ask
 from re import split
 from vyapp.app import root
 import sqlite3
+
+class YSnippetNS(Namespace):
+    pass
 
 class SnippetPicker(OptionWindow):
     def __init__(self, conn, cur):
@@ -102,7 +106,7 @@ class Ysnippet:
         """
         self.area = area
 
-        area.install('ysnippet',
+        area.install(YSnippetNS,
         ('NORMAL', '<Control-r>', self.get_title),
         ('NORMAL', '<Control-e>', self.reload),
         ('NORMAL', '<Control-f>', self.get_pattern),)

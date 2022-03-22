@@ -18,7 +18,11 @@ Event: <Alt-q>
 Description: Display sys.stdout log on window.
 """
 from vyapp.widgets import TextWindow
+from vyapp.plugins import Namespace
 import sys
+
+class SyslogNS(Namespace):
+    pass
 
 class CmdOutput:    
     """
@@ -44,7 +48,7 @@ class Syslog:
         
     def __init__(self, area):
         self.area = area
-        area.install('syslog', (-1, '<Alt-q>', self.view_log))
+        area.install(SyslogNS, (-1, '<Alt-q>', self.view_log))
 
     def view_log(self, event):
         self.win.display()

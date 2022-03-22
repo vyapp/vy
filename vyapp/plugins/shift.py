@@ -18,10 +18,14 @@ Event: <Key-less>
 Description: Shift to the left.
 
 """
+from vyapp.plugins import Namespace
+
+class ShiftNS(Namespace):
+    pass
 
 class Shift:
     def __init__(self, area):
-        area.install('shift', 
+        area.install(ShiftNS, 
         ('NORMAL', '<Key-greater>', self.sel_right),
         ('NORMAL', '<Key-less>',  self.sel_left))
         self.area = area

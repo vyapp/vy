@@ -67,12 +67,16 @@ from vyapp.dap import DAP
 from vyapp.ask import Ask
 from vyapp.app import root
 import shlex
+from vyapp.plugins import Namespace
+
+class GDBNS(Namespace):
+    pass
 
 class GDB(DAP):
     def __call__(self, area):
         self.area = area
         
-        area.install('GDB', 
+        area.install(GDBNS, 
         ('C', '<Key-p>', self.evaluate_selection),
         ('C', '<Key-R>', self.ask_gdb_exec), 
         ('C', '<Key-r>', self.run), 

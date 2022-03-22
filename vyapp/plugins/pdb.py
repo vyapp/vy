@@ -70,12 +70,16 @@ from vyapp.dap import DAP
 from vyapp.app import root
 import shlex
 import sys
+from vyapp.plugins import Namespace
+
+class PdbNS(Namespace):
+    pass
 
 class Pdb(DAP):
     def __call__(self, area, python='python'):
         self.area = area
         
-        area.install('pdb', 
+        area.install(PdbNS, 
         ('PYTHON', '<Key-p>', self.evaluate_selection),
         ('PYTHON', '<Key-x>', self.evaluate_expression),
         ('PYTHON', '<Key-r>', self.run), 

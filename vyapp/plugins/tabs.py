@@ -35,12 +35,16 @@ Description: It changes the focus right from a tab.
 from vyapp.app import root
 # from tkinter.messagebox import *
 from tkinter.filedialog import askopenfilename
+from vyapp.plugins import Namespace
+
+class TabsNS(Namespace):
+    pass
 
 class Tabs:
     def __init__(self, area):
         self.area = area
 
-        area.install('tabs', 
+        area.install(TabsNS, 
         (-1, '<Alt-E>', self.load_tab),
         (-1, '<Alt-R>', self.create_tab),
         (-1, '<Alt-x>', self.remove_tab),

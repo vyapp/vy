@@ -19,11 +19,15 @@ from vyapp.ask import Ask
 from tkinter import TclError
 from vyapp.tools import e_stop
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class LineIndexNS(Namespace):
+    pass
 
 class LineIndex:
     def __init__(self, area):
         self.area = area
-        area.install('line-index', 
+        area.install(LineIndexNS, 
         (-1, '<Alt-w>', self.set_pos))
 
     @e_stop

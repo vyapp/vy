@@ -37,10 +37,14 @@ Mode: NORMAL
 Event: <Key-braceright> 
 Description: Place the cursor at the beginning of the previous word.
 """
+from vyapp.plugins import Namespace
+
+class TextJumpsNS(Namespace):
+    pass
 
 class TextJumps:
     def __init__(self, area):
-        area.install('text-jumps', 
+        area.install(TextJumpsNS, 
         (-1, '<Alt-g>', self.text_start),
         ('NORMAL', '<Key-s>', self.text_start),
 

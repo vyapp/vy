@@ -25,12 +25,16 @@ Description: Remove a pane.
 """
 
 from vyapp.app import root
+from vyapp.plugins import Namespace
+
+class SplitsNS(Namespace):
+    pass
 
 class Splits:
     def __init__(self, area):
         self.area = area
 
-        area.install('splits', 
+        area.install(SplitsNS, 
         (-1, '<Alt-V>',  self.add_horizontal_area),
         (-1, '<Alt-C>', self.add_vertical_area),
         (-1, '<Alt-X>', self.remove_area))
