@@ -111,9 +111,6 @@ Features/Plugins
 - **Javascript Auto Completion**
     * https://github.com/nsf/gocode
 
-The github organization https://github.com/vyapp is meant
-to hold vy related projects.
-
 Basic Install
 =============
 
