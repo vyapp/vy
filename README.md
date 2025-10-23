@@ -1,6 +1,6 @@
-** This project is dead. **
+**This project is dead.**
 
-** Checkout: **
+Checkout:
 https://github.com/iogf/escs
 
 That is vy successor.
