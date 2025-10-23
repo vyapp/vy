@@ -178,8 +178,8 @@ class TextWindow(Toplevel):
         self.text.pack(side=LEFT, fill=BOTH, expand=True)
         self.text.focus_set()
         self.text.bind('<Escape>', lambda event: self.close())
-        self.text.bind('<Key-k>', lambda event: self.text.event_generate('<Up>'))
-        self.text.bind('<Key-j>', lambda event: self.text.event_generate('<Down>'))
+        self.text.bind('<Alt-k>', lambda event: self.text.event_generate('<Up>'))
+        self.text.bind('<Alt-j>', lambda event: self.text.event_generate('<Down>'))
 
         self.protocol("WM_DELETE_WINDOW", self.close)
 
