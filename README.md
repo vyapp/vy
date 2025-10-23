@@ -1,3 +1,10 @@
+** This project is dead. **
+
+** Checkout: **
+https://github.com/iogf/escs
+
+That is vy successor.
+
 ![vy](vy.png) vy
 ================
 
