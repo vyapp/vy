@@ -1,10 +1,3 @@
-**This project is dead.**
-
-Checkout:
-https://github.com/iogf/escs
-
-That is vy successor.
-
 ![vy](vy.png) vy
 ================
 
@@ -137,11 +130,11 @@ python setup.py install
 As vy is in development there may occur some changes to the vyrc file format, it is important to remove
 your ~/.vy directory before a new installation in order to upgrade to a new version.
 
-Documentation
-=============
+Docs
+====
 
 The vy docs may be outdated sometimes, i struggle to do my best to keep it all fine. There also
 exists many features which weren't documented yet.
 
-### [Vy Book](https://github.com/iogf/vy/wiki)
+### [Wiki](https://github.com/iogf/vy/wiki)
 
