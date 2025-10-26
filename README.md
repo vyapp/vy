@@ -130,6 +130,10 @@ python setup.py install
 As vy is in development there may occur some changes to the vyrc file format, it is important to remove
 your ~/.vy directory before a new installation in order to upgrade to a new version.
 
+**Note:**
+Vy has changed a lot since its first version thus a reset version was needed. It uses fourth digit scheme. 
+The last digit is used for meaning minor changes like code aeshetic changes.
+
 Docs
 ====
 
