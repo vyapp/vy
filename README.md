@@ -128,7 +128,7 @@ python setup.py install
 
 **Note:**
 The vy project is unmaintained. I had some ideas in the past years and i decided 
-it would be cool to implement. If you like modal editors then check out escs.
+it would be cool to implement so i started escs. 
 
 https://github.com/iogf/escs
 
