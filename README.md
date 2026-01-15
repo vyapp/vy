@@ -132,7 +132,8 @@ it would be cool to implement so i started escs.
 
 https://github.com/iogf/escs
 
-That is the vy's baby.
+The escs project is a vy rewriting/replacement with a more robust plugin systemj and
+comfortable keystrokes map.
 
 Docs
 ====
